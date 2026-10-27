@@ -35,8 +35,12 @@ target_compile_definitions(hb_native PRIVATE fsr_selftest=native_selftest fsr_fr
   XamInputGetState=native_XamInputGetState DbgPrint=native_DbgPrint)
 target_compile_options(hb_native PRIVATE -O2 -ffp-contract=off -fno-math-errno -fno-strict-aliasing)
 
+add_library(hb_native32 STATIC ${HB_SRC}/selftest.c)
+target_compile_definitions(hb_native32 PRIVATE FSR_NO_WIDE fsr_selftest=native32_selftest)
+target_compile_options(hb_native32 PRIVATE -O2 -ffp-contract=off -fno-math-errno -fno-strict-aliasing)
+
 add_executable(homebrew_test homebrew_test.cc ${hb64_GEN} ${hb32_GEN})
 target_include_directories(homebrew_test PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/gen_hb64 ${CMAKE_CURRENT_BINARY_DIR}/gen_hb32)
 target_compile_options(homebrew_test PRIVATE -ffp-contract=off)
-target_link_libraries(homebrew_test fsr_core hb_native)
+target_link_libraries(homebrew_test fsr_core hb_native hb_native32)
 add_test(NAME homebrew_test COMMAND homebrew_test ${HB_DIR})

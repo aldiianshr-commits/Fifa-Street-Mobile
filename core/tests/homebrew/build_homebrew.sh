@@ -23,7 +23,7 @@ build() {  # name target cpu extra-cflags ld-emulation
 }
 
 build hb64 powerpc64-unknown-linux-gnu 970 "-mabi=elfv2" elf64ppc
-build hb32 powerpc-unknown-linux-gnu 750 "" elf32ppc
+build hb32 powerpc-unknown-linux-gnu 750 "-DFSR_NO_WIDE" elf32ppc
 
 "$TOOLS/mkxex" "$OUT/hb64.elf" "$OUT/hb64.xex" $IMPORTS --syms "$OUT/hb64.syms"
 "$TOOLS/mkxex" "$OUT/hb32.elf" "$OUT/hb32.xex" $IMPORTS --syms "$OUT/hb32.syms"

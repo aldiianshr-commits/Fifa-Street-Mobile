@@ -27,6 +27,8 @@ jobs:
           ./tools/regen_homebrew.sh build-host 2>&1 | tee host-test.log
           ./build-host/tests/unit_tests build-host/tests/hb build-host | tee -a host-test.log
           ./build-host/tests/homebrew_test build-host/tests/hb | tee -a host-test.log
+          msg=$(grep -E "unit_tests:|selftest:|demo:|homebrew_test:|translated" host-test.log | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')
+          echo "::notice title=host tests $(uname -m)::${msg}"
       - name: Generated code determinism check
         if: matrix.os == 'ubuntu-24.04'
         run: |
@@ -94,7 +96,7 @@ jobs:
             --notes "Build otomatis dari commit ${GITHUB_SHA}. APK arm64-v8a. Status fitur: lihat README (Berfungsi / Parsial / Belum tersedia). FIFA Street belum dapat dijalankan; homebrew self-test dapat dijalankan."
 
   emulator-smoke:
-    name: Emulator smoke test (API 33, ARM translation)
+    name: Emulator smoke test (API 30, ARM translation)
     needs: android
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-24.04
@@ -111,7 +113,7 @@ jobs:
           sudo udevadm trigger --name-match=kvm
       - uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 33
+          api-level: 30
           arch: x86_64
           target: google_apis
           disable-animations: true

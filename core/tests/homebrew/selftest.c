@@ -6,6 +6,8 @@
  *   2. natively for the host / ARM64.
  * Both builds must produce identical results; any difference is a
  * recompiler or runtime bug. No libc: freestanding on purpose.
+ * FSR_NO_WIDE (set for the 32-bit PowerPC build and its native twin) skips
+ * code that would need 64-bit atomics/__int128/libgcc helpers.
  */
 #include <stdint.h>
 
@@ -148,9 +150,50 @@ static NOINLINE int32_t cmp_chain(int32_t a, uint32_t b) {
   return r;
 }
 
+static NOINLINE uint32_t atomics(volatile uint32_t* p, volatile uint64_t* q) {
+  uint32_t r = 0;
+  for (int i = 0; i < 10; i++) r += __atomic_fetch_add(p, (uint32_t)i * 3u + 1u, __ATOMIC_SEQ_CST);
+  uint32_t expect = *p;
+  r ^= (uint32_t)__atomic_compare_exchange_n(p, &expect, expect ^ 0x55u, 0, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST);
+  r += *p;
+#if !defined(FSR_NO_WIDE)
+  for (int i = 0; i < 4; i++) r += (uint32_t)__atomic_fetch_xor(q, 0x0123456789ull << i, __ATOMIC_SEQ_CST);
+  r ^= (uint32_t)(*q >> 17);
+#else
+  r += 0xC0FFEEu; /* 32-bit build: no 64-bit atomics; keep result layout aligned */
+  *q = 0;
+#endif
+  return r;
+}
+
+#if !defined(FSR_NO_WIDE)
+static NOINLINE uint64_t div64(uint64_t a, uint64_t b, int64_t c, int64_t d) {
+  return a / b + a % b + (uint64_t)(c / d) + (uint64_t)(c % d);
+}
+
+static NOINLINE uint32_t wide_bits(uint64_t x, int64_t s) {
+  uint32_t r = (uint32_t)__builtin_clzll(x | 1);
+  r += (uint32_t)(s >> 33) ^ (uint32_t)((uint64_t)s >> 51);
+  uint64_t hi = (uint64_t)(((unsigned __int128)x * 0x9E3779B97F4A7C15ull) >> 64);
+  r ^= (uint32_t)hi ^ (uint32_t)(hi >> 32);
+  int64_t sh = (int64_t)(((__int128)s * -77777777777ll) >> 64);
+  r += (uint32_t)sh;
+  return r;
+}
+#endif
+
+static NOINLINE double fp_misc(double a, float b) {
+  double r = (double)(int64_t)(a * 1e6) * 1e-6;          /* fctidz / fcfid */
+  r += (a > b) ? a - b : b - a;                            /* compares */
+  float fr = b * 3.0f + (float)a;                           /* frsp */
+  r += (double)fr;
+  r += (double)(uint32_t)(a < 0 ? -a : a);
+  return r;
+}
+
 /* ---------------------------------------------------------------- entry
  * results[] receives one value per sub-test; the return value is a hash. */
-#define NRESULTS 20
+#define NRESULTS 24
 FSR_EXPORT uint32_t fsr_selftest(uint32_t* results) {
   uint32_t r[NRESULTS];
   r[0] = fib(20);
@@ -190,6 +233,18 @@ FSR_EXPORT uint32_t fsr_selftest(uint32_t* results) {
   double acc_d = 0;
   for (int i = 1; i <= 10; i++) acc_d += 1.0 / (double)i;
   r[19] = (uint32_t)to_int(acc_d * 1e6);
+  volatile uint32_t atom32 = 7;
+  volatile uint64_t atom64 = 0xFEEDFACECAFEBEEFull;
+  r[20] = atomics(&atom32, &atom64);
+#if defined(FSR_NO_WIDE)
+  r[21] = 0x32323232u; /* 64-bit division needs libgcc helpers in 32-bit mode */
+  r[22] = 0x32323232u;
+#else
+  uint64_t dv = div64(0xFFFFFFFFFFFFFFF1ull, 0x123456789ull, -98765432109876ll, 12345ll);
+  r[21] = (uint32_t)dv ^ (uint32_t)(dv >> 32);
+  r[22] = wide_bits(0x00F0F0F0F0F0F0F0ull, -0x123456789ABCll);
+#endif
+  r[23] = (uint32_t)to_int(fp_misc(123.456789, -2.5f) * 1000.0);
 
   uint32_t h = 0;
   for (int i = 0; i < NRESULTS; i++) {

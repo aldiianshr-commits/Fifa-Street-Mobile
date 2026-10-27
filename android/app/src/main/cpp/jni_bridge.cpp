@@ -157,8 +157,9 @@ JFN(jstring, selfTest)(JNIEnv* env, jobject, jstring xex_path) {
   rt.log = [](const std::string& l) { log_line(l); };
   if (!rt.init(err) || !rt.load(x, m, err)) return jstr(env, "{\"ok\":false,\"error\":\"" + json_escape(err) + "\"}");
   uint32_t entry = rt.export_addr("fsr_selftest");
-  uint32_t buf = rt.alloc(80);
-  uint32_t native_res[20] = {};
+  constexpr int kResults = 24;  // must match NRESULTS in core/tests/homebrew/selftest.c
+  uint32_t buf = rt.alloc(4 * kResults);
+  uint32_t native_res[kResults] = {};
   const int N = 200;
   using C = std::chrono::steady_clock;
   auto t0 = C::now();
@@ -172,7 +173,7 @@ JFN(jstring, selfTest)(JNIEnv* env, jobject, jstring xex_path) {
   if (!ok) return jstr(env, "{\"ok\":false,\"error\":\"" + json_escape(err) + "\"}");
   std::string s = "{\"ok\":true,\"results\":[";
   int match = 0;
-  for (int i = 0; i < 20; i++) {
+  for (int i = 0; i < kResults; i++) {
     uint32_t g = fsr::rd_be32(rt.base() + buf + 4 * i);
     bool eq = g == native_res[i];
     match += eq;
@@ -181,10 +182,10 @@ JFN(jstring, selfTest)(JNIEnv* env, jobject, jstring xex_path) {
   }
   double nus = std::chrono::duration<double, std::micro>(t1 - t0).count() / N;
   double gus = std::chrono::duration<double, std::micro>(t2 - t1).count() / N;
-  s += "],\"matched\":" + std::to_string(match) + ",\"hash_native\":\"" + fsr::hex32(nh) + "\",\"hash_recomp\":\"" +
+  s += "],\"matched\":" + std::to_string(match) + ",\"total\":" + std::to_string(kResults) + ",\"hash_native\":\"" + fsr::hex32(nh) + "\",\"hash_recomp\":\"" +
        fsr::hex32(uint32_t(gh)) + "\",\"native_us\":" + std::to_string(nus) + ",\"recomp_us\":" + std::to_string(gus) +
        ",\"iterations\":" + std::to_string(N) + "}";
-  logf("[selftest] %d/20 match, native %.1f us, recompiled %.1f us per run", match, nus, gus);
+  logf("[selftest] %d/%d match, native %.1f us, recompiled %.1f us per run", match, kResults, nus, gus);
   return jstr(env, s);
 }
 

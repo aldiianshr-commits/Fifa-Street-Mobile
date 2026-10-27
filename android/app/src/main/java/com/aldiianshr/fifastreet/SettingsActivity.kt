@@ -96,7 +96,7 @@ class SettingsActivity : Activity() {
                 val txt = if (!j.optBoolean("ok")) "Gagal: ${j.optString("error")}" else {
                     val res = j.getJSONArray("results")
                     buildString {
-                        append("Hasil identik: ${j.optInt("matched")}/20  (hash native ${j.optString("hash_native")}, recompile ${j.optString("hash_recomp")})\n")
+                        append("Hasil identik: ${j.optInt("matched")}/${j.optInt("total")}  (hash native ${j.optString("hash_native")}, recompile ${j.optString("hash_recomp")})\n")
                         append("Waktu per iterasi (diukur di perangkat ini, ${j.optInt("iterations")}×): native ARM64 %.1f µs, PowerPC→ARM64 recompile %.1f µs\n"
                             .format(j.optDouble("native_us"), j.optDouble("recomp_us")))
                         for (i in 0 until res.length()) {
@@ -128,7 +128,7 @@ class SettingsActivity : Activity() {
         if (intent.getBooleanExtra("autotest", false)) {
             bg.execute {
                 val j = JSONObject(NativeBridge.selfTest(App.homebrewXex.path))
-                AppLog.i("AUTOTEST selftest ok=${j.optBoolean("ok")} matched=${j.optInt("matched")}/20 " +
+                AppLog.i("AUTOTEST selftest ok=${j.optBoolean("ok")} matched=${j.optInt("matched")}/${j.optInt("total")} " +
                     "native_us=${j.optDouble("native_us")} recomp_us=${j.optDouble("recomp_us")} error=${j.optString("error")}")
                 AppLog.i("AUTOTEST gpu ${NativeBridge.gpuInfo()}")
                 AppLog.pullNative()

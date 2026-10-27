@@ -13,6 +13,7 @@
 
 extern "C" {
 uint32_t native_selftest(uint32_t* results);
+uint32_t native32_selftest(uint32_t* results);
 uint32_t native_frame(uint32_t* fb, int32_t w, int32_t h, uint32_t frame);
 void native_demo_reset(void);
 // Shims used by the native build of demo.c.
@@ -29,7 +30,10 @@ uint32_t native_DbgPrint(const char*, ...) { return 0; }
 extern const fsr::RecompModule fsr_module_hb64;
 extern const fsr::RecompModule fsr_module_hb32;
 
-static int run(const std::string& dir, const char* xex_name, const fsr::RecompModule* mod) {
+constexpr int kResults = 24;
+using SelftestFn = uint32_t (*)(uint32_t*);
+
+static int run(const std::string& dir, const char* xex_name, const fsr::RecompModule* mod, SelftestFn native_fn) {
   int fails = 0;
   std::vector<uint8_t> file;
   std::string err;
@@ -45,13 +49,13 @@ static int run(const std::string& dir, const char* xex_name, const fsr::RecompMo
   if (!rt.init(err) || !rt.load(x, mod, err)) { std::printf("[%s] runtime: %s\n", xex_name, err.c_str()); return 1; }
 
   // 1) Self-test arithmetic/control-flow battery.
-  uint32_t native_res[20] = {}, guest_res[20] = {};
-  uint32_t native_hash = native_selftest(native_res);
+  uint32_t native_res[kResults] = {}, guest_res[kResults] = {};
+  uint32_t native_hash = native_fn(native_res);
   uint32_t buf = rt.alloc(sizeof guest_res);
   uint64_t ret = 0;
   uint32_t entry = rt.export_addr("fsr_selftest");
   if (!entry || !rt.call(entry, {buf}, &ret, err)) { std::printf("[%s] selftest call failed: %s\n", xex_name, err.c_str()); return 1; }
-  for (int i = 0; i < 20; i++) {
+  for (int i = 0; i < kResults; i++) {
     guest_res[i] = fsr::rd_be32(rt.base() + buf + 4 * i);
     if (guest_res[i] != native_res[i]) {
       std::printf("[%s] result[%d] native=%08X recompiled=%08X  MISMATCH\n", xex_name, i, native_res[i], guest_res[i]);
@@ -59,7 +63,7 @@ static int run(const std::string& dir, const char* xex_name, const fsr::RecompMo
     }
   }
   if (uint32_t(ret) != native_hash) { std::printf("[%s] hash mismatch %08X vs %08X\n", xex_name, uint32_t(ret), native_hash); fails++; }
-  else std::printf("[%s] selftest: 20/20 results identical (hash %08X)\n", xex_name, native_hash);
+  else std::printf("[%s] selftest: %d/%d results identical (hash %08X)\n", xex_name, kResults - fails, kResults, native_hash);
 
   // 2) Render demo with scripted input; compare framebuffers every frame.
   const int W = 320, H = 180;
@@ -96,9 +100,9 @@ static int run(const std::string& dir, const char* xex_name, const fsr::RecompMo
 
 int main(int argc, char** argv) {
   if (argc < 2) return 2;
-  int fails = run(argv[1], "hb64.xex", &fsr_module_hb64);
+  int fails = run(argv[1], "hb64.xex", &fsr_module_hb64, native_selftest);
   // The 32-bit build uses the same native results; it has its own module.
-  fails += run(argv[1], "hb32.xex", &fsr_module_hb32);
+  fails += run(argv[1], "hb32.xex", &fsr_module_hb32, native32_selftest);
   std::printf("homebrew_test: %s\n", fails ? "FAILED" : "PASSED");
   return fails ? 1 : 0;
 }

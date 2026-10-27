@@ -4,9 +4,11 @@
 set -x
 APK=${1:-FIFA-STREET-Recompiled-arm64-v8a.apk}
 PKG=com.aldiianshr.fifastreet
-adb install -r -g "$APK" || exit 1
-adb shell getprop ro.product.cpu.abilist
-adb shell getprop ro.dalvik.vm.native.bridge
+INFO="abilist=$(adb shell getprop ro.product.cpu.abilist) bridge=$(adb shell getprop ro.dalvik.vm.native.bridge) sdk=$(adb shell getprop ro.build.version.sdk)"
+OUT=$(adb install -r -g "$APK" 2>&1)
+RC=$?
+echo "::notice title=emulator install::${INFO} rc=${RC} $(echo "$OUT" | tail -3 | tr '\n' ' ')"
+[ $RC -eq 0 ] || exit 1
 adb shell appops set $PKG MANAGE_EXTERNAL_STORAGE allow || true
 
 adb logcat -c
@@ -34,4 +36,4 @@ if [ -s crash.log ]; then
   msg=$(head -60 crash.log | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')
   echo "::warning title=emulator crash::$msg"
 fi
-grep -q "AUTOTEST selftest ok=true matched=20/20" selftest.log
+grep -q "AUTOTEST selftest ok=true matched=24/24" selftest.log

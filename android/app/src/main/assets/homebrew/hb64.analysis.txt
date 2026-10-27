@@ -7,18 +7,18 @@ XEX2 /home/claude/fifa-street-mobile/android/app/src/main/assets/homebrew/hb64.x
   encryption   : none
   compression  : none
   image load   : ok
-  section .text va=00001000 size=5996 [code]
-  section .rodata va=00003000 size=222
-  section .got va=000030E0 size=8
-  section .toc va=000030E8 size=8
+  section .text va=00001000 size=6604 [code]
+  section .rodata va=00003000 size=230
+  section .got va=000030E8 size=8
+  section .toc va=000030F0 size=8
   section .data va=00004000 size=12
   section .bss va=00004010 size=1
-  section .pdata va=00005000 size=200
+  section .pdata va=00005000 size=208
   section .fsrimp va=00006000 size=12
-  .pdata functions : 24
+  .pdata functions : 25
   imports          : 2 (2 implemented by runtime HLE)
-  functions found  : 26 (2 with bctr dispatch)
-  instructions     : 1610
-  translated       : 1610 (100.00%)
+  functions found  : 27 (2 with bctr dispatch)
+  instructions     : 1757
+  translated       : 1757 (100.00%)
   VMX/VMX128       : 0 (not yet translated)
   invalid words    : 0
