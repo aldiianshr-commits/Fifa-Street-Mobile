@@ -1,0 +1,86 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  host-tests:
+    name: Core tests (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install toolchain
+        run: sudo apt-get update && sudo apt-get install -y clang lld ninja-build cmake
+      - name: Build tools, homebrew XEX, recompile and run tests
+        run: |
+          set -o pipefail
+          ./tools/regen_homebrew.sh build-host 2>&1 | tee host-test.log
+          ./build-host/tests/unit_tests build-host/tests/hb build-host | tee -a host-test.log
+          ./build-host/tests/homebrew_test build-host/tests/hb | tee -a host-test.log
+      - name: Generated code determinism check
+        if: matrix.os == 'ubuntu-24.04'
+        run: |
+          if ! git diff --quiet -- android/app/src/main/cpp/generated android/app/src/main/assets/homebrew; then
+            echo "::warning::Regenerated homebrew module differs from the committed copy (compiler version difference)."
+            git diff --stat -- android/app/src/main/cpp/generated android/app/src/main/assets/homebrew
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: host-tools-${{ matrix.os }}
+          path: |
+            host-test.log
+            build-host/fsr-analyze
+            build-host/fsr-recomp
+            build-host/mkxex
+            build-host/mkiso
+
+  android:
+    name: Android APK (arm64-v8a)
+    needs: host-tests
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install toolchain
+        run: sudo apt-get update && sudo apt-get install -y clang lld ninja-build cmake
+      - name: Regenerate homebrew module (keeps XEX asset and generated code in sync)
+        run: ./tools/regen_homebrew.sh build-host
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Install NDK + CMake
+        run: |
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "ndk;27.2.12479018" "cmake;3.22.1" "platforms;android-35" "build-tools;35.0.0"
+      - name: Build APK
+        working-directory: android
+        run: ./gradlew --no-daemon assembleRelease
+      - name: Inspect APK
+        run: |
+          APK=android/app/build/outputs/apk/release/app-release.apk
+          ls -la "$APK"
+          unzip -l "$APK" | grep -E "lib/|assets/" || true
+          cp "$APK" FIFA-STREET-Recompiled-arm64-v8a.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FIFA-STREET-Recompiled-apk
+          path: FIFA-STREET-Recompiled-arm64-v8a.apk
+      - name: Publish nightly release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete nightly --cleanup-tag -y || true
+          gh release create nightly FIFA-STREET-Recompiled-arm64-v8a.apk \
+            --target "$GITHUB_SHA" --prerelease --title "Nightly build ${GITHUB_SHA::7}" \
+            --notes "Build otomatis dari commit ${GITHUB_SHA}. APK arm64-v8a. Status fitur: lihat README (Berfungsi / Parsial / Belum tersedia). FIFA Street belum dapat dijalankan; homebrew self-test dapat dijalankan."
