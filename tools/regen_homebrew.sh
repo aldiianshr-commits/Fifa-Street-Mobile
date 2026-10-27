@@ -6,6 +6,7 @@
 set -euo pipefail
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
 BUILD=${1:-$ROOT/build-host}
+mkdir -p "$BUILD" && BUILD=$(cd "$BUILD" && pwd)
 cmake -S "$ROOT/core" -B "$BUILD" -G Ninja -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_C_COMPILER=${CC:-clang} -DCMAKE_CXX_COMPILER=${CXX:-clang++}
 cmake --build "$BUILD"

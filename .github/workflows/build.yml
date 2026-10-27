@@ -25,7 +25,8 @@ jobs:
         run: |
           set -o pipefail
           fail() {
-            msg=$(tail -n 60 host-test.log | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')
+            echo "exit code $? at: $BASH_COMMAND" >> host-test.log
+            msg=$(tail -n 40 host-test.log | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')
             echo "::error title=host tests failed ($(uname -m))::${msg}"
             exit 1
           }
