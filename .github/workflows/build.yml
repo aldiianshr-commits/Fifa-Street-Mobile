@@ -33,7 +33,7 @@ jobs:
           ./tools/regen_homebrew.sh build-host > host-test.log 2>&1 || fail
           ./build-host/tests/unit_tests build-host/tests/hb build-host >> host-test.log 2>&1 || fail
           ./build-host/tests/homebrew_test build-host/tests/hb >> host-test.log 2>&1 || fail
-          msg=$(grep -E "unit_tests:|selftest:|demo:|homebrew_test:|translated" host-test.log | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')
+          msg=$(grep -E "unit_tests:|selftest:|vectest|vmx128|demo:|homebrew_test:|translated" host-test.log | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')
           echo "::notice title=host tests $(uname -m)::${msg}"
       - name: Generated code determinism check
         if: matrix.os == 'ubuntu-24.04'

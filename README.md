@@ -4,7 +4,7 @@
 
 Proyek porting **native** FIFA Street versi Xbox 360 ke Android (target: **Xiaomi Pad 6 — Snapdragon 870, Adreno 650, Vulkan**) dengan pendekatan *static recompilation*: kode PowerPC (Xenon) dari `default.xex` diterjemahkan ke C++ lalu dikompilasi oleh Android NDK menjadi kode ARM64. **Tidak memakai emulator Xbox 360, interpreter, atau Xenia sebagai backend tersembunyi.**
 
-> **Status jujur saat ini:** FIFA Street **belum dapat dimainkan**. Yang sudah berfungsi dan teruji adalah fondasinya: pemindai & loader XEX, recompiler PowerPC→C++ (diuji diferensial dengan program homebrew), runtime + HLE kernel dasar, renderer Vulkan (presenter framebuffer), input sentuh/gamepad yang terhubung ke runtime, dan launcher Android lengkap. Komponen besar yang belum ada: penerjemah **VMX128**, GPU **Xenos → Vulkan**, audio **XMA/XAudio2**, dan **thread/sinkronisasi guest**. Detail di [docs/FEASIBILITY.md](docs/FEASIBILITY.md).
+> **Status jujur saat ini:** FIFA Street **belum dapat dimainkan**. Yang sudah berfungsi dan teruji adalah fondasinya: pemindai & loader XEX, recompiler PowerPC→C++ termasuk **AltiVec/VMX dan sebagian besar VMX128** (diuji diferensial dengan program homebrew), runtime + HLE kernel dasar, renderer Vulkan (presenter framebuffer), input sentuh/gamepad yang terhubung ke runtime, dan launcher Android lengkap. Komponen besar yang belum ada: GPU **Xenos → Vulkan**, audio **XMA/XAudio2**, **thread/sinkronisasi guest**, sebagian besar **HLE kernel**, serta `vpkd3d128`/`vupkd3d128`. Detail di [docs/FEASIBILITY.md](docs/FEASIBILITY.md) dan hasil uji di [docs/TEST_REPORT.md](docs/TEST_REPORT.md).
 
 ## Status fitur
 
@@ -17,8 +17,9 @@ Proyek porting **native** FIFA Street versi Xbox 360 ke Android (target: **Xiaom
 | Dekompresi LZX (normal) | ⚠️ Parsial | Memakai libmspack (dipakai juga oleh Xenia); belum diuji dengan data asli di CI karena tidak ada XEX LZX legal yang bisa disertakan |
 | Delta patch (title update `.xexp`) | ❌ Belum tersedia | |
 | Parser PE, `.pdata`, penemuan fungsi | ✅ Berfungsi | Termasuk target `bl`, tail call, rantai save/restore register |
-| Recompiler PowerPC → C++ (integer, branch, load/store, FPU, CR/XER, atomik, jump table) | ✅ Berfungsi | 64-bit & 32-bit; hasil identik bit-per-bit dengan build native (20/20 nilai + 24/24 frame) |
-| Instruksi VMX / VMX128 (SIMD Xbox 360) | ❌ Belum tersedia | Dihitung oleh analyzer, dieksekusi sebagai error "untranslated" |
+| Recompiler PowerPC → C++ (integer, branch, load/store, FPU, CR/XER, atomik, jump table) | ✅ Berfungsi | 64-bit & 32-bit; hasil identik bit-per-bit dengan build native (24/24 nilai + 24/24 frame), di x86-64, ARM64 Linux, dan Android |
+| AltiVec / VMX standar (±150 instruksi) | ✅ Berfungsi | 65 operasi berbeda diuji diferensial (auto-vectorization + intrinsik, termasuk bentuk record → CR6); sisanya diimplementasikan dari spesifikasi |
+| VMX128 (ekstensi Xenon, register v0–v127) | ⚠️ Parsial | Semua opcode VMX128 kecuali `vpkd3d128`/`vupkd3d128`; diverifikasi dengan 65 cek instruksi yang dienkode manual (tidak ada assembler publik untuk VMX128, jadi belum dibandingkan dengan hardware asli) |
 | Runtime: memori guest 4 GiB, panggilan tidak langsung, stack, TLS | ✅ Berfungsi | |
 | HLE kernel/XAM | ⚠️ Parsial | 18 fungsi (DbgPrint, NtAllocateVirtualMemory, XamInputGetState, …). Fungsi lain dilaporkan di log |
 | Thread guest (ExCreateThread, KeWait*, event) | ❌ Belum tersedia | |

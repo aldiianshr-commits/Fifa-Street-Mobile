@@ -28,6 +28,7 @@
 | `lzx_glue.cc` + `third_party/mspack` | Dekoder LZX libmspack dengan sistem I/O memori. |
 | `iso.h/.cc` | Pembaca XDVDFS (offset partisi rebuilt/XGD2/XGD3/XGD1), daftar berkas, ekstraksi; deteksi kontainer STFS (LIVE/PIRS/CON). |
 | `ppc.h`, `ppc_decode.cc` | Decoder instruksi PowerPC Xenon (±200 opcode), helper field, disassembler ringkas. Instruksi AltiVec/VMX128 dikenali sebagai kelas `vmx`. |
+| `ppc_vmx.h/.cc`, `vmx.h` | Decoder AltiVec + VMX128 (tata letak field mengikuti tabel decoder Xenia) dan semantik vektor per elemen dalam urutan byte big-endian (saturasi → VSCR[SAT], bentuk record → CR6). VMX128 memetakan register v0–v127 dan instruksi khas Xenon (`vmsum3fp128`, `vmsum4fp128`, `vrlimi128`, `vpermwi128`, `vmaddcfp128`, unaligned `lvlx/lvrx/stvlx/stvrx`, …). |
 | `recomp.h/.cc` | Penemuan fungsi (seed dari `.pdata`, entry point, ekspor, target `bl`, tail call; batas fungsi non-pdata dipindai sampai terminator) dan generator C++. |
 | `runtime.h` | ABI kode hasil generate: `PPCContext` (GPR 64-bit, FPR, CR per bit, XER, LR, CTR, reservation), helper memori big-endian, shift/rotate/carry PowerPC, konversi FP. |
 | `runtime.cc`, `host.h` | `Runtime`: reservasi 4 GiB (`mmap` NORESERVE), pemetaan image, slot IAT → thunk, heap guest, stack per thread host, `fsr_call_indirect` (pencarian biner tabel fungsi), trap/syscall/instruksi yang belum diterjemahkan → `GuestFault`. |
