@@ -73,6 +73,12 @@ class MainActivity : Activity() {
         setContentView(root)
         GameLibrary.listener = { refresh() }
         if (GameLibrary.games.isEmpty()) GameLibrary.rescan()
+        // Headless smoke tests (used by CI on an emulator): adb shell am start ... --es autotest selftest|play
+        when (intent.getStringExtra("autotest")) {
+            "selftest" -> startActivity(Intent(this, SettingsActivity::class.java).putExtra("autotest", true))
+            "play" -> startActivity(Intent(this, PlayActivity::class.java).putExtra("id", "homebrew")
+                .putExtra("autotest_seconds", intent.getIntExtra("seconds", 10)))
+        }
     }
 
     override fun onResume() {

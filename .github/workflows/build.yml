@@ -92,3 +92,28 @@ jobs:
           gh release create nightly FIFA-STREET-Recompiled-arm64-v8a.apk \
             --target "$GITHUB_SHA" --prerelease --title "Nightly build ${GITHUB_SHA::7}" \
             --notes "Build otomatis dari commit ${GITHUB_SHA}. APK arm64-v8a. Status fitur: lihat README (Berfungsi / Parsial / Belum tersedia). FIFA Street belum dapat dijalankan; homebrew self-test dapat dijalankan."
+
+  emulator-smoke:
+    name: Emulator smoke test (API 33, ARM translation)
+    needs: android
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v4
+        with:
+          name: FIFA-STREET-Recompiled-apk
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 33
+          arch: x86_64
+          target: google_apis
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          script: bash tools/ci_emulator_smoke.sh FIFA-STREET-Recompiled-arm64-v8a.apk

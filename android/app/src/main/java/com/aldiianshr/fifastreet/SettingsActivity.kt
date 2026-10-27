@@ -125,6 +125,16 @@ class SettingsActivity : Activity() {
             "Tidak ada file game, firmware, atau kunci dekripsi yang disertakan. Gunakan hanya salinan game yang Anda miliki secara sah.", 13f))
         body.addView(about)
         setContentView(Ui.scroll(this, body))
+        if (intent.getBooleanExtra("autotest", false)) {
+            bg.execute {
+                val j = JSONObject(NativeBridge.selfTest(App.homebrewXex.path))
+                AppLog.i("AUTOTEST selftest ok=${j.optBoolean("ok")} matched=${j.optInt("matched")}/20 " +
+                    "native_us=${j.optDouble("native_us")} recomp_us=${j.optDouble("recomp_us")} error=${j.optString("error")}")
+                AppLog.i("AUTOTEST gpu ${NativeBridge.gpuInfo()}")
+                AppLog.pullNative()
+                runOnUiThread { finish() }
+            }
+        }
     }
 
     override fun onDestroy() {

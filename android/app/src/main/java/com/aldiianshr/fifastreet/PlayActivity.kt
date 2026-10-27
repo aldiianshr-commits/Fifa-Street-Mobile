@@ -57,6 +57,8 @@ class PlayActivity : Activity(), SurfaceHolder.Callback {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         gameId = intent.getStringExtra("id") ?: run { finish(); return }
         val entry = synchronized(GameLibrary.games) { GameLibrary.games.firstOrNull { it.id == gameId } }
+            ?: if (gameId == "homebrew") GameEntry("homebrew", GameKind.HOMEBREW, App.homebrewXex.path, "Homebrew Self-Test")
+                .also { it.xexPath = App.homebrewXex.path } else null
         if (Sessions.gameId != gameId) {
             Sessions.stop()
             val xex = entry?.xexPath
@@ -101,6 +103,31 @@ class PlayActivity : Activity(), SurfaceHolder.Callback {
         pm.addThermalStatusListener(thermalListener!!)
         NativeBridge.sessionSetThermal(h, pm.currentThermalStatus)
         ui.post(statsTick)
+        val autotest = intent.getIntExtra("autotest_seconds", 0)
+        if (autotest > 0) {
+            // Scripted input: walk the D-pad around and press face buttons.
+            val script = object : Runnable {
+                var t = 0
+                override fun run() {
+                    if (h == 0L) return
+                    val b = listOf(XButton.DPAD_RIGHT, XButton.DPAD_DOWN, XButton.A, XButton.B, XButton.X, XButton.Y)[(t / 5) % 6].bit
+                    NativeBridge.sessionSetPad(h, b, (t * 8) and 255, 0, 0, 0, 0, 0, true)
+                    t++
+                    ui.postDelayed(this, 100)
+                }
+            }
+            ui.post(script)
+            ui.postDelayed({
+                val st = if (h != 0L) NativeBridge.sessionStats(h) else FloatArray(9)
+                AppLog.i("AUTOTEST play fps=${st[0]} frame_ms=${st[1]} guest_ms=${st[2]} present_ms=${st[3]} res=${st[4].toInt()}x${st[5].toInt()} " +
+                    "frames=${st[6].toLong()} kernel_calls=${st[7].toLong()} gpu=${if (h != 0L) NativeBridge.sessionGpu(h) else ""} " +
+                    "error=${if (h != 0L) NativeBridge.sessionError(h) else "no session"}")
+                ui.removeCallbacks(script)
+                AppLog.pullNative()
+                Sessions.stop()
+                finish()
+            }, autotest * 1000L)
+        }
     }
 
     private fun fail(msg: String) {
