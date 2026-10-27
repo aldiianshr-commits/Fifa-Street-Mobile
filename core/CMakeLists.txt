@@ -20,6 +20,7 @@ add_library(fsr_core STATIC
   src/exports.cc
   src/lzx_glue.cc
   src/ppc_decode.cc
+  src/ppc_vmx.cc
   src/recomp.cc
   src/report.cc
   src/runtime.cc

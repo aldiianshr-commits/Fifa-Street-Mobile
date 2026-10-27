@@ -20,6 +20,8 @@
 #include "session.h"
 
 extern "C" uint32_t native_selftest(uint32_t* results);
+extern "C" uint32_t native_vectest(uint32_t* results);
+#include "homebrew/vmx128_check.h"
 
 namespace fsr_android {
 bool audio_test_tone(bool on);
@@ -180,12 +182,34 @@ JFN(jstring, selfTest)(JNIEnv* env, jobject, jstring xex_path) {
     s += std::string(i ? "," : "") + "{\"native\":\"" + fsr::hex32(native_res[i]) + "\",\"recomp\":\"" + fsr::hex32(g) +
          "\",\"match\":" + (eq ? "true" : "false") + "}";
   }
+  // AltiVec battery (native scalar vs PowerPC AltiVec -> recompiled) and the
+  // hand-encoded VMX128 check.
+  constexpr int kV = 12;
+  uint32_t nv[kV] = {};
+  native_vectest(nv);
+  uint32_t vbuf = rt.alloc(4 * kV);
+  uint32_t ventry = rt.export_addr("fsr_vectest");
+  int vmatch = 0;
+  std::string verr;
+  if (ventry && rt.call(ventry, {vbuf}, nullptr, verr)) {
+    for (int i = 0; i < kV; i++) {
+      uint32_t g = fsr::rd_be32(rt.base() + vbuf + 4 * i);
+      bool eq = g == nv[i];
+      vmatch += eq;
+      s += ",{\"native\":\"" + fsr::hex32(nv[i]) + "\",\"recomp\":\"" + fsr::hex32(g) + "\",\"match\":" + (eq ? "true" : "false") + ",\"vec\":true}";
+    }
+  }
+  std::string vmx128_report;
+  int vmx128_bad = fsr_tests::check_vmx128(rt, &vmx128_report);
+  match += vmatch;
   double nus = std::chrono::duration<double, std::micro>(t1 - t0).count() / N;
   double gus = std::chrono::duration<double, std::micro>(t2 - t1).count() / N;
-  s += "],\"matched\":" + std::to_string(match) + ",\"total\":" + std::to_string(kResults) + ",\"hash_native\":\"" + fsr::hex32(nh) + "\",\"hash_recomp\":\"" +
+  s += "],\"matched\":" + std::to_string(match) + ",\"total\":" + std::to_string(kResults + kV) +
+       ",\"vmx128_failures\":" + std::to_string(vmx128_bad) + ",\"vmx128_report\":\"" + json_escape(vmx128_report) + "\"" + ",\"hash_native\":\"" + fsr::hex32(nh) + "\",\"hash_recomp\":\"" +
        fsr::hex32(uint32_t(gh)) + "\",\"native_us\":" + std::to_string(nus) + ",\"recomp_us\":" + std::to_string(gus) +
        ",\"iterations\":" + std::to_string(N) + "}";
-  logf("[selftest] %d/%d match, native %.1f us, recompiled %.1f us per run", match, kResults, nus, gus);
+  logf("[selftest] %d/%d match (incl. %d/%d AltiVec), VMX128 failures %d, native %.1f us, recompiled %.1f us per run", match,
+       kResults + kV, vmatch, kV, vmx128_bad, nus, gus);
   return jstr(env, s);
 }
 

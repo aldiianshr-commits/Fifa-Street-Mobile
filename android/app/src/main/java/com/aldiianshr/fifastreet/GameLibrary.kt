@@ -223,10 +223,15 @@ object GameLibrary {
         val ins = a.optLong("instructions")
         val tr = a.optLong("translated")
         val vmx = a.optLong("vmx")
+        val vmxOk = a.optLong("vmx_translated")
         val cov = a.optDouble("coverage", 0.0) * 100
-        out += Feature("Analisis kode PowerPC", if (vmx == 0L && a.optLong("invalid") == 0L) Ui.Status.WORKS else Ui.Status.PARTIAL,
-            "%,d fungsi, %,d instruksi; %.2f%% dapat diterjemahkan ke C++/ARM64. VMX/VMX128 belum diterjemahkan: %,d. Kata tak dikenal: %,d."
-                .format(a.optLong("functions"), ins, cov, vmx, a.optLong("invalid")))
+        val untr = a.optJSONObject("untranslated")
+        val top = untr?.keys()?.asSequence()?.map { it to untr.optLong(it) }?.sortedByDescending { it.second }?.take(4)
+            ?.joinToString { "${it.first} ×${it.second}" }.orEmpty()
+        out += Feature("Analisis & terjemahan kode PowerPC", if (tr == ins) Ui.Status.WORKS else Ui.Status.PARTIAL,
+            "%,d fungsi, %,d instruksi; %.2f%% dapat diterjemahkan ke C++/ARM64. VMX/VMX128: %,d dari %,d diterjemahkan (%,d encoding VMX128). Kata tak dikenal: %,d.%s"
+                .format(a.optLong("functions"), ins, cov, vmxOk, vmx, a.optLong("vmx128"), a.optLong("invalid"),
+                    if (top.isNotEmpty()) " Belum: $top" else ""))
         val impT = a.optInt("imports_total")
         val impI = a.optInt("imports_implemented")
         out += Feature("Impor kernel/XAM (HLE)", if (impT > 0 && impI == impT) Ui.Status.WORKS else if (impI > 0) Ui.Status.PARTIAL else Ui.Status.MISSING,

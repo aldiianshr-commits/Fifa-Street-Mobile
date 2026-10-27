@@ -36,4 +36,4 @@ if [ -s crash.log ]; then
   msg=$(head -60 crash.log | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')
   echo "::warning title=emulator crash::$msg"
 fi
-grep -q "AUTOTEST selftest ok=true matched=24/24" selftest.log
+grep -q "AUTOTEST selftest ok=true matched=36/36" selftest.log

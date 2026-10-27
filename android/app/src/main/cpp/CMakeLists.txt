@@ -14,8 +14,9 @@ add_subdirectory(${FSR_ROOT} fsr_core_build)
 file(GLOB HB64_GEN ${CMAKE_CURRENT_SOURCE_DIR}/generated/hb64/*.cpp)
 
 # Native (ARM64) build of the same self-test source for on-device comparison.
-add_library(hb_native STATIC ${FSR_ROOT}/tests/homebrew/selftest.c)
-target_compile_definitions(hb_native PRIVATE fsr_selftest=native_selftest)
+add_library(hb_native STATIC ${FSR_ROOT}/tests/homebrew/selftest.c ${FSR_ROOT}/tests/homebrew/vectest.c)
+target_compile_definitions(hb_native PRIVATE fsr_selftest=native_selftest fsr_vectest=native_vectest
+  fsr_vectest_dump=native_vectest_dump)
 target_compile_options(hb_native PRIVATE -O2 -ffp-contract=off -fno-math-errno)
 
 add_library(fsr SHARED
@@ -26,7 +27,7 @@ add_library(fsr SHARED
   native_log.cpp
   ${HB64_GEN}
 )
-target_include_directories(fsr PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/generated/hb64)
+target_include_directories(fsr PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/generated/hb64 ${FSR_ROOT}/tests)
 target_compile_options(fsr PRIVATE -O2 -ffp-contract=off -fexceptions)
 target_link_libraries(fsr fsr_core hb_native android log vulkan aaudio)
 target_link_options(fsr PRIVATE "-Wl,-z,max-page-size=16384")

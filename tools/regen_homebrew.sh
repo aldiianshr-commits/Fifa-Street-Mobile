@@ -16,7 +16,8 @@ ASSET="$ROOT/android/app/src/main/assets/homebrew"
 rm -rf "$GEN"
 mkdir -p "$GEN" "$ASSET"
 "$BUILD/fsr-recomp" "$BUILD/tests/hb/hb64.xex" --out "$GEN" --name hb64 \
-  --syms "$BUILD/tests/hb/hb64.syms" --export fsr_selftest --export fsr_frame
+  --syms "$BUILD/tests/hb/hb64.syms" --export fsr_selftest --export fsr_frame --export fsr_vectest \
+  --export fsr_vectest_dump --export fsr_vmx128_test
 cp "$BUILD/tests/hb/hb64.xex" "$ASSET/hb64.xex"
-"$BUILD/fsr-analyze" "$ASSET/hb64.xex" > "$ASSET/hb64.analysis.txt"
+(cd "$ASSET" && "$BUILD/fsr-analyze" hb64.xex > hb64.analysis.txt)
 echo "regen_homebrew: generated $(ls "$GEN" | wc -l) files in $GEN"

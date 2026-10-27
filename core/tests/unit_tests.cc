@@ -10,6 +10,7 @@
 #include "fsr/crypto.h"
 #include "fsr/iso.h"
 #include "fsr/ppc.h"
+#include "fsr/ppc_vmx.h"
 #include "fsr/recomp.h"
 #include "fsr/report.h"
 #include "fsr/runtime.h"
@@ -89,6 +90,37 @@ static void test_ppc_decode() {
   // rldicl r3,r3,0,32 field decode: sh=0, mb=32
   CHECK(f_mb64(0x78630020) == 32);
   CHECK(f_sh64(0x7C641E74) == 3 + 0);
+}
+
+static void test_vmx_decode() {
+  using namespace ppc;
+  CHECK(decode_vmx(0x7C0018CE) == VOp::lvx);          // lvx v0,0,r3
+  CHECK(decode_vmx(0x7C0019CE) == VOp::stvx);
+  CHECK(decode_vmx(0x1000000A) == VOp::vaddfp);
+  CHECK(decode_vmx(0x1000002B) == VOp::vperm);
+  CHECK(decode_vmx(0x1000002E) == VOp::vmaddfp);
+  CHECK(decode_vmx(0x10000486) == VOp::vcmpequw);     // Rc form (bit 21)
+  CHECK(v_rc(0x10000486));
+  CHECK(decode_vmx(0x14000010) == VOp::vaddfp128);
+  CHECK(decode_vmx(0x140001D0) == VOp::vmsum4fp128);
+  CHECK(decode_vmx(0x18000710) == VOp::vrlimi128);
+  CHECK(decode_vmx(0x18000210) == VOp::vpermwi128);
+  CHECK(decode_vmx(0x180007F0) == VOp::vupkd3d128);
+  CHECK(decode_vmx(0x100000C3) == VOp::lvx128);
+  CHECK(decode_vmx(0x10000010) == VOp::vsldoi128);
+  CHECK(vop_is_vmx128(VOp::vsldoi128) && !vop_is_vmx128(VOp::vperm));
+  // VMX128 register fields: vD=70 (l=6,h=2), vA=101 (l=5,bit5=1,bit6=1), vB=127 (l=31,h=3)
+  uint32_t raw = 0x14000010u | (6u << 21) | (2u << 2) | (5u << 16) | (1u << 5) | (1u << 10) | (31u << 11) | 3u;
+  CHECK(v128_d(raw) == 70 && v128_a(raw) == 101 && v128_b(raw) == 127);
+  CHECK(decode_vmx(raw) == VOp::vaddfp128);
+  VR a{}, b{}, d{};
+  vx::sf(a, 0, 1.5f); vx::sf(b, 0, 2.0f);
+  vx::vaddfp(d, a, b);
+  CHECK(vx::f(d, 0) == 3.5f);
+  uint32_t vscr = 0;
+  vx::sw(a, 1, 0x7FFFFFFF); vx::sw(b, 1, 1);
+  vx::vaddsws(d, a, b, vscr);
+  CHECK(vx::w(d, 1) == 0x7FFFFFFFu && (vscr & 1));
 }
 
 static void test_runtime_helpers() {
@@ -178,6 +210,7 @@ int main(int argc, char** argv) {
   test_aes();
   test_sha1();
   test_ppc_decode();
+  test_vmx_decode();
   test_runtime_helpers();
   test_xex(argv[1]);
   test_iso(argv[1], argv[2]);

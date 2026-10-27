@@ -33,8 +33,8 @@ jobs:
         if: matrix.os == 'ubuntu-24.04'
         run: |
           if ! git diff --quiet -- android/app/src/main/cpp/generated android/app/src/main/assets/homebrew; then
-            echo "::warning::Regenerated homebrew module differs from the committed copy (compiler version difference)."
-            git diff --stat -- android/app/src/main/cpp/generated android/app/src/main/assets/homebrew
+            d=$(git diff --stat -- android/app/src/main/cpp/generated android/app/src/main/assets/homebrew | awk '{printf "%s%%0A", $0}')
+            echo "::warning title=generated code drift::Regenerated homebrew module differs from the committed copy (toolchain difference).%0A${d}"
           fi
       - uses: actions/upload-artifact@v4
         with:

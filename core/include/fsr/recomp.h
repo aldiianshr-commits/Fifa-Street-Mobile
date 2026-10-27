@@ -40,7 +40,9 @@ struct RecompStats {
   uint64_t functions = 0;
   uint64_t instructions = 0;       // decoded instructions inside functions
   uint64_t translated = 0;         // emitted as real C++
-  uint64_t vmx = 0;                // AltiVec/VMX128 (not yet translated)
+  uint64_t vmx = 0;                // AltiVec/VMX128 instructions (all)
+  uint64_t vmx_translated = 0;     // ... of which translated
+  uint64_t vmx128 = 0;             // ... of which VMX128 encodings
   uint64_t invalid = 0;            // undecodable words inside functions
   uint64_t padding_words = 0;      // zero words (alignment/data) inside function ranges
   uint64_t dynamic_functions = 0;  // functions using bctr dispatch

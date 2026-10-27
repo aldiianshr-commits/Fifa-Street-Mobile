@@ -9,6 +9,7 @@
 #include "fsr/bytes.h"
 #include "fsr/crypto.h"
 #include "fsr/ppc.h"
+#include "fsr/ppc_vmx.h"
 
 namespace fsr {
 using namespace ppc;
@@ -178,6 +179,171 @@ std::vector<FunctionInfo> discover_functions(const RecompInput& in) {
 }
 
 namespace {
+
+// ---------------------------------------------------------------- VMX / VMX128
+// Returns true when the vector instruction was translated.
+static bool emit_vmx_impl(uint32_t raw, uint32_t addr, std::ostringstream& o) {
+  using V = VOp;
+  V op = decode_vmx(raw);
+  auto Vr = [](uint32_t n) { return "ctx.v[" + std::to_string(n) + "]"; };
+  const uint32_t d = v_d(raw), a = v_a(raw), b = v_b(raw), c = v_c(raw);
+  const uint32_t D = v128_d(raw), A = v128_a(raw), B = v128_b(raw);
+  const std::string ea = "uint32_t(" + RA0(f_ra(raw)) + " + " + R(f_rb(raw)) + ")";
+  auto call = [&](const char* fn, std::initializer_list<std::string> args) {
+    o << "  fsr::vx::" << fn << "(";
+    bool first = true;
+    for (auto& s : args) { o << (first ? "" : ", ") << s; first = false; }
+    o << ");\n";
+  };
+  const std::string sat = "ctx.vscr";
+  auto cmp = [&](const char* fn, uint32_t vd, uint32_t va, uint32_t vb, bool rc, bool bounds) {
+    call(fn, {Vr(vd), Vr(va), Vr(vb)});
+    if (rc) o << "  fsr::vx::" << (bounds ? "cr6_bounds" : "cr6_from") << "(ctx.crb, " << Vr(vd) << ");\n";
+  };
+  switch (op) {
+    // loads / stores
+    case V::lvx: case V::lvxl: call("lvx", {Vr(d), "base", ea}); return true;
+    case V::lvx128: case V::lvxl128: call("lvx", {Vr(D), "base", ea}); return true;
+    case V::stvx: case V::stvxl: call("stvx", {Vr(d), "base", ea}); return true;
+    case V::stvx128: case V::stvxl128: call("stvx", {Vr(D), "base", ea}); return true;
+    case V::lvsl: call("lvsl", {Vr(d), ea}); return true;
+    case V::lvsr: call("lvsr", {Vr(d), ea}); return true;
+    case V::lvsl128: call("lvsl", {Vr(D), ea}); return true;
+    case V::lvsr128: call("lvsr", {Vr(D), ea}); return true;
+    case V::lvebx: call("lvebx", {Vr(d), "base", ea}); return true;
+    case V::lvehx: call("lvehx", {Vr(d), "base", ea}); return true;
+    case V::lvewx: call("lvewx", {Vr(d), "base", ea}); return true;
+    case V::lvewx128: call("lvewx", {Vr(D), "base", ea}); return true;
+    case V::stvebx: call("stvebx", {Vr(d), "base", ea}); return true;
+    case V::stvehx: call("stvehx", {Vr(d), "base", ea}); return true;
+    case V::stvewx: call("stvewx", {Vr(d), "base", ea}); return true;
+    case V::stvewx128: call("stvewx", {Vr(D), "base", ea}); return true;
+    case V::lvlx: case V::lvlxl: call("lvlx", {Vr(d), "base", ea}); return true;
+    case V::lvrx: case V::lvrxl: call("lvrx", {Vr(d), "base", ea}); return true;
+    case V::stvlx: case V::stvlxl: call("stvlx", {Vr(d), "base", ea}); return true;
+    case V::stvrx: case V::stvrxl: call("stvrx", {Vr(d), "base", ea}); return true;
+    case V::lvlx128: case V::lvlxl128: call("lvlx", {Vr(D), "base", ea}); return true;
+    case V::lvrx128: case V::lvrxl128: call("lvrx", {Vr(D), "base", ea}); return true;
+    case V::stvlx128: case V::stvlxl128: call("stvlx", {Vr(D), "base", ea}); return true;
+    case V::stvrx128: case V::stvrxl128: call("stvrx", {Vr(D), "base", ea}); return true;
+    case V::mfvscr:
+      o << "  std::memset(" << Vr(d) << ".b, 0, 16); fsr::vx::sw(" << Vr(d) << ", 3, ctx.vscr);\n";
+      return true;
+    case V::mtvscr: o << "  ctx.vscr = fsr::vx::w(" << Vr(b) << ", 3);\n"; return true;
+
+    // plain binary ops (vD, vA, vB)
+#define BIN(x) case V::x: call(#x, {Vr(d), Vr(a), Vr(b)}); return true;
+#define BINS(x) case V::x: call(#x, {Vr(d), Vr(a), Vr(b), sat}); return true;
+    BIN(vaddubm) BIN(vadduhm) BIN(vadduwm) BIN(vsububm) BIN(vsubuhm) BIN(vsubuwm) BIN(vaddcuw) BIN(vsubcuw)
+    BINS(vaddubs) BINS(vadduhs) BINS(vadduws) BINS(vaddsbs) BINS(vaddshs) BINS(vaddsws)
+    BINS(vsububs) BINS(vsubuhs) BINS(vsubuws) BINS(vsubsbs) BINS(vsubshs) BINS(vsubsws)
+    BIN(vmaxub) BIN(vmaxuh) BIN(vmaxuw) BIN(vminub) BIN(vminuh) BIN(vminuw) BIN(vmaxsb) BIN(vmaxsh) BIN(vmaxsw)
+    BIN(vminsb) BIN(vminsh) BIN(vminsw) BIN(vavgub) BIN(vavguh) BIN(vavguw) BIN(vavgsb) BIN(vavgsh) BIN(vavgsw)
+    BIN(vand) BIN(vandc) BIN(vor) BIN(vxor) BIN(vnor)
+    BIN(vslb) BIN(vslh) BIN(vslw) BIN(vsrb) BIN(vsrh) BIN(vsrw) BIN(vsrab) BIN(vsrah) BIN(vsraw)
+    BIN(vrlb) BIN(vrlh) BIN(vrlw) BIN(vsl) BIN(vsr) BIN(vslo) BIN(vsro)
+    BIN(vaddfp) BIN(vsubfp) BIN(vmaxfp) BIN(vminfp)
+    BIN(vmrghb) BIN(vmrghh) BIN(vmrghw) BIN(vmrglb) BIN(vmrglh) BIN(vmrglw)
+    BIN(vpkuhum) BIN(vpkuwum) BINS(vpkuhus) BINS(vpkuwus) BINS(vpkshus) BINS(vpkshss) BINS(vpkswus) BINS(vpkswss)
+    BIN(vpkpx)
+    BIN(vmuleub) BIN(vmuloub) BIN(vmulesb) BIN(vmulosb) BIN(vmuleuh) BIN(vmulouh) BIN(vmulesh) BIN(vmulosh)
+    BINS(vsum4ubs) BINS(vsum4sbs) BINS(vsum4shs) BINS(vsum2sws) BINS(vsumsws)
+#undef BIN
+#undef BINS
+    // unary (vD, vB)
+#define UN(x) case V::x: call(#x, {Vr(d), Vr(b)}); return true;
+    UN(vrefp) UN(vrsqrtefp) UN(vexptefp) UN(vlogefp) UN(vrfin) UN(vrfiz) UN(vrfip) UN(vrfim)
+    UN(vupkhsb) UN(vupklsb) UN(vupkhsh) UN(vupklsh) UN(vupkhpx) UN(vupklpx)
+#undef UN
+    case V::vspltb: call("vspltb", {Vr(d), Vr(b), std::to_string(a)}); return true;
+    case V::vsplth: call("vsplth", {Vr(d), Vr(b), std::to_string(a)}); return true;
+    case V::vspltw: call("vspltw", {Vr(d), Vr(b), std::to_string(a)}); return true;
+    case V::vspltisb: call("vspltisb", {Vr(d), std::to_string(a)}); return true;
+    case V::vspltish: call("vspltish", {Vr(d), std::to_string(a)}); return true;
+    case V::vspltisw: call("vspltisw", {Vr(d), std::to_string(a)}); return true;
+    case V::vcfux: call("vcfux", {Vr(d), Vr(b), std::to_string(a)}); return true;
+    case V::vcfsx: call("vcfsx", {Vr(d), Vr(b), std::to_string(a)}); return true;
+    case V::vctuxs: call("vctuxs", {Vr(d), Vr(b), std::to_string(a), sat}); return true;
+    case V::vctsxs: call("vctsxs", {Vr(d), Vr(b), std::to_string(a), sat}); return true;
+    // compares
+    case V::vcmpequb: cmp("vcmpequb_e", d, a, b, v_rc(raw), false); return true;
+    case V::vcmpequh: cmp("vcmpequh_e", d, a, b, v_rc(raw), false); return true;
+    case V::vcmpequw: cmp("vcmpequw_e", d, a, b, v_rc(raw), false); return true;
+    case V::vcmpeqfp: cmp("vcmpeqfp_e", d, a, b, v_rc(raw), false); return true;
+    case V::vcmpgefp: cmp("vcmpgefp_e", d, a, b, v_rc(raw), false); return true;
+    case V::vcmpgtub: cmp("vcmpgtub_e", d, a, b, v_rc(raw), false); return true;
+    case V::vcmpgtuh: cmp("vcmpgtuh_e", d, a, b, v_rc(raw), false); return true;
+    case V::vcmpgtuw: cmp("vcmpgtuw_e", d, a, b, v_rc(raw), false); return true;
+    case V::vcmpgtfp: cmp("vcmpgtfp_e", d, a, b, v_rc(raw), false); return true;
+    case V::vcmpgtsb: cmp("vcmpgtsb_e", d, a, b, v_rc(raw), false); return true;
+    case V::vcmpgtsh: cmp("vcmpgtsh_e", d, a, b, v_rc(raw), false); return true;
+    case V::vcmpgtsw: cmp("vcmpgtsw_e", d, a, b, v_rc(raw), false); return true;
+    case V::vcmpbfp: cmp("vcmpbfp_e", d, a, b, v_rc(raw), true); return true;
+    // VA form
+    case V::vmaddfp: call("vmaddfp", {Vr(d), Vr(a), Vr(c), Vr(b)}); return true;
+    case V::vnmsubfp: call("vnmsubfp", {Vr(d), Vr(a), Vr(c), Vr(b)}); return true;
+    case V::vsel: call("vsel", {Vr(d), Vr(a), Vr(b), Vr(c)}); return true;
+    case V::vperm: call("vperm", {Vr(d), Vr(a), Vr(b), Vr(c)}); return true;
+    case V::vsldoi: call("vsldoi", {Vr(d), Vr(a), Vr(b), std::to_string(c & 15)}); return true;
+    case V::vmhaddshs: call("vmhaddshs", {Vr(d), Vr(a), Vr(b), Vr(c), sat}); return true;
+    case V::vmhraddshs: call("vmhraddshs", {Vr(d), Vr(a), Vr(b), Vr(c), sat}); return true;
+    case V::vmladduhm: call("vmladduhm", {Vr(d), Vr(a), Vr(b), Vr(c)}); return true;
+    case V::vmsumubm: call("vmsumubm", {Vr(d), Vr(a), Vr(b), Vr(c)}); return true;
+    case V::vmsummbm: call("vmsummbm", {Vr(d), Vr(a), Vr(b), Vr(c)}); return true;
+    case V::vmsumuhm: call("vmsumuhm", {Vr(d), Vr(a), Vr(b), Vr(c)}); return true;
+    case V::vmsumuhs: call("vmsumuhs", {Vr(d), Vr(a), Vr(b), Vr(c), sat}); return true;
+    case V::vmsumshm: call("vmsumshm", {Vr(d), Vr(a), Vr(b), Vr(c)}); return true;
+    case V::vmsumshs: call("vmsumshs", {Vr(d), Vr(a), Vr(b), Vr(c), sat}); return true;
+
+    // ---------------- VMX128
+#define B128(x, fn) case V::x: call(fn, {Vr(D), Vr(A), Vr(B)}); return true;
+#define B128S(x, fn) case V::x: call(fn, {Vr(D), Vr(A), Vr(B), sat}); return true;
+    B128(vaddfp128, "vaddfp") B128(vsubfp128, "vsubfp") B128(vmulfp128, "vmulfp")
+    B128(vmsum3fp128, "vmsum3fp128") B128(vmsum4fp128, "vmsum4fp128")
+    B128(vand128, "vand") B128(vandc128, "vandc") B128(vnor128, "vnor") B128(vor128, "vor") B128(vxor128, "vxor")
+    B128(vslo128, "vslo") B128(vsro128, "vsro")
+    B128S(vpkshss128, "vpkshss") B128S(vpkshus128, "vpkshus") B128S(vpkswss128, "vpkswss") B128S(vpkswus128, "vpkswus")
+    B128(vpkuhum128, "vpkuhum") B128S(vpkuhus128, "vpkuhus") B128(vpkuwum128, "vpkuwum") B128S(vpkuwus128, "vpkuwus")
+    B128(vrlw128, "vrlw") B128(vslw128, "vslw") B128(vsraw128, "vsraw") B128(vsrw128, "vsrw")
+    B128(vmaxfp128, "vmaxfp") B128(vminfp128, "vminfp") B128(vmrghw128, "vmrghw") B128(vmrglw128, "vmrglw")
+#undef B128
+#undef B128S
+    case V::vperm128: call("vperm", {Vr(D), Vr(A), Vr(B), Vr(v128_c3(raw))}); return true;
+    case V::vsldoi128: call("vsldoi", {Vr(D), Vr(A), Vr(B), std::to_string(v128_sh(raw))}); return true;
+    case V::vmaddfp128: call("vmaddfp", {Vr(D), Vr(A), Vr(B), Vr(D)}); return true;    // A*B + D
+    case V::vmaddcfp128: call("vmaddfp", {Vr(D), Vr(A), Vr(D), Vr(B)}); return true;   // A*D + B
+    case V::vnmsubfp128: call("vnmsubfp", {Vr(D), Vr(A), Vr(B), Vr(D)}); return true;  // -(A*B - D)
+    case V::vsel128: call("vsel", {Vr(D), Vr(A), Vr(B), Vr(D)}); return true;
+    case V::vpermwi128: call("vpermwi128", {Vr(D), Vr(B), std::to_string(v128_perm(raw))}); return true;
+    case V::vrlimi128: call("vrlimi128", {Vr(D), Vr(B), std::to_string(v128_imm(raw)), std::to_string(v128_z(raw))}); return true;
+    case V::vcfpsxws128: call("vctsxs", {Vr(D), Vr(B), std::to_string(v128_imm(raw)), sat}); return true;
+    case V::vcfpuxws128: call("vctuxs", {Vr(D), Vr(B), std::to_string(v128_imm(raw)), sat}); return true;
+    case V::vcsxwfp128: call("vcfsx", {Vr(D), Vr(B), std::to_string(v128_imm(raw))}); return true;
+    case V::vcuxwfp128: call("vcfux", {Vr(D), Vr(B), std::to_string(v128_imm(raw))}); return true;
+    case V::vrfim128: call("vrfim", {Vr(D), Vr(B)}); return true;
+    case V::vrfin128: call("vrfin", {Vr(D), Vr(B)}); return true;
+    case V::vrfip128: call("vrfip", {Vr(D), Vr(B)}); return true;
+    case V::vrfiz128: call("vrfiz", {Vr(D), Vr(B)}); return true;
+    case V::vrefp128: call("vrefp", {Vr(D), Vr(B)}); return true;
+    case V::vrsqrtefp128: call("vrsqrtefp", {Vr(D), Vr(B)}); return true;
+    case V::vexptefp128: call("vexptefp", {Vr(D), Vr(B)}); return true;
+    case V::vlogefp128: call("vlogefp", {Vr(D), Vr(B)}); return true;
+    case V::vspltw128: call("vspltw", {Vr(D), Vr(B), std::to_string(v128_imm(raw) & 3)}); return true;
+    case V::vspltisw128: call("vspltisw", {Vr(D), std::to_string(v128_imm(raw))}); return true;
+    case V::vcmpeqfp128: cmp("vcmpeqfp_e", D, A, B, v128_rc(raw), false); return true;
+    case V::vcmpgefp128: cmp("vcmpgefp_e", D, A, B, v128_rc(raw), false); return true;
+    case V::vcmpgtfp128: cmp("vcmpgtfp_e", D, A, B, v128_rc(raw), false); return true;
+    case V::vcmpbfp128: cmp("vcmpbfp_e", D, A, B, v128_rc(raw), true); return true;
+    case V::vcmpequw128: cmp("vcmpequw_e", D, A, B, v128_rc(raw), false); return true;
+    case V::vupkhsb128: call(A == 0x60 ? "vupkhsh" : "vupkhsb", {Vr(D), Vr(B)}); return true;
+    case V::vupklsb128: call(A == 0x60 ? "vupklsh" : "vupklsb", {Vr(D), Vr(B)}); return true;
+    case V::vpkd3d128:   // D3D format packing: not implemented yet
+    case V::vupkd3d128:
+    case V::unknown:
+    default:
+      return false;
+  }
+}
 
 class Emitter {
  public:
@@ -705,11 +871,18 @@ bool Emitter::emit(uint32_t raw, uint32_t addr, std::ostringstream& o) {
       o << "  // FPSCR bit op ignored (default rounding)\n";
       return true;
     // ---------------------------------------------------------------- not yet translated
-    case Op::vmx:
+    case Op::vmx: {
       st_.vmx++;
-      st_.unimplemented_histogram["vmx/vmx128"]++;
+      VOp vop = decode_vmx(raw);
+      if (vop_is_vmx128(vop)) st_.vmx128++;
+      if (emit_vmx_impl(raw, addr, o)) {
+        st_.vmx_translated++;
+        return true;
+      }
+      st_.unimplemented_histogram[std::string("vmx:") + vop_name(vop)]++;
       o << "  fsr::fsr_unimplemented(ctx, base, " << hx(addr) << ", " << hx(raw) << ");\n";
       return false;
+    }
     case Op::invalid:
     default:
       st_.invalid++;
@@ -735,8 +908,14 @@ RecompStats analyze(const RecompInput& in, std::vector<FunctionInfo>* out_funcs)
       Op op = decode(raw);
       st.instructions++;
       st.op_histogram[op_name(op)]++;
-      if (op == Op::vmx) { st.vmx++; st.unimplemented_histogram["vmx/vmx128"]++; }
-      else if (op == Op::invalid) { st.invalid++; st.unimplemented_histogram["invalid"]++; }
+      if (op == Op::vmx) {
+        st.vmx++;
+        VOp vop = decode_vmx(raw);
+        if (vop_is_vmx128(vop)) st.vmx128++;
+        std::ostringstream sink;
+        if (emit_vmx_impl(raw, a, sink)) { st.vmx_translated++; st.translated++; }
+        else st.unimplemented_histogram[std::string("vmx:") + vop_name(vop)]++;
+      } else if (op == Op::invalid) { st.invalid++; st.unimplemented_histogram["invalid"]++; }
       else st.translated++;
       if ((op == Op::bcctr || op == Op::bclr) && f_lk(raw)) st.indirect_call_sites++;
       if (op == Op::bcctr && !f_lk(raw)) st.indirect_call_sites++;

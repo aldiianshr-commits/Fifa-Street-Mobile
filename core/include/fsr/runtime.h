@@ -8,6 +8,8 @@
 #include <cstdint>
 #include <cstring>
 
+#include "fsr/vmx.h"
+
 namespace fsr {
 
 union FReg {
@@ -28,6 +30,9 @@ struct PPCContext {
   uint64_t reserve_val64;
   uint32_t thread_id;
   void* runtime;  // owning Runtime*
+  uint32_t vscr;   // VSCR (bit 0 = SAT, bit 16 = NJ)
+  uint32_t vrsave;
+  VR v[128];       // VMX (v0-v31) + VMX128 (v32-v127), big-endian byte order
 };
 
 using GuestFunc = void (*)(PPCContext& ctx, uint8_t* base);

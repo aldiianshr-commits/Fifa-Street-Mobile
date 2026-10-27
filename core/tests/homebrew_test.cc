@@ -3,6 +3,7 @@
 // compiler. Results must match bit-for-bit.
 //   homebrew_test <hb-dir>
 // SPDX-License-Identifier: MIT
+#include <cmath>
 #include <cstdio>
 #include <cstring>
 #include <string>
@@ -14,6 +15,8 @@
 extern "C" {
 uint32_t native_selftest(uint32_t* results);
 uint32_t native32_selftest(uint32_t* results);
+uint32_t native_vectest(uint32_t* results);
+uint32_t native_vectest_dump(uint32_t* out);
 uint32_t native_frame(uint32_t* fb, int32_t w, int32_t h, uint32_t frame);
 void native_demo_reset(void);
 // Shims used by the native build of demo.c.
@@ -31,6 +34,15 @@ extern const fsr::RecompModule fsr_module_hb64;
 extern const fsr::RecompModule fsr_module_hb32;
 
 constexpr int kResults = 24;
+
+#include "homebrew/vmx128_check.h"
+
+static int run_vmx128(fsr::Runtime& rt, const char* xex_name) {
+  std::string report;
+  int bad = fsr_tests::check_vmx128(rt, &report);
+  std::printf("[%s] %s", xex_name, report.c_str());
+  return bad ? 1 : 0;
+}
 using SelftestFn = uint32_t (*)(uint32_t*);
 
 static int run(const std::string& dir, const char* xex_name, const fsr::RecompModule* mod, SelftestFn native_fn) {
@@ -64,6 +76,42 @@ static int run(const std::string& dir, const char* xex_name, const fsr::RecompMo
   }
   if (uint32_t(ret) != native_hash) { std::printf("[%s] hash mismatch %08X vs %08X\n", xex_name, uint32_t(ret), native_hash); fails++; }
   else std::printf("[%s] selftest: %d/%d results identical (hash %08X)\n", xex_name, kResults - fails, kResults, native_hash);
+
+  // 1b) Vector (AltiVec/VMX) battery.
+  {
+    constexpr int kV = 12;
+    uint32_t nv[kV] = {};
+    uint32_t nvh = native_vectest(nv);
+    uint32_t vbuf = rt.alloc(4 * kV);
+    uint64_t vret = 0;
+    uint32_t ventry = rt.export_addr("fsr_vectest");
+    if (!ventry || !rt.call(ventry, {vbuf}, &vret, err)) {
+      std::printf("[%s] vectest call failed: %s\n", xex_name, err.c_str());
+      fails++;
+    } else {
+      int bad = 0;
+      for (int i = 0; i < kV; i++) {
+        uint32_t g = fsr::rd_be32(rt.base() + vbuf + 4 * i);
+        if (g != nv[i]) { std::printf("[%s] vec[%d] native=%08X recompiled=%08X  MISMATCH\n", xex_name, i, nv[i], g); bad++; }
+      }
+      if (uint32_t(vret) != nvh) bad++;
+      if (bad) {
+        fails++;
+        // Word-level diff of the raw vector outputs to pinpoint the instruction.
+        uint32_t nd[136] = {}, dbuf = rt.alloc(4 * 136);
+        native_vectest_dump(nd);
+        uint32_t dfn = rt.export_addr("fsr_vectest_dump");
+        if (dfn && rt.call(dfn, {dbuf}, nullptr, err))
+          for (int i = 0; i < 136; i++) {
+            uint32_t g = fsr::rd_be32(rt.base() + dbuf + 4 * i);
+            if (g != nd[i]) std::printf("    raw[%s %d] native=%08X recompiled=%08X\n", i < 40 ? "intrin" : "intrin2", i < 40 ? i : i - 40, nd[i], g);
+          }
+      }
+      std::printf("[%s] vectest (AltiVec): %d/%d results identical\n", xex_name, kV - (bad > kV ? kV : bad), kV);
+    }
+  }
+
+  fails += run_vmx128(rt, xex_name);
 
   // 2) Render demo with scripted input; compare framebuffers every frame.
   const int W = 320, H = 180;

@@ -116,8 +116,12 @@ std::string to_json(const AnalysisReport& r) {
     if (r.deep) {
       auto& s = r.stats;
       o << ",\"functions\":" << s.functions << ",\"instructions\":" << s.instructions << ",\"translated\":" << s.translated
-        << ",\"vmx\":" << s.vmx << ",\"invalid\":" << s.invalid << ",\"dynamic_functions\":" << s.dynamic_functions
-        << ",\"indirect_sites\":" << s.indirect_call_sites << ",\"coverage\":" << s.coverage();
+        << ",\"vmx\":" << s.vmx << ",\"vmx_translated\":" << s.vmx_translated << ",\"vmx128\":" << s.vmx128
+        << ",\"invalid\":" << s.invalid << ",\"dynamic_functions\":" << s.dynamic_functions
+        << ",\"indirect_sites\":" << s.indirect_call_sites << ",\"coverage\":" << s.coverage() << ",\"untranslated\":{";
+      bool first = true;
+      for (auto& [k, v] : s.unimplemented_histogram) { o << (first ? "" : ",") << jstr(k) << ":" << v; first = false; }
+      o << "}";
     }
   }
   o << "}";
@@ -150,7 +154,9 @@ std::string to_text(const AnalysisReport& r) {
     std::snprintf(pct, sizeof pct, "%.2f%%", s.coverage() * 100);
     o << "  functions found  : " << s.functions << " (" << s.dynamic_functions << " with bctr dispatch)\n"
       << "  instructions     : " << s.instructions << "\n  translated       : " << s.translated << " (" << pct << ")\n"
-      << "  VMX/VMX128       : " << s.vmx << " (not yet translated)\n  invalid words    : " << s.invalid << "\n";
+      << "  VMX/VMX128       : " << s.vmx << " (" << s.vmx_translated << " translated, " << s.vmx128
+      << " VMX128 encodings)\n  invalid words    : " << s.invalid << "\n";
+    for (auto& [k, v] : s.unimplemented_histogram) o << "  untranslated     : " << k << " x" << v << "\n";
   }
   return o.str();
 }

@@ -27,19 +27,42 @@ static const fsr::FuncEntry kFuncs[] = {
   {0x82001BB0, fsr_gen_hb64::sub_82001BB0},
   {0x82001C70, fsr_gen_hb64::sub_82001C70},
   {0x82001EA0, fsr_gen_hb64::sub_82001EA0},
-  {0x82001F00, fsr_gen_hb64::sub_82001F00},
-  {0x820028A0, fsr_gen_hb64::sub_820028A0},
-  {0x820028E0, fsr_gen_hb64::sub_820028E0},
-  {0x82002960, fsr_gen_hb64::sub_82002960},
+  {0x82001FE0, fsr_gen_hb64::sub_82001FE0},
+  {0x82001FE8, fsr_gen_hb64::sub_82001FE8},
+  {0x820020B0, fsr_gen_hb64::sub_820020B0},
+  {0x820020B8, fsr_gen_hb64::sub_820020B8},
+  {0x82002260, fsr_gen_hb64::sub_82002260},
+  {0x820026F0, fsr_gen_hb64::sub_820026F0},
+  {0x820026F8, fsr_gen_hb64::sub_820026F8},
+  {0x820027A0, fsr_gen_hb64::sub_820027A0},
+  {0x82002800, fsr_gen_hb64::sub_82002800},
+  {0x82002808, fsr_gen_hb64::sub_82002808},
+  {0x820028D0, fsr_gen_hb64::sub_820028D0},
+  {0x820028D8, fsr_gen_hb64::sub_820028D8},
+  {0x82002C40, fsr_gen_hb64::sub_82002C40},
+  {0x82002C90, fsr_gen_hb64::sub_82002C90},
+  {0x82002CF0, fsr_gen_hb64::sub_82002CF0},
+  {0x82002D40, fsr_gen_hb64::sub_82002D40},
+  {0x82002D48, fsr_gen_hb64::sub_82002D48},
+  {0x82002E00, fsr_gen_hb64::sub_82002E00},
+  {0x82002E08, fsr_gen_hb64::sub_82002E08},
+  {0x82002EA0, fsr_gen_hb64::sub_82002EA0},
+  {0x82002FD0, fsr_gen_hb64::sub_82002FD0},
+  {0x82003020, fsr_gen_hb64::sub_82003020},
+  {0x82003080, fsr_gen_hb64::sub_82003080},
+  {0x82003A20, fsr_gen_hb64::sub_82003A20},
+  {0x82003A60, fsr_gen_hb64::sub_82003A60},
+  {0x82003AE0, fsr_gen_hb64::sub_82003AE0},
+  {0x82003B50, fsr_gen_hb64::sub_82003B50},
 };
 
 static const char* const kLibs[] = {"xam.xex", "xboxkrnl.exe", nullptr};
-static const fsr::NamedAddr kExports[] = {{"fsr_selftest", 0x82001020}, {"fsr_frame", 0x82001F00}, {nullptr, 0}};
+static const fsr::NamedAddr kExports[] = {{"fsr_selftest", 0x82001020}, {"fsr_frame", 0x82003080}, {"fsr_vectest", 0x82002260}, {"fsr_vectest_dump", 0x82001EA0}, {"fsr_vmx128_test", 0x82003B50}, {nullptr, 0}};
 
 extern const fsr::RecompModule fsr_module_hb64;
 const fsr::RecompModule fsr_module_hb64 = {
-  "hb64", 0x82000000, 0x7000, 0x82001020,
-  {0xD9,0x41,0xE0,0xA9,0x3D,0x6C,0x88,0x33,0x1A,0x2B,0x9A,0xEB,0xA2,0xEA,0xE9,0xAD,0x40,0x63,0x75,0xAF},
-  kFuncs, 29, 0,
-  kLibs, 2, kExports, 2
+  "hb64", 0x82000000, 0x8000, 0x82001020,
+  {0xA9,0xB8,0x1E,0xD9,0x5F,0xEE,0xAA,0xBC,0x16,0xA6,0x80,0xBE,0x3C,0xE2,0x9B,0x83,0xF2,0x35,0x82,0x8C},
+  kFuncs, 52, 844,
+  kLibs, 2, kExports, 5
 };

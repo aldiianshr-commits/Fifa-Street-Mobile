@@ -2,6 +2,7 @@
 #include <cstdio>
 
 #include "fsr/ppc.h"
+#include "fsr/ppc_vmx.h"
 
 namespace fsr::ppc {
 
@@ -319,7 +320,14 @@ std::string disasm(uint32_t r, uint32_t addr) {
       std::snprintf(buf, sizeof buf, "%s r%u,r%u,%u,%u,%u", op_name(op), f_ra(r), f_rt(r), f_sh(r),
                     f_mb(r), f_me(r));
       break;
-    case Op::invalid: case Op::vmx:
+    case Op::vmx: {
+      VOp v = decode_vmx(r);
+      if (v == VOp::unknown) std::snprintf(buf, sizeof buf, "vmx? 0x%08X", r);
+      else if (vop_is_vmx128(v))
+        std::snprintf(buf, sizeof buf, "%s v%u,v%u,v%u", vop_name(v), v128_d(r), v128_a(r), v128_b(r));
+      else std::snprintf(buf, sizeof buf, "%s v%u,v%u,v%u", vop_name(v), v_d(r), v_a(r), v_b(r));
+    } break;
+    case Op::invalid:
       std::snprintf(buf, sizeof buf, "%s 0x%08X", op_name(op), r);
       break;
     default:
