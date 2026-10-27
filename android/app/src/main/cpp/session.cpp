@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 #include "session.h"
 
+#include <algorithm>
 #include <chrono>
 #include <cstring>
 

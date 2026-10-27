@@ -4,6 +4,7 @@
 #include <jni.h>
 #include <sys/stat.h>
 
+#include <algorithm>
 #include <chrono>
 #include <cstring>
 #include <memory>

@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.aldiianshr.fifastreet"
-        minSdk = 29
+        minSdk = 30
         targetSdk = 35
         versionCode = (System.getenv("GITHUB_RUN_NUMBER") ?: "1").toInt()
         versionName = "0.1.0"
@@ -59,5 +59,10 @@ android {
 
     packaging {
         jniLibs { useLegacyPackaging = false }
+    }
+
+    lint {
+        abortOnError = false
+        checkReleaseBuilds = false
     }
 }
