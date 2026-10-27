@@ -142,7 +142,8 @@ object Ui {
     }
 
     enum class Status(val label: String, val color: Int) {
-        WORKS("Berfungsi", OK), PARTIAL("Parsial", PARTIAL), MISSING("Belum tersedia", NO), NEEDS("Perlu tindakan", PARTIAL)
+        WORKS("Berfungsi", Ui.OK), PARTIAL("Parsial", Ui.PARTIAL), MISSING("Belum tersedia", Ui.NO),
+        NEEDS("Perlu tindakan", Ui.PARTIAL)
     }
 
     fun prompt(act: Activity, title: String, initial: String, onOk: (String) -> Unit) {

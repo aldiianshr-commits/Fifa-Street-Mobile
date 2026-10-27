@@ -64,7 +64,7 @@ class MainActivity : Activity() {
             setPadding(Ui.dpi(this@MainActivity, 12), Ui.dpi(this@MainActivity, 8), Ui.dpi(this@MainActivity, 12), 0)
             clipToPadding = false
             setOnItemClickListener { _, _, pos, _ ->
-                val g = adapter.getItem(pos)
+                val g = this@MainActivity.adapter.getItem(pos)
                 startActivity(Intent(this@MainActivity, GameActivity::class.java).putExtra("id", g.id))
             }
             layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f)
