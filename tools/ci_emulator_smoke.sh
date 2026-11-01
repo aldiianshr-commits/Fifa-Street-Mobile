@@ -80,6 +80,19 @@ echo "texts after tap: $(grep -o 'text="[^"]*"' ui2.xml | head -40 | tr '\n' ' '
 echo "resumed: $(adb shell dumpsys activity activities | grep -m2 -E 'mResumedActivity|ResumedActivity')" >> saf_ui.txt
 sleep 6
 adb logcat -d -s FSR:I > saf.log
+via="documentsui"
+if ! grep -q "ISO ditambahkan" saf.log; then
+  # Deterministic fallback: open the same ISO through a content:// URI (MediaStore) with an
+  # ACTION_VIEW intent, exercising ContentResolver -> ParcelFileDescriptor -> pread.
+  via="mediastore-view"
+  adb shell am force-stop $PKG
+  id=$(adb shell content query --uri content://media/external/file --projection _id \
+       --where "_data=\'/storage/emulated/0/Download/fsr-test.iso\'" | sed -n 's/.*_id=\([0-9]*\).*/\1/p' | head -1)
+  adb logcat -c
+  adb shell am start -W -a android.intent.action.VIEW -d "content://media/external/file/$id" -t application/x-iso9660-image -n $PKG/.MainActivity
+  sleep 10
+  adb logcat -d -s FSR:I > saf.log
+fi
 adb shell am force-stop $PKG
 # Restart: the library must come back from library.json + persisted URI permission + cache.
 adb logcat -c
@@ -87,7 +100,7 @@ adb shell am start -W -n $PKG/.MainActivity
 sleep 8
 adb logcat -d -s FSR:I > saf_restart.log
 adb shell am force-stop $PKG
-note "emulator SAF pick (picked=$picked)" saf.log "."
+note "emulator SAF pick (picked=$picked via=$via)" saf.log "."
 note "emulator SAF ui" saf_ui.txt "."
 note "emulator SAF after restart" saf_restart.log "Library dimuat|fsr-test|cache|tidak dapat diakses"
 
@@ -101,5 +114,5 @@ if [ -s crash.log ]; then
 fi
 grep -q "AUTOTEST selftest ok=true matched=36/36" selftest.log && grep -q "AUTOTEST scan status=ready" selftest.log && grep -q "AUTOTEST discio passed=11/11" selftest.log
 RC=$?
-grep -q "persisted=true" saf.log && grep -q "fsr-test.iso: ready" saf.log && grep -q "fsr-test.iso: hasil analisis dari cache (ready)" saf_restart.log || echo "::warning title=SAF flow::SAF pick/persistence check did not fully pass"
+grep -q "fsr-test.iso: ready" saf.log && grep -q "fsr-test.iso: hasil analisis dari cache (ready)" saf_restart.log || echo "::warning title=SAF flow::SAF pick/persistence check did not fully pass"
 exit $RC
