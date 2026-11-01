@@ -127,7 +127,7 @@ object GameLibrary {
         meta.first?.let { e.name = it }
         synchronized(games) { if (existing == null) games += e }
         save()
-        AppLog.i("ISO ditambahkan: ${e.name} (${GameLibraryFmt.bytes(meta.second)})")
+        AppLog.i("ISO ditambahkan: ${e.name}" + if (meta.second >= 0) " (${GameLibraryFmt.bytes(meta.second)})" else "")
         refresh(e, force = existing != null)
         return e
     }
@@ -303,6 +303,7 @@ object GameLibrary {
                 cf.writeText(JSONObject().put("stamp", stamp(e)).put("report", json).toString())
             }
             e.report = json
+            if (e.size < 0 && json.optLong("image_size", -1) > 0) e.size = json.optLong("image_size")
             AppLog.i("${e.name}: ${json.optString("status")} – ${json.optString("status_reason")} (${"%.2f".format(json.optDouble("seconds", 0.0))} s)")
         } catch (t: Throwable) {
             val msg = "ISO tidak dapat dibuka: ${t.message ?: t}"

@@ -96,13 +96,17 @@ fi
 adb shell am force-stop $PKG
 # Restart: the library must come back from library.json + persisted URI permission + cache.
 adb logcat -c
-adb shell am start -W -n $PKG/.MainActivity
-sleep 8
-adb logcat -d -s FSR:I > saf_restart.log
+sleep 1
+adb shell am start -W -n $PKG/.MainActivity > restart_start.txt 2>&1
+sleep 10
+adb logcat -d > restart_full.log
+grep " FSR " restart_full.log > saf_restart.log || true
+{ cat restart_start.txt; grep -E "fifastreet|AndroidRuntime" restart_full.log | tail -15; } > restart_diag.txt
 adb shell am force-stop $PKG
 note "emulator SAF pick (picked=$picked via=$via)" saf.log "."
 note "emulator SAF ui" saf_ui.txt "."
-note "emulator SAF after restart" saf_restart.log "Library dimuat|fsr-test|cache|tidak dapat diakses"
+note "emulator SAF after restart" saf_restart.log "."
+note "emulator restart diag" restart_diag.txt "."
 
 grep -E "FATAL EXCEPTION|AndroidRuntime|Fatal signal|backtrace:" -A 12 full.log | head -60 > crash.log
 
