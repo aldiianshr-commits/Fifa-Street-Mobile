@@ -56,19 +56,19 @@ class PlayActivity : Activity(), SurfaceHolder.Callback {
         super.onCreate(savedInstanceState)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         gameId = intent.getStringExtra("id") ?: run { finish(); return }
-        val entry = synchronized(GameLibrary.games) { GameLibrary.games.firstOrNull { it.id == gameId } }
-            ?: if (gameId == "homebrew") GameEntry("homebrew", GameKind.HOMEBREW, App.homebrewXex.path, "Homebrew Self-Test")
-                .also { it.xexPath = App.homebrewXex.path } else null
+        GameLibrary.load()
+        val entry = GameLibrary.find(gameId)
         if (Sessions.gameId != gameId) {
             Sessions.stop()
-            val xex = entry?.xexPath
-            if (xex == null) { fail("Executable game tidak ditemukan."); return }
+            if (entry == null) { fail("Game tidak ada di library."); return }
             val key = if (App.keyFile.exists()) App.keyFile.path else null
-            val handle = NativeBridge.sessionCreate(xex, key)
+            // The runtime reads the executable and every data file straight from the ISO.
+            val fd = try { GameLibrary.openFd(entry) } catch (t: Throwable) { fail("ISO tidak dapat dibuka: ${t.message}"); return }
+            val handle = NativeBridge.sessionCreateDisc(fd, key)
             if (handle == 0L) { fail(NativeBridge.lastCreateError()); return }
             Sessions.handle = handle
             Sessions.gameId = gameId
-            AppLog.i("Sesi dibuat untuk ${entry.name}")
+            AppLog.i("Sesi dibuat untuk ${entry.name} (ISO di-mount sebagai game:\\)")
         }
         gfx = Store.effectiveGraphics(gameId)
         val profile = Store.profileFor(gameId)
@@ -152,8 +152,9 @@ class PlayActivity : Activity(), SurfaceHolder.Callback {
             if (h == 0L) return
             val s = NativeBridge.sessionStats(h)
             val th = if (s[8] > 0f) "  ⚠ throttling (30 FPS)" else ""
-            stats.text = "%.1f FPS  frame %.2f ms  guest %.2f ms  present %.2f ms\n%dx%d  ·  frame %d  ·  kernel calls %d  ·  %s%s"
-                .format(s[0], s[1], s[2], s[3], s[4].toInt(), s[5].toInt(), s[6].toLong(), s[7].toLong(), NativeBridge.sessionGpu(h), th)
+            stats.text = "%.1f FPS  frame %.2f ms  guest %.2f ms  present %.2f ms\n%dx%d  ·  frame %d  ·  kernel calls %d  ·  disc %s  ·  %s%s"
+                .format(s[0], s[1], s[2], s[3], s[4].toInt(), s[5].toInt(), s[6].toLong(), s[7].toLong(),
+                    GameLibraryFmt.bytes(NativeBridge.sessionDiscBytes(h)), NativeBridge.sessionGpu(h), th)
             if (!errorShown && !NativeBridge.sessionRunning(h) && NativeBridge.sessionError(h).isNotEmpty()) {
                 errorShown = true
                 val err = NativeBridge.sessionError(h)

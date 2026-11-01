@@ -7,6 +7,7 @@
 #include <sstream>
 
 #include "fsr/bytes.h"
+#include "fsr/crypto.h"
 #include "fsr/host.h"
 
 namespace fsr {
@@ -27,11 +28,19 @@ bool load_key_file(const std::string& path, uint8_t key[16], std::string* err) {
 }
 
 AnalysisReport analyze_xex(const std::string& path, const uint8_t* key, bool deep) {
+  std::vector<uint8_t> file;
   AnalysisReport r;
   r.path = path;
-  std::vector<uint8_t> file;
   if (!read_file(path, file, &r.error)) return r;
-  XexModule x;
+  return analyze_xex_buffer(std::move(file), path, key, deep, nullptr, nullptr);
+}
+
+AnalysisReport analyze_xex_buffer(std::vector<uint8_t> file, const std::string& label, const uint8_t* key, bool deep,
+                                  XexModule* keep, const AnalyzeProgress& progress) {
+  AnalysisReport r;
+  r.path = label;
+  XexModule local;
+  XexModule& x = keep ? *keep : local;
   if (!x.parse(std::move(file), r.error)) return r;
   r.parsed = true;
   r.info = x.info();
@@ -43,6 +52,10 @@ AnalysisReport analyze_xex(const std::string& path, const uint8_t* key, bool dee
   r.info = x.info();  // now with resolved import names
   r.sections = x.sections();
   r.pdata_functions = x.pdata().size();
+  uint8_t sha[20];
+  Sha1::hash(x.image().data(), x.image().size(), sha);
+  r.image_sha1 = hexbytes(sha, 20);
+  if (const RecompModule* m = find_registered_module(x.image())) r.module = m->name;
   for (auto& lib : r.info.imports) {
     for (size_t i = 0; i < lib.records.size(); i++) {
       const auto& rec = lib.records[i];
@@ -61,12 +74,12 @@ AnalysisReport analyze_xex(const std::string& path, const uint8_t* key, bool dee
   if (deep) {
     r.deep = true;
     RecompInput in = make_input(x, "game");
-    r.stats = analyze(in);
+    r.stats = analyze(in, nullptr, progress);
   }
   return r;
 }
 
-static std::string jstr(const std::string& s) {
+std::string jstr(const std::string& s) {
   std::string o = "\"";
   for (char c : s) {
     if (c == '"' || c == '\\') { o.push_back('\\'); o.push_back(c); }
@@ -96,7 +109,8 @@ std::string to_json(const AnalysisReport& r) {
     }
     o << "],\"libraries\":[";
     for (size_t k = 0; k < i.imports.size(); k++) o << (k ? "," : "") << jstr(i.imports[k].name);
-    o << "],\"load_status\":" << jstr(to_string(r.load_status)) << ",\"load_error\":" << jstr(r.load_error);
+    o << "],\"load_status\":" << jstr(to_string(r.load_status)) << ",\"load_error\":" << jstr(r.load_error)
+      << ",\"region_text\":" << jstr(region_text(i.region)) << ",\"module_flags\":" << i.module_flags;
   }
   if (r.image_loaded) {
     o << ",\"sections\":[";
@@ -105,7 +119,8 @@ std::string to_json(const AnalysisReport& r) {
       o << (k ? "," : "") << "{\"name\":" << jstr(s.name) << ",\"va\":" << jstr(hex32(s.va)) << ",\"size\":" << s.vsize
         << ",\"exec\":" << (s.executable() ? "true" : "false") << "}";
     }
-    o << "],\"pdata_functions\":" << r.pdata_functions << ",\"imports_total\":" << r.imports.size()
+    o << "],\"image_sha1\":" << jstr(r.image_sha1) << ",\"module\":" << (r.module.empty() ? "null" : jstr(r.module))
+      << ",\"pdata_functions\":" << r.pdata_functions << ",\"imports_total\":" << r.imports.size()
       << ",\"imports_implemented\":" << r.imports_implemented << ",\"imports\":[";
     for (size_t k = 0; k < r.imports.size(); k++) {
       auto& m = r.imports[k];
@@ -161,4 +176,20 @@ std::string to_text(const AnalysisReport& r) {
   return o.str();
 }
 
+}  // namespace fsr
+
+namespace fsr {
+std::string region_text(uint32_t region) {
+  if (region == 0xFFFFFFFFu) return "Region free (semua region)";
+  std::string s;
+  auto add = [&](const char* t) { s += (s.empty() ? "" : ", "); s += t; };
+  if (region & 0x000000FFu) add("NTSC-U");
+  if (region & 0x00000100u) add("NTSC-J (Jepang)");
+  if (region & 0x00000200u) add("NTSC-J (China)");
+  if (region & 0x0000FC00u) add("NTSC-J (Asia lain)");
+  if (region & 0x00010000u) add("PAL (AU/NZ)");
+  if (region & 0x00FE0000u) add("PAL (Eropa/lain)");
+  if (region & 0xFF000000u) add("lainnya");
+  return s.empty() ? "tidak ada flag region" : s;
+}
 }  // namespace fsr

@@ -18,8 +18,14 @@ object NativeBridge {
     external fun gpuInfo(): String
     external fun selfTest(xexPath: String): String
 
+    // Disc images (one ISO = the whole input). fd is a detached descriptor; native closes it.
+    external fun scanDisc(fd: Int, keyPath: String?, deep: Boolean, callback: ScanCallback?): String
+    external fun discFileTest(fd: Int): String
+
     // Sessions (one running title)
     external fun sessionCreate(xexPath: String, keyPath: String?): Long
+    external fun sessionCreateDisc(fd: Int, keyPath: String?): Long
+    external fun sessionDiscBytes(h: Long): Long
     external fun lastCreateError(): String
     external fun sessionSetSurface(h: Long, surface: Surface?)
     external fun sessionStart(h: Long)

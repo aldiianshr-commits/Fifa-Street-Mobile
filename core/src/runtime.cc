@@ -22,6 +22,40 @@ constexpr uint32_t kHeapEnd = 0x7F000000u;
 constexpr uint32_t kStackSize = 1u << 20;
 }  // namespace
 
+namespace {
+std::mutex g_mod_mu;
+std::vector<const RecompModule*>& modules() {
+  static std::vector<const RecompModule*> v;
+  return v;
+}
+}  // namespace
+
+void register_module(const RecompModule* m) {
+  std::lock_guard<std::mutex> l(g_mod_mu);
+  for (auto* x : modules())
+    if (x == m) return;
+  modules().push_back(m);
+}
+
+const RecompModule* find_registered_module_sha1(const uint8_t sha1[20], uint32_t image_size) {
+  std::lock_guard<std::mutex> l(g_mod_mu);
+  for (auto* m : modules())
+    if (m->image_size == image_size && std::memcmp(m->image_sha1, sha1, 20) == 0) return m;
+  return nullptr;
+}
+
+const RecompModule* const* registered_modules(size_t* count) {
+  std::lock_guard<std::mutex> l(g_mod_mu);
+  *count = modules().size();
+  return modules().data();
+}
+
+const RecompModule* find_registered_module(const std::vector<uint8_t>& image) {
+  uint8_t sha[20];
+  Sha1::hash(image.data(), image.size(), sha);
+  return find_registered_module_sha1(sha, uint32_t(image.size()));
+}
+
 Runtime::Runtime() = default;
 Runtime::~Runtime() {
   if (mem_) munmap(mem_, mem_size_);

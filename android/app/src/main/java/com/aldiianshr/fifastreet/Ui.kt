@@ -143,7 +143,11 @@ object Ui {
 
     enum class Status(val label: String, val color: Int) {
         WORKS("Berfungsi", Ui.OK), PARTIAL("Parsial", Ui.PARTIAL), MISSING("Belum tersedia", Ui.NO),
-        NEEDS("Perlu tindakan", Ui.PARTIAL)
+        NEEDS("Perlu tindakan", Ui.PARTIAL), INFO("Info", Ui.DIM);
+
+        companion object {
+            fun of(state: String) = when (state) { "ok" -> WORKS; "partial" -> PARTIAL; "missing" -> MISSING; else -> INFO }
+        }
     }
 
     fun prompt(act: Activity, title: String, initial: String, onOk: (String) -> Unit) {

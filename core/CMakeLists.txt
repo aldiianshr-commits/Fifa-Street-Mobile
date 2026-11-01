@@ -26,6 +26,9 @@ add_library(fsr_core STATIC
   src/runtime.cc
   src/kernel.cc
   src/iso.cc
+  src/source.cc
+  src/vfs.cc
+  src/disc_scan.cc
 )
 target_include_directories(fsr_core PUBLIC include PRIVATE third_party/xenia)
 target_link_libraries(fsr_core PUBLIC fsr_mspack)

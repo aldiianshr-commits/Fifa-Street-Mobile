@@ -15,3 +15,39 @@ XamInputGetState:
 DbgPrint:
   .long 0, 0, 0, 0
   .size DbgPrint, 16
+
+  .globl NtOpenFile
+  .type NtOpenFile,@function
+NtOpenFile:
+  .long 0, 0, 0, 0
+  .size NtOpenFile, 16
+
+  .globl NtReadFile
+  .type NtReadFile,@function
+NtReadFile:
+  .long 0, 0, 0, 0
+  .size NtReadFile, 16
+
+  .globl NtQueryInformationFile
+  .type NtQueryInformationFile,@function
+NtQueryInformationFile:
+  .long 0, 0, 0, 0
+  .size NtQueryInformationFile, 16
+
+  .globl NtSetInformationFile
+  .type NtSetInformationFile,@function
+NtSetInformationFile:
+  .long 0, 0, 0, 0
+  .size NtSetInformationFile, 16
+
+  .globl NtQueryFullAttributesFile
+  .type NtQueryFullAttributesFile,@function
+NtQueryFullAttributesFile:
+  .long 0, 0, 0, 0
+  .size NtQueryFullAttributesFile, 16
+
+  .globl NtClose
+  .type NtClose,@function
+NtClose:
+  .long 0, 0, 0, 0
+  .size NtClose, 16

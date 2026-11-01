@@ -9,6 +9,7 @@
 #include <string>
 
 #include "fsr/bytes.h"
+#include "fsr/disc_scan.h"
 #include "fsr/host.h"
 #include "fsr/xex.h"
 
@@ -146,11 +147,86 @@ static int run(const std::string& dir, const char* xex_name, const fsr::RecompMo
   return fails;
 }
 
+static uint32_t crc32_host(const std::vector<uint8_t>& d) {
+  uint32_t c = 0xFFFFFFFFu;
+  for (uint8_t b : d) {
+    c ^= b;
+    for (int k = 0; k < 8; k++) c = (c & 1) ? 0xEDB88320u ^ (c >> 1) : c >> 1;
+  }
+  return ~c;
+}
+
+// End-to-end: one ISO as the only input -> scan -> main XEX read from the ISO
+// -> recompiled module -> guest reads game:\ files through the kernel HLE.
+static int run_disc(const std::string& dir, const char* iso_name) {
+  int fails = 0;
+  std::string err, iso = dir + "/" + iso_name;
+  auto src = fsr::FdSource::open(iso, &err);
+  if (!src) { std::printf("[%s] open: %s\n", iso_name, err.c_str()); return 1; }
+  std::vector<std::string> stages;
+  fsr::ScanOptions so;
+  auto rep = fsr::scan_disc(src, so, [&](const std::string& st, uint64_t, uint64_t, const std::string&) {
+    if (stages.empty() || stages.back() != st) stages.push_back(st);
+    return true;
+  });
+  std::string stage_list;
+  for (auto& s2 : stages) stage_list += s2 + " ";
+  std::printf("[%s] scan: %s (%s), layout '%s', %llu files, stages: %s\n", iso_name, fsr::to_string(rep.status),
+              rep.status_reason.c_str(), rep.layout.layout.c_str(), (unsigned long long)rep.files, stage_list.c_str());
+  if (rep.status != fsr::GameStatus::Ready) {
+    std::printf("%s", fsr::to_text(rep).c_str());
+    fails++;
+  }
+  if (rep.categories["video"].files != 1 || rep.categories["executable"].files != 1) {
+    std::printf("[%s] unexpected classification\n", iso_name);
+    fails++;
+  }
+  // Runtime straight from the disc.
+  auto disc = std::make_shared<fsr::XisoReader>();
+  fsr::XexModule x;
+  std::string inner;
+  if (!disc->open(src, err) || !fsr::load_main_xex(*disc, nullptr, x, &inner, err)) {
+    std::printf("[%s] load_main_xex: %s\n", iso_name, err.c_str());
+    return fails + 1;
+  }
+  fsr::Runtime rt;
+  std::vector<std::string> logs;
+  rt.log = [&](const std::string& l) { logs.push_back(l); };
+  const fsr::RecompModule* mod = fsr::find_registered_module(x.image());
+  if (!mod || !rt.init(err) || !rt.load(x, mod, err)) { std::printf("[%s] runtime: %s\n", iso_name, err.c_str()); return fails + 1; }
+  rt.mount_disc(std::make_shared<fsr::DiscVfs>(disc));
+  uint32_t out = rt.alloc(4 * 11);
+  if (!rt.call(rt.export_addr("fsr_fileio_test"), {out}, nullptr, err)) {
+    std::printf("[%s] fileio call: %s\n", iso_name, err.c_str());
+    return fails + 1;
+  }
+  std::vector<uint8_t> hello, readme;
+  fsr::read_file(dir + "/hello.txt", hello);
+  fsr::read_file(dir + "/readme.txt", readme);
+  uint32_t exp[11] = {0, crc32_host(hello), uint32_t(hello.size()), 0xC0000011u, uint32_t(hello.size()),
+                      uint32_t(hello.size()), fsr::rd_be32(hello.data() + 3), uint32_t(readme.size()), 0xC0000034u,
+                      0xC0000008u, 0xC000003Au};
+  const char* names[11] = {"open", "crc32", "bytes", "eof-status", "std-info-size", "position", "offset-read",
+                           "full-attributes", "missing-file", "double-close", "other-device"};
+  int bad = 0;
+  for (int i = 0; i < 11; i++) {
+    uint32_t g = fsr::rd_be32(rt.base() + out + 4 * i);
+    if (g != exp[i]) { bad++; std::printf("    fileio %-16s expected %08X got %08X\n", names[i], exp[i], g); }
+  }
+  std::printf("[%s] guest file I/O from ISO: %d/11 checks passed (%llu bytes served by pread)\n", iso_name, 11 - bad,
+              (unsigned long long)rt.vfs()->bytes_read);
+  return fails + (bad ? 1 : 0);
+}
+
 int main(int argc, char** argv) {
   if (argc < 2) return 2;
+  fsr::register_module(&fsr_module_hb64);
+  fsr::register_module(&fsr_module_hb32);
   int fails = run(argv[1], "hb64.xex", &fsr_module_hb64, native_selftest);
   // The 32-bit build uses the same native results; it has its own module.
   fails += run(argv[1], "hb32.xex", &fsr_module_hb32, native32_selftest);
+  fails += run_disc(argv[1], "homebrew.iso");
+  fails += run_disc(argv[1], "homebrew_xgd2.iso");
   std::printf("homebrew_test: %s\n", fails ? "FAILED" : "PASSED");
   return fails ? 1 : 0;
 }

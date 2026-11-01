@@ -8,7 +8,9 @@
 
 #include "fsr/bytes.h"
 #include "fsr/crypto.h"
+#include "fsr/disc_scan.h"
 #include "fsr/iso.h"
+#include "fsr/vfs.h"
 #include "fsr/ppc.h"
 #include "fsr/ppc_vmx.h"
 #include "fsr/recomp.h"
@@ -183,7 +185,7 @@ static void test_xex(const std::string& dir) {
   auto rep = analyze_xex(dir + "/hb64.xex", nullptr, true);
   CHECK(rep.parsed && rep.image_loaded && rep.deep);
   CHECK(rep.stats.instructions > 1000);
-  CHECK(rep.imports_implemented == 2);
+  CHECK(rep.imports_implemented == 8);
   CHECK(to_json(rep).find("\"title_id\":\"46535231\"") != std::string::npos);
 }
 
@@ -205,6 +207,75 @@ static void test_iso(const std::string& dir, const std::string& tools) {
   CHECK(a == b);
 }
 
+static void test_encrypted_disc(const std::string& dir, const std::string& tools) {
+  std::string iso = dir + "/enc.iso";
+  std::string cmd = tools + "/mkiso " + iso + " default.xex=" + dir + "/hb64_enc.xex >/dev/null";
+  CHECK(std::system(cmd.c_str()) == 0);
+  std::string err;
+  auto src = FdSource::open(iso, &err);
+  ScanOptions so;
+  auto r = scan_disc(src, so, nullptr);
+  bool needs_key = false;
+  for (auto& q : r.requirements) needs_key |= q.id == "decryption" && q.state == ReqState::Missing;
+  CHECK(r.status == GameStatus::Partial && needs_key && !r.xex.image_loaded);
+  uint8_t key[16];
+  CHECK(load_key_file(dir + "/test.key", key, &err));
+  so.key = key;
+  auto rk = scan_disc(src, so, nullptr);
+  bool decrypted = false;
+  for (auto& q : rk.requirements) decrypted |= q.id == "decryption" && q.state == ReqState::Ok;
+  CHECK(decrypted && rk.xex.image_loaded && rk.key_supplied);
+}
+
+static void test_disc_scan(const std::string& dir) {
+  std::string err;
+  // Path translation for the game:\ device.
+  std::string dp, dev;
+  CHECK(DiscVfs::translate("game:\\Data\\Hello.TXT", &dp, &dev) && dp == "data/hello.txt");
+  CHECK(DiscVfs::translate("\\Device\\Cdrom0\\media\\x.wmv", &dp) && dp == "media/x.wmv");
+  CHECK(DiscVfs::translate("D:\\", &dp) && dp.empty());
+  CHECK(!DiscVfs::translate("cache:\\x", &dp, &dev) && dev == "cache:");
+  CHECK(!DiscVfs::translate("gamedata:\\x", &dp));
+  // Classification by magic and extension.
+  CHECK(classify_file("a/b.bin", reinterpret_cast<const uint8_t*>("XEX2...."), 8) == "executable");
+  CHECK(classify_file("movie.wmv", nullptr, 0) == "video");
+  CHECK(classify_file("x.dat", reinterpret_cast<const uint8_t*>("BIGF...."), 8) == "archive");
+  CHECK(classify_file("x", reinterpret_cast<const uint8_t*>("RIFF...."), 8) == "audio");
+  // Whole-disc scan from a file descriptor, no extraction.
+  auto src = FdSource::open(dir + "/homebrew.iso", &err);
+  CHECK(src != nullptr);
+  ScanOptions so;
+  uint64_t calls = 0;
+  auto r = scan_disc(src, so, [&](const std::string&, uint64_t, uint64_t, const std::string&) { calls++; return true; });
+  CHECK(r.ok && r.platform == "xbox360" && r.main_xex == "default.xex" && r.files == 4 && calls > 3);
+  CHECK(to_json(r).find("\"status\":") != std::string::npos);
+  // Cancellation.
+  auto rc = scan_disc(src, so, [&](const std::string& st, uint64_t, uint64_t, const std::string&) { return st != "inventory"; });
+  CHECK(rc.cancelled);
+  // Truncated dump: cut the image in the middle of default.xex.
+  std::vector<uint8_t> iso;
+  read_file(dir + "/homebrew.iso", iso);
+  XisoReader xr;
+  CHECK(xr.open(dir + "/homebrew.iso", err));
+  const IsoEntry* xe = xr.find("default.xex");
+  CHECK(xe != nullptr);
+  if (xe) {
+    iso.resize(size_t(xe->offset + xe->size / 2));
+    auto tr = scan_disc(std::make_shared<MemorySource>(iso), so, nullptr);
+    CHECK(tr.ok && tr.truncated >= 1 && tr.status == GameStatus::Unsupported);
+    bool completeness_missing = false;
+    for (auto& q : tr.requirements) completeness_missing |= q.id == "completeness" && q.state == ReqState::Missing;
+    CHECK(completeness_missing);
+  }
+  // Not a disc at all / STFS / bare XEX.
+  std::vector<uint8_t> junk(200000, 0x5A);
+  CHECK(scan_disc(std::make_shared<MemorySource>(junk), so, nullptr).status == GameStatus::Unsupported);
+  std::vector<uint8_t> live(200000, 0);
+  std::memcpy(live.data(), "LIVE", 4);
+  auto lr = scan_disc(std::make_shared<MemorySource>(live), so, nullptr);
+  CHECK(lr.status == GameStatus::Unsupported && lr.error.find("STFS") != std::string::npos);
+}
+
 int main(int argc, char** argv) {
   if (argc < 3) { std::printf("usage: unit_tests <homebrew-dir> <tools-dir>\n"); return 2; }
   test_aes();
@@ -214,6 +285,8 @@ int main(int argc, char** argv) {
   test_runtime_helpers();
   test_xex(argv[1]);
   test_iso(argv[1], argv[2]);
+  test_disc_scan(argv[1]);
+  test_encrypted_disc(argv[1], argv[2]);
   std::printf("unit_tests: %d passed, %d failed\n", g_pass, g_fail);
   return g_fail ? 1 : 0;
 }

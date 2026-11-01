@@ -5,12 +5,13 @@ find_program(FSR_LLD NAMES ld.lld ld.lld-18 ld.lld-17 ld.lld-19 REQUIRED)
 
 set(HB_DIR ${CMAKE_CURRENT_BINARY_DIR}/hb)
 set(HB_SRC ${CMAKE_CURRENT_SOURCE_DIR}/homebrew)
-set(HB_OUT ${HB_DIR}/hb64.xex ${HB_DIR}/hb32.xex ${HB_DIR}/hb64_enc.xex ${HB_DIR}/hb64.syms ${HB_DIR}/hb32.syms)
+set(HB_OUT ${HB_DIR}/hb64.xex ${HB_DIR}/hb32.xex ${HB_DIR}/hb64_enc.xex ${HB_DIR}/hb64.syms ${HB_DIR}/hb32.syms
+  ${HB_DIR}/homebrew.iso)
 add_custom_command(
   OUTPUT ${HB_OUT}
   COMMAND ${CMAKE_COMMAND} -E env CLANG=${FSR_CLANG} LLD=${FSR_LLD}
           bash ${HB_SRC}/build_homebrew.sh $<TARGET_FILE_DIR:mkxex> ${HB_DIR}
-  DEPENDS mkxex ${HB_SRC}/selftest.c ${HB_SRC}/vectest.c ${HB_SRC}/demo.c ${HB_SRC}/crt.c ${HB_SRC}/thunks.S ${HB_SRC}/vmx128.S ${HB_SRC}/link.ld
+  DEPENDS mkxex mkiso ${HB_SRC}/fileio.c ${HB_SRC}/selftest.c ${HB_SRC}/vectest.c ${HB_SRC}/demo.c ${HB_SRC}/crt.c ${HB_SRC}/thunks.S ${HB_SRC}/vmx128.S ${HB_SRC}/link.ld
           ${HB_SRC}/build_homebrew.sh
   COMMENT "Building homebrew PowerPC test XEX files")
 
@@ -20,7 +21,7 @@ foreach(m hb64 hb32)
   add_custom_command(
     OUTPUT ${${m}_GEN}
     COMMAND $<TARGET_FILE:fsr-recomp> ${HB_DIR}/${m}.xex --out ${GEN} --name ${m} --syms ${HB_DIR}/${m}.syms
-            --export fsr_selftest --export fsr_frame --export fsr_vectest --export fsr_vectest_dump --export fsr_vmx128_test
+            --export fsr_selftest --export fsr_frame --export fsr_vectest --export fsr_vectest_dump --export fsr_vmx128_test --export fsr_fileio_test
     DEPENDS fsr-recomp ${HB_DIR}/${m}.xex ${HB_DIR}/${m}.syms
     COMMENT "Recompiling ${m}.xex to C++")
 endforeach()

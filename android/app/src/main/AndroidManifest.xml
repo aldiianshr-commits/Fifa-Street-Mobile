@@ -23,12 +23,20 @@
 
         <activity
             android:name=".MainActivity"
+            android:launchMode="singleTop"
             android:exported="true"
             android:screenOrientation="sensorLandscape"
             android:configChanges="orientation|screenSize|screenLayout|keyboard|keyboardHidden|navigation|uiMode">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- "Open with" an ISO from a file manager adds it to the library. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="content" android:mimeType="application/x-iso9660-image" />
+                <data android:scheme="content" android:mimeType="application/x-cd-image" />
             </intent-filter>
         </activity>
         <activity android:name=".GameActivity" android:exported="false" android:screenOrientation="sensorLandscape"

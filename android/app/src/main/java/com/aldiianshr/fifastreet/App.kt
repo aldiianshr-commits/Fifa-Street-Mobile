@@ -27,14 +27,16 @@ class App : Application() {
         AppLog.i("App start: ${DeviceInfo.summary(this)}")
     }
 
-    /** Copies the bundled homebrew test XEX (our own code) out of the APK. */
+    /** Copies the bundled homebrew test XEX and test ISO (our own code, no game data) out of the APK. */
     private fun installHomebrew() {
         val dir = File(filesDir, "homebrew").apply { mkdirs() }
-        val out = File(dir, "hb64.xex")
-        assets.open("homebrew/hb64.xex").use { input ->
-            val bytes = input.readBytes()
-            if (!out.exists() || out.length() != bytes.size.toLong() || !out.readBytes().contentEquals(bytes)) {
-                out.writeBytes(bytes)
+        for (name in listOf("hb64.xex", "homebrew.iso")) {
+            val out = File(dir, name)
+            assets.open("homebrew/$name").use { input ->
+                val bytes = input.readBytes()
+                if (!out.exists() || out.length() != bytes.size.toLong() || !out.readBytes().contentEquals(bytes)) {
+                    out.writeBytes(bytes)
+                }
             }
         }
     }
@@ -43,6 +45,7 @@ class App : Application() {
         lateinit var instance: App
             private set
         val homebrewXex: File get() = File(instance.filesDir, "homebrew/hb64.xex")
+        val homebrewIso: File get() = File(instance.filesDir, "homebrew/homebrew.iso")
         val keyFile: File get() = File(instance.filesDir, "keys/xex.key")
         val cacheRoot: File get() = File(instance.filesDir, "analysis").apply { mkdirs() }
         val reportsDir: File get() = File(instance.filesDir, "reports").apply { mkdirs() }

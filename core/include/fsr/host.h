@@ -14,6 +14,7 @@
 #include <vector>
 
 #include "fsr/runtime.h"
+#include "fsr/vfs.h"
 #include "fsr/xex.h"
 
 namespace fsr {
@@ -69,6 +70,10 @@ class Runtime {
 
   static Runtime* current();
 
+  // Disc mounted as game:\ / d:\ for the file-system HLE (nullptr = none).
+  void mount_disc(std::shared_ptr<DiscVfs> vfs) { vfs_ = std::move(vfs); }
+  DiscVfs* vfs() const { return vfs_.get(); }
+
   // Used by kernel.cc.
   void note_unimplemented_import(const std::string& name);
   std::atomic<uint64_t> kernel_calls_{0};
@@ -83,7 +88,10 @@ class Runtime {
   PadState pad_;
   mutable std::mutex imp_mu_;
   std::set<std::string> unimpl_imports_;
+  std::shared_ptr<DiscVfs> vfs_;
 };
+
+const RecompModule* find_registered_module(const std::vector<uint8_t>& image);
 
 // HLE kernel dispatch (kernel.cc).
 using HleFn = void (*)(PPCContext&, uint8_t*, Runtime&);

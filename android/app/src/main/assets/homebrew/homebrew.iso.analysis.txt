@@ -1,0 +1,46 @@
+Disc image: 120.0 KB  layout: rebuilt/XISO (partisi game saja)  platform: xbox360
+  files: 4  dirs: 2  data: 43.1 KB  truncated: 0
+    config: 2 (3.0 KB)
+    executable: 1 (40.0 KB)
+    video: 1 (86 B)
+  main executable: default.xex
+  requirements:
+    [ok] Filesystem XDVDFS: rebuilt/XISO (partisi game saja), 4 berkas / 2 folder, 43.1 KB
+    [ok] Kelengkapan data: semua 4 berkas berada di dalam image (120.0 KB)
+    [ok] Executable utama: default.xex (40.0 KB), Title ID 46535231, media 12345678, versi 00010000, disc 1/1
+    [info] Region: tidak ada flag region
+    [ok] Enkripsi: image tidak terenkripsi
+    [ok] Dekompresi: tanpa kompresi → image PE 36.0 KB
+    [ok] Modul executable lain: tidak ada modul XEX tambahan di disc
+    [ok] Terjemahan CPU PowerPC → ARM64: 51 fungsi, 3648 instruksi, 100.00% dapat diterjemahkan (VMX 844/844, VMX128 39)
+    [ok] Impor kernel/XAM (HLE): 8/8 diimplementasikan
+    [info] File data yang dirujuk: seluruh ISO di-mount sebagai game:\ dan d:\ (dibaca langsung, tanpa ekstraksi). Literal path di kode: 2/3 ditemukan di ISO, 0 pola dinamis (%s/*), 1 ke perangkat lain (cache:/hdd:/update:). Tidak ditemukan (bisa opsional/ dibuat saat runtime, tidak dapat dipastikan statis): game:\data\does_not_exist.bin
+    [missing] Modul native ARM64 (hasil recompile): kode PowerPC sudah dianalisis di perangkat, tetapi APK ini belum berisi modul ARM64 hasil kompilasi untuk image ini (SHA-1 9665216C93E1…). Tahap C++ → ARM64 memerlukan toolchain clang/NDK yang tidak ada di perangkat; jalankan fsr-recomp pada ISO ini di PC lalu build APK pribadi.
+    [missing] Grafis Xenos → Vulkan: penerjemah perintah GPU Xenos (PM4, shader microcode, EDRAM, tekstur tiled) ke Vulkan belum dibuat
+  STATUS: partial - Modul native ARM64 (hasil recompile): kode PowerPC sudah dianalisis di perangkat, tetapi APK ini belum berisi modul ARM64 hasil kompilasi untuk image ini (SHA-1 9665216C93E1…). Tahap C++ → ARM64 memerlukan toolchain clang/NDK yang tidak ada di perangkat; jalankan fsr-recomp pada ISO ini di PC lalu build APK pribadi.
+  (0.00 s)
+
+XEX2 default.xex
+  title id     : 46535231   media id: 12345678   version: 00010000
+  disc         : 1/1
+  original PE  : homebrew.exe
+  base / entry : 82000000 / 82001080
+  image size   : 36864 bytes
+  encryption   : none
+  compression  : none
+  image load   : ok
+  section .text va=00001000 size=12512 [code]
+  section .rodata va=00005000 size=514
+  section .got va=00005208 size=8
+  section .toc va=00005210 size=8
+  section .data va=00006000 size=12
+  section .bss va=00006010 size=1
+  section .pdata va=00007000 size=392
+  section .fsrimp va=00008000 size=36
+  .pdata functions : 48
+  imports          : 8 (8 implemented by runtime HLE)
+  functions found  : 51 (2 with bctr dispatch)
+  instructions     : 3648
+  translated       : 3648 (100.00%)
+  VMX/VMX128       : 844 (844 translated, 39 VMX128 encodings)
+  invalid words    : 0

@@ -39,6 +39,9 @@ std::string modules_json();
 class Session {
  public:
   static std::unique_ptr<Session> create(const std::string& xex_path, const std::string& key_path, std::string& err);
+  // Runs straight from a disc image: takes ownership of fd, reads the main
+  // executable out of the ISO and mounts the disc as game:\ for file I/O.
+  static std::unique_ptr<Session> create_from_disc(int fd, const std::string& key_path, std::string& err);
   ~Session();
 
   void set_window(ANativeWindow* win);  // takes ownership of one reference
@@ -51,11 +54,13 @@ class Session {
   void set_graphics(const GraphicsConfig& g);
   void set_thermal_status(int status);  // PowerManager.THERMAL_STATUS_*
   SessionStats stats() const;
+  uint64_t disc_bytes_read() const { return rt_.vfs() ? rt_.vfs()->bytes_read : 0; }
   std::string last_error() const;
   std::string gpu_name() const;
 
  private:
   Session() = default;
+  bool bind(std::string& err);
   void loop();
 
   fsr::XexModule xex_;

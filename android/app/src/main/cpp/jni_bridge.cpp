@@ -12,6 +12,7 @@
 #include <string>
 
 #include "fsr/bytes.h"
+#include "fsr/disc_scan.h"
 #include "fsr/host.h"
 #include "fsr/iso.h"
 #include "fsr/report.h"
@@ -290,3 +291,91 @@ JFN(jstring, sessionError)(JNIEnv* env, jobject, jlong h) { return jstr(env, h ?
 JFN(jstring, sessionGpu)(JNIEnv* env, jobject, jlong h) { return jstr(env, h ? S(h)->gpu_name() : ""); }
 JFN(jstring, drainLog)(JNIEnv* env, jobject) { return jstr(env, drain_log()); }
 JFN(jboolean, audioTestTone)(JNIEnv*, jobject, jboolean on) { return audio_test_tone(on) ? JNI_TRUE : JNI_FALSE; }
+
+// ---------------------------------------------------------------- disc images
+// scanDisc(fd, keyPath, deep, callback): fd is adopted (closed by native).
+// callback: boolean onProgress(String stage, long done, long total, String msg)
+JFN(jstring, scanDisc)(JNIEnv* env, jobject, jint fd, jstring key_path, jboolean deep, jobject cb) {
+  std::string err;
+  auto src = fsr::FdSource::adopt(fd, &err);
+  if (!src)
+    return jstr(env, "{\"ok\":false,\"open_failed\":true,\"seekable\":false,\"status\":\"unsupported\",\"error\":\"" +
+                         json_escape(err) + "\",\"status_reason\":\"" + json_escape(err) + "\"}");
+  std::string kp = str(env, key_path);
+  uint8_t key[16];
+  fsr::ScanOptions so;
+  so.deep = deep;
+  if (!kp.empty() && fsr::load_key_file(kp, key, nullptr)) so.key = key;
+  jclass cls = cb ? env->GetObjectClass(cb) : nullptr;
+  jmethodID mid = cls ? env->GetMethodID(cls, "onProgress", "(Ljava/lang/String;JJLjava/lang/String;)Z") : nullptr;
+  std::string last_stage;
+  auto last_t = std::chrono::steady_clock::now();
+  auto rep = fsr::scan_disc(src, so, [&](const std::string& stage, uint64_t done, uint64_t total, const std::string& msg) {
+    if (!mid) return true;
+    auto now = std::chrono::steady_clock::now();
+    if (stage == last_stage && done != total && now - last_t < std::chrono::milliseconds(100)) return true;
+    last_stage = stage;
+    last_t = now;
+    jstring js = env->NewStringUTF(stage.c_str());
+    jstring jm = env->NewStringUTF(msg.c_str());
+    jboolean go = env->CallBooleanMethod(cb, mid, js, jlong(done), jlong(total), jm);
+    env->DeleteLocalRef(js);
+    env->DeleteLocalRef(jm);
+    if (env->ExceptionCheck()) { env->ExceptionClear(); return false; }
+    return go == JNI_TRUE;
+  });
+  logf("[scan] %s: %s (%.2f s, %llu files, layout %s)", fsr::to_string(rep.status), rep.status_reason.c_str(), rep.seconds,
+       (unsigned long long)rep.files, rep.layout.layout.c_str());
+  return jstr(env, fsr::to_json(rep));
+}
+
+JFN(jlong, sessionCreateDisc)(JNIEnv* env, jobject, jint fd, jstring key) {
+  std::string err;
+  auto s = Session::create_from_disc(fd, str(env, key), err);
+  std::lock_guard<std::mutex> l(g_err_mu);
+  g_create_error = err;
+  if (!s) {
+    logf("[session] create from disc failed: %s", err.c_str());
+    return 0;
+  }
+  return reinterpret_cast<jlong>(s.release());
+}
+
+JFN(jlong, sessionDiscBytes)(JNIEnv*, jobject, jlong h) { return h ? jlong(S(h)->disc_bytes_read()) : 0; }
+
+// Runs the homebrew fsr_fileio_test against a disc image (fd adopted): checks
+// that guest kernel file I/O is served straight from the ISO.
+JFN(jstring, discFileTest)(JNIEnv* env, jobject, jint fd) {
+  std::string err;
+  auto src = fsr::FdSource::adopt(fd, &err);
+  auto disc = std::make_shared<fsr::XisoReader>();
+  fsr::XexModule x;
+  std::string inner;
+  if (!src || !disc->open(src, err) || !fsr::load_main_xex(*disc, nullptr, x, &inner, err))
+    return jstr(env, "{\"ok\":false,\"error\":\"" + json_escape(err) + "\"}");
+  const fsr::RecompModule* m = find_module_for_image(x.image());
+  fsr::Runtime rt;
+  rt.log = [](const std::string& l) { log_line(l); };
+  if (!m || !rt.init(err) || !rt.load(x, m, err))
+    return jstr(env, "{\"ok\":false,\"error\":\"" + json_escape(m ? err : "no module") + "\"}");
+  rt.mount_disc(std::make_shared<fsr::DiscVfs>(disc));
+  uint32_t fn = rt.export_addr("fsr_fileio_test");
+  uint32_t out = rt.alloc(44);
+  if (!fn || !rt.call(fn, {out}, nullptr, err)) return jstr(env, "{\"ok\":false,\"error\":\"" + json_escape(err) + "\"}");
+  const fsr::IsoEntry* hello = disc->find("data/hello.txt");
+  const fsr::IsoEntry* readme = disc->find("media/readme.txt");
+  std::vector<uint8_t> hb;
+  if (hello) disc->read(*hello, hb);
+  uint32_t crc = 0xFFFFFFFFu;
+  for (uint8_t b : hb) { crc ^= b; for (int k = 0; k < 8; k++) crc = (crc & 1) ? 0xEDB88320u ^ (crc >> 1) : crc >> 1; }
+  crc = ~crc;
+  uint32_t exp[11] = {0, crc, uint32_t(hb.size()), 0xC0000011u, uint32_t(hb.size()), uint32_t(hb.size()),
+                      hb.size() >= 7 ? fsr::rd_be32(hb.data() + 3) : 0, readme ? uint32_t(readme->size) : 0, 0xC0000034u,
+                      0xC0000008u, 0xC000003Au};
+  int pass = 0;
+  for (int i = 0; i < 11; i++) pass += fsr::rd_be32(rt.base() + out + 4 * i) == exp[i];
+  logf("[disc-test] guest file I/O from ISO: %d/11 checks, %llu bytes via pread", pass,
+       (unsigned long long)rt.vfs()->bytes_read);
+  return jstr(env, "{\"ok\":true,\"passed\":" + std::to_string(pass) + ",\"total\":11,\"bytes\":" +
+                       std::to_string(rt.vfs()->bytes_read) + "}");
+}

@@ -63,6 +63,11 @@ struct RecompModule {
   uint32_t export_count;
 };
 
+// ---- registry of recompiled modules linked into this binary ----
+void register_module(const RecompModule* m);
+const RecompModule* find_registered_module_sha1(const uint8_t sha1[20], uint32_t image_size);
+const RecompModule* const* registered_modules(size_t* count);
+
 // ---- services implemented by the runtime (runtime.cc / kernel.cc) ----
 void fsr_call_indirect(PPCContext& ctx, uint8_t* base, uint32_t addr);
 void fsr_kernel_call(PPCContext& ctx, uint8_t* base, uint32_t lib, uint32_t ordinal);

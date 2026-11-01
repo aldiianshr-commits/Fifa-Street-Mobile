@@ -17,11 +17,11 @@ import android.widget.ListView
 import android.widget.ProgressBar
 import android.widget.TextView
 
-/** Game library: folder selection, automatic scan, per-title status. */
+/** Library: one ISO per game, picked through the Storage Access Framework and processed automatically. */
 class MainActivity : Activity() {
     private lateinit var list: ListView
     private lateinit var status: TextView
-    private lateinit var permCard: View
+    private lateinit var empty: View
     private val adapter = GameAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,23 +40,19 @@ class MainActivity : Activity() {
         status = Ui.text(this, "", 13f, Ui.DIM)
         titles.addView(status)
         top.addView(titles)
-        top.addView(Ui.button(this, "Pilih folder", true) { pickFolder() })
-        top.addView(Ui.button(this, "Pindai ulang") { GameLibrary.rescan(force = true) })
+        top.addView(Ui.button(this, "＋ Tambah ISO", true) { pickIso() })
+        top.addView(Ui.button(this, "Pindai folder") { pickFolder() })
         top.addView(Ui.button(this, "Kontrol") { startActivity(Intent(this, ControlsActivity::class.java)) })
         top.addView(Ui.button(this, "Pengaturan") { startActivity(Intent(this, SettingsActivity::class.java)) })
         top.addView(Ui.button(this, "Log") { startActivity(Intent(this, LogActivity::class.java)) })
         root.addView(top)
 
-        permCard = Ui.card(this).apply {
+        empty = Ui.card(this).apply {
             (layoutParams as LinearLayout.LayoutParams).setMargins(Ui.dpi(this@MainActivity, 12), Ui.dpi(this@MainActivity, 8), Ui.dpi(this@MainActivity, 12), 0)
-            addView(Ui.text(this@MainActivity, "Izin \"Akses semua file\" diperlukan agar runtime native dapat membaca folder game Anda (mis. /storage/emulated/0/FifaStreet).", 14f))
-            addView(Ui.button(this@MainActivity, "Berikan izin", true) {
-                runCatching {
-                    startActivity(Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, Uri.parse("package:$packageName")))
-                }.onFailure { startActivity(Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)) }
-            })
+            addView(Ui.text(this@MainActivity, "Pilih satu file ISO Xbox 360 milik Anda. Aplikasi membaca ISO langsung (tanpa ekstraksi), memindai seluruh isinya, " +
+                "menemukan executable dan file data, lalu menganalisis kode secara otomatis. Tidak perlu memilih XEX atau file internal lain.", 14f))
         }
-        root.addView(permCard)
+        root.addView(empty)
 
         list = ListView(this).apply {
             adapter = this@MainActivity.adapter
@@ -64,77 +60,101 @@ class MainActivity : Activity() {
             setPadding(Ui.dpi(this@MainActivity, 12), Ui.dpi(this@MainActivity, 8), Ui.dpi(this@MainActivity, 12), 0)
             clipToPadding = false
             setOnItemClickListener { _, _, pos, _ ->
-                val g = this@MainActivity.adapter.getItem(pos)
-                startActivity(Intent(this@MainActivity, GameActivity::class.java).putExtra("id", g.id))
+                startActivity(Intent(this@MainActivity, GameActivity::class.java).putExtra("id", this@MainActivity.adapter.getItem(pos).id))
             }
             layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f)
         }
         root.addView(list)
         setContentView(root)
         GameLibrary.listener = { refresh() }
-        if (GameLibrary.games.isEmpty()) GameLibrary.rescan()
-        // Headless smoke tests (used by CI on an emulator): adb shell am start ... --es autotest selftest|play
+        GameLibrary.load()
+        handleViewIntent(intent)
+        // Headless smoke tests (CI emulator): adb shell am start ... --es autotest selftest|play
         when (intent.getStringExtra("autotest")) {
             "selftest" -> startActivity(Intent(this, SettingsActivity::class.java).putExtra("autotest", true))
-            "play" -> startActivity(Intent(this, PlayActivity::class.java).putExtra("id", "homebrew")
+            "play" -> startActivity(Intent(this, PlayActivity::class.java).putExtra("id", GameLibrary.BUILTIN_ID)
                 .putExtra("autotest_seconds", intent.getIntExtra("seconds", 10)))
         }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleViewIntent(intent)
+    }
+
+    /** "Open with" from a file manager also adds the ISO. */
+    private fun handleViewIntent(i: Intent?) {
+        if (i?.action == Intent.ACTION_VIEW) i.data?.let { GameLibrary.addUri(it) }
     }
 
     override fun onResume() {
         super.onResume()
         GameLibrary.listener = { refresh() }
-        permCard.visibility = if (Environment.isExternalStorageManager()) View.GONE else View.VISIBLE
         refresh()
     }
 
     private fun refresh() {
-        val folder = Store.gameFolder ?: "(belum dipilih – default disarankan /storage/emulated/0/FifaStreet)"
-        status.text = "Folder: $folder · ${GameLibrary.scanStatus}"
+        val g = GameLibrary.snapshot()
+        val c = LibStatus.values().associateWith { s -> g.count { it.status == s } }
+        status.text = "${g.size} game · Ready ${c[LibStatus.READY]} · Processing ${c[LibStatus.PROCESSING]} · " +
+            "Partial ${c[LibStatus.PARTIAL]} · Unsupported ${c[LibStatus.UNSUPPORTED]}"
+        empty.visibility = if (g.count { it.type != SourceType.BUILTIN } == 0) View.VISIBLE else View.GONE
         adapter.notifyDataSetChanged()
     }
 
-    private fun pickFolder() {
-        val i = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
-        runCatching { startActivityForResult(i, REQ_TREE) }.onFailure {
-            Ui.prompt(this, "Path folder game", Store.gameFolder ?: "/storage/emulated/0/FifaStreet") { setFolder(it) }
+    private fun pickIso() {
+        val i = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "*/*"
+            putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("application/x-iso9660-image", "application/octet-stream", "application/x-cd-image", "*/*"))
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
         }
+        startActivityForResult(i, REQ_ISO)
+    }
+
+    private fun pickFolder() {
+        if (!Environment.isExternalStorageManager()) {
+            Ui.info(this, "Izin diperlukan", "Pemindaian folder membaca file lewat path dan membutuhkan izin \"Akses semua file\". " +
+                "Alternatifnya, gunakan \"Tambah ISO\" yang tidak membutuhkan izin ini.")
+            runCatching { startActivity(Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, Uri.parse("package:$packageName"))) }
+            return
+        }
+        runCatching { startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT_TREE), REQ_TREE) }.onFailure {
+            Ui.prompt(this, "Path folder", Store.gameFolder ?: "/storage/emulated/0/FifaStreet") { scanFolderPath(it) }
+        }
+    }
+
+    private fun scanFolderPath(path: String) {
+        Store.gameFolder = path
+        GameLibrary.scanFolder(java.io.File(path))
     }
 
     @Deprecated("framework API")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQ_TREE && resultCode == RESULT_OK) {
-            val uri = data?.data ?: return
-            val path = treeUriToPath(uri)
-            if (path == null) {
-                Ui.prompt(this, "Lokasi tidak dapat dipetakan ke path. Masukkan path manual:", "/storage/emulated/0/FifaStreet") { setFolder(it) }
-            } else setFolder(path)
+        if (resultCode != RESULT_OK) return
+        val uri = data?.data ?: return
+        when (requestCode) {
+            REQ_ISO -> {
+                val e = GameLibrary.addUri(uri)
+                startActivity(Intent(this, GameActivity::class.java).putExtra("id", e.id))
+            }
+            REQ_TREE -> treeUriToPath(uri)?.let { scanFolderPath(it) }
+                ?: Ui.prompt(this, "Lokasi tidak dapat dipetakan ke path. Masukkan path manual:", "/storage/emulated/0/FifaStreet") { scanFolderPath(it) }
         }
     }
 
-    private fun setFolder(path: String) {
-        Store.gameFolder = path
-        AppLog.i("Folder game: $path")
-        GameLibrary.rescan(force = false)
-        refresh()
-    }
-
-    /** Maps an ExternalStorage tree URI to a filesystem path the native runtime can open. */
     private fun treeUriToPath(uri: Uri): String? {
         if (uri.authority != "com.android.externalstorage.documents") return null
-        val doc = DocumentsContract.getTreeDocumentId(uri)
-        val parts = doc.split(":", limit = 2)
-        val vol = parts[0]
+        val parts = DocumentsContract.getTreeDocumentId(uri).split(":", limit = 2)
+        val base = if (parts[0].equals("primary", true)) Environment.getExternalStorageDirectory().path else "/storage/${parts[0]}"
         val rel = parts.getOrElse(1) { "" }
-        val base = if (vol.equals("primary", true)) Environment.getExternalStorageDirectory().path else "/storage/$vol"
         return if (rel.isEmpty()) base else "$base/$rel"
     }
 
     inner class GameAdapter : BaseAdapter() {
-        private fun items() = synchronized(GameLibrary.games) { GameLibrary.games.toList() }
-        override fun getCount() = items().size
-        override fun getItem(position: Int) = items()[position]
+        override fun getCount() = GameLibrary.snapshot().size
+        override fun getItem(position: Int) = GameLibrary.snapshot()[position]
         override fun getItemId(position: Int) = position.toLong()
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -144,13 +164,23 @@ class MainActivity : Activity() {
             val row = Ui.hbox(ctx)
             val col = Ui.vbox(ctx, 0).apply { layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f) }
             col.addView(Ui.text(ctx, g.name, 17f, Ui.TEXT, true))
+            val src = when (g.type) { SourceType.URI -> "ISO (SAF)"; SourceType.PATH -> "ISO (folder)"; SourceType.BUILTIN -> "ISO uji bawaan" }
             val tid = if (g.titleId.isNotEmpty()) " · Title ID ${g.titleId}" else ""
-            col.addView(Ui.text(ctx, "${g.kind.label}$tid", 13f, Ui.DIM))
-            col.addView(Ui.text(ctx, g.state, 13f, Ui.TEXT))
+            val layout = g.report?.optString("layout")?.takeIf { it.isNotEmpty() }?.let { " · $it" } ?: ""
+            col.addView(Ui.text(ctx, "$src · ${GameLibraryFmt.bytes(g.size)}$layout$tid${if (g.fromCache) " · cache" else ""}", 13f, Ui.DIM))
+            if (g.status == LibStatus.PROCESSING) {
+                val pct = GameLibrary.percent(g)
+                col.addView(Ui.text(ctx, "${GameLibrary.stageLabel(g)}${if (pct >= 0) " · $pct%" else ""}  ${g.stageMsg.take(80)}", 13f, Ui.ACCENT))
+                col.addView(ProgressBar(ctx, null, android.R.attr.progressBarStyleHorizontal).apply {
+                    isIndeterminate = pct < 0
+                    max = 100
+                    progress = pct.coerceAtLeast(0)
+                })
+            } else {
+                col.addView(Ui.text(ctx, g.reason.take(220), 13f, Ui.TEXT))
+            }
             row.addView(col)
-            if (g.busy) row.addView(ProgressBar(ctx).apply { layoutParams = LinearLayout.LayoutParams(Ui.dpi(ctx, 28), Ui.dpi(ctx, 28)) })
-            val (label, color) = GameLibrary.overall(g)
-            row.addView(Ui.badge(ctx, label, color).apply { gravity = Gravity.CENTER })
+            row.addView(Ui.badge(ctx, g.status.label, g.status.color).apply { gravity = Gravity.CENTER })
             card.addView(row)
             return LinearLayout(ctx).apply {
                 orientation = LinearLayout.VERTICAL
@@ -160,5 +190,8 @@ class MainActivity : Activity() {
         }
     }
 
-    companion object { const val REQ_TREE = 41 }
+    companion object {
+        const val REQ_ISO = 40
+        const val REQ_TREE = 41
+    }
 }

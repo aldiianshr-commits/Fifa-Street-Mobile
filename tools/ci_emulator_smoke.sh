@@ -30,10 +30,10 @@ note() {  # title file pattern
   msg=$(grep -E "$3" "$2" | head -40 | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')
   echo "::notice title=$1::${msg:-no matching lines}"
 }
-note "emulator selftest" selftest.log "AUTOTEST|\[selftest\]|App start"
-note "emulator play" play.log "AUTOTEST|\[vk\]|\[session\]|\[guest\]|unimplemented|Vulkan"
+note "emulator selftest" selftest.log "AUTOTEST|\[selftest\]|\[scan\]|\[disc-test\]|App start"
+note "emulator play" play.log "AUTOTEST|\[vk\]|\[session\]|\[guest\]|\[fs\]|Library|unimplemented|Vulkan"
 if [ -s crash.log ]; then
   msg=$(head -60 crash.log | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')
   echo "::warning title=emulator crash::$msg"
 fi
-grep -q "AUTOTEST selftest ok=true matched=36/36" selftest.log
+grep -q "AUTOTEST selftest ok=true matched=36/36" selftest.log && grep -q "AUTOTEST scan status=ready" selftest.log && grep -q "AUTOTEST discio passed=11/11" selftest.log

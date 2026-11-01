@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: MIT
 #pragma once
 #include <cstdint>
+#include <functional>
 #include <map>
 #include <string>
 #include <vector>
@@ -47,6 +48,7 @@ struct RecompStats {
   uint64_t padding_words = 0;      // zero words (alignment/data) inside function ranges
   uint64_t dynamic_functions = 0;  // functions using bctr dispatch
   uint64_t indirect_call_sites = 0;
+  bool cancelled = false;
   std::map<std::string, uint64_t> op_histogram;
   std::map<std::string, uint64_t> unimplemented_histogram;  // "vmx", "invalid"...
   double coverage() const { return instructions ? double(translated) / double(instructions) : 0.0; }
@@ -67,7 +69,10 @@ struct RecompOutput {
 RecompInput make_input(const XexModule& xex, const std::string& module_name);
 // Function discovery only (fast; used for on-device analysis).
 std::vector<FunctionInfo> discover_functions(const RecompInput& in);
-RecompStats analyze(const RecompInput& in, std::vector<FunctionInfo>* out_funcs = nullptr);
+// Progress: (done, total) over functions; return false to cancel.
+using AnalyzeProgress = std::function<bool(uint64_t, uint64_t)>;
+RecompStats analyze(const RecompInput& in, std::vector<FunctionInfo>* out_funcs = nullptr,
+                    const AnalyzeProgress& progress = nullptr);
 // Full C++ generation.
 RecompOutput recompile(const RecompInput& in, const RecompOptions& opt = {});
 

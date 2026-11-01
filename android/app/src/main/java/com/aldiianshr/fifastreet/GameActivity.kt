@@ -1,79 +1,191 @@
 package com.aldiianshr.fifastreet
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.ProgressBar
+import org.json.JSONObject
 import java.io.File
 
-/** Game information, compatibility status, actions and per-game settings. */
+/** Game details: library status, every runtime requirement with its reason, disc inventory, actions. */
 class GameActivity : Activity() {
     private lateinit var id: String
     private lateinit var body: LinearLayout
+    private var lastRender = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         id = intent.getStringExtra("id") ?: run { finish(); return }
         body = Ui.vbox(this, 14)
         setContentView(Ui.scroll(this, body))
-        GameLibrary.listener = { render() }
     }
 
     override fun onResume() {
         super.onResume()
-        GameLibrary.listener = { render() }
+        GameLibrary.listener = { throttledRender() }
         render()
     }
 
-    private fun entry() = synchronized(GameLibrary.games) { GameLibrary.games.firstOrNull { it.id == id } }
-
-    private fun render() {
-        val e = entry() ?: run { finish(); return }
-        body.removeAllViews()
-        body.addView(Ui.header(this, e.name, "Kembali" to { finish() }))
-        val (label, color) = GameLibrary.overall(e)
-        val top = Ui.card(this)
-        val row = Ui.hbox(this)
-        row.addView(Ui.badge(this, label, color))
-        row.addView(Ui.text(this, "   ${e.state}", 15f))
-        top.addView(row)
-        top.addView(Ui.text(this, "${e.kind.label} · ${e.path}", 13f, Ui.DIM))
-        val actions = Ui.hbox(this)
-        val running = Sessions.gameId == e.id && Sessions.handle != 0L
-        actions.addView(Ui.button(this, if (running) "Resume" else "Play", true) { play(e) }.apply {
-            isEnabled = e.playable; alpha = if (e.playable) 1f else 0.4f
-        })
-        if (running) actions.addView(Ui.button(this, "Stop") { Sessions.stop(); render() })
-        actions.addView(Ui.button(this, if (e.busy) "Menganalisis…" else "Analisis ulang") { if (!e.busy) GameLibrary.analyzeAsync(e) })
-        actions.addView(Ui.button(this, "Impor kunci XEX") { importKey() })
-        if (App.keyFile.exists()) actions.addView(Ui.button(this, "Hapus kunci") { App.keyFile.delete(); AppLog.i("Kunci XEX dihapus"); GameLibrary.analyzeAsync(e); render() })
-        top.addView(actions)
-        if (!e.playable && e.kind != GameKind.HOMEBREW)
-            top.addView(Ui.text(this, "Play dinonaktifkan: game ini belum dapat dijalankan secara native (lihat status di bawah). " +
-                "Aplikasi tidak memakai emulator atau simulasi gameplay sebagai pengganti.", 13f, Ui.PARTIAL))
-        body.addView(top)
-
-        val comp = Ui.card(this)
-        comp.addView(Ui.section(this, "STATUS KOMPATIBILITAS"))
-        GameLibrary.features(e).forEach { comp.addView(Ui.statusRow(this, it.label, it.status, it.detail)) }
-        body.addView(comp)
-
-        body.addView(settingsCard(e))
-        e.analysis?.let { a -> body.addView(detailsCard(a)) }
+    private fun throttledRender() {
+        val now = System.currentTimeMillis()
+        val e = GameLibrary.find(id)
+        if (e != null && e.processing && now - lastRender < 250) return
+        render()
     }
 
-    private fun play(e: GameEntry) {
-        startActivity(Intent(this, PlayActivity::class.java).putExtra("id", e.id))
+    private fun render() {
+        lastRender = System.currentTimeMillis()
+        val e = GameLibrary.find(id) ?: run { finish(); return }
+        body.removeAllViews()
+        body.addView(Ui.header(this, e.name, "Kembali" to { finish() }))
+
+        val top = Ui.card(this)
+        val row = Ui.hbox(this)
+        row.addView(Ui.badge(this, e.status.label, e.status.color))
+        row.addView(Ui.text(this, "   " + if (e.status == LibStatus.PROCESSING) GameLibrary.stageLabel(e) else e.reason, 15f))
+        top.addView(row)
+        if (e.status == LibStatus.PROCESSING) {
+            val pct = GameLibrary.percent(e)
+            top.addView(ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal).apply {
+                isIndeterminate = pct < 0; max = 100; progress = pct.coerceAtLeast(0)
+            })
+            top.addView(Ui.text(this, "${if (pct >= 0) "$pct% · " else ""}${e.stageMsg}", 13f, Ui.DIM))
+        }
+        val src = when (e.type) {
+            SourceType.URI -> "ISO dipilih lewat SAF (izin baca disimpan)" + if (e.localCopy != null) " · dibaca dari salinan internal" else " · dibaca langsung"
+            SourceType.PATH -> "ISO dari folder · dibaca langsung"
+            SourceType.BUILTIN -> "ISO uji bawaan (homebrew buatan proyek, bukan data game)"
+        }
+        top.addView(Ui.text(this, "$src · ${GameLibraryFmt.bytes(e.size)}${if (e.fromCache) " · hasil dari cache" else ""}", 13f, Ui.DIM))
+        val actions = Ui.hbox(this)
+        val running = Sessions.gameId == e.id && Sessions.handle != 0L
+        actions.addView(Ui.button(this, if (running) "Resume" else "Play", true) {
+            startActivity(Intent(this, PlayActivity::class.java).putExtra("id", e.id))
+        }.apply { isEnabled = e.playable || running; alpha = if (e.playable || running) 1f else 0.4f })
+        if (running) actions.addView(Ui.button(this, "Stop") { Sessions.stop(); render() })
+        if (e.status == LibStatus.PROCESSING) actions.addView(Ui.button(this, "Batal") { GameLibrary.cancel(e) })
+        else actions.addView(Ui.button(this, "Proses ulang") { GameLibrary.refresh(e, force = true) })
+        actions.addView(Ui.button(this, "Impor kunci XEX") { importKey() })
+        if (App.keyFile.exists()) actions.addView(Ui.button(this, "Hapus kunci") {
+            App.keyFile.delete(); AppLog.i("Kunci XEX dihapus"); GameLibrary.refreshAll(force = false)
+        })
+        if (e.type != SourceType.BUILTIN) actions.addView(Ui.button(this, "Hapus dari library") {
+            AlertDialog.Builder(this).setTitle("Hapus ${e.name}?")
+                .setMessage("File ISO Anda tidak dihapus; hanya entri library, cache analisis, dan salinan internal (jika ada).")
+                .setPositiveButton("Hapus") { _, _ -> GameLibrary.remove(e); finish() }.setNegativeButton("Batal", null).show()
+        })
+        top.addView(actions)
+        if (!e.playable && e.status != LibStatus.PROCESSING)
+            top.addView(Ui.text(this, "Play hanya aktif untuk status Ready. Aplikasi tidak memakai emulator atau simulasi gameplay sebagai pengganti.", 12f, Ui.DIM))
+        body.addView(top)
+
+        val r = e.report
+        if (r != null && e.status != LibStatus.PROCESSING) {
+            val req = Ui.card(this)
+            req.addView(Ui.section(this, "PERSYARATAN RUNTIME (DIPERIKSA OTOMATIS DARI ISO)"))
+            r.optJSONArray("requirements")?.let { arr ->
+                for (i in 0 until arr.length()) {
+                    val q = arr.getJSONObject(i)
+                    req.addView(Ui.statusRow(this, q.optString("label"), Ui.Status.of(q.optString("state")), q.optString("detail")))
+                }
+            }
+            if ((r.optJSONArray("requirements")?.length() ?: 0) == 0)
+                req.addView(Ui.statusRow(this, "Pemrosesan", Ui.Status.MISSING, r.optString("status_reason")))
+            body.addView(req)
+            if (r.optBoolean("ok")) body.addView(discCard(r))
+            r.optJSONObject("xex")?.let { body.addView(xexCard(it)) }
+        }
+        body.addView(settingsCard(e))
+    }
+
+    private fun discCard(r: JSONObject): View {
+        val c = Ui.card(this)
+        c.addView(Ui.section(this, "ISI DISC"))
+        fun line(k: String, v: String) = c.addView(Ui.text(this, "$k: $v", 13f))
+        line("Layout", "${r.optString("layout")} (partisi di offset 0x%X)".format(r.optLong("partition_offset")))
+        line("Platform", when (r.optString("platform")) { "xbox360" -> "Xbox 360"; "xbox" -> "Xbox original"; else -> "tidak diketahui" })
+        line("Berkas", "${r.optLong("files")} berkas, ${r.optLong("dirs")} folder, ${GameLibraryFmt.bytes(r.optLong("bytes"))} data")
+        line("Executable utama", r.optString("main_xex").ifEmpty { "-" })
+        line("Lama pemrosesan", "%.2f s".format(r.optDouble("seconds")))
+        r.optJSONObject("categories")?.let { cat ->
+            val names = mapOf("executable" to "Executable", "title-patch" to "Patch", "video" to "Video", "audio" to "Audio",
+                "texture" to "Tekstur/gambar", "ui" to "UI", "archive" to "Arsip data", "config" to "Konfigurasi/teks",
+                "script" to "Skrip", "font" to "Font", "shader" to "Shader", "metadata" to "Metadata", "other" to "Lainnya")
+            c.addView(Ui.section(this, "KLASIFIKASI FILE"))
+            cat.keys().asSequence().sortedByDescending { cat.getJSONObject(it).optLong("bytes") }.forEach { k ->
+                val o = cat.getJSONObject(k)
+                c.addView(Ui.text(this, "${names[k] ?: k}: ${o.optLong("files")} berkas, ${GameLibraryFmt.bytes(o.optLong("bytes"))}", 13f, Ui.DIM))
+            }
+        }
+        r.optJSONArray("special_dirs")?.takeIf { it.length() > 0 }?.let { a ->
+            line("Folder sistem", (0 until a.length()).joinToString { a.getString(it) } + " (tidak dibutuhkan runtime)")
+        }
+        r.optJSONArray("modules")?.takeIf { it.length() > 0 }?.let { a ->
+            c.addView(Ui.section(this, "MODUL XEX LAIN"))
+            for (i in 0 until a.length()) {
+                val m = a.getJSONObject(i)
+                c.addView(Ui.text(this, "${m.optString("path")} · ${GameLibraryFmt.bytes(m.optLong("size"))} · " +
+                    (if (m.optBoolean("dll")) "DLL" else if (m.optBoolean("patch")) "patch" else "executable") +
+                    " · ${m.optString("load_status").ifEmpty { m.optString("error") }}", 13f, Ui.DIM))
+            }
+        }
+        r.optJSONObject("refs")?.let { refs ->
+            if (refs.optLong("total") > 0 || refs.optLong("patterns") > 0) {
+                c.addView(Ui.section(this, "FILE YANG DIRUJUK KODE"))
+                c.addView(Ui.text(this, "${refs.optLong("found")}/${refs.optLong("total")} ditemukan di ISO · ${refs.optLong("patterns")} pola dinamis · " +
+                    "${refs.optLong("other_device")} ke perangkat lain", 13f))
+                refs.optJSONArray("missing")?.let { m ->
+                    for (i in 0 until minOf(m.length(), 15)) c.addView(Ui.text(this, "✘ ${m.getString(i)}", 12f, Ui.PARTIAL).apply { typeface = Typeface.MONOSPACE })
+                }
+                refs.optJSONArray("found_examples")?.let { m ->
+                    for (i in 0 until minOf(m.length(), 8)) c.addView(Ui.text(this, "✔ ${m.getString(i)}", 12f, Ui.DIM).apply { typeface = Typeface.MONOSPACE })
+                }
+            }
+        }
+        r.optJSONArray("truncated_examples")?.takeIf { it.length() > 0 }?.let { a ->
+            c.addView(Ui.section(this, "BERKAS TERPOTONG"))
+            for (i in 0 until a.length()) c.addView(Ui.text(this, a.getString(i), 12f, Ui.NO))
+        }
+        return c
+    }
+
+    private fun xexCard(a: JSONObject): View {
+        val c = Ui.card(this)
+        c.addView(Ui.section(this, "EXECUTABLE (DIBACA LANGSUNG DARI ISO)"))
+        fun line(k: String, v: String) = c.addView(Ui.text(this, "$k: $v", 13f))
+        if (!a.optBoolean("parsed")) { line("Error", a.optString("error")); return c }
+        line("Title ID / Media ID", "${a.optString("title_id")} / ${a.optString("media_id")}")
+        line("Versi · disc", "${a.optString("version")} · ${a.optInt("disc")}/${a.optInt("discs")}")
+        line("Region", a.optString("region_text"))
+        line("PE asli", a.optString("pe_name"))
+        line("Enkripsi / kompresi", "${if (a.optInt("encryption") == 1) "AES" else "tidak ada"} / " +
+            listOf("tidak ada", "basic", "LZX", "delta").getOrElse(a.optInt("compression")) { "?" })
+        line("Status image", a.optString("load_status") + a.optString("load_error").let { if (it.isNotEmpty()) " – $it" else "" })
+        if (a.has("functions"))
+            line("Kode", "%,d fungsi, %,d instruksi, %.2f%% dapat diterjemahkan".format(a.optLong("functions"), a.optLong("instructions"), a.optDouble("coverage") * 100))
+        a.optJSONArray("libraries")?.let { line("Library impor", (0 until it.length()).joinToString { i -> it.getString(i) }) }
+        a.optJSONArray("imports")?.let { im ->
+            c.addView(Ui.section(this, "IMPOR KERNEL (${a.optInt("imports_implemented")}/${im.length()} diimplementasikan)"))
+            val sb = StringBuilder()
+            for (i in 0 until im.length()) {
+                val o = im.getJSONObject(i)
+                sb.append(if (o.optBoolean("impl")) "✔ " else "✘ ").append(o.optString("lib")).append('!').append(o.optString("name")).append('\n')
+            }
+            c.addView(Ui.text(this, sb.toString().trimEnd(), 12f, Ui.DIM).apply { typeface = Typeface.MONOSPACE })
+        }
+        return c
     }
 
     private fun settingsCard(e: GameEntry): View {
         val c = Ui.card(this)
-        c.addView(Ui.section(this, "PENGATURAN GAME INI"))
+        c.addView(Ui.section(this, "PENGATURAN GAME INI (TERSIMPAN OTOMATIS)"))
         val custom = Store.gameGraphics(e.id)
         c.addView(Ui.switchRow(this, "Gunakan pengaturan grafis khusus game", custom != null) { on ->
-            Store.saveGameGraphics(e.id, if (on) Store.globalGraphics() else null)
-            render()
+            Store.saveGameGraphics(e.id, if (on) Store.globalGraphics() else null); render()
         })
         if (custom != null) c.addView(GraphicsEditor.build(this, custom) { Store.saveGameGraphics(e.id, it) })
         val profiles = Store.profiles()
@@ -84,47 +196,11 @@ class GameActivity : Activity() {
         c.addView(Ui.button(this, "Atur kontrol untuk game ini") {
             startActivity(Intent(this, ControlsActivity::class.java).putExtra("gameId", e.id))
         })
-        c.addView(Ui.text(this, "Pemetaan tombol diteruskan 1:1 sebagai tombol Xbox 360 (A/B/X/Y, LB/RB, LT/RT, D-pad, analog, Start, Back). " +
-            "Fungsi gameplay FIFA Street per tombol tidak dicantumkan karena belum dapat diverifikasi dari data game.", 12f, Ui.DIM))
-        return c
-    }
-
-    private fun detailsCard(a: org.json.JSONObject): View {
-        val c = Ui.card(this)
-        c.addView(Ui.section(this, "DETAIL EXECUTABLE"))
-        fun line(k: String, v: String) = c.addView(Ui.text(this, "$k: $v", 13f))
-        if (!a.optBoolean("parsed")) { line("Error", a.optString("error")); return c }
-        line("Title ID / Media ID", "${a.optString("title_id")} / ${a.optString("media_id")}")
-        line("Versi", a.optString("version"))
-        line("PE asli", a.optString("pe_name"))
-        line("Base / entry", "${a.optString("base")} / ${a.optString("entry")}")
-        line("Ukuran image", GameLibrary.fmtBytes(a.optLong("image_size")))
-        line("Region", a.optString("region"))
-        line("Slot TLS", a.optInt("tls_slots").toString())
-        a.optJSONArray("libraries")?.let { line("Library impor", (0 until it.length()).joinToString { i -> it.getString(i) }) }
-        a.optJSONArray("static_libs")?.let { if (it.length() > 0) line("Static lib XDK", (0 until it.length()).joinToString { i -> it.getString(i) }) }
-        a.optJSONArray("sections")?.let { s ->
-            c.addView(Ui.section(this, "SECTION PE"))
-            for (i in 0 until s.length()) {
-                val o = s.getJSONObject(i)
-                c.addView(Ui.text(this, "${o.optString("name")}  VA ${o.optString("va")}  ${GameLibrary.fmtBytes(o.optLong("size"))}${if (o.optBoolean("exec")) "  [kode]" else ""}", 13f, Ui.DIM))
-            }
-        }
-        a.optJSONArray("imports")?.let { im ->
-            c.addView(Ui.section(this, "IMPOR KERNEL (${a.optInt("imports_implemented")}/${im.length()} diimplementasikan)"))
-            val sb = StringBuilder()
-            for (i in 0 until im.length()) {
-                val o = im.getJSONObject(i)
-                sb.append(if (o.optBoolean("impl")) "✔ " else "✘ ").append(o.optString("lib")).append('!').append(o.optString("name")).append('\n')
-            }
-            c.addView(Ui.text(this, sb.toString().trimEnd(), 12f, Ui.DIM).apply { typeface = android.graphics.Typeface.MONOSPACE })
-        }
         return c
     }
 
     private fun importKey() {
-        val i = Intent(Intent.ACTION_OPEN_DOCUMENT).apply { addCategory(Intent.CATEGORY_OPENABLE); type = "*/*" }
-        startActivityForResult(i, REQ_KEY)
+        startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT).apply { addCategory(Intent.CATEGORY_OPENABLE); type = "*/*" }, REQ_KEY)
     }
 
     @Deprecated("framework API")
@@ -138,9 +214,8 @@ class GameActivity : Activity() {
         if (!ok) { Ui.info(this, "Kunci tidak valid", "File kunci harus berisi 16 byte mentah atau 32 digit heksadesimal."); return }
         File(App.keyFile.parent!!).mkdirs()
         App.keyFile.writeBytes(bytes)
-        AppLog.i("Kunci XEX diimpor ke penyimpanan privat aplikasi")
-        entry()?.let { GameLibrary.analyzeAsync(it) }
-        render()
+        AppLog.i("Kunci XEX diimpor ke penyimpanan privat aplikasi; library diproses ulang")
+        GameLibrary.refreshAll(force = false)
     }
 
     companion object { const val REQ_KEY = 51 }

@@ -1,6 +1,6 @@
 // fsr-analyze / fsr-recomp command line tools.
-//   fsr-analyze <file.xex> [--key keyfile] [--json] [--shallow]
-//   fsr-recomp  <file.xex> --out <dir> [--name module] [--key keyfile]
+//   fsr-analyze <file.xex|disc.iso> [--key keyfile] [--json] [--shallow]
+//   fsr-recomp  <file.xex|disc.iso> --out <dir> [--name module] [--key keyfile]
 //               [--syms file.syms] [--export name=0xADDR]... [--no-comments]
 // SPDX-License-Identifier: MIT
 #include <sys/stat.h>
@@ -10,6 +10,8 @@
 #include <string>
 
 #include "fsr/bytes.h"
+#include "fsr/disc_scan.h"
+#include "fsr/iso.h"
 #include "fsr/recomp.h"
 #include "fsr/report.h"
 
@@ -28,6 +30,21 @@ static int analyze_main(int argc, char** argv) {
   uint8_t key[16];
   std::string err;
   if (!keyp.empty() && !load_key_file(keyp, key, &err)) { std::fprintf(stderr, "%s\n", err.c_str()); return 2; }
+  if (sniff_container(path) == ContainerKind::Xdvdfs) {
+    // Disc image: scan everything in place, no extraction.
+    auto src = FdSource::open(path, &err);
+    ScanOptions so;
+    so.key = keyp.empty() ? nullptr : key;
+    so.deep = deep;
+    std::string last;
+    auto dr = scan_disc(src, so, [&](const std::string& st, uint64_t d, uint64_t t, const std::string&) {
+      if (!json && st != last) { std::fprintf(stderr, "[%s] %llu/%llu\n", st.c_str(), (unsigned long long)d, (unsigned long long)t); last = st; }
+      return true;
+    });
+    std::string out = json ? to_json(dr) + "\n" : to_text(dr) + (dr.have_report ? "\n" + to_text(dr.xex) : "");
+    std::fwrite(out.data(), 1, out.size(), stdout);
+    return dr.ok ? 0 : 1;
+  }
   auto r = analyze_xex(path, keyp.empty() ? nullptr : key, deep);
   std::string s = json ? to_json(r) + "\n" : to_text(r);
   std::fwrite(s.data(), 1, s.size(), stdout);
@@ -56,15 +73,26 @@ static int recomp_main(int argc, char** argv) {
       else exports.emplace_back(e.substr(0, eq), uint32_t(std::stoul(e.substr(eq + 1), nullptr, 0)));
     }
   }
-  std::vector<uint8_t> file;
   std::string err;
-  if (!read_file(path, file, &err)) { std::fprintf(stderr, "%s\n", err.c_str()); return 1; }
-  XexModule x;
-  if (!x.parse(std::move(file), err)) { std::fprintf(stderr, "parse: %s\n", err.c_str()); return 1; }
   uint8_t key[16];
   if (!keyp.empty() && !load_key_file(keyp, key, &err)) { std::fprintf(stderr, "%s\n", err.c_str()); return 1; }
-  LoadStatus st = x.load_image(keyp.empty() ? nullptr : key, err);
-  if (st != LoadStatus::Ok) { std::fprintf(stderr, "load: %s (%s)\n", to_string(st), err.c_str()); return 1; }
+  XexModule x;
+  if (sniff_container(path) == ContainerKind::Xdvdfs) {
+    // Disc image input: the main executable is read straight out of the ISO.
+    XisoReader disc;
+    std::string inner;
+    if (!disc.open(path, err) || !load_main_xex(disc, keyp.empty() ? nullptr : key, x, &inner, err)) {
+      std::fprintf(stderr, "disc: %s\n", err.c_str());
+      return 1;
+    }
+    std::fprintf(stderr, "fsr-recomp: using %s from disc image\n", inner.c_str());
+  } else {
+    std::vector<uint8_t> file;
+    if (!read_file(path, file, &err)) { std::fprintf(stderr, "%s\n", err.c_str()); return 1; }
+    if (!x.parse(std::move(file), err)) { std::fprintf(stderr, "parse: %s\n", err.c_str()); return 1; }
+    LoadStatus st = x.load_image(keyp.empty() ? nullptr : key, err);
+    if (st != LoadStatus::Ok) { std::fprintf(stderr, "load: %s (%s)\n", to_string(st), err.c_str()); return 1; }
+  }
   RecompInput in = make_input(x, name);
   in.exports = exports;
   if (!syms.empty()) {

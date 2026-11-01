@@ -7,6 +7,7 @@
 
 #include "fsr/bytes.h"
 #include "fsr/crypto.h"
+#include "fsr/disc_scan.h"
 #include "fsr/report.h"
 #include "native_log.h"
 
@@ -14,25 +15,25 @@ extern const fsr::RecompModule fsr_module_hb64;
 
 namespace fsr_android {
 namespace {
-// Every recompiled module compiled into this APK. A commercial title can only
-// run here after its executable has been recompiled (fsr-recomp, on a PC, from
-// the user's own legally obtained XEX) and the generated sources were built in.
-const fsr::RecompModule* const kModules[] = {&fsr_module_hb64};
 using Clock = std::chrono::steady_clock;
+// Every recompiled module compiled into this APK is registered with the core
+// registry. A commercial title can only run after its executable has been
+// recompiled (fsr-recomp, on a PC, from the user's own disc) and built in.
+struct RegisterModules {
+  RegisterModules() { fsr::register_module(&fsr_module_hb64); }
+} g_register;
 }  // namespace
 
 const fsr::RecompModule* find_module_for_image(const std::vector<uint8_t>& image) {
-  uint8_t sha[20];
-  fsr::Sha1::hash(image.data(), image.size(), sha);
-  for (auto* m : kModules)
-    if (m->image_size == image.size() && std::memcmp(m->image_sha1, sha, 20) == 0) return m;
-  return nullptr;
+  return fsr::find_registered_module(image);
 }
 
 std::string modules_json() {
+  size_t n = 0;
+  const fsr::RecompModule* const* mods = fsr::registered_modules(&n);
   std::string s = "[";
-  for (size_t i = 0; i < sizeof(kModules) / sizeof(kModules[0]); i++) {
-    auto* m = kModules[i];
+  for (size_t i = 0; i < n; i++) {
+    auto* m = mods[i];
     s += (i ? "," : "");
     s += "{\"name\":\"" + std::string(m->name) + "\",\"base\":\"" + fsr::hex32(m->image_base) + "\",\"size\":" +
          std::to_string(m->image_size) + ",\"functions\":" + std::to_string(m->func_count) + ",\"sha1\":\"" +
@@ -41,34 +42,58 @@ std::string modules_json() {
   return s + "]";
 }
 
+static bool key_from(const std::string& key_path, uint8_t key[16]) {
+  return !key_path.empty() && fsr::load_key_file(key_path, key, nullptr);
+}
+
+bool Session::bind(std::string& err) {
+  mod_ = find_module_for_image(xex_.image());
+  if (!mod_) {
+    err = "Executable ini belum memiliki modul ARM64 hasil recompile di dalam APK. Kode PowerPC-nya harus di-recompile "
+          "(fsr-recomp) lalu dibangun ke APK; runtime tidak memakai emulator/interpreter sebagai cadangan.";
+    return false;
+  }
+  rt_.log = [](const std::string& l) { log_line(l); };
+  if (!rt_.init(err) || !rt_.load(xex_, mod_, err)) return false;
+  frame_fn_ = rt_.export_addr("fsr_frame");
+  if (!frame_fn_) {
+    err = "modul tidak memiliki entry fsr_frame; entry retail membutuhkan thread guest dan GPU Xenos yang belum dibuat";
+    return false;
+  }
+  fb_ = rt_.alloc(1920 * 1080 * 4, 4096);
+  logf("[session] module '%s' bound: %u functions, image %08X+%X", mod_->name, mod_->func_count, mod_->image_base,
+       mod_->image_size);
+  return true;
+}
+
 std::unique_ptr<Session> Session::create(const std::string& xex_path, const std::string& key_path, std::string& err) {
   std::unique_ptr<Session> s(new Session());
   std::vector<uint8_t> file;
   if (!fsr::read_file(xex_path, file, &err)) return nullptr;
   if (!s->xex_.parse(std::move(file), err)) return nullptr;
   uint8_t key[16];
-  bool have_key = !key_path.empty() && fsr::load_key_file(key_path, key, nullptr);
-  fsr::LoadStatus st = s->xex_.load_image(have_key ? key : nullptr, err);
+  fsr::LoadStatus st = s->xex_.load_image(key_from(key_path, key) ? key : nullptr, err);
   if (st != fsr::LoadStatus::Ok) {
     err = std::string("XEX image: ") + fsr::to_string(st) + " - " + err;
     return nullptr;
   }
-  s->mod_ = find_module_for_image(s->xex_.image());
-  if (!s->mod_) {
-    err = "Executable ini belum memiliki modul hasil recompile di dalam APK. Kode PowerPC-nya harus di-recompile "
-          "(fsr-recomp) lalu dibangun ke APK; runtime tidak memakai emulator/interpreter sebagai cadangan.";
-    return nullptr;
-  }
-  s->rt_.log = [](const std::string& l) { log_line(l); };
-  if (!s->rt_.init(err) || !s->rt_.load(s->xex_, s->mod_, err)) return nullptr;
-  s->frame_fn_ = s->rt_.export_addr("fsr_frame");
-  if (!s->frame_fn_) {
-    err = "module has no frame entry point";
-    return nullptr;
-  }
-  s->fb_ = s->rt_.alloc(1920 * 1080 * 4, 4096);
-  logf("[session] module '%s' bound: %u functions, image %08X+%X", s->mod_->name, s->mod_->func_count,
-       s->mod_->image_base, s->mod_->image_size);
+  if (!s->bind(err)) return nullptr;
+  return s;
+}
+
+std::unique_ptr<Session> Session::create_from_disc(int fd, const std::string& key_path, std::string& err) {
+  auto src = fsr::FdSource::adopt(fd, &err);
+  if (!src) return nullptr;
+  auto disc = std::make_shared<fsr::XisoReader>();
+  if (!disc->open(src, err)) return nullptr;
+  std::unique_ptr<Session> s(new Session());
+  uint8_t key[16];
+  std::string inner;
+  if (!fsr::load_main_xex(*disc, key_from(key_path, key) ? key : nullptr, s->xex_, &inner, err)) return nullptr;
+  if (!s->bind(err)) return nullptr;
+  s->rt_.mount_disc(std::make_shared<fsr::DiscVfs>(disc));
+  logf("[session] disc mounted as game:\\ (%s, %zu entries), executable %s read in place", disc->layout().layout.c_str(),
+       disc->entries().size(), inner.c_str());
   return s;
 }
 

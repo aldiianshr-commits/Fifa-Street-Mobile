@@ -894,13 +894,15 @@ bool Emitter::emit(uint32_t raw, uint32_t addr, std::ostringstream& o) {
 
 }  // namespace
 
-RecompStats analyze(const RecompInput& in, std::vector<FunctionInfo>* out_funcs) {
+RecompStats analyze(const RecompInput& in, std::vector<FunctionInfo>* out_funcs, const AnalyzeProgress& progress) {
   RecompOutput out;
   auto funcs = discover_functions(in);
   RecompStats st;
   st.functions = funcs.size();
   Code code{in.image, in.base, in.size};
+  uint64_t done = 0;
   for (auto& f : funcs) {
+    if (progress && (done++ % 256) == 0 && !progress(done, funcs.size())) { st.cancelled = true; break; }
     if (f.dynamic_dispatch) st.dynamic_functions++;
     for (uint32_t a = f.start; a < f.end; a += 4) {
       uint32_t raw = code.word(a);

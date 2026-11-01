@@ -116,6 +116,26 @@ class SettingsActivity : Activity() {
             result.text = if (!ok) "AAudio gagal dibuka (lihat Log)." else if (toneOn) "Nada 440 Hz diputar. Tekan lagi untuk berhenti." else "Audio dihentikan."
         })
         rt.addView(row)
+        val row2 = Ui.hbox(this)
+        row2.addView(Ui.button(this, "Uji ISO: baca file game:\\ dari ISO") {
+            result.text = "Menjalankan…"
+            bg.execute {
+                val j = JSONObject(NativeBridge.discFileTest(android.os.ParcelFileDescriptor.open(App.homebrewIso,
+                    android.os.ParcelFileDescriptor.MODE_READ_ONLY).detachFd()))
+                val txt = if (j.optBoolean("ok")) "File I/O guest dari ISO: ${j.optInt("passed")}/${j.optInt("total")} cek lulus, ${j.optLong("bytes")} byte dibaca langsung (pread)"
+                else "Gagal: ${j.optString("error")}"
+                AppLog.i(txt)
+                runOnUiThread { result.text = txt }
+            }
+        })
+        row2.addView(Ui.button(this, "Ekspor ISO uji (untuk mencoba Tambah ISO)") {
+            startActivityForResult(android.content.Intent(android.content.Intent.ACTION_CREATE_DOCUMENT).apply {
+                addCategory(android.content.Intent.CATEGORY_OPENABLE)
+                type = "application/octet-stream"
+                putExtra(android.content.Intent.EXTRA_TITLE, "fsr-homebrew-test.iso")
+            }, REQ_EXPORT)
+        })
+        rt.addView(row2)
         rt.addView(result)
         rt.addView(Ui.text(this, "Audio game (XAudio2/XMA) belum tersedia; tombol di atas hanya menguji jalur audio perangkat.", 12f, Ui.DIM))
         body.addView(rt)
@@ -132,10 +152,33 @@ class SettingsActivity : Activity() {
                 AppLog.i("AUTOTEST selftest ok=${j.optBoolean("ok")} matched=${j.optInt("matched")}/${j.optInt("total")} " +
                     "vmx128_failures=${j.optInt("vmx128_failures")} native_us=${j.optDouble("native_us")} recomp_us=${j.optDouble("recomp_us")} error=${j.optString("error")}")
                 AppLog.i("AUTOTEST gpu ${NativeBridge.gpuInfo()}")
+                // One ISO as the only input: scan through a file descriptor, then guest file I/O from the ISO.
+                val t0 = System.currentTimeMillis()
+                val scan = JSONObject(NativeBridge.scanDisc(android.os.ParcelFileDescriptor.open(App.homebrewIso,
+                    android.os.ParcelFileDescriptor.MODE_READ_ONLY).detachFd(), null, true, null))
+                val ok = (0 until (scan.optJSONArray("requirements")?.length() ?: 0)).count {
+                    scan.getJSONArray("requirements").getJSONObject(it).optString("state") == "ok"
+                }
+                AppLog.i("AUTOTEST scan status=${scan.optString("status")} layout=${scan.optString("layout")} files=${scan.optLong("files")} " +
+                    "main=${scan.optString("main_xex")} requirements_ok=$ok ms=${System.currentTimeMillis() - t0} reason=${scan.optString("status_reason")}")
+                val ft = JSONObject(NativeBridge.discFileTest(android.os.ParcelFileDescriptor.open(App.homebrewIso,
+                    android.os.ParcelFileDescriptor.MODE_READ_ONLY).detachFd()))
+                AppLog.i("AUTOTEST discio passed=${ft.optInt("passed")}/${ft.optInt("total")} bytes=${ft.optLong("bytes")} error=${ft.optString("error")}")
                 AppLog.pullNative()
                 runOnUiThread { finish() }
             }
         }
+    }
+
+    @Deprecated("framework API")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: android.content.Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode != REQ_EXPORT || resultCode != RESULT_OK) return
+        val uri = data?.data ?: return
+        runCatching {
+            contentResolver.openOutputStream(uri)!!.use { it.write(App.homebrewIso.readBytes()) }
+            Ui.info(this, "ISO uji diekspor", "Sekarang pilih file ini lewat \"Tambah ISO\" di Library untuk mencoba alur SAF.")
+        }.onFailure { Ui.info(this, "Ekspor gagal", it.toString()) }
     }
 
     override fun onDestroy() {
@@ -143,4 +186,6 @@ class SettingsActivity : Activity() {
         if (toneOn) NativeBridge.audioTestTone(false)
         bg.shutdown()
     }
+
+    companion object { const val REQ_EXPORT = 61 }
 }
