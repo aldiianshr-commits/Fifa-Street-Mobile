@@ -51,9 +51,16 @@ for i, n in enumerate(nodes):
 if target is not None:
     # walk back to the nearest clickable ancestor-ish node (list item) and tap its centre
     pick = nodes[target]
-    for j in range(target, max(-1, target - 8), -1):
-        if 'clickable="true"' in nodes[j]:
-            pick = nodes[j]
+    def box(n):
+        return tuple(map(int, re.search(r'bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"', n).groups()))
+    tb = box(nodes[target])
+    for j in range(target, max(-1, target - 20), -1):
+        n = nodes[j]
+        if 'clickable="true"' not in n or 'preview_icon' in n or 'Preview' in n:
+            continue
+        b = box(n)
+        if b[0] <= tb[0] and b[1] <= tb[1] and b[2] >= tb[2] and b[3] >= tb[3]:  # contains the title
+            pick = n
             break
     open("saf_node.txt", "w").write(nodes[target] + "\nTAP: " + pick + "\n")
     m = re.search(r'bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"', pick)
