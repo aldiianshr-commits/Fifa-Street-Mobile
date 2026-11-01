@@ -72,6 +72,7 @@ class MainActivity : Activity() {
         // Headless smoke tests (CI emulator): adb shell am start ... --es autotest selftest|play
         when (intent.getStringExtra("autotest")) {
             "selftest" -> startActivity(Intent(this, SettingsActivity::class.java).putExtra("autotest", true))
+            "pickiso" -> pickIso(initialDownloads = true)
             "play" -> startActivity(Intent(this, PlayActivity::class.java).putExtra("id", GameLibrary.BUILTIN_ID)
                 .putExtra("autotest_seconds", intent.getIntExtra("seconds", 10)))
         }
@@ -102,8 +103,10 @@ class MainActivity : Activity() {
         adapter.notifyDataSetChanged()
     }
 
-    private fun pickIso() {
+    private fun pickIso(initialDownloads: Boolean = false) {
         val i = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            if (initialDownloads) putExtra(DocumentsContract.EXTRA_INITIAL_URI,
+                Uri.parse("content://com.android.externalstorage.documents/document/primary%3ADownload"))
             addCategory(Intent.CATEGORY_OPENABLE)
             type = "*/*"
             putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("application/x-iso9660-image", "application/octet-stream", "application/x-cd-image", "*/*"))
@@ -137,6 +140,7 @@ class MainActivity : Activity() {
         when (requestCode) {
             REQ_ISO -> {
                 val e = GameLibrary.addUri(uri)
+                AppLog.i("AUTOTEST picked uri=$uri persisted=${contentResolver.persistedUriPermissions.any { it.uri == uri && it.isReadPermission }}")
                 startActivity(Intent(this, GameActivity::class.java).putExtra("id", e.id))
             }
             REQ_TREE -> treeUriToPath(uri)?.let { scanFolderPath(it) }
