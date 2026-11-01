@@ -42,14 +42,28 @@ for attempt in 1 2 3 4 5 6; do
   xy=$(python3 - <<'PY'
 import re
 s = open("ui.xml", encoding="utf-8", errors="ignore").read()
-m = re.search(r'text="fsr-test\.iso"[^>]*bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"', s)
-if m:
+nodes = re.findall(r'<node [^>]*>', s)
+target = None
+for i, n in enumerate(nodes):
+    if 'text="fsr-test.iso"' in n:
+        target = i
+        break
+if target is not None:
+    # walk back to the nearest clickable ancestor-ish node (list item) and tap its centre
+    pick = nodes[target]
+    for j in range(target, max(-1, target - 8), -1):
+        if 'clickable="true"' in nodes[j]:
+            pick = nodes[j]
+            break
+    open("saf_node.txt", "w").write(nodes[target] + "\nTAP: " + pick + "\n")
+    m = re.search(r'bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"', pick)
     a, b, c, d = map(int, m.groups())
     print((a + c) // 2, (b + d) // 2)
 PY
 )
   if [ -n "$xy" ]; then
     echo "texts before tap: $(grep -o 'text="[^"]*"' ui.xml | head -40 | tr '\n' ' ')" > saf_ui.txt
+    cat saf_node.txt >> saf_ui.txt
     adb shell input tap $xy; picked=1; break
   fi
 done
