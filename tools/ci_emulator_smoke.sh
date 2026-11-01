@@ -48,9 +48,16 @@ if m:
     print((a + c) // 2, (b + d) // 2)
 PY
 )
-  if [ -n "$xy" ]; then adb shell input tap $xy; picked=1; break; fi
+  if [ -n "$xy" ]; then
+    echo "texts before tap: $(grep -o 'text="[^"]*"' ui.xml | head -40 | tr '\n' ' ')" > saf_ui.txt
+    adb shell input tap $xy; picked=1; break
+  fi
 done
-sleep 12
+sleep 6
+adb shell uiautomator dump /sdcard/ui2.xml >/dev/null 2>&1; adb pull /sdcard/ui2.xml ui2.xml >/dev/null 2>&1
+echo "texts after tap: $(grep -o 'text="[^"]*"' ui2.xml | head -40 | tr '\n' ' ')" >> saf_ui.txt
+echo "resumed: $(adb shell dumpsys activity activities | grep -m2 -E 'mResumedActivity|ResumedActivity')" >> saf_ui.txt
+sleep 6
 adb logcat -d -s FSR:I > saf.log
 adb shell am force-stop $PKG
 # Restart: the library must come back from library.json + persisted URI permission + cache.
@@ -59,7 +66,8 @@ adb shell am start -W -n $PKG/.MainActivity
 sleep 8
 adb logcat -d -s FSR:I > saf_restart.log
 adb shell am force-stop $PKG
-note "emulator SAF pick (picked=$picked)" saf.log "AUTOTEST picked|ISO ditambahkan|fsr-test|\[scan\]|Izin"
+note "emulator SAF pick (picked=$picked)" saf.log "."
+note "emulator SAF ui" saf_ui.txt "."
 note "emulator SAF after restart" saf_restart.log "Library dimuat|fsr-test|cache|tidak dapat diakses"
 
 grep -E "FATAL EXCEPTION|AndroidRuntime|Fatal signal|backtrace:" -A 12 full.log | head -60 > crash.log
