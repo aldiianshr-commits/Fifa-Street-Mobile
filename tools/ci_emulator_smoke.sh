@@ -85,6 +85,8 @@ if ! grep -q "ISO ditambahkan" saf.log; then
   # Deterministic fallback: open the same ISO through a content:// URI (MediaStore) with an
   # ACTION_VIEW intent, exercising ContentResolver -> ParcelFileDescriptor -> pread.
   via="mediastore-view"
+  adb shell am force-stop com.google.android.documentsui
+  adb shell input keyevent KEYCODE_HOME
   adb shell am force-stop $PKG
   id=$(adb shell content query --uri content://media/external/file --projection _id \
        --where "_data=\'/storage/emulated/0/Download/fsr-test.iso\'" | sed -n 's/.*_id=\([0-9]*\).*/\1/p' | head -1)
@@ -97,7 +99,9 @@ adb shell am force-stop $PKG
 # Restart: the library must come back from library.json + persisted URI permission + cache.
 adb logcat -c
 sleep 1
-adb shell am start -W -n $PKG/.MainActivity > restart_start.txt 2>&1
+adb shell am force-stop com.google.android.documentsui
+adb shell input keyevent KEYCODE_HOME
+adb shell am start -W -f 0x10008000 -n $PKG/.MainActivity > restart_start.txt 2>&1
 sleep 10
 adb logcat -d > restart_full.log
 grep " FSR " restart_full.log > saf_restart.log || true
