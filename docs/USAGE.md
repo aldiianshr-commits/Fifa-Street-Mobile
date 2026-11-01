@@ -1,25 +1,17 @@
 # Panduan penggunaan
 
-## 1. Menyiapkan file game (milik Anda sendiri)
+## 1. Menambahkan game: satu file ISO
 
-Struktur yang didukung di folder pilihan Anda (default yang disarankan `/storage/emulated/0/FifaStreet/`):
-
-```
-FifaStreet/
-├── default.xex          ← folder hasil ekstrak disc
-├── ...data game...
-└── FIFA Street.iso      ← atau image disc XDVDFS (XGD2/XGD3/rebuilt)
-```
-
-* Paket **STFS/Games on Demand** (berkas tanpa ekstensi berawalan `LIVE`/`CON `) terdeteksi tetapi belum dapat dibaca — ubah ke ISO/folder dengan alat Anda sendiri.
-* Aplikasi tidak mengunduh atau menyertakan file game, firmware, maupun kunci.
+* **Library → ＋ Tambah ISO**, pilih file `.iso` Xbox 360 milik Anda (dari penyimpanan internal, kartu SD, atau USB OTG). Alternatif: buka ISO dari file manager dengan "Buka dengan → FIFA STREET Recompiled".
+* ISO dibaca **di tempat** lewat file descriptor dari Storage Access Framework; izin baca disimpan permanen sehingga library tetap ada setelah aplikasi ditutup atau perangkat di-restart.
+* Bila penyedia penyimpanan hanya memberikan stream (umumnya penyedia cloud), aplikasi menyalin ISO sekali ke penyimpanan aplikasi (jika ruang cukup) lalu membacanya dari sana.
+* Hasil analisis di-cache per ISO; pemrosesan ulang hanya terjadi bila ISO, kunci, atau versi aplikasi berubah (atau Anda menekan *Proses ulang*).
+* *Pindai folder* (opsional) mencari semua ISO di sebuah folder; ini butuh izin "Akses semua file".
+* Paket **STFS/Games on Demand** dan executable XEX polos dikenali tetapi diberi status Unsupported dengan alasannya.
 
 ## 2. XEX terenkripsi
 
-`default.xex` retail terenkripsi AES. Dua pilihan:
-
-* **Impor kunci XEX** (16 byte biner atau 32 digit heksadesimal) dari konsol Anda sendiri melalui *Detail game → Impor kunci XEX*. Kunci disimpan di penyimpanan privat aplikasi dan dapat dihapus kapan saja. Kunci yang salah terdeteksi (hash blok/MZ tidak valid).
-* atau gunakan XEX yang sudah Anda dekripsi sendiri.
+`default.xex` retail terenkripsi AES. Impor kunci XEX dari konsol Anda sendiri lewat *Detail game → Impor kunci XEX* (16 byte biner atau 32 digit heks). Kunci disimpan privat di aplikasi dan dapat dihapus; semua ISO diproses ulang otomatis. Kunci yang salah terdeteksi (hash blok/MZ tidak valid).
 
 ## 3. Membaca status kompatibilitas
 
@@ -30,9 +22,10 @@ jumlah fungsi & instruksi, persentase instruksi yang dapat diterjemahkan, jumlah
 
 ```bash
 ./tools/regen_homebrew.sh build-host          # build fsr-analyze / fsr-recomp
-./build-host/fsr-analyze default.xex --key xex.key           # ringkasan
+./build-host/fsr-analyze game.iso --key xex.key              # ISO langsung: laporan disc + executable
+./build-host/fsr-analyze default.xex --key xex.key           # atau XEX polos
 ./build-host/fsr-analyze default.xex --key xex.key --json    # JSON
-./build-host/fsr-recomp  default.xex --key xex.key --out gen/fifastreet --name fifastreet
+./build-host/fsr-recomp  game.iso --key xex.key --out gen/fifastreet --name fifastreet   # XEX diambil dari ISO
 ```
 
 Untuk memasukkannya ke APK pribadi: salin `gen/fifastreet/*` ke `android/app/src/main/cpp/generated/fifastreet/`, tambahkan berkasnya di `android/app/src/main/cpp/CMakeLists.txt` dan `&fsr_module_fifastreet` ke `kModules` di `session.cpp`, lalu build. **Jangan publikasikan** kode hasil recompile game komersial.

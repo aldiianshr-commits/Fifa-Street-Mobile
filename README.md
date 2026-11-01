@@ -10,7 +10,12 @@ Proyek porting **native** FIFA Street versi Xbox 360 ke Android (target: **Xiaom
 
 | Komponen | Status | Keterangan |
 |---|---|---|
-| Pemindai folder game (XEX, ISO XDVDFS, deteksi STFS/GOD) | ✅ Berfungsi | Pilih folder (SAF), pindai ulang, cache analisis, cek ISO terpotong |
+| **Input satu file ISO** (pilih lewat SAF / "Buka dengan") | ✅ Berfungsi | ISO dibaca langsung lewat file descriptor (`pread`), tanpa ekstraksi; izin baca disimpan; library & hasil analisis tetap ada setelah aplikasi ditutup |
+| Pemindaian & validasi ISO otomatis | ✅ Berfungsi | Layout XGD2/XGD3/rebuilt (+ deteksi XGD1/Xbox original, STFS, XEX polos), validasi descriptor & pohon direktori, inventaris & klasifikasi semua file (magic + ekstensi), deteksi berkas terpotong |
+| Deteksi executable, modul, region, enkripsi, file yang dirujuk | ✅ Berfungsi | `default.xex` dibaca dari ISO; XEX lain di disc (DLL/patch) dilaporkan; literal path `game:\`/`d:\` di kode dicocokkan dengan isi ISO |
+| Status library Ready / Processing / Partial / Unsupported + progres per tahap | ✅ Berfungsi | Setiap persyaratan runtime dicantumkan dengan alasannya; bisa dibatalkan; cache hasil analisis |
+| ISO di-mount sebagai `game:\` untuk runtime (HLE NtCreateFile/NtOpenFile/NtReadFile/NtQueryInformationFile/NtSetInformationFile/NtQueryFullAttributesFile/NtClose) | ✅ Berfungsi | Read-only; diuji 11/11 cek dari kode PowerPC hasil recompile |
+| Penyedia penyimpanan tanpa akses acak (stream) | ⚠️ Parsial | Otomatis disalin sekali ke penyimpanan aplikasi bila ruang cukup; belum diuji dengan penyedia cloud sungguhan |
 | Loader XEX2: header, eksekusi/title info, impor, resource | ✅ Berfungsi | Diuji dengan XEX homebrew buatan sendiri |
 | Dekripsi AES XEX | ✅ Berfungsi (kunci dari pengguna) | **Tidak ada kunci yang disertakan.** Impor kunci konsol Anda sendiri atau pakai XEX yang sudah didekripsi |
 | Dekompresi basic | ✅ Berfungsi | Diuji (basic + AES dengan kunci uji acak) |
@@ -21,7 +26,7 @@ Proyek porting **native** FIFA Street versi Xbox 360 ke Android (target: **Xiaom
 | AltiVec / VMX standar (±150 instruksi) | ✅ Berfungsi | 65 operasi berbeda diuji diferensial (auto-vectorization + intrinsik, termasuk bentuk record → CR6); sisanya diimplementasikan dari spesifikasi |
 | VMX128 (ekstensi Xenon, register v0–v127) | ⚠️ Parsial | Semua opcode VMX128 kecuali `vpkd3d128`/`vupkd3d128`; diverifikasi dengan 65 cek instruksi yang dienkode manual (tidak ada assembler publik untuk VMX128, jadi belum dibandingkan dengan hardware asli) |
 | Runtime: memori guest 4 GiB, panggilan tidak langsung, stack, TLS | ✅ Berfungsi | |
-| HLE kernel/XAM | ⚠️ Parsial | 18 fungsi (DbgPrint, NtAllocateVirtualMemory, XamInputGetState, …). Fungsi lain dilaporkan di log |
+| HLE kernel/XAM | ⚠️ Parsial | 25 fungsi (DbgPrint, NtAllocateVirtualMemory, file I/O disc, XamInputGetState, …). Fungsi lain dilaporkan per game |
 | Thread guest (ExCreateThread, KeWait*, event) | ❌ Belum tersedia | |
 | GPU Xenos → Vulkan (perintah PM4, shader, EDRAM, tekstur) | ❌ Belum tersedia | Komponen terbesar yang tersisa |
 | Presenter Vulkan (resolusi internal, render scale, VSync/MAILBOX, filter, aspect, frame pacing) | ✅ Berfungsi | Menampilkan framebuffer yang ditulis kode guest (homebrew) |
@@ -46,12 +51,13 @@ APK ditandatangani dengan kunci uji publik (`android/signing/fsr-test.jks`, pass
 
 ## Cara pakai singkat
 
-1. Pasang APK, buka aplikasi, berikan izin **Akses semua file**.
-2. **Pilih folder** berisi game milik Anda (mis. `/storage/emulated/0/FifaStreet/` berisi `default.xex` + data, atau file `.iso`).
-3. Aplikasi memindai, mengekstrak `default.xex` dari ISO bila perlu, lalu menganalisis: title ID, enkripsi/kompresi, section, impor kernel, jumlah fungsi/instruksi, persentase yang dapat diterjemahkan, jumlah VMX.
-4. Jika XEX terenkripsi: **Impor kunci XEX** (milik Anda sendiri) atau gunakan XEX yang sudah Anda dekripsi.
-5. **Homebrew Self-Test** (bawaan) dapat langsung di-*Play*: bola digerakkan oleh analog kiri/D-pad, warna oleh A/B/X/Y, ukuran oleh LT/RT — ini membuktikan jalur *kontrol → runtime → kode PowerPC hasil recompile → Vulkan* bekerja di perangkat.
-6. **Pengaturan → Uji runtime** membandingkan hasil kode native ARM64 vs kode PowerPC hasil recompile di perangkat Anda sendiri dan mengukur waktunya.
+1. Pasang APK, buka aplikasi, ketuk **＋ Tambah ISO**, lalu pilih satu file ISO Xbox 360 milik Anda. Tidak perlu izin "Akses semua file" dan tidak perlu memilih XEX/file internal apa pun.
+2. Aplikasi otomatis: validasi format → baca filesystem → pindai & klasifikasi seluruh isi → baca `default.xex` langsung dari ISO → dekripsi/dekompresi → analisis & cek terjemahan kode → periksa modul dan file yang dirujuk. Progres tampil per tahap dan bisa dibatalkan.
+3. Game masuk ke Library dengan status **Ready / Processing / Partial / Unsupported**; halaman detail menjelaskan setiap persyaratan yang belum terpenuhi beserta penyebab teknisnya.
+4. Jika XEX terenkripsi dan tidak ada kunci, statusnya **Partial** dengan alasan "terenkripsi AES-128 – impor kunci XEX dari konsol Anda". Tidak ada keberhasilan dekripsi yang dikarang.
+5. **Homebrew Self-Test (ISO uji bawaan)** berstatus Ready dan bisa di-*Play*: runtime membaca executable dan file data langsung dari ISO uji itu. *Pengaturan → Ekspor ISO uji* menyimpan ISO tersebut agar alur "Tambah ISO" bisa dicoba.
+
+Yang akan Anda lihat untuk FIFA Street saat ini: **Partial** (atau Unsupported bila ISO rusak/terpotong). Alasannya: modul ARM64 hasil recompile untuk executable FIFA Street belum ada di APK, kompilasi C++ → ARM64 butuh toolchain di PC, dan GPU Xenos, thread, serta audio belum diimplementasikan.
 
 Panduan lengkap (termasuk me-recompile XEX Anda sendiri di PC): [docs/USAGE.md](docs/USAGE.md).
 

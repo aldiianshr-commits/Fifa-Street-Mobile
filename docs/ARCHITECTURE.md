@@ -26,6 +26,9 @@
 | `xex.h/.cc` | Parser XEX2 (header opsional, security info, execution info, import libraries, resource, static lib, TLS), dekripsi AES-128-CBC dengan **session key yang dibuka memakai kunci dari pengguna**, dekompresi basic dan LZX (rantai blok + verifikasi SHA-1 per blok), parser PE (mesin `0x1F2` PowerPC BE), `.pdata`, resolusi rekaman impor. |
 | `crypto.cc` | AES-128 (S-box dibangkitkan, diverifikasi vektor FIPS-197) dan SHA-1. |
 | `lzx_glue.cc` + `third_party/mspack` | Dekoder LZX libmspack dengan sistem I/O memori. |
+| `source.h/.cc` | Sumber baca acak: `FdSource` (pread di atas fd, termasuk fd dari SAF), `MemorySource`, `SliceSource`. Menolak fd yang tidak seekable dengan pesan jelas. |
+| `disc_scan.h/.cc` | Pemrosesan satu ISO: validasi → inventaris & klasifikasi → executable utama dibaca dari ISO → dekripsi/analisis → modul lain → rujukan path → daftar persyaratan → status Ready/Partial/Unsupported; progres + pembatalan. |
+| `vfs.h/.cc` + HLE file di `kernel.cc` | ISO di-mount read-only sebagai `game:\`, `d:\`, `\Device\Cdrom0`; handle file, posisi, informasi file; semua baca langsung dari ISO. |
 | `iso.h/.cc` | Pembaca XDVDFS (offset partisi rebuilt/XGD2/XGD3/XGD1), daftar berkas, ekstraksi; deteksi kontainer STFS (LIVE/PIRS/CON). |
 | `ppc.h`, `ppc_decode.cc` | Decoder instruksi PowerPC Xenon (±200 opcode), helper field, disassembler ringkas. Instruksi AltiVec/VMX128 dikenali sebagai kelas `vmx`. |
 | `ppc_vmx.h/.cc`, `vmx.h` | Decoder AltiVec + VMX128 (tata letak field mengikuti tabel decoder Xenia) dan semantik vektor per elemen dalam urutan byte big-endian (saturasi → VSCR[SAT], bentuk record → CR6). VMX128 memetakan register v0–v127 dan instruksi khas Xenon (`vmsum3fp128`, `vmsum4fp128`, `vrlimi128`, `vpermwi128`, `vmaddcfp128`, unaligned `lvlx/lvrx/stvlx/stvrx`, …). |

@@ -1,14 +1,14 @@
 # Laporan pengujian
 
-Tanggal: 27 Oktober 2026 · commit terbaru di `main` · semua angka di bawah berasal dari eksekusi nyata (lokal dan GitHub Actions), bukan perkiraan.
+Tanggal: 1 November 2026 (pembaruan: input ISO langsung) · commit terbaru di `main` · semua angka di bawah berasal dari eksekusi nyata (lokal dan GitHub Actions), bukan perkiraan.
 
 ## Ringkasan
 
 | Lingkungan | Yang diuji | Hasil |
 |---|---|---|
-| Linux x86-64 (lokal + CI `ubuntu-24.04`) | 92 unit test; uji diferensial homebrew 64-bit & 32-bit | ✅ lulus semua |
+| Linux x86-64 (lokal + CI `ubuntu-24.04`) | 115 unit test; uji diferensial homebrew 64-bit & 32-bit; 2 ISO uji end-to-end | ✅ lulus semua |
 | Linux ARM64 (CI `ubuntu-24.04-arm`) | Sama seperti di atas, kode hasil recompile dikompilasi untuk AArch64 | ✅ lulus semua |
-| Android 11 emulator x86_64 dengan translasi ARM (`libndk_translation`), Vulkan SwiftShader | Pemasangan APK arm64, self-test runtime di dalam aplikasi, sesi *Play* homebrew dengan input terskrip | ✅ 36/36 identik, VMX128 0 gagal, sesi berjalan tanpa error |
+| Android 11 emulator x86_64 dengan translasi ARM (`libndk_translation`), Vulkan SwiftShader | Pemasangan APK arm64, self-test runtime, scan ISO lewat fd, file I/O guest dari ISO, ISO via URI `content://` + restart, sesi *Play* dari ISO | ✅ 36/36 identik, scan `ready`, disc I/O 11/11, library + cache bertahan setelah restart |
 | Xiaomi Pad 6 fisik | — | ⚠️ **Belum diuji**: tidak ada akses ke perangkat fisik dari lingkungan build. Jalankan *Pengaturan → Uji runtime* dan *Homebrew Self-Test → Play* di perangkat Anda |
 | FIFA Street | — | ❌ Belum dapat dijalankan (lihat FEASIBILITY.md). Tidak ada file game yang tersedia/diunduh |
 
@@ -44,6 +44,13 @@ Emulator: `sdk_gphone_x86_64`, Android 11 / API 30, ABI `x86_64, x86, arm64-v8a,
 * Self-test di aplikasi (`--es autotest selftest`): `[selftest] 36/36 match (incl. 12/12 AltiVec), VMX128 failures 0`.
 * Sesi *Play* homebrew (`--es autotest play`, 12 detik, input D-pad/A/B/X/Y terskrip): Vulkan `SwiftShader Device (Subzero)` Vulkan 1.3.0, swapchain 640×320, resolusi internal 854×480, ±496 frame tanpa error, ±502 panggilan kernel (polling input tiap frame), log guest `homebrew demo running: 854x480`.
 * Angka waktu/FPS dari emulator **tidak mewakili** Xiaomi Pad 6 (CPU ARM ditranslasikan ke x86 dan GPU dirender perangkat lunak), sehingga tidak dicantumkan sebagai benchmark.
+
+## 3b. Input ISO langsung (pembaruan 1 Nov 2026)
+
+* Host: `homebrew.iso` (layout rebuilt) dan `homebrew_xgd2.iso` (partisi XGD2 di 0x0FD90000) → `scan_disc` berstatus **ready** melalui tahap validate → filesystem → inventory → xex → decrypt → analyze → modules → references → done; executable dibaca dari ISO; kode PowerPC hasil recompile membuka/membaca `game:\data\hello.txt` dan `d:\MEDIA\Readme.TXT` lewat HLE kernel: **11/11 cek** (CRC isi, EOF, posisi, offset eksplisit, atribut, file hilang, double close, perangkat lain).
+* Unit test: ISO terpotong di tengah `default.xex` → Unsupported + "Kelengkapan data: Missing"; XEX AES di dalam ISO tanpa kunci → Partial + "Enkripsi: Missing"; dengan kunci uji → terdekripsi; data acak & paket STFS → Unsupported dengan alasan; pembatalan di tengah pemindaian.
+* Emulator: ISO yang sama di `/sdcard/Download` dibuka lewat URI `content://media/...` (intent "Buka dengan") → `fsr-test.iso: ready`; aplikasi dihentikan dan dibuka lagi → `Library dimuat: 2 entri`, `fsr-test.iso: hasil analisis dari cache (ready)`.
+* **Belum terverifikasi otomatis:** pemilihan lewat UI DocumentsUI. Ketukan otomatis (uiautomator) pada item grid tidak memicu pemilihan di emulator, sehingga `takePersistableUriPermission` dari picker sungguhan belum teruji di CI (jalur kode sama, izin MediaStore tidak bersifat persisten). Mohon dicoba langsung di perangkat.
 
 ## 4. Pemeriksaan APK
 
