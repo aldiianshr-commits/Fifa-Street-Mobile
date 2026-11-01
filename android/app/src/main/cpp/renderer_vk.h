@@ -19,6 +19,15 @@ struct RenderSettings {
   int aspect = 0;  // 0 = keep 16:9 (letterbox), 1 = stretch to screen
 };
 
+// Per-present CPU timings (ms) and swapchain diagnostics.
+struct PresentTimings {
+  double wait = 0, acquire = 0, copy = 0, submit = 0, present = 0;
+};
+struct SwapInfo {
+  uint32_t images = 0, transform = 1, current_transform = 1, recreations = 0, suboptimal = 0;
+  VkPresentModeKHR mode = VK_PRESENT_MODE_FIFO_KHR;
+};
+
 struct GpuInfo {
   std::string name;
   uint32_t api = 0, driver = 0, vendor = 0, device = 0;
@@ -35,6 +44,10 @@ class VkRenderer {
   // rgba: tightly packed width*height*4 bytes (R,G,B,A).
   bool present(const uint8_t* rgba, uint32_t w, uint32_t h, const RenderSettings& s, std::string& err);
   const GpuInfo& info() const { return info_; }
+  // Surface size changed but the window is the same: rebuild only the swapchain.
+  bool resize(std::string& err);
+  const PresentTimings& last_timings() const { return timings_; }
+  const SwapInfo& swap_info() const { return swap_; }
   static bool query(GpuInfo& out, std::string& err);  // instance-only probe for the settings screen
 
  private:
@@ -75,6 +88,9 @@ class VkRenderer {
   uint32_t guest_w_ = 0, guest_h_ = 0;
   bool guest_initialized_ = false;
   GpuInfo info_;
+  PresentTimings timings_;
+  SwapInfo swap_;
+  bool flip180_ = false;
 };
 
 }  // namespace fsr_android

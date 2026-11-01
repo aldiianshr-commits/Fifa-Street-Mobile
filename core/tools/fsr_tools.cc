@@ -58,7 +58,7 @@ static int recomp_main(int argc, char** argv) {
   }
   std::string path = argv[1], out = "recomp_out", name = "game", keyp, syms;
   std::vector<std::pair<std::string, uint32_t>> exports;
-  bool comments = true;
+  bool comments = true, mode32 = false;
   for (int i = 2; i < argc; i++) {
     std::string a = argv[i];
     if (a == "--out" && i + 1 < argc) out = argv[++i];
@@ -66,6 +66,7 @@ static int recomp_main(int argc, char** argv) {
     else if (a == "--key" && i + 1 < argc) keyp = argv[++i];
     else if (a == "--syms" && i + 1 < argc) syms = argv[++i];
     else if (a == "--no-comments") comments = false;
+    else if (a == "--mode32") mode32 = true;
     else if (a == "--export" && i + 1 < argc) {
       std::string e = argv[++i];
       auto eq = e.find('=');
@@ -117,6 +118,7 @@ static int recomp_main(int argc, char** argv) {
     if (!ex.second) { std::fprintf(stderr, "export %s not found in --syms\n", ex.first.c_str()); return 1; }
   RecompOptions opt;
   opt.emit_comments = comments;
+  opt.mode32 = mode32;
   RecompOutput res = recompile(in, opt);
   ::mkdir(out.c_str(), 0755);
   for (auto& [fn, content] : res.files)

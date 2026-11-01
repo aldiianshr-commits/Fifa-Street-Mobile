@@ -30,6 +30,11 @@ uint32_t native_XamInputGetState(uint32_t, uint32_t, void* st) {
   return 0;
 }
 uint32_t native_DbgPrint(const char*, ...) { return 0; }
+// The guest demo runs without a mounted disc in this test, so its file open
+// fails with STATUS_NO_MEDIA; the native twin reports the same.
+uint32_t native_NtOpenFile(uint32_t*, uint32_t, void*, void*, uint32_t) { return 0xC0000178u; }
+uint32_t native_NtReadFile(uint32_t, uint32_t, uint32_t, uint32_t, void*, void*, uint32_t, uint64_t*) { return 0xC0000008u; }
+uint32_t native_NtClose(uint32_t) { return 0xC0000008u; }
 }
 extern const fsr::RecompModule fsr_module_hb64;
 extern const fsr::RecompModule fsr_module_hb32;

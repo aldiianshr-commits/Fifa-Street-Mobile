@@ -5,6 +5,7 @@
 #include <vulkan/vulkan_android.h>
 
 #include <algorithm>
+#include <chrono>
 #include <cstring>
 
 #include "native_log.h"
@@ -186,8 +187,23 @@ bool VkRenderer::create_swapchain(bool vsync, std::string& err) {
   }
   VkPresentModeKHR mode = VK_PRESENT_MODE_FIFO_KHR;
   if (!vsync) mode = info_.mailbox ? VK_PRESENT_MODE_MAILBOX_KHR : info_.immediate ? VK_PRESENT_MODE_IMMEDIATE_KHR : VK_PRESENT_MODE_FIFO_KHR;
-  uint32_t count = std::max(caps.minImageCount, 3u);
+  // One more than the minimum so FIFO does not stall waiting for the compositor.
+  uint32_t count = std::max(caps.minImageCount + 1, 3u);
   if (caps.maxImageCount) count = std::min(count, caps.maxImageCount);
+  // Pre-rotation (Android): presenting with a transform that differs from the
+  // display's makes the compositor rotate every frame and makes every present
+  // return VK_SUBOPTIMAL_KHR. 180 degrees is handled here by a mirrored blit;
+  // 90/270 would need a transposed copy, so those keep IDENTITY (compositor
+  // rotates) and SUBOPTIMAL is tolerated instead of rebuilding the swapchain.
+  VkSurfaceTransformFlagBitsKHR pre = VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR;
+  flip180_ = false;
+  if (caps.currentTransform == VK_SURFACE_TRANSFORM_ROTATE_180_BIT_KHR &&
+      (caps.supportedTransforms & VK_SURFACE_TRANSFORM_ROTATE_180_BIT_KHR)) {
+    pre = VK_SURFACE_TRANSFORM_ROTATE_180_BIT_KHR;
+    flip180_ = true;
+  } else if (!(caps.supportedTransforms & VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR)) {
+    pre = caps.currentTransform;
+  }
   VkCompositeAlphaFlagBitsKHR alpha = (caps.supportedCompositeAlpha & VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR)
                                           ? VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR
                                           : VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR;
@@ -200,8 +216,7 @@ bool VkRenderer::create_swapchain(bool vsync, std::string& err) {
   ci.imageArrayLayers = 1;
   ci.imageUsage = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
   ci.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
-  ci.preTransform = VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR & caps.supportedTransforms ? VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR
-                                                                                     : caps.currentTransform;
+  ci.preTransform = pre;
   ci.compositeAlpha = alpha;
   ci.presentMode = mode;
   ci.clipped = VK_TRUE;
@@ -213,6 +228,14 @@ bool VkRenderer::create_swapchain(bool vsync, std::string& err) {
   sc_format_ = chosen.format;
   sc_extent_ = ext;
   sc_vsync_ = vsync;
+  swap_.images = count;
+  swap_.transform = uint32_t(pre);
+  swap_.current_transform = uint32_t(caps.currentTransform);
+  swap_.mode = mode;
+  swap_.recreations++;
+  logf("[vk] swapchain %ux%u, %u images, present mode %d, preTransform %u, currentTransform %u%s", ext.width, ext.height,
+       count, int(mode), uint32_t(pre), uint32_t(caps.currentTransform),
+       pre != caps.currentTransform ? " (compositor rotates; SUBOPTIMAL tolerated)" : "");
   uint32_t in = 0;
   vkGetSwapchainImagesKHR(device_, swapchain_, &in, nullptr);
   sc_images_.resize(in);
@@ -308,9 +331,13 @@ bool VkRenderer::present(const uint8_t* rgba, uint32_t w, uint32_t h, const Rend
     if (!create_swapchain(s.vsync, err)) return false;
   }
   if (!ensure_guest_image(w, h, err)) return false;
+  using Clock = std::chrono::steady_clock;
+  auto ms = [](Clock::time_point a, Clock::time_point b) { return std::chrono::duration<double, std::milli>(b - a).count(); };
+  auto t0 = Clock::now();
   Frame& f = frames_[frame_index_];
   frame_index_ = (frame_index_ + 1) % kFrames;
   vkWaitForFences(device_, 1, &f.fence, VK_TRUE, UINT64_MAX);
+  auto t1 = Clock::now();
 
   uint32_t idx = 0;
   VkResult r = vkAcquireNextImageKHR(device_, swapchain_, UINT64_MAX, f.acquired, VK_NULL_HANDLE, &idx);
@@ -319,8 +346,10 @@ bool VkRenderer::present(const uint8_t* rgba, uint32_t w, uint32_t h, const Rend
     return create_swapchain(s.vsync, err);
   }
   if (r != VK_SUCCESS && r != VK_SUBOPTIMAL_KHR) { err = "vkAcquireNextImageKHR " + std::to_string(r); return false; }
+  auto t2 = Clock::now();
   vkResetFences(device_, 1, &f.fence);
   std::memcpy(f.staging_ptr, rgba, size_t(w) * h * 4);
+  auto t3 = Clock::now();
 
   VkCommandBufferBeginInfo bi{VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO};
   bi.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
@@ -363,8 +392,14 @@ bool VkRenderer::present(const uint8_t* rgba, uint32_t w, uint32_t h, const Rend
   blit.srcSubresource = {VK_IMAGE_ASPECT_COLOR_BIT, 0, 0, 1};
   blit.srcOffsets[1] = {int32_t(w), int32_t(h), 1};
   blit.dstSubresource = {VK_IMAGE_ASPECT_COLOR_BIT, 0, 0, 1};
-  blit.dstOffsets[0] = {dx0, dy0, 0};
-  blit.dstOffsets[1] = {dx1, dy1, 1};
+  if (flip180_) {  // pre-rotated by 180 degrees: mirror both axes
+    int32_t W = int32_t(sc_extent_.width), H = int32_t(sc_extent_.height);
+    blit.dstOffsets[0] = {W - dx0, H - dy0, 0};
+    blit.dstOffsets[1] = {W - dx1, H - dy1, 1};
+  } else {
+    blit.dstOffsets[0] = {dx0, dy0, 0};
+    blit.dstOffsets[1] = {dx1, dy1, 1};
+  }
   VkFilter filter = (s.linear && info_.blit_linear) ? VK_FILTER_LINEAR : VK_FILTER_NEAREST;
   vkCmdBlitImage(f.cmd, guest_, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, dst, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &blit,
                  filter);
@@ -382,6 +417,7 @@ bool VkRenderer::present(const uint8_t* rgba, uint32_t w, uint32_t h, const Rend
   si.signalSemaphoreCount = 1;
   si.pSignalSemaphores = &f.rendered;
   VKCHECK(vkQueueSubmit(queue_, 1, &si, f.fence), "vkQueueSubmit");
+  auto t4 = Clock::now();
   VkPresentInfoKHR pi{VK_STRUCTURE_TYPE_PRESENT_INFO_KHR};
   pi.waitSemaphoreCount = 1;
   pi.pWaitSemaphores = &f.rendered;
@@ -389,12 +425,35 @@ bool VkRenderer::present(const uint8_t* rgba, uint32_t w, uint32_t h, const Rend
   pi.pSwapchains = &swapchain_;
   pi.pImageIndices = &idx;
   r = vkQueuePresentKHR(queue_, &pi);
-  if (r == VK_ERROR_OUT_OF_DATE_KHR || r == VK_SUBOPTIMAL_KHR) {
+  auto t5 = Clock::now();
+  timings_ = {ms(t0, t1), ms(t1, t2), ms(t2, t3), ms(t3, t4), ms(t4, t5)};
+  if (r == VK_ERROR_OUT_OF_DATE_KHR) {
     vkDeviceWaitIdle(device_);
     return create_swapchain(s.vsync, err);
   }
+  if (r == VK_SUBOPTIMAL_KHR) {
+    // Usually only a transform mismatch (see create_swapchain). Rebuild only
+    // if the surface size really changed, never every frame.
+    swap_.suboptimal++;
+    VkSurfaceCapabilitiesKHR caps;
+    if (vkGetPhysicalDeviceSurfaceCapabilitiesKHR(phys_, surface_, &caps) == VK_SUCCESS &&
+        caps.currentExtent.width != UINT32_MAX &&
+        (caps.currentExtent.width != sc_extent_.width || caps.currentExtent.height != sc_extent_.height ||
+         (flip180_ && caps.currentTransform != VK_SURFACE_TRANSFORM_ROTATE_180_BIT_KHR) ||
+         (!flip180_ && caps.currentTransform == VK_SURFACE_TRANSFORM_ROTATE_180_BIT_KHR))) {
+      vkDeviceWaitIdle(device_);
+      return create_swapchain(s.vsync, err);
+    }
+    return true;
+  }
   if (r != VK_SUCCESS) { err = "vkQueuePresentKHR " + std::to_string(r); return false; }
   return true;
+}
+
+bool VkRenderer::resize(std::string& err) {
+  if (!device_) { err = "renderer not ready"; return false; }
+  vkDeviceWaitIdle(device_);
+  return create_swapchain(sc_vsync_, err);
 }
 
 void VkRenderer::shutdown() {

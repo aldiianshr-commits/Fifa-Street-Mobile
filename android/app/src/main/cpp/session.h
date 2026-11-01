@@ -28,6 +28,8 @@ struct GraphicsConfig {
 
 struct SessionStats {
   float fps = 0, frame_ms = 0, guest_ms = 0, present_ms = 0;
+  float wait_ms = 0, acquire_ms = 0, copy_ms = 0, submit_ms = 0, queue_present_ms = 0;
+  uint32_t sc_images = 0, sc_mode = 0, sc_transform = 0, sc_current_transform = 0, sc_recreations = 0, sc_suboptimal = 0;
   uint32_t width = 0, height = 0;
   uint64_t frames = 0, kernel_calls = 0;
   bool throttled = false;
@@ -72,7 +74,7 @@ class Session {
   std::condition_variable cv_;
   std::thread thread_;
   std::atomic<bool> running_{false};
-  bool paused_ = false, quit_ = false, window_dirty_ = false;
+  bool paused_ = false, quit_ = false, window_dirty_ = false, window_resized_ = false;
   ANativeWindow* window_ = nullptr;
   GraphicsConfig gfx_;
   int thermal_ = 0;

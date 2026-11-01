@@ -278,12 +278,15 @@ JFN(void, sessionSetGraphics)(JNIEnv*, jobject, jlong h, jint w, jint hh, jint s
 JFN(void, sessionSetThermal)(JNIEnv*, jobject, jlong h, jint status) { if (h) S(h)->set_thermal_status(status); }
 
 JFN(jfloatArray, sessionStats)(JNIEnv* env, jobject, jlong h) {
-  jfloatArray a = env->NewFloatArray(9);
+  constexpr int N = 20;
+  jfloatArray a = env->NewFloatArray(N);
   if (!h) return a;
   SessionStats s = S(h)->stats();
-  float v[9] = {s.fps, s.frame_ms, s.guest_ms, s.present_ms, float(s.width), float(s.height), float(s.frames),
-                float(s.kernel_calls), s.throttled ? 1.f : 0.f};
-  env->SetFloatArrayRegion(a, 0, 9, v);
+  float v[N] = {s.fps, s.frame_ms, s.guest_ms, s.present_ms, float(s.width), float(s.height), float(s.frames),
+                float(s.kernel_calls), s.throttled ? 1.f : 0.f, s.wait_ms, s.acquire_ms, s.copy_ms, s.submit_ms,
+                s.queue_present_ms, float(s.sc_images), float(s.sc_mode), float(s.sc_transform),
+                float(s.sc_current_transform), float(s.sc_recreations), float(s.sc_suboptimal)};
+  env->SetFloatArrayRegion(a, 0, N, v);
   return a;
 }
 

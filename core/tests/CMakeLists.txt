@@ -15,12 +15,14 @@ add_custom_command(
           ${HB_SRC}/build_homebrew.sh
   COMMENT "Building homebrew PowerPC test XEX files")
 
+set(hb64_MODE "")
+set(hb32_MODE "--mode32")  # plain 32-bit PowerPC code (Xbox 360 titles use 64-bit mode)
 foreach(m hb64 hb32)
   set(GEN ${CMAKE_CURRENT_BINARY_DIR}/gen_${m})
   set(${m}_GEN ${GEN}/${m}_decls.h ${GEN}/${m}_funcs_000.cpp ${GEN}/${m}_table.cpp)
   add_custom_command(
     OUTPUT ${${m}_GEN}
-    COMMAND $<TARGET_FILE:fsr-recomp> ${HB_DIR}/${m}.xex --out ${GEN} --name ${m} --syms ${HB_DIR}/${m}.syms
+    COMMAND $<TARGET_FILE:fsr-recomp> ${HB_DIR}/${m}.xex --out ${GEN} --name ${m} --syms ${HB_DIR}/${m}.syms ${${m}_MODE}
             --export fsr_selftest --export fsr_frame --export fsr_vectest --export fsr_vectest_dump --export fsr_vmx128_test --export fsr_fileio_test
     DEPENDS fsr-recomp ${HB_DIR}/${m}.xex ${HB_DIR}/${m}.syms
     COMMENT "Recompiling ${m}.xex to C++")
@@ -33,7 +35,8 @@ add_test(NAME unit_tests COMMAND unit_tests ${HB_DIR} $<TARGET_FILE_DIR:mkiso>)
 # Native build of the very same homebrew sources, symbols renamed.
 add_library(hb_native STATIC ${HB_SRC}/selftest.c ${HB_SRC}/demo.c ${HB_SRC}/vectest.c)
 target_compile_definitions(hb_native PRIVATE fsr_selftest=native_selftest fsr_frame=native_frame fsr_demo_reset=native_demo_reset fsr_vectest=native_vectest fsr_vectest_dump=native_vectest_dump
-  XamInputGetState=native_XamInputGetState DbgPrint=native_DbgPrint)
+  XamInputGetState=native_XamInputGetState DbgPrint=native_DbgPrint
+  NtOpenFile=native_NtOpenFile NtReadFile=native_NtReadFile NtClose=native_NtClose)
 target_compile_options(hb_native PRIVATE -O2 -ffp-contract=off -fno-math-errno -fno-strict-aliasing)
 
 add_library(hb_native32 STATIC ${HB_SRC}/selftest.c)

@@ -129,7 +129,14 @@ class VirtualControllerView(ctx: Context) : View(ctx) {
                         stroke.color = Color.argb(a, 220, 225, 235); c.drawCircle(x, y, r, stroke)
                     }
                     label.alpha = a
-                    c.drawText(i.id, x, y + label.textSize / 3, label)
+                    val wide = i.id in listOf("LB", "RB", "LT", "RT", "BACK", "START")
+                    val maxW = if (wide) r * 2.6f * 0.78f else r * 2f * 0.72f
+                    val base = unit * 0.45f * minOf(1.15f, i.size)
+                    label.textSize = base
+                    val tw = label.measureText(i.id)
+                    if (tw > maxW) label.textSize = base * maxW / tw
+                    c.drawText(i.id, x, y + label.textSize * 0.36f, label)
+                    label.textSize = unit * 0.45f
                 }
             }
             if (sel) {

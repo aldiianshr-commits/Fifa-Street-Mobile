@@ -56,20 +56,22 @@ static const fsr::FuncEntry kFuncs[] = {
   {0x82003030, fsr_gen_hb64::sub_82003030},
   {0x82003080, fsr_gen_hb64::sub_82003080},
   {0x820030E0, fsr_gen_hb64::sub_820030E0},
-  {0x82003A80, fsr_gen_hb64::sub_82003A80},
-  {0x82003AC0, fsr_gen_hb64::sub_82003AC0},
-  {0x82003B40, fsr_gen_hb64::sub_82003B40},
-  {0x82003BC0, fsr_gen_hb64::sub_82003BC0},
-  {0x82003FE0, fsr_gen_hb64::sub_82003FE0},
+  {0x82004650, fsr_gen_hb64::sub_82004650},
+  {0x82004658, fsr_gen_hb64::sub_82004658},
+  {0x82004B30, fsr_gen_hb64::sub_82004B30},
+  {0x82004B70, fsr_gen_hb64::sub_82004B70},
+  {0x82004BF0, fsr_gen_hb64::sub_82004BF0},
+  {0x82004C60, fsr_gen_hb64::sub_82004C60},
+  {0x82005080, fsr_gen_hb64::sub_82005080},
 };
 
 static const char* const kLibs[] = {"xam.xex", "xboxkrnl.exe", nullptr};
-static const fsr::NamedAddr kExports[] = {{"fsr_selftest", 0x82001080}, {"fsr_frame", 0x820030E0}, {"fsr_vectest", 0x820022C0}, {"fsr_vectest_dump", 0x82001F00}, {"fsr_vmx128_test", 0x82003FE0}, {"fsr_fileio_test", 0x82003BC0}, {nullptr, 0}};
+static const fsr::NamedAddr kExports[] = {{"fsr_selftest", 0x82001080}, {"fsr_frame", 0x820030E0}, {"fsr_vectest", 0x820022C0}, {"fsr_vectest_dump", 0x82001F00}, {"fsr_vmx128_test", 0x82005080}, {"fsr_fileio_test", 0x82004C60}, {nullptr, 0}};
 
 extern const fsr::RecompModule fsr_module_hb64;
 const fsr::RecompModule fsr_module_hb64 = {
-  "hb64", 0x82000000, 0x9000, 0x82001080,
-  {0x96,0x65,0x21,0x6C,0x93,0xE1,0xA,0x85,0x76,0x43,0x4B,0xF,0x33,0xB6,0xAE,0x24,0x63,0x5,0x6E,0x7B},
-  kFuncs, 59, 844,
+  "hb64", 0x82000000, 0xA000, 0x82001080,
+  {0x2B,0x17,0xA2,0xBD,0xFF,0x9D,0x75,0xE8,0x5A,0x89,0x9,0x77,0x4C,0x4C,0xCE,0x42,0xCC,0xC8,0xE0,0xE8},
+  kFuncs, 61, 844,
   kLibs, 2, kExports, 6
 };

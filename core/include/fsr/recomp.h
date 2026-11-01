@@ -57,6 +57,10 @@ struct RecompStats {
 struct RecompOptions {
   uint32_t functions_per_file = 1500;
   bool emit_comments = true;
+  // Xbox 360 titles run with MSR[SF]=1 (64-bit mode), the default. mode32 is
+  // for plain 32-bit PowerPC code (our 32-bit homebrew test): CTR decrement
+  // tests and CR0 record forms then look at the low 32 bits only.
+  bool mode32 = false;
 };
 
 struct RecompOutput {

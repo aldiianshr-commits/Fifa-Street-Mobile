@@ -14,8 +14,8 @@ FSR_FUNC(sub_82001080) {
   uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
   // 82001080: addis r2,r12,1
   ctx.r[2] = ctx.r[12] + uint64_t(65536);
-  // 82001084: addi r2,r2,-15992
-  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-15992));
+  // 82001084: addi r2,r2,-11200
+  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-11200));
   // 82001088: mfspr r0,r8,r0
   ctx.r[0] = ctx.lr;
   // 8200108C: stdu r1,-432(r1)
@@ -62,8 +62,8 @@ FSR_FUNC(sub_82001080) {
   // 820010C8: stw r3,272(r1)
   t0 = (ctx.r[1] + uint64_t(272)); ea = uint32_t(t0);
   fsr::st32(base, ea, uint32_t(ctx.r[3]));
-  // 820010CC: addi r4,r4,32332
-  ctx.r[4] = ctx.r[4] + uint64_t(32332);
+  // 820010CC: addi r4,r4,31636
+  ctx.r[4] = ctx.r[4] + uint64_t(31636);
   // 820010D0: addi r3,r4,80
   ctx.r[3] = ctx.r[4] + uint64_t(80);
   // 820010D4: addi r4,r0,41
@@ -322,8 +322,8 @@ FSR_FUNC(sub_82001080) {
   fsr::st32(base, ea, uint32_t(ctx.r[3]));
   // 82001264: addis r3,r2,-1
   ctx.r[3] = ctx.r[2] + uint64_t(int64_t(-65536));
-  // 82001268: lfd f1,32264(r3)
-  t0 = (ctx.r[3] + uint64_t(32264)); ea = uint32_t(t0);
+  // 82001268: lfd f1,31568(r3)
+  t0 = (ctx.r[3] + uint64_t(31568)); ea = uint32_t(t0);
   ctx.f[1].u = fsr::ld64(base, ea);
   // 8200126C: bl 0x82001920
   ctx.lr = 0x82001270;
@@ -333,8 +333,8 @@ FSR_FUNC(sub_82001080) {
   fsr::st32(base, ea, uint32_t(ctx.r[3]));
   // 82001274: addis r3,r2,-1
   ctx.r[3] = ctx.r[2] + uint64_t(int64_t(-65536));
-  // 82001278: lfs f1,32272(r3)
-  t0 = (ctx.r[3] + uint64_t(32272)); ea = uint32_t(t0);
+  // 82001278: lfs f1,31576(r3)
+  t0 = (ctx.r[3] + uint64_t(31576)); ea = uint32_t(t0);
   ctx.f[1].d = double(fsr::f32_from_bits(fsr::ld32(base, ea)));
   // 8200127C: bl 0x82001920
   ctx.lr = 0x82001280;
@@ -344,8 +344,8 @@ FSR_FUNC(sub_82001080) {
   fsr::st32(base, ea, uint32_t(ctx.r[3]));
   // 82001284: addis r3,r2,-1
   ctx.r[3] = ctx.r[2] + uint64_t(int64_t(-65536));
-  // 82001288: lfs f1,32280(r3)
-  t0 = (ctx.r[3] + uint64_t(32280)); ea = uint32_t(t0);
+  // 82001288: lfs f1,31584(r3)
+  t0 = (ctx.r[3] + uint64_t(31584)); ea = uint32_t(t0);
   ctx.f[1].d = double(fsr::f32_from_bits(fsr::ld32(base, ea)));
   // 8200128C: bl 0x82001920
   ctx.lr = 0x82001290;
@@ -359,8 +359,8 @@ FSR_FUNC(sub_82001080) {
   ctx.r[4] = uint64_t(0) + uint64_t(17);
   // 8200129C: addi r5,r0,5
   ctx.r[5] = uint64_t(0) + uint64_t(5);
-  // 820012A0: addi r29,r3,18232
-  ctx.r[29] = ctx.r[3] + uint64_t(18232);
+  // 820012A0: addi r29,r3,13440
+  ctx.r[29] = ctx.r[3] + uint64_t(13440);
   // 820012A4: or_ r29,r3,r29
   ctx.r[3] = ctx.r[29] | ctx.r[29];
   // 820012A8: bl 0x820019C8
@@ -372,8 +372,8 @@ FSR_FUNC(sub_82001080) {
   ctx.r[3] = ctx.r[2] + uint64_t(int64_t(-65536));
   // 820012B4: addi r5,r0,36
   ctx.r[5] = uint64_t(0) + uint64_t(36);
-  // 820012B8: addi r28,r3,18264
-  ctx.r[28] = ctx.r[3] + uint64_t(18264);
+  // 820012B8: addi r28,r3,13472
+  ctx.r[28] = ctx.r[3] + uint64_t(13472);
   // 820012BC: or_ r28,r3,r28
   ctx.r[3] = ctx.r[28] | ctx.r[28];
   // 820012C0: bl 0x820019C8
@@ -385,8 +385,8 @@ FSR_FUNC(sub_82001080) {
   ctx.r[3] = ctx.r[2] + uint64_t(int64_t(-65536));
   // 820012CC: addi r5,r0,67
   ctx.r[5] = uint64_t(0) + uint64_t(67);
-  // 820012D0: addi r27,r3,18296
-  ctx.r[27] = ctx.r[3] + uint64_t(18296);
+  // 820012D0: addi r27,r3,13504
+  ctx.r[27] = ctx.r[3] + uint64_t(13504);
   // 820012D4: or_ r27,r3,r27
   ctx.r[3] = ctx.r[27] | ctx.r[27];
   // 820012D8: bl 0x820019C8
@@ -398,8 +398,8 @@ FSR_FUNC(sub_82001080) {
   ctx.r[3] = ctx.r[2] + uint64_t(int64_t(-65536));
   // 820012E4: addi r5,r0,98
   ctx.r[5] = uint64_t(0) + uint64_t(98);
-  // 820012E8: addi r26,r3,18328
-  ctx.r[26] = ctx.r[3] + uint64_t(18328);
+  // 820012E8: addi r26,r3,13536
+  ctx.r[26] = ctx.r[3] + uint64_t(13536);
   // 820012EC: or_ r26,r3,r26
   ctx.r[3] = ctx.r[26] | ctx.r[26];
   // 820012F0: bl 0x820019C8
@@ -583,8 +583,8 @@ loc_82001400:
   fsr::st32(base, ea, uint32_t(ctx.r[3]));
   // 82001424: addis r3,r2,-1
   ctx.r[3] = ctx.r[2] + uint64_t(int64_t(-65536));
-  // 82001428: lfd f1,32256(r3)
-  t0 = (ctx.r[3] + uint64_t(32256)); ea = uint32_t(t0);
+  // 82001428: lfd f1,31560(r3)
+  t0 = (ctx.r[3] + uint64_t(31560)); ea = uint32_t(t0);
   ctx.f[1].u = fsr::ld64(base, ea);
   // 8200142C: stw r25,344(r1)
   t0 = (ctx.r[1] + uint64_t(344)); ea = uint32_t(t0);
@@ -638,8 +638,8 @@ loc_82001400:
   fsr::st64(base, ea, ctx.r[3]);
   // 82001480: addis r3,r2,-1
   ctx.r[3] = ctx.r[2] + uint64_t(int64_t(-65536));
-  // 82001484: lfd f1,32248(r3)
-  t0 = (ctx.r[3] + uint64_t(32248)); ea = uint32_t(t0);
+  // 82001484: lfd f1,31552(r3)
+  t0 = (ctx.r[3] + uint64_t(31552)); ea = uint32_t(t0);
   ctx.f[1].u = fsr::ld64(base, ea);
   // 82001488: bl 0x82001920
   ctx.lr = 0x8200148C;
@@ -714,8 +714,8 @@ FSR_FUNC(sub_820014F0) {
   uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
   // 820014F0: addis r2,r12,1
   ctx.r[2] = ctx.r[12] + uint64_t(65536);
-  // 820014F4: addi r2,r2,-17128
-  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-17128));
+  // 820014F4: addi r2,r2,-12336
+  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-12336));
   // 820014F8: mfspr r0,r8,r0
   ctx.r[0] = ctx.lr;
   // 820014FC: std r28,-32(r1)
@@ -1219,8 +1219,8 @@ loc_820017B0:
   // 820017B0: addis r2,r12,1
   ctx.r[2] = ctx.r[12] + uint64_t(65536);
 loc_820017B4:
-  // 820017B4: addi r2,r2,-17832
-  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-17832));
+  // 820017B4: addi r2,r2,-13040
+  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-13040));
 loc_820017B8:
   // 820017B8: addis r5,r2,-1
   ctx.r[5] = ctx.r[2] + uint64_t(int64_t(-65536));
@@ -1234,11 +1234,11 @@ loc_820017C4:
   // 820017C4: addis r7,r0,21845
   ctx.r[7] = uint64_t(0) + uint64_t(1431633920);
 loc_820017C8:
-  // 820017C8: addi r5,r5,32288
-  ctx.r[5] = ctx.r[5] + uint64_t(32288);
+  // 820017C8: addi r5,r5,31592
+  ctx.r[5] = ctx.r[5] + uint64_t(31592);
 loc_820017CC:
-  // 820017CC: addi r4,r4,32332
-  ctx.r[4] = ctx.r[4] + uint64_t(32332);
+  // 820017CC: addi r4,r4,31636
+  ctx.r[4] = ctx.r[4] + uint64_t(31636);
 loc_820017D0:
   // 820017D0: addi r3,r0,12345
   ctx.r[3] = uint64_t(0) + uint64_t(12345);
@@ -1478,11 +1478,11 @@ loc_820017C4:
   // 820017C4: addis r7,r0,21845
   ctx.r[7] = uint64_t(0) + uint64_t(1431633920);
 loc_820017C8:
-  // 820017C8: addi r5,r5,32288
-  ctx.r[5] = ctx.r[5] + uint64_t(32288);
+  // 820017C8: addi r5,r5,31592
+  ctx.r[5] = ctx.r[5] + uint64_t(31592);
 loc_820017CC:
-  // 820017CC: addi r4,r4,32332
-  ctx.r[4] = ctx.r[4] + uint64_t(32332);
+  // 820017CC: addi r4,r4,31636
+  ctx.r[4] = ctx.r[4] + uint64_t(31636);
 loc_820017D0:
   // 820017D0: addi r3,r0,12345
   ctx.r[3] = uint64_t(0) + uint64_t(12345);
@@ -1846,8 +1846,8 @@ FSR_FUNC(sub_820019C0) {
   uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
   // 820019C0: addis r2,r12,1
   ctx.r[2] = ctx.r[12] + uint64_t(65536);
-  // 820019C4: addi r2,r2,-18360
-  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-18360));
+  // 820019C4: addi r2,r2,-13568
+  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-13568));
   // 820019C8: mfspr r0,r8,r0
   ctx.r[0] = ctx.lr;
   // 820019CC: stdu r1,-32(r1)
@@ -1936,8 +1936,8 @@ FSR_FUNC(sub_82001A10) {
   uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
   // 82001A10: addis r2,r12,1
   ctx.r[2] = ctx.r[12] + uint64_t(65536);
-  // 82001A14: addi r2,r2,-18440
-  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-18440));
+  // 82001A14: addi r2,r2,-13648
+  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-13648));
   // 82001A18: mfspr r0,r8,r0
   ctx.r[0] = ctx.lr;
   // 82001A1C: std r29,-24(r1)
@@ -2988,8 +2988,8 @@ FSR_FUNC(sub_82001F00) {
   uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
   // 82001F00: addis r2,r12,1
   ctx.r[2] = ctx.r[12] + uint64_t(65536);
-  // 82001F04: addi r2,r2,-19704
-  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-19704));
+  // 82001F04: addi r2,r2,-14912
+  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-14912));
   // 82001F08: mfspr r0,r8,r0
   ctx.r[0] = ctx.lr;
   // 82001F0C: stdu r1,-656(r1)
@@ -3050,8 +3050,8 @@ FSR_FUNC(sub_82001F00) {
   ctx.r[3] = ctx.r[2] + uint64_t(int64_t(-65536));
   // 82001F74: addi r6,r1,608
   ctx.r[6] = ctx.r[1] + uint64_t(608);
-  // 82001F78: addi r3,r3,32616
-  ctx.r[3] = ctx.r[3] + uint64_t(32616);
+  // 82001F78: addi r3,r3,31920
+  ctx.r[3] = ctx.r[3] + uint64_t(31920);
   // 82001F7C: lvx v2,v3,v4
   fsr::vx::lvx(ctx.v[2], base, uint32_t(ctx.r[3] + ctx.r[4]));
   // 82001F80: stvx v2,v6,v4
@@ -3060,8 +3060,8 @@ FSR_FUNC(sub_82001F00) {
   fsr::vx::lvx(ctx.v[2], base, uint32_t(uint64_t(0) + ctx.r[3]));
   // 82001F88: addis r3,r2,-1
   ctx.r[3] = ctx.r[2] + uint64_t(int64_t(-65536));
-  // 82001F8C: addi r3,r3,32584
-  ctx.r[3] = ctx.r[3] + uint64_t(32584);
+  // 82001F8C: addi r3,r3,31888
+  ctx.r[3] = ctx.r[3] + uint64_t(31888);
   // 82001F90: stvx v2,v0,v6
   fsr::vx::stvx(ctx.v[2], base, uint32_t(uint64_t(0) + ctx.r[6]));
   // 82001F94: addi r6,r1,576
@@ -3173,8 +3173,8 @@ FSR_FUNC(sub_82002040) {
   uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
   // 82002040: addis r2,r12,1
   ctx.r[2] = ctx.r[12] + uint64_t(65536);
-  // 82002044: addi r2,r2,-20024
-  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-20024));
+  // 82002044: addi r2,r2,-15232
+  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-15232));
   // 82002048: addi r5,r0,16
   ctx.r[5] = uint64_t(0) + uint64_t(16);
   // 8200204C: lvx v3,v0,v4
@@ -3185,8 +3185,8 @@ FSR_FUNC(sub_82002040) {
   fsr::vx::lvx(ctx.v[4], base, uint32_t(ctx.r[4] + ctx.r[5]));
   // 82002058: addis r4,r2,-1
   ctx.r[4] = ctx.r[2] + uint64_t(int64_t(-65536));
-  // 8200205C: addi r4,r4,32472
-  ctx.r[4] = ctx.r[4] + uint64_t(32472);
+  // 8200205C: addi r4,r4,31776
+  ctx.r[4] = ctx.r[4] + uint64_t(31776);
   // 82002060: vcmpgtuw v1,v3,v4
   fsr::vx::vcmpgtuw_e(ctx.v[1], ctx.v[3], ctx.v[4]);
   // 82002064: vandc v6,v3,v1
@@ -3284,8 +3284,8 @@ FSR_FUNC(sub_82002048) {
   fsr::vx::lvx(ctx.v[4], base, uint32_t(ctx.r[4] + ctx.r[5]));
   // 82002058: addis r4,r2,-1
   ctx.r[4] = ctx.r[2] + uint64_t(int64_t(-65536));
-  // 8200205C: addi r4,r4,32472
-  ctx.r[4] = ctx.r[4] + uint64_t(32472);
+  // 8200205C: addi r4,r4,31776
+  ctx.r[4] = ctx.r[4] + uint64_t(31776);
   // 82002060: vcmpgtuw v1,v3,v4
   fsr::vx::vcmpgtuw_e(ctx.v[1], ctx.v[3], ctx.v[4]);
   // 82002064: vandc v6,v3,v1
@@ -3375,8 +3375,8 @@ FSR_FUNC(sub_82002110) {
   uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
   // 82002110: addis r2,r12,1
   ctx.r[2] = ctx.r[12] + uint64_t(65536);
-  // 82002114: addi r2,r2,-20232
-  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-20232));
+  // 82002114: addi r2,r2,-15440
+  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-15440));
   // 82002118: or_ r3,r5,r3
   ctx.r[5] = ctx.r[3] | ctx.r[3];
   // 8200211C: addi r3,r0,16
@@ -3435,8 +3435,8 @@ FSR_FUNC(sub_82002110) {
   fsr::vx::stvx(ctx.v[9], base, uint32_t(ctx.r[5] + ctx.r[3]));
   // 82002188: addis r3,r2,-1
   ctx.r[3] = ctx.r[2] + uint64_t(int64_t(-65536));
-  // 8200218C: addi r3,r3,32568
-  ctx.r[3] = ctx.r[3] + uint64_t(32568);
+  // 8200218C: addi r3,r3,31872
+  ctx.r[3] = ctx.r[3] + uint64_t(31872);
   // 82002190: lvx v0,v0,v3
   fsr::vx::lvx(ctx.v[0], base, uint32_t(uint64_t(0) + ctx.r[3]));
   // 82002194: addi r3,r0,128
@@ -3654,8 +3654,8 @@ FSR_FUNC(sub_82002118) {
   fsr::vx::stvx(ctx.v[9], base, uint32_t(ctx.r[5] + ctx.r[3]));
   // 82002188: addis r3,r2,-1
   ctx.r[3] = ctx.r[2] + uint64_t(int64_t(-65536));
-  // 8200218C: addi r3,r3,32568
-  ctx.r[3] = ctx.r[3] + uint64_t(32568);
+  // 8200218C: addi r3,r3,31872
+  ctx.r[3] = ctx.r[3] + uint64_t(31872);
   // 82002190: lvx v0,v0,v3
   fsr::vx::lvx(ctx.v[0], base, uint32_t(uint64_t(0) + ctx.r[3]));
   // 82002194: addi r3,r0,128
@@ -3817,8 +3817,8 @@ FSR_FUNC(sub_820022C0) {
   uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
   // 820022C0: addis r2,r12,1
   ctx.r[2] = ctx.r[12] + uint64_t(65536);
-  // 820022C4: addi r2,r2,-20664
-  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-20664));
+  // 820022C4: addi r2,r2,-15872
+  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-15872));
   // 820022C8: mfspr r0,r8,r0
   ctx.r[0] = ctx.lr;
   // 820022CC: stdu r1,-3408(r1)
@@ -3865,13 +3865,13 @@ FSR_FUNC(sub_820022C0) {
   ctx.r[11] = ctx.r[1] + uint64_t(1424);
   // 82002314: addi r12,r1,1296
   ctx.r[12] = ctx.r[1] + uint64_t(1296);
-  // 82002318: lfs f0,32276(r27)
-  t0 = (ctx.r[27] + uint64_t(32276)); ea = uint32_t(t0);
+  // 82002318: lfs f0,31580(r27)
+  t0 = (ctx.r[27] + uint64_t(31580)); ea = uint32_t(t0);
   ctx.f[0].d = double(fsr::f32_from_bits(fsr::ld32(base, ea)));
   // 8200231C: addi r27,r0,0
   ctx.r[27] = uint64_t(0) + uint64_t(0);
-  // 82002320: lfs f1,32284(r28)
-  t0 = (ctx.r[28] + uint64_t(32284)); ea = uint32_t(t0);
+  // 82002320: lfs f1,31588(r28)
+  t0 = (ctx.r[28] + uint64_t(31588)); ea = uint32_t(t0);
   ctx.f[1].d = double(fsr::f32_from_bits(fsr::ld32(base, ea)));
   // 82002324: addi r28,r0,0
   ctx.r[28] = uint64_t(0) + uint64_t(0);
@@ -4214,8 +4214,8 @@ loc_82002398:
   ctx.r[3] = ctx.r[2] + uint64_t(int64_t(-65536));
   // 82002568: addi r16,r0,16
   ctx.r[16] = uint64_t(0) + uint64_t(16);
-  // 8200256C: addi r3,r3,32616
-  ctx.r[3] = ctx.r[3] + uint64_t(32616);
+  // 8200256C: addi r3,r3,31920
+  ctx.r[3] = ctx.r[3] + uint64_t(31920);
   // 82002570: lvx v2,v3,v16
   fsr::vx::lvx(ctx.v[2], base, uint32_t(ctx.r[3] + ctx.r[16]));
   // 82002574: addi r4,r1,624
@@ -4291,8 +4291,8 @@ loc_82002398:
   ctx.r[3] = ctx.r[2] + uint64_t(int64_t(-65536));
   // 820025FC: addi r4,r1,432
   ctx.r[4] = ctx.r[1] + uint64_t(432);
-  // 82002600: addi r3,r3,32584
-  ctx.r[3] = ctx.r[3] + uint64_t(32584);
+  // 82002600: addi r3,r3,31888
+  ctx.r[3] = ctx.r[3] + uint64_t(31888);
   // 82002604: lvx v2,v3,v16
   fsr::vx::lvx(ctx.v[2], base, uint32_t(ctx.r[3] + ctx.r[16]));
   // 82002608: stvx v2,v4,v16
@@ -4492,16 +4492,16 @@ FSR_FUNC(sub_82002750) {
   uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
   // 82002750: addis r2,r12,1
   ctx.r[2] = ctx.r[12] + uint64_t(65536);
-  // 82002754: addi r2,r2,-21832
-  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-21832));
+  // 82002754: addi r2,r2,-17040
+  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-17040));
   // 82002758: addis r7,r2,-1
   ctx.r[7] = ctx.r[2] + uint64_t(int64_t(-65536));
   // 8200275C: addi r6,r0,16
   ctx.r[6] = uint64_t(0) + uint64_t(16);
   // 82002760: vspltisw v2,v31,v0
   fsr::vx::vspltisw(ctx.v[2], 31);
-  // 82002764: addi r8,r7,32504
-  ctx.r[8] = ctx.r[7] + uint64_t(32504);
+  // 82002764: addi r8,r7,31808
+  ctx.r[8] = ctx.r[7] + uint64_t(31808);
   // 82002768: addi r7,r0,15
   ctx.r[7] = uint64_t(0) + uint64_t(15);
   // 8200276C: lvx v3,v0,v8
@@ -4594,8 +4594,8 @@ FSR_FUNC(sub_82002758) {
   ctx.r[6] = uint64_t(0) + uint64_t(16);
   // 82002760: vspltisw v2,v31,v0
   fsr::vx::vspltisw(ctx.v[2], 31);
-  // 82002764: addi r8,r7,32504
-  ctx.r[8] = ctx.r[7] + uint64_t(32504);
+  // 82002764: addi r8,r7,31808
+  ctx.r[8] = ctx.r[7] + uint64_t(31808);
   // 82002768: addi r7,r0,15
   ctx.r[7] = uint64_t(0) + uint64_t(15);
   // 8200276C: lvx v3,v0,v8
@@ -4734,16 +4734,16 @@ FSR_FUNC(sub_82002860) {
   uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
   // 82002860: addis r2,r12,1
   ctx.r[2] = ctx.r[12] + uint64_t(65536);
-  // 82002864: addi r2,r2,-22104
-  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-22104));
+  // 82002864: addi r2,r2,-17312
+  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-17312));
   // 82002868: addis r7,r2,-1
   ctx.r[7] = ctx.r[2] + uint64_t(int64_t(-65536));
   // 8200286C: addi r6,r0,16
   ctx.r[6] = uint64_t(0) + uint64_t(16);
   // 82002870: vspltisw v2,v3,v0
   fsr::vx::vspltisw(ctx.v[2], 3);
-  // 82002874: addi r8,r7,32488
-  ctx.r[8] = ctx.r[7] + uint64_t(32488);
+  // 82002874: addi r8,r7,31792
+  ctx.r[8] = ctx.r[7] + uint64_t(31792);
   // 82002878: addi r7,r0,15
   ctx.r[7] = uint64_t(0) + uint64_t(15);
   // 8200287C: lvx v4,v0,v8
@@ -4850,8 +4850,8 @@ FSR_FUNC(sub_82002868) {
   ctx.r[6] = uint64_t(0) + uint64_t(16);
   // 82002870: vspltisw v2,v3,v0
   fsr::vx::vspltisw(ctx.v[2], 3);
-  // 82002874: addi r8,r7,32488
-  ctx.r[8] = ctx.r[7] + uint64_t(32488);
+  // 82002874: addi r8,r7,31792
+  ctx.r[8] = ctx.r[7] + uint64_t(31792);
   // 82002878: addi r7,r0,15
   ctx.r[7] = uint64_t(0) + uint64_t(15);
   // 8200287C: lvx v4,v0,v8
@@ -4954,8 +4954,8 @@ FSR_FUNC(sub_82002930) {
   uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
   // 82002930: addis r2,r12,1
   ctx.r[2] = ctx.r[12] + uint64_t(65536);
-  // 82002934: addi r2,r2,-22312
-  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-22312));
+  // 82002934: addi r2,r2,-17520
+  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-17520));
   // 82002938: addi r6,r0,16
   ctx.r[6] = uint64_t(0) + uint64_t(16);
   // 8200293C: lvx v4,v0,v4
@@ -4980,8 +4980,8 @@ FSR_FUNC(sub_82002930) {
   ctx.r[6] = ctx.r[2] + uint64_t(int64_t(-65536));
   // 82002964: vspltw v13,v3,v5
   fsr::vx::vspltw(ctx.v[13], ctx.v[5], 3);
-  // 82002968: addi r6,r6,32552
-  ctx.r[6] = ctx.r[6] + uint64_t(32552);
+  // 82002968: addi r6,r6,31856
+  ctx.r[6] = ctx.r[6] + uint64_t(31856);
   // 8200296C: lvsl v0,v0,v5
   fsr::vx::lvsl(ctx.v[0], uint32_t(uint64_t(0) + ctx.r[5]));
   // 82002970: vperm v6,v4,v8
@@ -5429,8 +5429,8 @@ FSR_FUNC(sub_82002938) {
   ctx.r[6] = ctx.r[2] + uint64_t(int64_t(-65536));
   // 82002964: vspltw v13,v3,v5
   fsr::vx::vspltw(ctx.v[13], ctx.v[5], 3);
-  // 82002968: addi r6,r6,32552
-  ctx.r[6] = ctx.r[6] + uint64_t(32552);
+  // 82002968: addi r6,r6,31856
+  ctx.r[6] = ctx.r[6] + uint64_t(31856);
   // 8200296C: lvsl v0,v0,v5
   fsr::vx::lvsl(ctx.v[0], uint32_t(uint64_t(0) + ctx.r[5]));
   // 82002970: vperm v6,v4,v8
@@ -5992,8 +5992,8 @@ FSR_FUNC(sub_82002DA0) {
   uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
   // 82002DA0: addis r2,r12,1
   ctx.r[2] = ctx.r[12] + uint64_t(65536);
-  // 82002DA4: addi r2,r2,-23448
-  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-23448));
+  // 82002DA4: addi r2,r2,-18656
+  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-18656));
   // 82002DA8: addi r7,r0,16
   ctx.r[7] = uint64_t(0) + uint64_t(16);
   // 82002DAC: addis r9,r2,-1
@@ -6002,8 +6002,8 @@ FSR_FUNC(sub_82002DA0) {
   fsr::vx::vspltisw(ctx.v[3], 31);
   // 82002DB4: addi r8,r0,15
   ctx.r[8] = uint64_t(0) + uint64_t(15);
-  // 82002DB8: addi r10,r9,32456
-  ctx.r[10] = ctx.r[9] + uint64_t(32456);
+  // 82002DB8: addi r10,r9,31760
+  ctx.r[10] = ctx.r[9] + uint64_t(31760);
   // 82002DBC: mtspr r7,r9,r0
   ctx.ctr = ctx.r[7];
   // 82002DC0: addis r7,r2,-1
@@ -6012,8 +6012,8 @@ FSR_FUNC(sub_82002DA0) {
   fsr::vx::lvx(ctx.v[4], base, uint32_t(uint64_t(0) + ctx.r[10]));
   // 82002DC8: addi r9,r1,-16
   ctx.r[9] = ctx.r[1] + uint64_t(int64_t(-16));
-  // 82002DCC: addi r7,r7,32520
-  ctx.r[7] = ctx.r[7] + uint64_t(32520);
+  // 82002DCC: addi r7,r7,31824
+  ctx.r[7] = ctx.r[7] + uint64_t(31824);
   // 82002DD0: addi r10,r1,-32
   ctx.r[10] = ctx.r[1] + uint64_t(int64_t(-32));
   // 82002DD4: lvx v2,v0,v7
@@ -6109,8 +6109,8 @@ FSR_FUNC(sub_82002DA8) {
   fsr::vx::vspltisw(ctx.v[3], 31);
   // 82002DB4: addi r8,r0,15
   ctx.r[8] = uint64_t(0) + uint64_t(15);
-  // 82002DB8: addi r10,r9,32456
-  ctx.r[10] = ctx.r[9] + uint64_t(32456);
+  // 82002DB8: addi r10,r9,31760
+  ctx.r[10] = ctx.r[9] + uint64_t(31760);
   // 82002DBC: mtspr r7,r9,r0
   ctx.ctr = ctx.r[7];
   // 82002DC0: addis r7,r2,-1
@@ -6119,8 +6119,8 @@ FSR_FUNC(sub_82002DA8) {
   fsr::vx::lvx(ctx.v[4], base, uint32_t(uint64_t(0) + ctx.r[10]));
   // 82002DC8: addi r9,r1,-16
   ctx.r[9] = ctx.r[1] + uint64_t(int64_t(-16));
-  // 82002DCC: addi r7,r7,32520
-  ctx.r[7] = ctx.r[7] + uint64_t(32520);
+  // 82002DCC: addi r7,r7,31824
+  ctx.r[7] = ctx.r[7] + uint64_t(31824);
   // 82002DD0: addi r10,r1,-32
   ctx.r[10] = ctx.r[1] + uint64_t(int64_t(-32));
   // 82002DD4: lvx v2,v0,v7
@@ -6210,14 +6210,14 @@ FSR_FUNC(sub_82002E60) {
   uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
   // 82002E60: addis r2,r12,1
   ctx.r[2] = ctx.r[12] + uint64_t(65536);
-  // 82002E64: addi r2,r2,-23640
-  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-23640));
+  // 82002E64: addi r2,r2,-18848
+  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-18848));
   // 82002E68: addis r7,r2,-1
   ctx.r[7] = ctx.r[2] + uint64_t(int64_t(-65536));
   // 82002E6C: addi r6,r0,16
   ctx.r[6] = uint64_t(0) + uint64_t(16);
-  // 82002E70: addi r8,r7,32536
-  ctx.r[8] = ctx.r[7] + uint64_t(32536);
+  // 82002E70: addi r8,r7,31840
+  ctx.r[8] = ctx.r[7] + uint64_t(31840);
   // 82002E74: addi r7,r0,15
   ctx.r[7] = uint64_t(0) + uint64_t(15);
   // 82002E78: lvx v2,v0,v8
@@ -6300,8 +6300,8 @@ FSR_FUNC(sub_82002E68) {
   ctx.r[7] = ctx.r[2] + uint64_t(int64_t(-65536));
   // 82002E6C: addi r6,r0,16
   ctx.r[6] = uint64_t(0) + uint64_t(16);
-  // 82002E70: addi r8,r7,32536
-  ctx.r[8] = ctx.r[7] + uint64_t(32536);
+  // 82002E70: addi r8,r7,31840
+  ctx.r[8] = ctx.r[7] + uint64_t(31840);
   // 82002E74: addi r7,r0,15
   ctx.r[7] = uint64_t(0) + uint64_t(15);
   // 82002E78: lvx v2,v0,v8
@@ -6574,50 +6574,49 @@ FSR_FUNC(sub_82003080) {
   uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
   // 82003080: addis r2,r12,1
   ctx.r[2] = ctx.r[12] + uint64_t(65536);
-  // 82003084: addi r2,r2,-24184
-  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-24184));
-  // 82003088: addi r3,r0,0
-  ctx.r[3] = uint64_t(0) + uint64_t(0);
-  // 8200308C: ori r0,r0,0x0
+  // 82003084: addi r2,r2,-19392
+  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-19392));
+  // 82003088: ori r0,r0,0x0
   ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003090: addis r6,r0,0
-  ctx.r[6] = uint64_t(0) + uint64_t(0);
-  // 82003094: ori r5,r3,0xB400
-  ctx.r[5] = ctx.r[3] | 0xB400ull;
-  // 82003098: stw r5,-29188(r2)
-  t0 = (ctx.r[2] + uint64_t(int64_t(-29188))); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[5]));
-  // 8200309C: addi r4,r0,-11716
-  ctx.r[4] = uint64_t(0) + uint64_t(int64_t(-11716));
-  // 820030A0: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 820030A4: rldicl r4,r4,r8
-  ctx.r[4] = fsr::rotl64(ctx.r[4], 8) & 0xFFFFFFFFull;
-  // 820030A8: stw r4,-29184(r2)
-  t0 = (ctx.r[2] + uint64_t(int64_t(-29184))); ea = uint32_t(t0);
+  // 8200308C: addi r4,r0,16384
+  ctx.r[4] = uint64_t(0) + uint64_t(16384);
+  // 82003090: stw r4,-29888(r2)
+  t0 = (ctx.r[2] + uint64_t(int64_t(-29888))); ea = uint32_t(t0);
   fsr::st32(base, ea, uint32_t(ctx.r[4]));
-  // 820030AC: ori r4,r6,0xB400
-  ctx.r[4] = ctx.r[6] | 0xB400ull;
+  // 82003094: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003098: addi r4,r0,26000
+  ctx.r[4] = uint64_t(0) + uint64_t(26000);
+  // 8200309C: stw r4,-29884(r2)
+  t0 = (ctx.r[2] + uint64_t(int64_t(-29884))); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[4]));
+  // 820030A0: addi r3,r0,15615
+  ctx.r[3] = uint64_t(0) + uint64_t(15615);
+  // 820030A4: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820030A8: oris r3,r3,0xF0D2
+  ctx.r[3] = ctx.r[3] | 0xF0D20000ull;
+  // 820030AC: stw r3,-29880(r2)
+  t0 = (ctx.r[2] + uint64_t(int64_t(-29880))); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
   // 820030B0: ori r0,r0,0x0
   ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 820030B4: addi r4,r4,-29696
-  ctx.r[4] = ctx.r[4] + uint64_t(int64_t(-29696));
-  // 820030B8: addis r4,r4,1
-  ctx.r[4] = ctx.r[4] + uint64_t(65536);
-  // 820030BC: stw r4,-29192(r2)
-  t0 = (ctx.r[2] + uint64_t(int64_t(-29192))); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[4]));
-  // 820030C0: ori r0,r0,0x0
+  // 820030B4: addi r4,r0,0
+  ctx.r[4] = uint64_t(0) + uint64_t(0);
+  // 820030B8: stb r4,-29744(r2)
+  t0 = (ctx.r[2] + uint64_t(int64_t(-29744))); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[4]));
+  // 820030BC: ori r0,r0,0x0
   ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 820030C4: stb r3,-29176(r2)
-  t0 = (ctx.r[2] + uint64_t(int64_t(-29176))); ea = uint32_t(t0);
-  fsr::st8(base, ea, uint8_t(ctx.r[3]));
-  // 820030C8: bclr r20,r0,r0
+  // 820030C0: stb r4,-29743(r2)
+  t0 = (ctx.r[2] + uint64_t(int64_t(-29743))); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[4]));
+  // 820030C4: bclr r20,r0,r0
   if (true) return;
+  fsr::fsr_unimplemented(ctx, base, 0x820030C8, 0); // zero word (padding)
   fsr::fsr_unimplemented(ctx, base, 0x820030CC, 0); // zero word (padding)
   fsr::fsr_unimplemented(ctx, base, 0x820030D0, 0); // zero word (padding)
-  fsr::fsr_unimplemented(ctx, base, 0x820030D4, 0); // zero word (padding)
-  fsr::fsr_call_indirect(ctx, base, 0x820030D8);
+  fsr::fsr_call_indirect(ctx, base, 0x820030D4);
   return;
 }
 
@@ -6625,2404 +6624,5641 @@ FSR_FUNC(sub_820030E0) {
   uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
   // 820030E0: addis r2,r12,1
   ctx.r[2] = ctx.r[12] + uint64_t(65536);
-  // 820030E4: addi r2,r2,-24280
-  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-24280));
-  // 820030E8: mfcr r12,r0,r0
-  ctx.r[12] = fsr::get_cr(ctx);
-  // 820030EC: stw r12,8(r1)
-  t0 = (ctx.r[1] + uint64_t(8)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[12]));
-  // 820030F0: mfspr r0,r8,r0
+  // 820030E4: addi r2,r2,-19488
+  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-19488));
+  // 820030E8: mfspr r0,r8,r0
   ctx.r[0] = ctx.lr;
-  // 820030F4: stdu r1,-256(r1)
-  t0 = (ctx.r[1] + uint64_t(int64_t(-256))); ea = uint32_t(t0);
+  // 820030EC: stdu r1,-496(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-496))); ea = uint32_t(t0);
   fsr::st64(base, ea, ctx.r[1]);
   ctx.r[1] = t0;
-  // 820030F8: std r0,272(r1)
-  t0 = (ctx.r[1] + uint64_t(272)); ea = uint32_t(t0);
+  // 820030F0: std r0,512(r1)
+  t0 = (ctx.r[1] + uint64_t(512)); ea = uint32_t(t0);
   fsr::st64(base, ea, ctx.r[0]);
-  // 820030FC: std r29,232(r1)
-  t0 = (ctx.r[1] + uint64_t(232)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[29]);
-  // 82003100: or_ r4,r29,r4
-  ctx.r[29] = ctx.r[4] | ctx.r[4];
-  // 82003104: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003108: std r30,240(r1)
-  t0 = (ctx.r[1] + uint64_t(240)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[30]);
-  // 8200310C: or_ r5,r30,r5
-  ctx.r[30] = ctx.r[5] | ctx.r[5];
-  // 82003110: lbz r5,-29176(r2)
-  t0 = (ctx.r[2] + uint64_t(int64_t(-29176))); ea = uint32_t(t0);
-  ctx.r[5] = fsr::ld8(base, ea);
-  // 82003114: std r27,216(r1)
-  t0 = (ctx.r[1] + uint64_t(216)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[27]);
-  // 82003118: or_ r6,r27,r6
-  ctx.r[27] = ctx.r[6] | ctx.r[6];
-  // 8200311C: cmpli r0,r5,r0
-  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[5]), 0u);
-  // 82003120: std r28,224(r1)
-  t0 = (ctx.r[1] + uint64_t(224)); ea = uint32_t(t0);
+  // 820030F4: std r28,464(r1)
+  t0 = (ctx.r[1] + uint64_t(464)); ea = uint32_t(t0);
   fsr::st64(base, ea, ctx.r[28]);
-  // 82003124: or_ r3,r28,r3
+  // 820030F8: or_ r3,r28,r3
   ctx.r[28] = ctx.r[3] | ctx.r[3];
-  // 82003128: std r14,112(r1)
-  t0 = (ctx.r[1] + uint64_t(112)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[14]);
-  // 8200312C: std r15,120(r1)
-  t0 = (ctx.r[1] + uint64_t(120)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[15]);
-  // 82003130: std r16,128(r1)
-  t0 = (ctx.r[1] + uint64_t(128)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[16]);
-  // 82003134: std r17,136(r1)
-  t0 = (ctx.r[1] + uint64_t(136)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[17]);
-  // 82003138: std r18,144(r1)
-  t0 = (ctx.r[1] + uint64_t(144)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[18]);
-  // 8200313C: std r19,152(r1)
-  t0 = (ctx.r[1] + uint64_t(152)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[19]);
-  // 82003140: std r20,160(r1)
-  t0 = (ctx.r[1] + uint64_t(160)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[20]);
-  // 82003144: std r21,168(r1)
-  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[21]);
-  // 82003148: std r22,176(r1)
-  t0 = (ctx.r[1] + uint64_t(176)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[22]);
-  // 8200314C: std r23,184(r1)
-  t0 = (ctx.r[1] + uint64_t(184)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[23]);
-  // 82003150: std r24,192(r1)
-  t0 = (ctx.r[1] + uint64_t(192)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[24]);
-  // 82003154: std r25,200(r1)
-  t0 = (ctx.r[1] + uint64_t(200)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[25]);
-  // 82003158: std r26,208(r1)
-  t0 = (ctx.r[1] + uint64_t(208)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[26]);
-  // 8200315C: std r31,248(r1)
-  t0 = (ctx.r[1] + uint64_t(248)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[31]);
-  // 82003160: bc 4,2,0x82003184
-  if (!ctx.crb[2]) goto loc_82003184;
-  // 82003164: addi r3,r0,1
-  ctx.r[3] = uint64_t(0) + uint64_t(1);
-  // 82003168: addis r5,r2,-1
-  ctx.r[5] = ctx.r[2] + uint64_t(int64_t(-65536));
-  // 8200316C: stb r3,-29176(r2)
-  t0 = (ctx.r[2] + uint64_t(int64_t(-29176))); ea = uint32_t(t0);
-  fsr::st8(base, ea, uint8_t(ctx.r[3]));
-  // 82003170: addi r3,r5,32648
-  ctx.r[3] = ctx.r[5] + uint64_t(32648);
-  // 82003174: or_ r29,r4,r29
-  ctx.r[4] = ctx.r[29] | ctx.r[29];
-  // 82003178: or_ r30,r5,r30
-  ctx.r[5] = ctx.r[30] | ctx.r[30];
-  // 8200317C: bl 0x82001010
-  ctx.lr = 0x82003180;
-  sub_82001010(ctx, base);
-  // 82003180: ori r0,r0,0x0
+  // 820030FC: ori r0,r0,0x0
   ctx.r[0] = ctx.r[0] | 0x0ull;
-loc_82003184:
-  // 82003184: addi r5,r1,96
-  ctx.r[5] = ctx.r[1] + uint64_t(96);
-  // 82003188: addi r3,r0,0
-  ctx.r[3] = uint64_t(0) + uint64_t(0);
-  // 8200318C: addi r4,r0,0
-  ctx.r[4] = uint64_t(0) + uint64_t(0);
-  // 82003190: bl 0x82001000
-  ctx.lr = 0x82003194;
-  sub_82001000(ctx, base);
-  // 82003194: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003198: cmpli r0,r3,r0
-  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[3]), 0u);
-  // 8200319C: bc 12,2,0x820031B4
-  if (ctx.crb[2]) goto loc_820031B4;
-  // 820031A0: addi r3,r0,0
-  ctx.r[3] = uint64_t(0) + uint64_t(0);
-  // 820031A4: addi r4,r0,18
-  ctx.r[4] = uint64_t(0) + uint64_t(18);
-  // 820031A8: addi r5,r0,0
-  ctx.r[5] = uint64_t(0) + uint64_t(0);
-  // 820031AC: addi r31,r0,0
-  ctx.r[31] = uint64_t(0) + uint64_t(0);
-  // 820031B0: b 0x820031D4
-  goto loc_820031D4;
-loc_820031B4:
-  // 820031B4: lbz r3,102(r1)
-  t0 = (ctx.r[1] + uint64_t(102)); ea = uint32_t(t0);
-  ctx.r[3] = fsr::ld8(base, ea);
-  // 820031B8: lbz r4,103(r1)
-  t0 = (ctx.r[1] + uint64_t(103)); ea = uint32_t(t0);
-  ctx.r[4] = fsr::ld8(base, ea);
-  // 820031BC: add r3,r4,r3
-  t0 = ctx.r[4]; t1 = ctx.r[3]; ctx.r[3] = t0 + t1;
-  // 820031C0: lha r5,104(r1)
-  t0 = (ctx.r[1] + uint64_t(104)); ea = uint32_t(t0);
-  ctx.r[5] = uint64_t(int64_t(int16_t(fsr::ld16(base, ea))));
-  // 820031C4: rlwinm r4,r3,28,4,31
-  ctx.r[4] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[3]), 28)) & 0xFFFFFFFull;
-  // 820031C8: addi r4,r4,18
-  ctx.r[4] = ctx.r[4] + uint64_t(18);
-  // 820031CC: lhz r31,100(r1)
-  t0 = (ctx.r[1] + uint64_t(100)); ea = uint32_t(t0);
-  ctx.r[31] = fsr::ld16(base, ea);
-  // 820031D0: lha r3,106(r1)
-  t0 = (ctx.r[1] + uint64_t(106)); ea = uint32_t(t0);
-  ctx.r[3] = uint64_t(int64_t(int16_t(fsr::ld16(base, ea))));
-loc_820031D4:
-  // 820031D4: andi_rc r6,r31,0x4
-  ctx.r[6] = ctx.r[31] & 0x4ull;
-  fsr::set_cr0(ctx, ctx.r[6]);
-  // 820031D8: addi r7,r0,-20000
-  ctx.r[7] = uint64_t(0) + uint64_t(int64_t(-20000));
-  // 820031DC: mcrf r4,r0,r0
-  std::memcpy(ctx.crb + 4, ctx.crb + 0, 4);
-  // 820031E0: andi_rc r6,r31,0x8
-  ctx.r[6] = ctx.r[31] & 0x8ull;
-  fsr::set_cr0(ctx, ctx.r[6]);
-  // 820031E4: addi r8,r0,20000
-  ctx.r[8] = uint64_t(0) + uint64_t(20000);
-  // 820031E8: bc 12,6,0x820031F4
-  if (ctx.crb[6]) goto loc_820031F4;
-  // 820031EC: ori r5,r7,0x0
-  ctx.r[5] = ctx.r[7] | 0x0ull;
-  // 820031F0: b 0x820031F4
-  goto loc_820031F4;
-loc_820031F4:
-  // 820031F4: mcrf r20,r0,r0
-  std::memcpy(ctx.crb + 20, ctx.crb + 0, 4);
-  // 820031F8: andi_rc r6,r31,0x1
-  ctx.r[6] = ctx.r[31] & 0x1ull;
-  fsr::set_cr0(ctx, ctx.r[6]);
-  // 820031FC: bc 12,22,0x82003208
-  if (ctx.crb[22]) goto loc_82003208;
-  // 82003200: ori r6,r8,0x0
-  ctx.r[6] = ctx.r[8] | 0x0ull;
-  // 82003204: b 0x8200320C
-  goto loc_8200320C;
-loc_82003208:
-  // 82003208: addi r6,r5,0
-  ctx.r[6] = ctx.r[5] + uint64_t(0);
-loc_8200320C:
-  // 8200320C: mcrf r4,r0,r0
-  std::memcpy(ctx.crb + 4, ctx.crb + 0, 4);
-  // 82003210: addi r5,r0,-8002
-  ctx.r[5] = uint64_t(0) + uint64_t(int64_t(-8002));
-  // 82003214: addi r9,r6,-4001
-  ctx.r[9] = ctx.r[6] + uint64_t(int64_t(-4001));
-  // 82003218: bc 12,6,0x82003224
-  if (ctx.crb[6]) goto loc_82003224;
-  // 8200321C: ori r3,r8,0x0
-  ctx.r[3] = ctx.r[8] | 0x0ull;
-  // 82003220: b 0x82003224
-  goto loc_82003224;
-loc_82003224:
-  // 82003224: cmpl r20,r9,r5
-  fsr::set_cr_unsigned(ctx, 5, uint32_t(ctx.r[9]), uint32_t(ctx.r[5]));
-  // 82003228: andi_rc r9,r31,0x2
-  ctx.r[9] = ctx.r[31] & 0x2ull;
-  fsr::set_cr0(ctx, ctx.r[9]);
-  // 8200322C: bc 12,2,0x82003238
-  if (ctx.crb[2]) goto loc_82003238;
-  // 82003230: ori r3,r7,0x0
-  ctx.r[3] = ctx.r[7] | 0x0ull;
-  // 82003234: b 0x82003238
-  goto loc_82003238;
-loc_82003238:
-  // 82003238: bc 12,21,0x82003260
-  if (ctx.crb[21]) goto loc_82003260;
-  // 8200323C: rlwinm r7,r6,7,26,31
-  ctx.r[7] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[6]), 7)) & 0x3Full;
-  // 82003240: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003244: add r6,r6,r7
-  t0 = ctx.r[6]; t1 = ctx.r[7]; ctx.r[6] = t0 + t1;
-  // 82003248: lwz r7,-29192(r2)
-  t0 = (ctx.r[2] + uint64_t(int64_t(-29192))); ea = uint32_t(t0);
-  ctx.r[7] = fsr::ld32(base, ea);
-  // 8200324C: addi r8,r2,-29192
-  ctx.r[8] = ctx.r[2] + uint64_t(int64_t(-29192));
-  // 82003250: extsh r6,r6,r0
-  ctx.r[6] = uint64_t(int64_t(int16_t(ctx.r[6])));
-  // 82003254: srawi r6,r6,r6
-  ctx.r[6] = fsr::ppc_sraw(ctx, ctx.r[6], 6);
-  // 82003258: add r6,r7,r6
-  t0 = ctx.r[7]; t1 = ctx.r[6]; ctx.r[6] = t0 + t1;
-  // 8200325C: stw r6,0(r8)
-  t0 = (ctx.r[8] + uint64_t(0)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[6]));
-loc_82003260:
-  // 82003260: addi r6,r3,-4001
-  ctx.r[6] = ctx.r[3] + uint64_t(int64_t(-4001));
-  // 82003264: cmpl r0,r6,r5
-  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[6]), uint32_t(ctx.r[5]));
-  // 82003268: bc 12,1,0x82003290
-  if (ctx.crb[1]) goto loc_82003290;
-  // 8200326C: rlwinm r5,r3,7,26,31
-  ctx.r[5] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[3]), 7)) & 0x3Full;
-  // 82003270: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003274: add r3,r3,r5
-  t0 = ctx.r[3]; t1 = ctx.r[5]; ctx.r[3] = t0 + t1;
-  // 82003278: lwz r5,-29188(r2)
-  t0 = (ctx.r[2] + uint64_t(int64_t(-29188))); ea = uint32_t(t0);
-  ctx.r[5] = fsr::ld32(base, ea);
-  // 8200327C: addi r6,r2,-29188
-  ctx.r[6] = ctx.r[2] + uint64_t(int64_t(-29188));
-  // 82003280: extsh r3,r3,r0
-  ctx.r[3] = uint64_t(int64_t(int16_t(ctx.r[3])));
-  // 82003284: srawi r3,r3,r6
-  ctx.r[3] = fsr::ppc_sraw(ctx, ctx.r[3], 6);
-  // 82003288: subf r3,r3,r5
-  t0 = ~ctx.r[3]; t1 = ctx.r[5]; ctx.r[3] = t1 + t0 + 1;
-  // 8200328C: stw r3,0(r6)
-  t0 = (ctx.r[6] + uint64_t(0)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[3]));
-loc_82003290:
-  // 82003290: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003294: lwz r5,-29192(r2)
-  t0 = (ctx.r[2] + uint64_t(int64_t(-29192))); ea = uint32_t(t0);
-  ctx.r[5] = fsr::ld32(base, ea);
-  // 82003298: cmpi r0,r5,r31
-  fsr::set_cr_signed(ctx, 0, int32_t(ctx.r[5]), -1);
-  // 8200329C: bc 12,1,0x820032AC
-  if (ctx.crb[1]) goto loc_820032AC;
-  // 820032A0: addi r5,r0,0
-  ctx.r[5] = uint64_t(0) + uint64_t(0);
-  // 820032A4: stw r5,-29192(r2)
-  t0 = (ctx.r[2] + uint64_t(int64_t(-29192))); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[5]));
-  // 820032A8: addi r5,r0,0
-  ctx.r[5] = uint64_t(0) + uint64_t(0);
-loc_820032AC:
-  // 820032AC: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 820032B0: lwz r6,-29188(r2)
-  t0 = (ctx.r[2] + uint64_t(int64_t(-29188))); ea = uint32_t(t0);
-  ctx.r[6] = fsr::ld32(base, ea);
-  // 820032B4: cmpi r0,r6,r31
-  fsr::set_cr_signed(ctx, 0, int32_t(ctx.r[6]), -1);
-  // 820032B8: bc 12,1,0x820032C8
-  if (ctx.crb[1]) goto loc_820032C8;
-  // 820032BC: addi r6,r0,0
-  ctx.r[6] = uint64_t(0) + uint64_t(0);
-  // 820032C0: stw r6,-29188(r2)
-  t0 = (ctx.r[2] + uint64_t(int64_t(-29188))); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[6]));
-  // 820032C4: addi r6,r0,0
-  ctx.r[6] = uint64_t(0) + uint64_t(0);
-loc_820032C8:
-  // 820032C8: rlwinm r8,r29,8,0,23
-  ctx.r[8] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[29]), 8)) & 0xFFFFFF00ull;
-  // 820032CC: addi r8,r8,-256
-  ctx.r[8] = ctx.r[8] + uint64_t(int64_t(-256));
-  // 820032D0: cmp r0,r5,r8
-  fsr::set_cr_signed(ctx, 0, int32_t(ctx.r[5]), int32_t(ctx.r[8]));
-  // 820032D4: bc 4,1,0x820032E4
-  if (!ctx.crb[1]) goto loc_820032E4;
-  // 820032D8: addi r3,r2,-29192
-  ctx.r[3] = ctx.r[2] + uint64_t(int64_t(-29192));
-  // 820032DC: or_ r8,r5,r8
-  ctx.r[5] = ctx.r[8] | ctx.r[8];
-  // 820032E0: stw r8,0(r3)
-  t0 = (ctx.r[3] + uint64_t(0)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[8]));
-loc_820032E4:
-  // 820032E4: rlwinm r3,r30,8,0,23
-  ctx.r[3] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[30]), 8)) & 0xFFFFFF00ull;
-  // 820032E8: addi r3,r3,-256
-  ctx.r[3] = ctx.r[3] + uint64_t(int64_t(-256));
-  // 820032EC: cmp r0,r6,r3
-  fsr::set_cr_signed(ctx, 0, int32_t(ctx.r[6]), int32_t(ctx.r[3]));
-  // 820032F0: bc 4,1,0x82003300
-  if (!ctx.crb[1]) goto loc_82003300;
-  // 820032F4: addi r6,r2,-29188
-  ctx.r[6] = ctx.r[2] + uint64_t(int64_t(-29188));
-  // 820032F8: stw r3,0(r6)
-  t0 = (ctx.r[6] + uint64_t(0)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[3]));
-  // 820032FC: or_ r3,r6,r3
-  ctx.r[6] = ctx.r[3] | ctx.r[3];
-loc_82003300:
-  // 82003300: cmpli r0,r31,r2
-  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[31]), 4096u);
-  // 82003304: bc 12,0,0x82003368
-  if (ctx.crb[0]) goto loc_82003368;
-  // 82003308: andi_rc r3,r31,0x4000
-  ctx.r[3] = ctx.r[31] & 0x4000ull;
-  fsr::set_cr0(ctx, ctx.r[3]);
-  // 8200330C: addis r7,r0,15570
-  ctx.r[7] = uint64_t(0) + uint64_t(1020395520);
-  // 82003310: mcrf r4,r0,r0
-  std::memcpy(ctx.crb + 4, ctx.crb + 0, 4);
-  // 82003314: addis r3,r0,-6596
-  ctx.r[3] = uint64_t(0) + uint64_t(int64_t(-432275456));
-  // 82003318: addis r8,r0,15480
-  ctx.r[8] = uint64_t(0) + uint64_t(1014497280);
-  // 8200331C: andi_rc r9,r31,0x2000
-  ctx.r[9] = ctx.r[31] & 0x2000ull;
-  fsr::set_cr0(ctx, ctx.r[9]);
-  // 82003320: ori r3,r3,0x3CFF
-  ctx.r[3] = ctx.r[3] | 0x3CFFull;
-  // 82003324: ori r7,r7,0x5AFF
-  ctx.r[7] = ctx.r[7] | 0x5AFFull;
-  // 82003328: ori r8,r8,0xF0FF
-  ctx.r[8] = ctx.r[8] | 0xF0FFull;
-  // 8200332C: bc 12,2,0x82003334
-  if (ctx.crb[2]) goto loc_82003334;
-  // 82003330: b 0x82003338
-  goto loc_82003338;
-loc_82003334:
-  // 82003334: addi r3,r7,0
-  ctx.r[3] = ctx.r[7] + uint64_t(0);
-loc_82003338:
-  // 82003338: addis r9,r0,-3886
-  ctx.r[9] = uint64_t(0) + uint64_t(int64_t(-254672896));
-  // 8200333C: bc 12,6,0x82003348
-  if (ctx.crb[6]) goto loc_82003348;
-  // 82003340: ori r3,r8,0x0
-  ctx.r[3] = ctx.r[8] | 0x0ull;
-  // 82003344: b 0x82003348
-  goto loc_82003348;
-loc_82003348:
-  // 82003348: cmpli r0,r31,r15
-  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[31]), 32767u);
-  // 8200334C: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003350: ori r7,r9,0x3CFF
-  ctx.r[7] = ctx.r[9] | 0x3CFFull;
-  // 82003354: bc 12,1,0x8200335C
-  if (ctx.crb[1]) goto loc_8200335C;
-  // 82003358: b 0x82003360
-  goto loc_82003360;
-loc_8200335C:
-  // 8200335C: addi r3,r7,0
-  ctx.r[3] = ctx.r[7] + uint64_t(0);
-loc_82003360:
-  // 82003360: addi r7,r2,-29184
-  ctx.r[7] = ctx.r[2] + uint64_t(int64_t(-29184));
-  // 82003364: stw r3,0(r7)
-  t0 = (ctx.r[7] + uint64_t(0)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[3]));
-loc_82003368:
-  // 82003368: cmpi r4,r30,r0
-  fsr::set_cr_signed(ctx, 1, int32_t(ctx.r[30]), 1);
-  // 8200336C: cmpi r0,r29,r0
-  fsr::set_cr_signed(ctx, 0, int32_t(ctx.r[29]), 1);
-  // 82003370: bc 12,4,0x820034B0
-  if (ctx.crb[4]) goto loc_820034B0;
-  // 82003374: rldicl r29,r8,r0
-  ctx.r[8] = fsr::rotl64(ctx.r[29], 0) & 0xFFFFFFFFull;
-  // 82003378: rldicl r30,r7,r0
-  ctx.r[7] = fsr::rotl64(ctx.r[30], 0) & 0xFFFFFFFFull;
-  // 8200337C: rlwinm r11,r8,0,1,30
-  ctx.r[11] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[8]), 0)) & 0x7FFFFFFEull;
-  // 82003380: rlwinm r9,r27,24,0,7
-  ctx.r[9] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[27]), 24)) & 0xFF000000ull;
-  // 82003384: addi r3,r11,-2
-  ctx.r[3] = ctx.r[11] + uint64_t(int64_t(-2));
-  // 82003388: addi r10,r28,-8
-  ctx.r[10] = ctx.r[28] + uint64_t(int64_t(-8));
-  // 8200338C: rldicl r3,r3,r31
-  ctx.r[3] = fsr::rotl64(ctx.r[3], 63) & 0x7FFFFFFFFFFFFFFFull;
-  // 82003390: addi r12,r28,-4
-  ctx.r[12] = ctx.r[28] + uint64_t(int64_t(-4));
-  // 82003394: addi r26,r0,0
-  ctx.r[26] = uint64_t(0) + uint64_t(0);
-  // 82003398: addi r0,r0,0
-  ctx.r[0] = uint64_t(0) + uint64_t(0);
-  // 8200339C: addi r25,r3,1
-  ctx.r[25] = ctx.r[3] + uint64_t(1);
-  // 820033A0: cmpli r20,r29,r0
-  fsr::set_cr_unsigned(ctx, 5, uint32_t(ctx.r[29]), 1u);
-  // 820033A4: cmpl r25,r11,r8
-  fsr::set_cr_unsigned(ctx, 6, ctx.r[11], ctx.r[8]);
-  // 820033A8: b 0x820033C0
-  goto loc_820033C0;
-  // 820033AC: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-loc_820033B0:
-  // 820033B0: addi r26,r26,1
-  ctx.r[26] = ctx.r[26] + uint64_t(1);
-  // 820033B4: add r0,r0,r29
-  t0 = ctx.r[0]; t1 = ctx.r[29]; ctx.r[0] = t0 + t1;
-  // 820033B8: cmpl r29,r26,r7
-  fsr::set_cr_unsigned(ctx, 7, ctx.r[26], ctx.r[7]);
-  // 820033BC: bc 12,30,0x820034B0
-  if (ctx.crb[30]) goto loc_820034B0;
-loc_820033C0:
-  // 820033C0: bc 12,0,0x820033B0
-  if (ctx.crb[0]) goto loc_820033B0;
-  // 820033C4: mulli r3,r26,60
-  ctx.r[3] = ctx.r[26] * uint64_t(60);
-  // 820033C8: rldic r0,r24,r2
-  ctx.r[24] = fsr::rotl64(ctx.r[0], 2) & 0x3FFFFFFFCull;
-  // 820033CC: divwu r3,r3,r30
-  ctx.r[3] = fsr::divw_u(ctx.r[3], ctx.r[30]);
-  // 820033D0: rlwinm r3,r3,16,0,15
-  ctx.r[3] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[3]), 16)) & 0xFFFF0000ull;
-  // 820033D4: addis r3,r3,40
-  ctx.r[3] = ctx.r[3] + uint64_t(2621440);
-  // 820033D8: addi r23,r0,0
-  ctx.r[23] = uint64_t(0) + uint64_t(0);
-  // 820033DC: bc 12,22,0x8200345C
-  if (ctx.crb[22]) goto loc_8200345C;
-  // 820033E0: add r23,r10,r24
-  t0 = ctx.r[10]; t1 = ctx.r[24]; ctx.r[23] = t0 + t1;
-  // 820033E4: addi r22,r0,1
-  ctx.r[22] = uint64_t(0) + uint64_t(1);
-  // 820033E8: or_ r9,r21,r9
-  ctx.r[21] = ctx.r[9] | ctx.r[9];
-  // 820033EC: mtspr r25,r9,r0
-  ctx.ctr = ctx.r[25];
-  // 820033F0: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 820033F4: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 820033F8: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 820033FC: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-loc_82003400:
-  // 82003400: xor_ r22,r20,r26
-  ctx.r[20] = ctx.r[22] ^ ctx.r[26];
-  // 82003404: addis r19,r21,256
-  ctx.r[19] = ctx.r[21] + uint64_t(16777216);
-  // 82003408: rlwinm r20,r20,8,19,23
-  ctx.r[20] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[20]), 8)) & 0x1F00ull;
-  // 8200340C: rlwimi r20,r19,0,2,7
-  ctx.r[20] = (fsr::dup32(fsr::rotl32(uint32_t(ctx.r[19]), 0)) & 0x3F000000ull) | (ctx.r[20] & 0xFFFFFFFFC0FFFFFFull);
-  // 82003410: addi r19,r22,-1
-  ctx.r[19] = ctx.r[22] + uint64_t(int64_t(-1));
-  // 82003414: xor_ r19,r19,r26
-  ctx.r[19] = ctx.r[19] ^ ctx.r[26];
-  // 82003418: rlwinm r19,r19,8,19,23
-  ctx.r[19] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[19]), 8)) & 0x1F00ull;
-  // 8200341C: rlwimi r19,r21,0,2,7
-  ctx.r[19] = (fsr::dup32(fsr::rotl32(uint32_t(ctx.r[21]), 0)) & 0x3F000000ull) | (ctx.r[19] & 0xFFFFFFFFC0FFFFFFull);
-  // 82003420: addi r19,r19,12800
-  ctx.r[19] = ctx.r[19] + uint64_t(12800);
-  // 82003424: addi r20,r20,12800
-  ctx.r[20] = ctx.r[20] + uint64_t(12800);
-  // 82003428: addis r19,r19,5120
-  ctx.r[19] = ctx.r[19] + uint64_t(335544320);
-  // 8200342C: addis r20,r20,5120
-  ctx.r[20] = ctx.r[20] + uint64_t(335544320);
-  // 82003430: or_ r19,r19,r3
-  ctx.r[19] = ctx.r[19] | ctx.r[3];
-  // 82003434: ori r19,r19,0xFF
-  ctx.r[19] = ctx.r[19] | 0xFFull;
-  // 82003438: or_ r20,r20,r3
-  ctx.r[20] = ctx.r[20] | ctx.r[3];
-  // 8200343C: stwu r19,8(r23)
-  t0 = (ctx.r[23] + uint64_t(8)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[19]));
-  ctx.r[23] = t0;
-  // 82003440: ori r20,r20,0xFF
-  ctx.r[20] = ctx.r[20] | 0xFFull;
-  // 82003444: addi r22,r22,2
-  ctx.r[22] = ctx.r[22] + uint64_t(2);
-  // 82003448: addis r21,r21,512
-  ctx.r[21] = ctx.r[21] + uint64_t(33554432);
-  // 8200344C: stw r20,4(r23)
-  t0 = (ctx.r[23] + uint64_t(4)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[20]));
-  // 82003450: bc 16,0,0x82003400
-  ctx.ctr--;
-  if (ctx.ctr != 0) goto loc_82003400;
-  // 82003454: or_ r11,r23,r11
-  ctx.r[23] = ctx.r[11] | ctx.r[11];
-  // 82003458: bc 12,26,0x820033B0
-  if (ctx.crb[26]) goto loc_820033B0;
-loc_8200345C:
-  // 8200345C: rldicr r23,r22,r2
-  ctx.r[22] = fsr::rotl64(ctx.r[23], 2) & 0xFFFFFFFFFFFFFFFCull;
-  // 82003460: add r21,r27,r23
-  t0 = ctx.r[27]; t1 = ctx.r[23]; ctx.r[21] = t0 + t1;
-  // 82003464: add r22,r22,r24
-  t0 = ctx.r[22]; t1 = ctx.r[24]; ctx.r[22] = t0 + t1;
-  // 82003468: subf r20,r23,r8
-  t0 = ~ctx.r[23]; t1 = ctx.r[8]; ctx.r[20] = t1 + t0 + 1;
-  // 8200346C: rlwinm r24,r21,24,0,7
-  ctx.r[24] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[21]), 24)) & 0xFF000000ull;
-  // 82003470: add r22,r12,r22
-  t0 = ctx.r[12]; t1 = ctx.r[22]; ctx.r[22] = t0 + t1;
-  // 82003474: mtspr r20,r9,r0
-  ctx.ctr = ctx.r[20];
-  // 82003478: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 8200347C: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-loc_82003480:
-  // 82003480: xor_ r23,r21,r26
-  ctx.r[21] = ctx.r[23] ^ ctx.r[26];
-  // 82003484: addi r23,r23,1
-  ctx.r[23] = ctx.r[23] + uint64_t(1);
-  // 82003488: rlwinm r21,r21,8,19,23
-  ctx.r[21] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[21]), 8)) & 0x1F00ull;
-  // 8200348C: rlwimi r21,r24,0,2,7
-  ctx.r[21] = (fsr::dup32(fsr::rotl32(uint32_t(ctx.r[24]), 0)) & 0x3F000000ull) | (ctx.r[21] & 0xFFFFFFFFC0FFFFFFull);
-  // 82003490: addi r21,r21,12800
-  ctx.r[21] = ctx.r[21] + uint64_t(12800);
-  // 82003494: addis r21,r21,5120
-  ctx.r[21] = ctx.r[21] + uint64_t(335544320);
-  // 82003498: or_ r21,r21,r3
-  ctx.r[21] = ctx.r[21] | ctx.r[3];
-  // 8200349C: ori r21,r21,0xFF
-  ctx.r[21] = ctx.r[21] | 0xFFull;
-  // 820034A0: stwu r21,4(r22)
-  t0 = (ctx.r[22] + uint64_t(4)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[21]));
-  ctx.r[22] = t0;
-  // 820034A4: addis r24,r24,256
-  ctx.r[24] = ctx.r[24] + uint64_t(16777216);
-  // 820034A8: bc 16,0,0x82003480
-  ctx.ctr--;
-  if (ctx.ctr != 0) goto loc_82003480;
-  // 820034AC: b 0x820033B0
-  goto loc_820033B0;
-loc_820034B0:
-  // 820034B0: srawi r30,r7,r1
-  ctx.r[7] = fsr::ppc_sraw(ctx, ctx.r[30], 1);
-  // 820034B4: addis r3,r0,-6426
-  ctx.r[3] = uint64_t(0) + uint64_t(int64_t(-421134336));
-  // 820034B8: addze r7,r7,r0
-  t0 = ctx.r[7]; t1 = 0; ctx.r[7] = fsr::add_carry(ctx, t0, t1, ctx.xer_ca);
-  // 820034BC: ori r8,r3,0xE6FF
-  ctx.r[8] = ctx.r[3] | 0xE6FFull;
-  // 820034C0: extsw r7,r3,r0
-  ctx.r[3] = uint64_t(int64_t(int32_t(ctx.r[7])));
-  // 820034C4: cmpli r20,r29,r0
-  fsr::set_cr_unsigned(ctx, 5, uint32_t(ctx.r[29]), 2u);
-  // 820034C8: bc 12,0,0x82003548
-  if (ctx.crb[0]) goto loc_82003548;
-  // 820034CC: cmpi r24,r30,r31
-  fsr::set_cr_signed(ctx, 6, int32_t(ctx.r[30]), -1);
-  // 820034D0: bc 12,24,0x82003548
-  if (ctx.crb[24]) goto loc_82003548;
-  // 820034D4: cmp r24,r7,r30
-  fsr::set_cr_signed(ctx, 6, int32_t(ctx.r[7]), int32_t(ctx.r[30]));
-  // 820034D8: bc 4,24,0x82003548
-  if (!ctx.crb[24]) goto loc_82003548;
-  // 820034DC: addi r7,r0,0
-  ctx.r[7] = uint64_t(0) + uint64_t(0);
-  // 820034E0: mulld r9,r3,r29
-  ctx.r[9] = ctx.r[3] * ctx.r[29];
-  // 820034E4: bc 12,20,0x82003524
-  if (ctx.crb[20]) goto loc_82003524;
-  // 820034E8: rldicr r29,r7,r0
-  ctx.r[7] = fsr::rotl64(ctx.r[29], 0) & 0xFFFFFFFFFFFFFFFEull;
-  // 820034EC: rldicr r9,r11,r2
-  ctx.r[11] = fsr::rotl64(ctx.r[9], 2) & 0xFFFFFFFFFFFFFFFCull;
-  // 820034F0: addi r10,r7,-2
-  ctx.r[10] = ctx.r[7] + uint64_t(int64_t(-2));
-  // 820034F4: add r11,r11,r28
-  t0 = ctx.r[11]; t1 = ctx.r[28]; ctx.r[11] = t0 + t1;
-  // 820034F8: rldicl r10,r10,r31
-  ctx.r[10] = fsr::rotl64(ctx.r[10], 63) & 0x7FFFFFFFFFFFFFFFull;
-  // 820034FC: addi r12,r10,1
-  ctx.r[12] = ctx.r[10] + uint64_t(1);
-  // 82003500: addi r10,r11,-8
-  ctx.r[10] = ctx.r[11] + uint64_t(int64_t(-8));
-  // 82003504: mtspr r12,r9,r0
-  ctx.ctr = ctx.r[12];
-  // 82003508: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 8200350C: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-loc_82003510:
-  // 82003510: stwu r8,8(r10)
-  t0 = (ctx.r[10] + uint64_t(8)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[8]));
-  ctx.r[10] = t0;
-  // 82003514: stw r8,4(r10)
-  t0 = (ctx.r[10] + uint64_t(4)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[8]));
-  // 82003518: bc 16,0,0x82003510
-  ctx.ctr--;
-  if (ctx.ctr != 0) goto loc_82003510;
-  // 8200351C: cmpl r25,r7,r29
-  fsr::set_cr_unsigned(ctx, 6, ctx.r[7], ctx.r[29]);
-  // 82003520: bc 12,26,0x82003548
-  if (ctx.crb[26]) goto loc_82003548;
-loc_82003524:
-  // 82003524: rldicr r9,r9,r2
-  ctx.r[9] = fsr::rotl64(ctx.r[9], 2) & 0xFFFFFFFFFFFFFFFCull;
-  // 82003528: rldicr r7,r10,r2
-  ctx.r[10] = fsr::rotl64(ctx.r[7], 2) & 0xFFFFFFFFFFFFFFFCull;
-  // 8200352C: add r9,r9,r10
-  t0 = ctx.r[9]; t1 = ctx.r[10]; ctx.r[9] = t0 + t1;
-  // 82003530: subf r10,r7,r29
-  t0 = ~ctx.r[7]; t1 = ctx.r[29]; ctx.r[10] = t1 + t0 + 1;
-  // 82003534: add r7,r9,r28
-  t0 = ctx.r[9]; t1 = ctx.r[28]; ctx.r[7] = t0 + t1;
-  // 82003538: addi r7,r7,-4
-  ctx.r[7] = ctx.r[7] + uint64_t(int64_t(-4));
-  // 8200353C: mtspr r10,r9,r0
-  ctx.ctr = ctx.r[10];
-loc_82003540:
-  // 82003540: stwu r8,4(r7)
-  t0 = (ctx.r[7] + uint64_t(4)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[8]));
-  ctx.r[7] = t0;
-  // 82003544: bc 16,0,0x82003540
-  ctx.ctr--;
-  if (ctx.ctr != 0) goto loc_82003540;
-loc_82003548:
-  // 82003548: bc 12,0,0x820035C8
-  if (ctx.crb[0]) goto loc_820035C8;
-  // 8200354C: cmpi r24,r30,r31
-  fsr::set_cr_signed(ctx, 6, int32_t(ctx.r[30]), -3);
-  // 82003550: bc 12,24,0x820035C8
-  if (ctx.crb[24]) goto loc_820035C8;
-  // 82003554: addi r7,r3,1
-  ctx.r[7] = ctx.r[3] + uint64_t(1);
-  // 82003558: cmp r25,r7,r30
-  fsr::set_cr_signed(ctx, 6, int64_t(ctx.r[7]), int64_t(ctx.r[30]));
-  // 8200355C: bc 4,24,0x820035C8
-  if (!ctx.crb[24]) goto loc_820035C8;
-  // 82003560: addi r3,r0,0
-  ctx.r[3] = uint64_t(0) + uint64_t(0);
-  // 82003564: mulld r7,r7,r29
-  ctx.r[7] = ctx.r[7] * ctx.r[29];
-  // 82003568: bc 12,20,0x820035A4
-  if (ctx.crb[20]) goto loc_820035A4;
-  // 8200356C: rldicr r29,r3,r0
-  ctx.r[3] = fsr::rotl64(ctx.r[29], 0) & 0xFFFFFFFFFFFFFFFEull;
-  // 82003570: rldicr r7,r10,r2
-  ctx.r[10] = fsr::rotl64(ctx.r[7], 2) & 0xFFFFFFFFFFFFFFFCull;
-  // 82003574: addi r9,r3,-2
-  ctx.r[9] = ctx.r[3] + uint64_t(int64_t(-2));
-  // 82003578: add r10,r10,r28
-  t0 = ctx.r[10]; t1 = ctx.r[28]; ctx.r[10] = t0 + t1;
-  // 8200357C: rldicl r9,r9,r31
-  ctx.r[9] = fsr::rotl64(ctx.r[9], 63) & 0x7FFFFFFFFFFFFFFFull;
-  // 82003580: addi r11,r9,1
-  ctx.r[11] = ctx.r[9] + uint64_t(1);
-  // 82003584: addi r9,r10,-8
-  ctx.r[9] = ctx.r[10] + uint64_t(int64_t(-8));
-  // 82003588: mtspr r11,r9,r0
-  ctx.ctr = ctx.r[11];
-  // 8200358C: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-loc_82003590:
-  // 82003590: stwu r8,8(r9)
-  t0 = (ctx.r[9] + uint64_t(8)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[8]));
-  ctx.r[9] = t0;
-  // 82003594: stw r8,4(r9)
-  t0 = (ctx.r[9] + uint64_t(4)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[8]));
-  // 82003598: bc 16,0,0x82003590
-  ctx.ctr--;
-  if (ctx.ctr != 0) goto loc_82003590;
-  // 8200359C: cmpl r21,r3,r29
-  fsr::set_cr_unsigned(ctx, 5, ctx.r[3], ctx.r[29]);
-  // 820035A0: bc 12,22,0x820035C8
-  if (ctx.crb[22]) goto loc_820035C8;
-loc_820035A4:
-  // 820035A4: rldicr r7,r7,r2
-  ctx.r[7] = fsr::rotl64(ctx.r[7], 2) & 0xFFFFFFFFFFFFFFFCull;
-  // 820035A8: rldicr r3,r9,r2
-  ctx.r[9] = fsr::rotl64(ctx.r[3], 2) & 0xFFFFFFFFFFFFFFFCull;
-  // 820035AC: add r7,r7,r9
-  t0 = ctx.r[7]; t1 = ctx.r[9]; ctx.r[7] = t0 + t1;
-  // 820035B0: subf r9,r3,r29
-  t0 = ~ctx.r[3]; t1 = ctx.r[29]; ctx.r[9] = t1 + t0 + 1;
-  // 820035B4: add r3,r7,r28
-  t0 = ctx.r[7]; t1 = ctx.r[28]; ctx.r[3] = t0 + t1;
-  // 820035B8: addi r3,r3,-4
-  ctx.r[3] = ctx.r[3] + uint64_t(int64_t(-4));
-  // 820035BC: mtspr r9,r9,r0
-  ctx.ctr = ctx.r[9];
-loc_820035C0:
-  // 820035C0: stwu r8,4(r3)
-  t0 = (ctx.r[3] + uint64_t(4)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[8]));
-  ctx.r[3] = t0;
-  // 820035C4: bc 16,0,0x820035C0
-  ctx.ctr--;
-  if (ctx.ctr != 0) goto loc_820035C0;
-loc_820035C8:
-  // 820035C8: rldicr r29,r7,r2
-  ctx.r[7] = fsr::rotl64(ctx.r[29], 2) & 0xFFFFFFFFFFFFFFFCull;
-  // 820035CC: bc 12,4,0x82003680
-  if (ctx.crb[4]) goto loc_82003680;
-  // 820035D0: srawi r29,r3,r1
-  ctx.r[3] = fsr::ppc_sraw(ctx, ctx.r[29], 1);
-  // 820035D4: cmpi r4,r29,r31
-  fsr::set_cr_signed(ctx, 1, int32_t(ctx.r[29]), -2);
-  // 820035D8: addze r3,r3,r0
-  t0 = ctx.r[3]; t1 = 0; ctx.r[3] = fsr::add_carry(ctx, t0, t1, ctx.xer_ca);
-  // 820035DC: addi r9,r3,-1
-  ctx.r[9] = ctx.r[3] + uint64_t(int64_t(-1));
-  // 820035E0: extsw r9,r9,r0
-  ctx.r[9] = uint64_t(int64_t(int32_t(ctx.r[9])));
-  // 820035E4: addi r9,r9,1
-  ctx.r[9] = ctx.r[9] + uint64_t(1);
-  // 820035E8: cmp r29,r9,r29
-  fsr::set_cr_signed(ctx, 7, int64_t(ctx.r[9]), int64_t(ctx.r[29]));
-  // 820035EC: cmp r20,r3,r29
-  fsr::set_cr_signed(ctx, 5, int32_t(ctx.r[3]), int32_t(ctx.r[29]));
-  // 820035F0: addi r10,r0,0
-  ctx.r[10] = uint64_t(0) + uint64_t(0);
-  // 820035F4: addi r11,r0,1
-  ctx.r[11] = uint64_t(0) + uint64_t(1);
-  // 820035F8: extsw r3,r3,r0
-  ctx.r[3] = uint64_t(int64_t(int32_t(ctx.r[3])));
-  // 820035FC: bc 12,1,0x82003608
-  if (ctx.crb[1]) goto loc_82003608;
-  // 82003600: ori r12,r10,0x0
-  ctx.r[12] = ctx.r[10] | 0x0ull;
-  // 82003604: b 0x8200360C
-  goto loc_8200360C;
-loc_82003608:
-  // 82003608: addi r12,r11,0
-  ctx.r[12] = ctx.r[11] + uint64_t(0);
-loc_8200360C:
-  // 8200360C: bc 12,5,0x82003614
-  if (ctx.crb[5]) goto loc_82003614;
-  // 82003610: b 0x82003618
-  goto loc_82003618;
-loc_82003614:
-  // 82003614: addi r10,r11,0
-  ctx.r[10] = ctx.r[11] + uint64_t(0);
-loc_82003618:
-  // 82003618: bc 12,21,0x82003620
-  if (ctx.crb[21]) goto loc_82003620;
-  // 8200361C: b 0x82003624
-  goto loc_82003624;
-loc_82003620:
-  // 82003620: addi r11,r0,0
-  ctx.r[11] = uint64_t(0) + uint64_t(0);
-loc_82003624:
-  // 82003624: rldicr r3,r3,r2
-  ctx.r[3] = fsr::rotl64(ctx.r[3], 2) & 0xFFFFFFFFFFFFFFFCull;
-  // 82003628: and_ r12,r11,r11
-  ctx.r[11] = ctx.r[12] & ctx.r[11];
-  // 8200362C: add r3,r28,r3
-  t0 = ctx.r[28]; t1 = ctx.r[3]; ctx.r[3] = t0 + t1;
-  // 82003630: cmpli r4,r11,r0
-  fsr::set_cr_unsigned(ctx, 1, uint32_t(ctx.r[11]), 0u);
-  // 82003634: mfcr r9,r16,r2
-  ctx.r[9] = fsr::get_cr(ctx);
-  // 82003638: rlwinm r9,r9,29,31,31
-  ctx.r[9] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[9]), 29)) & 0x1ull;
-  // 8200363C: and_ r10,r9,r9
-  ctx.r[9] = ctx.r[10] & ctx.r[9];
-  fsr::set_cr0(ctx, ctx.r[9]);
-  // 82003640: mtspr r30,r9,r0
-  ctx.ctr = ctx.r[30];
-  // 82003644: b 0x82003658
-  goto loc_82003658;
-  // 82003648: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 8200364C: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-loc_82003650:
-  // 82003650: add r3,r3,r7
-  t0 = ctx.r[3]; t1 = ctx.r[7]; ctx.r[3] = t0 + t1;
-  // 82003654: bc 18,0,0x82003680
-  ctx.ctr--;
-  if (ctx.ctr == 0) goto loc_82003680;
-loc_82003658:
-  // 82003658: bc 4,6,0x82003670
-  if (!ctx.crb[6]) goto loc_82003670;
-  // 8200365C: bc 12,2,0x82003650
-  if (ctx.crb[2]) goto loc_82003650;
-  // 82003660: b 0x82003678
-  goto loc_82003678;
-  // 82003664: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003668: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 8200366C: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-loc_82003670:
-  // 82003670: stw r8,-4(r3)
-  t0 = (ctx.r[3] + uint64_t(int64_t(-4))); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[8]));
-  // 82003674: bc 12,2,0x82003650
-  if (ctx.crb[2]) goto loc_82003650;
-loc_82003678:
-  // 82003678: stw r8,0(r3)
-  t0 = (ctx.r[3] + uint64_t(0)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[8]));
-  // 8200367C: b 0x82003650
-  goto loc_82003650;
-loc_82003680:
-  // 82003680: srawi r6,r6,r8
-  ctx.r[6] = fsr::ppc_sraw(ctx, ctx.r[6], 8);
-  // 82003684: rldicl r4,r3,r0
-  ctx.r[3] = fsr::rotl64(ctx.r[4], 0) & 0xFFFFFFFFull;
-  // 82003688: subf r3,r3,r6
-  t0 = ~ctx.r[3]; t1 = ctx.r[6]; ctx.r[3] = t1 + t0 + 1;
-  // 8200368C: neg r9,r4,r0
-  t0 = ctx.r[4]; ctx.r[9] = uint64_t(0) - t0;
-  // 82003690: mulld r8,r3,r29
-  ctx.r[8] = ctx.r[3] * ctx.r[29];
-  // 82003694: srawi r5,r5,r8
-  ctx.r[5] = fsr::ppc_sraw(ctx, ctx.r[5], 8);
-  // 82003698: mullw r3,r4,r4
-  ctx.r[3] = uint64_t(int64_t(int32_t(ctx.r[4])) * int64_t(int32_t(ctx.r[4])));
-  // 8200369C: addi r10,r4,1
-  ctx.r[10] = ctx.r[4] + uint64_t(1);
-  // 820036A0: rldic r4,r11,r2
-  ctx.r[11] = fsr::rotl64(ctx.r[4], 2) & 0x3FFFFFFFCull;
-  // 820036A4: rldic r4,r12,r1
-  ctx.r[12] = fsr::rotl64(ctx.r[4], 1) & 0x1FFFFFFFEull;
-  // 820036A8: extsw r9,r4,r0
-  ctx.r[4] = uint64_t(int64_t(int32_t(ctx.r[9])));
-  // 820036AC: rldicr r5,r9,r2
-  ctx.r[9] = fsr::rotl64(ctx.r[5], 2) & 0xFFFFFFFFFFFFFFFCull;
-  // 820036B0: rldicr r8,r27,r2
-  ctx.r[27] = fsr::rotl64(ctx.r[8], 2) & 0xFFFFFFFFFFFFFFFCull;
-  // 820036B4: rldicl r10,r8,r0
-  ctx.r[8] = fsr::rotl64(ctx.r[10], 0) & 0xFFFFFFFFull;
-  // 820036B8: add r10,r27,r9
-  t0 = ctx.r[27]; t1 = ctx.r[9]; ctx.r[10] = t0 + t1;
-  // 820036BC: ori r9,r12,0x1
-  ctx.r[9] = ctx.r[12] | 0x1ull;
-  // 820036C0: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 820036C4: addis r0,r0,8224
-  ctx.r[0] = uint64_t(0) + uint64_t(538968064);
-  // 820036C8: lwz r12,-29184(r2)
-  t0 = (ctx.r[2] + uint64_t(int64_t(-29184))); ea = uint32_t(t0);
-  ctx.r[12] = fsr::ld32(base, ea);
-  // 820036CC: subf r11,r11,r10
-  t0 = ~ctx.r[11]; t1 = ctx.r[10]; ctx.r[11] = t1 + t0 + 1;
-  // 820036D0: addi r27,r0,0
-  ctx.r[27] = uint64_t(0) + uint64_t(0);
-  // 820036D4: add r10,r28,r11
-  t0 = ctx.r[28]; t1 = ctx.r[11]; ctx.r[10] = t0 + t1;
-  // 820036D8: addi r11,r11,-4
-  ctx.r[11] = ctx.r[11] + uint64_t(int64_t(-4));
-  // 820036DC: ori r26,r0,0x20FF
-  ctx.r[26] = ctx.r[0] | 0x20FFull;
-  // 820036E0: or_ r4,r25,r4
-  ctx.r[25] = ctx.r[4] | ctx.r[4];
-  // 820036E4: b 0x82003704
-  goto loc_82003704;
-  // 820036E8: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 820036EC: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-loc_820036F0:
-  // 820036F0: addi r25,r25,1
-  ctx.r[25] = ctx.r[25] + uint64_t(1);
-  // 820036F4: add r10,r10,r7
-  t0 = ctx.r[10]; t1 = ctx.r[7]; ctx.r[10] = t0 + t1;
-  // 820036F8: cmpl r1,r25,r8
-  fsr::set_cr_unsigned(ctx, 0, ctx.r[25], ctx.r[8]);
-  // 820036FC: addi r27,r27,1
-  ctx.r[27] = ctx.r[27] + uint64_t(1);
-  // 82003700: bc 12,2,0x8200379C
-  if (ctx.crb[2]) goto loc_8200379C;
-loc_82003704:
-  // 82003704: mulld r0,r7,r27
-  ctx.r[0] = ctx.r[7] * ctx.r[27];
-  // 82003708: add r23,r25,r6
-  t0 = ctx.r[25]; t1 = ctx.r[6]; ctx.r[23] = t0 + t1;
-  fsr::set_cr0(ctx, ctx.r[23]);
-  // 8200370C: mcrf r4,r0,r0
-  std::memcpy(ctx.crb + 4, ctx.crb + 0, 4);
-  // 82003710: add r0,r11,r0
-  t0 = ctx.r[11]; t1 = ctx.r[0]; ctx.r[0] = t0 + t1;
-  // 82003714: add r24,r28,r0
-  t0 = ctx.r[28]; t1 = ctx.r[0]; ctx.r[24] = t0 + t1;
-  // 82003718: mulld r0,r25,r25
-  ctx.r[0] = ctx.r[25] * ctx.r[25];
-  // 8200371C: cmp r21,r23,r30
-  fsr::set_cr_signed(ctx, 5, int64_t(ctx.r[23]), int64_t(ctx.r[30]));
-  // 82003720: or_ r4,r23,r4
-  ctx.r[23] = ctx.r[4] | ctx.r[4];
-  // 82003724: mtspr r9,r9,r0
-  ctx.ctr = ctx.r[9];
-  // 82003728: b 0x82003748
-  goto loc_82003748;
-  // 8200372C: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003730: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003734: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003738: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 8200373C: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-loc_82003740:
-  // 82003740: addi r23,r23,1
-  ctx.r[23] = ctx.r[23] + uint64_t(1);
-  // 82003744: bc 18,0,0x820036F0
-  ctx.ctr--;
-  if (ctx.ctr == 0) goto loc_820036F0;
-loc_82003748:
-  // 82003748: mulld r22,r23,r23
-  ctx.r[22] = ctx.r[23] * ctx.r[23];
-  // 8200374C: add r22,r22,r0
-  t0 = ctx.r[22]; t1 = ctx.r[0]; ctx.r[22] = t0 + t1;
-  // 82003750: cmpl r0,r3,r22
-  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[3]), uint32_t(ctx.r[22]));
-  // 82003754: or_ r24,r22,r24
-  ctx.r[22] = ctx.r[24] | ctx.r[24];
-  // 82003758: addi r24,r24,4
-  ctx.r[24] = ctx.r[24] + uint64_t(4);
-  // 8200375C: bc 12,0,0x82003740
-  if (ctx.crb[0]) goto loc_82003740;
-  // 82003760: add r21,r5,r23
-  t0 = ctx.r[5]; t1 = ctx.r[23]; ctx.r[21] = t0 + t1;
-  // 82003764: cmp r1,r21,r29
-  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[21]), int64_t(ctx.r[29]));
-  // 82003768: bc 4,0,0x82003740
-  if (!ctx.crb[0]) goto loc_82003740;
-  // 8200376C: cmpi r1,r21,r0
-  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[21]), 0);
-  // 82003770: bc 12,0,0x82003740
-  if (ctx.crb[0]) goto loc_82003740;
-  // 82003774: bc 12,4,0x82003740
-  if (ctx.crb[4]) goto loc_82003740;
-  // 82003778: bc 4,20,0x82003740
-  if (!ctx.crb[20]) goto loc_82003740;
-  // 8200377C: xor_ r23,r21,r25
-  ctx.r[21] = ctx.r[23] ^ ctx.r[25];
-  // 82003780: andi_rc r21,r21,0x4
-  ctx.r[21] = ctx.r[21] & 0x4ull;
-  fsr::set_cr0(ctx, ctx.r[21]);
-  // 82003784: bc 12,2,0x82003790
-  if (ctx.crb[2]) goto loc_82003790;
-  // 82003788: ori r21,r12,0x0
-  ctx.r[21] = ctx.r[12] | 0x0ull;
-  // 8200378C: b 0x82003794
-  goto loc_82003794;
-loc_82003790:
-  // 82003790: addi r21,r26,0
-  ctx.r[21] = ctx.r[26] + uint64_t(0);
-loc_82003794:
-  // 82003794: stw r21,4(r22)
-  t0 = (ctx.r[22] + uint64_t(4)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[21]));
-  // 82003798: b 0x82003740
-  goto loc_82003740;
-loc_8200379C:
-  // 8200379C: addi r3,r30,-22
-  ctx.r[3] = ctx.r[30] + uint64_t(int64_t(-22));
-  // 820037A0: addi r5,r30,-8
-  ctx.r[5] = ctx.r[30] + uint64_t(int64_t(-8));
-  // 820037A4: extsw r3,r3,r0
-  ctx.r[3] = uint64_t(int64_t(int32_t(ctx.r[3])));
-  // 820037A8: extsw r5,r17,r0
-  ctx.r[17] = uint64_t(int64_t(int32_t(ctx.r[5])));
-  // 820037AC: mulld r4,r29,r3
-  ctx.r[4] = ctx.r[29] * ctx.r[3];
-  // 820037B0: addi r16,r3,1
-  ctx.r[16] = ctx.r[3] + uint64_t(1);
-  // 820037B4: cmp r1,r16,r17
-  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[16]), int64_t(ctx.r[17]));
-  // 820037B8: rldicr r4,r4,r2
-  ctx.r[4] = fsr::rotl64(ctx.r[4], 2) & 0xFFFFFFFFFFFFFFFCull;
-  // 820037BC: add r4,r4,r28
-  t0 = ctx.r[4]; t1 = ctx.r[28]; ctx.r[4] = t0 + t1;
-  // 820037C0: bc 12,1,0x820037CC
-  if (ctx.crb[1]) goto loc_820037CC;
-  // 820037C4: ori r28,r17,0x0
-  ctx.r[28] = ctx.r[17] | 0x0ull;
-  // 820037C8: b 0x820037D0
-  goto loc_820037D0;
-loc_820037CC:
-  // 820037CC: addi r28,r16,0
-  ctx.r[28] = ctx.r[16] + uint64_t(0);
-loc_820037D0:
-  // 820037D0: addi r5,r29,-8
-  ctx.r[5] = ctx.r[29] + uint64_t(int64_t(-8));
-  // 820037D4: addi r6,r29,-9
-  ctx.r[6] = ctx.r[29] + uint64_t(int64_t(-9));
-  // 820037D8: addi r8,r29,-10
-  ctx.r[8] = ctx.r[29] + uint64_t(int64_t(-10));
-  // 820037DC: addi r9,r29,-11
-  ctx.r[9] = ctx.r[29] + uint64_t(int64_t(-11));
-  // 820037E0: addi r10,r29,-12
-  ctx.r[10] = ctx.r[29] + uint64_t(int64_t(-12));
-  // 820037E4: addi r11,r29,-13
-  ctx.r[11] = ctx.r[29] + uint64_t(int64_t(-13));
-  // 820037E8: addi r12,r29,-14
-  ctx.r[12] = ctx.r[29] + uint64_t(int64_t(-14));
-  // 820037EC: addi r0,r29,-15
-  ctx.r[0] = ctx.r[29] + uint64_t(int64_t(-15));
-  // 820037F0: addi r27,r29,-16
-  ctx.r[27] = ctx.r[29] + uint64_t(int64_t(-16));
-  // 820037F4: addi r26,r29,-17
-  ctx.r[26] = ctx.r[29] + uint64_t(int64_t(-17));
-  // 820037F8: addi r25,r29,-18
-  ctx.r[25] = ctx.r[29] + uint64_t(int64_t(-18));
-  // 820037FC: addi r24,r29,-19
-  ctx.r[24] = ctx.r[29] + uint64_t(int64_t(-19));
-  // 82003800: addi r23,r29,-20
-  ctx.r[23] = ctx.r[29] + uint64_t(int64_t(-20));
-  // 82003804: addi r22,r29,-21
-  ctx.r[22] = ctx.r[29] + uint64_t(int64_t(-21));
-  // 82003808: addi r21,r29,-22
-  ctx.r[21] = ctx.r[29] + uint64_t(int64_t(-22));
-  // 8200380C: addi r20,r29,-23
-  ctx.r[20] = ctx.r[29] + uint64_t(int64_t(-23));
-  // 82003810: addi r19,r29,-24
-  ctx.r[19] = ctx.r[29] + uint64_t(int64_t(-24));
-  // 82003814: addi r29,r29,-25
-  ctx.r[29] = ctx.r[29] + uint64_t(int64_t(-25));
-  // 82003818: addi r18,r0,0
-  ctx.r[18] = uint64_t(0) + uint64_t(0);
-  // 8200381C: addi r16,r4,52
-  ctx.r[16] = ctx.r[4] + uint64_t(52);
-  // 82003820: subf r17,r3,r28
-  t0 = ~ctx.r[3]; t1 = ctx.r[28]; ctx.r[17] = t1 + t0 + 1;
-  // 82003824: b 0x82003844
-  goto loc_82003844;
-  // 82003828: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 8200382C: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-loc_82003830:
-  // 82003830: addi r18,r18,1
-  ctx.r[18] = ctx.r[18] + uint64_t(1);
-  // 82003834: addi r16,r16,88
-  ctx.r[16] = ctx.r[16] + uint64_t(88);
-  // 82003838: cmpli r1,r18,r0
-  fsr::set_cr_unsigned(ctx, 0, ctx.r[18], 16u);
-  // 8200383C: or_ r15,r31,r15
-  ctx.r[31] = ctx.r[15] | ctx.r[15];
-  // 82003840: bc 12,2,0x820039FC
-  if (ctx.crb[2]) goto loc_820039FC;
-loc_82003844:
-  // 82003844: srw r31,r4,r18
-  ctx.r[4] = fsr::ppc_srw(ctx.r[31], ctx.r[18]);
-  // 82003848: mulli r14,r18,22
-  ctx.r[14] = ctx.r[18] * uint64_t(22);
-  // 8200384C: andi_rc r4,r4,0x1
-  ctx.r[4] = ctx.r[4] & 0x1ull;
-  fsr::set_cr0(ctx, ctx.r[4]);
-  // 82003850: addi r4,r0,-1
-  ctx.r[4] = uint64_t(0) + uint64_t(int64_t(-1));
-  // 82003854: addi r28,r0,160
-  ctx.r[28] = uint64_t(0) + uint64_t(160);
-  // 82003858: cmp r5,r14,r5
-  fsr::set_cr_signed(ctx, 1, int64_t(ctx.r[14]), int64_t(ctx.r[5]));
-  // 8200385C: cmp r21,r14,r6
-  fsr::set_cr_signed(ctx, 5, int64_t(ctx.r[14]), int64_t(ctx.r[6]));
-  // 82003860: cmp r25,r14,r8
-  fsr::set_cr_signed(ctx, 6, int64_t(ctx.r[14]), int64_t(ctx.r[8]));
-  // 82003864: cmp r29,r14,r9
-  fsr::set_cr_signed(ctx, 7, int64_t(ctx.r[14]), int64_t(ctx.r[9]));
-  // 82003868: or_ r31,r15,r31
-  ctx.r[15] = ctx.r[31] | ctx.r[31];
-  // 8200386C: cmp r9,r14,r10
-  fsr::set_cr_signed(ctx, 2, int64_t(ctx.r[14]), int64_t(ctx.r[10]));
-  // 82003870: bc 12,2,0x8200387C
-  if (ctx.crb[2]) goto loc_8200387C;
-  // 82003874: ori r31,r4,0x0
-  ctx.r[31] = ctx.r[4] | 0x0ull;
-  // 82003878: b 0x82003880
-  goto loc_82003880;
-loc_8200387C:
-  // 8200387C: addi r31,r28,0
-  ctx.r[31] = ctx.r[28] + uint64_t(0);
-loc_82003880:
-  // 82003880: cmp r1,r14,r11
-  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[14]), int64_t(ctx.r[11]));
-  // 82003884: cmp r13,r14,r12
-  fsr::set_cr_signed(ctx, 3, int64_t(ctx.r[14]), int64_t(ctx.r[12]));
-  // 82003888: or_ r16,r28,r16
-  ctx.r[28] = ctx.r[16] | ctx.r[16];
-  // 8200388C: or_ r3,r4,r3
-  ctx.r[4] = ctx.r[3] | ctx.r[3];
-  // 82003890: mtspr r17,r9,r0
-  ctx.ctr = ctx.r[17];
-  // 82003894: b 0x820038AC
-  goto loc_820038AC;
-  // 82003898: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 8200389C: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-loc_820038A0:
-  // 820038A0: addi r4,r4,1
-  ctx.r[4] = ctx.r[4] + uint64_t(1);
-  // 820038A4: add r28,r28,r7
-  t0 = ctx.r[28]; t1 = ctx.r[7]; ctx.r[28] = t0 + t1;
-  // 820038A8: bc 18,0,0x82003830
-  ctx.ctr--;
-  if (ctx.ctr == 0) goto loc_82003830;
-loc_820038AC:
-  // 820038AC: cmpi r17,r4,r0
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[4]), 0);
-  // 820038B0: bc 12,16,0x820038A0
-  if (ctx.crb[16]) goto loc_820038A0;
-  // 820038B4: cmp r17,r4,r30
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[4]), int64_t(ctx.r[30]));
-  // 820038B8: bc 4,16,0x820038A0
-  if (!ctx.crb[16]) goto loc_820038A0;
-  // 820038BC: bc 12,4,0x82003940
-  if (ctx.crb[4]) goto loc_82003940;
-  // 820038C0: bc 12,20,0x82003948
-  if (ctx.crb[20]) goto loc_82003948;
-loc_820038C4:
-  // 820038C4: bc 12,24,0x82003950
-  if (ctx.crb[24]) goto loc_82003950;
-loc_820038C8:
-  // 820038C8: bc 12,28,0x82003958
-  if (ctx.crb[28]) goto loc_82003958;
-loc_820038CC:
-  // 820038CC: bc 12,8,0x82003960
-  if (ctx.crb[8]) goto loc_82003960;
-loc_820038D0:
-  // 820038D0: bc 12,0,0x82003968
-  if (ctx.crb[0]) goto loc_82003968;
-loc_820038D4:
-  // 820038D4: bc 12,12,0x82003970
-  if (ctx.crb[12]) goto loc_82003970;
-loc_820038D8:
-  // 820038D8: cmp r17,r14,r0
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[14]), int64_t(ctx.r[0]));
-  // 820038DC: bc 12,16,0x8200397C
-  if (ctx.crb[16]) goto loc_8200397C;
-loc_820038E0:
-  // 820038E0: cmp r17,r14,r27
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[14]), int64_t(ctx.r[27]));
-  // 820038E4: bc 12,16,0x82003988
-  if (ctx.crb[16]) goto loc_82003988;
-loc_820038E8:
-  // 820038E8: cmp r17,r14,r26
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[14]), int64_t(ctx.r[26]));
-  // 820038EC: bc 12,16,0x82003994
-  if (ctx.crb[16]) goto loc_82003994;
-loc_820038F0:
-  // 820038F0: cmp r17,r14,r25
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[14]), int64_t(ctx.r[25]));
-  // 820038F4: bc 12,16,0x820039A0
-  if (ctx.crb[16]) goto loc_820039A0;
-loc_820038F8:
-  // 820038F8: cmp r17,r14,r24
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[14]), int64_t(ctx.r[24]));
-  // 820038FC: bc 12,16,0x820039AC
-  if (ctx.crb[16]) goto loc_820039AC;
-loc_82003900:
-  // 82003900: cmp r17,r14,r23
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[14]), int64_t(ctx.r[23]));
-  // 82003904: bc 12,16,0x820039B8
-  if (ctx.crb[16]) goto loc_820039B8;
-loc_82003908:
-  // 82003908: cmp r17,r14,r22
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[14]), int64_t(ctx.r[22]));
-  // 8200390C: bc 12,16,0x820039C4
-  if (ctx.crb[16]) goto loc_820039C4;
-loc_82003910:
-  // 82003910: cmp r17,r14,r21
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[14]), int64_t(ctx.r[21]));
-  // 82003914: bc 12,16,0x820039D0
-  if (ctx.crb[16]) goto loc_820039D0;
-loc_82003918:
-  // 82003918: cmp r17,r14,r20
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[14]), int64_t(ctx.r[20]));
-  // 8200391C: bc 12,16,0x820039DC
-  if (ctx.crb[16]) goto loc_820039DC;
-loc_82003920:
-  // 82003920: cmp r17,r14,r19
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[14]), int64_t(ctx.r[19]));
-  // 82003924: bc 12,16,0x820039E8
-  if (ctx.crb[16]) goto loc_820039E8;
-loc_82003928:
-  // 82003928: cmp r17,r14,r29
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[14]), int64_t(ctx.r[29]));
-  // 8200392C: bc 4,16,0x820038A0
-  if (!ctx.crb[16]) goto loc_820038A0;
-  // 82003930: b 0x820039F4
-  goto loc_820039F4;
-  // 82003934: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003938: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 8200393C: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-loc_82003940:
-  // 82003940: stw r31,-20(r28)
-  t0 = (ctx.r[28] + uint64_t(int64_t(-20))); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[31]));
-  // 82003944: bc 4,20,0x820038C4
-  if (!ctx.crb[20]) goto loc_820038C4;
-loc_82003948:
-  // 82003948: stw r31,-16(r28)
-  t0 = (ctx.r[28] + uint64_t(int64_t(-16))); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[31]));
-  // 8200394C: bc 4,24,0x820038C8
-  if (!ctx.crb[24]) goto loc_820038C8;
-loc_82003950:
-  // 82003950: stw r31,-12(r28)
-  t0 = (ctx.r[28] + uint64_t(int64_t(-12))); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[31]));
-  // 82003954: bc 4,28,0x820038CC
-  if (!ctx.crb[28]) goto loc_820038CC;
-loc_82003958:
-  // 82003958: stw r31,-8(r28)
-  t0 = (ctx.r[28] + uint64_t(int64_t(-8))); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[31]));
-  // 8200395C: bc 4,8,0x820038D0
-  if (!ctx.crb[8]) goto loc_820038D0;
-loc_82003960:
-  // 82003960: stw r31,-4(r28)
-  t0 = (ctx.r[28] + uint64_t(int64_t(-4))); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[31]));
-  // 82003964: bc 4,0,0x820038D4
-  if (!ctx.crb[0]) goto loc_820038D4;
-loc_82003968:
-  // 82003968: stw r31,0(r28)
-  t0 = (ctx.r[28] + uint64_t(0)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[31]));
-  // 8200396C: bc 4,12,0x820038D8
-  if (!ctx.crb[12]) goto loc_820038D8;
-loc_82003970:
-  // 82003970: stw r31,4(r28)
-  t0 = (ctx.r[28] + uint64_t(4)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[31]));
-  // 82003974: cmp r17,r14,r0
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[14]), int64_t(ctx.r[0]));
-  // 82003978: bc 4,16,0x820038E0
-  if (!ctx.crb[16]) goto loc_820038E0;
-loc_8200397C:
-  // 8200397C: stw r31,8(r28)
-  t0 = (ctx.r[28] + uint64_t(8)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[31]));
-  // 82003980: cmp r17,r14,r27
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[14]), int64_t(ctx.r[27]));
-  // 82003984: bc 4,16,0x820038E8
-  if (!ctx.crb[16]) goto loc_820038E8;
-loc_82003988:
-  // 82003988: stw r31,12(r28)
-  t0 = (ctx.r[28] + uint64_t(12)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[31]));
-  // 8200398C: cmp r17,r14,r26
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[14]), int64_t(ctx.r[26]));
-  // 82003990: bc 4,16,0x820038F0
-  if (!ctx.crb[16]) goto loc_820038F0;
-loc_82003994:
-  // 82003994: stw r31,16(r28)
-  t0 = (ctx.r[28] + uint64_t(16)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[31]));
-  // 82003998: cmp r17,r14,r25
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[14]), int64_t(ctx.r[25]));
-  // 8200399C: bc 4,16,0x820038F8
-  if (!ctx.crb[16]) goto loc_820038F8;
-loc_820039A0:
-  // 820039A0: stw r31,20(r28)
-  t0 = (ctx.r[28] + uint64_t(20)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[31]));
-  // 820039A4: cmp r17,r14,r24
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[14]), int64_t(ctx.r[24]));
-  // 820039A8: bc 4,16,0x82003900
-  if (!ctx.crb[16]) goto loc_82003900;
-loc_820039AC:
-  // 820039AC: stw r31,24(r28)
-  t0 = (ctx.r[28] + uint64_t(24)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[31]));
-  // 820039B0: cmp r17,r14,r23
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[14]), int64_t(ctx.r[23]));
-  // 820039B4: bc 4,16,0x82003908
-  if (!ctx.crb[16]) goto loc_82003908;
-loc_820039B8:
-  // 820039B8: stw r31,28(r28)
-  t0 = (ctx.r[28] + uint64_t(28)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[31]));
-  // 820039BC: cmp r17,r14,r22
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[14]), int64_t(ctx.r[22]));
-  // 820039C0: bc 4,16,0x82003910
-  if (!ctx.crb[16]) goto loc_82003910;
-loc_820039C4:
-  // 820039C4: stw r31,32(r28)
-  t0 = (ctx.r[28] + uint64_t(32)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[31]));
-  // 820039C8: cmp r17,r14,r21
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[14]), int64_t(ctx.r[21]));
-  // 820039CC: bc 4,16,0x82003918
-  if (!ctx.crb[16]) goto loc_82003918;
-loc_820039D0:
-  // 820039D0: stw r31,36(r28)
-  t0 = (ctx.r[28] + uint64_t(36)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[31]));
-  // 820039D4: cmp r17,r14,r20
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[14]), int64_t(ctx.r[20]));
-  // 820039D8: bc 4,16,0x82003920
-  if (!ctx.crb[16]) goto loc_82003920;
-loc_820039DC:
-  // 820039DC: stw r31,40(r28)
-  t0 = (ctx.r[28] + uint64_t(40)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[31]));
-  // 820039E0: cmp r17,r14,r19
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[14]), int64_t(ctx.r[19]));
-  // 820039E4: bc 4,16,0x82003928
-  if (!ctx.crb[16]) goto loc_82003928;
-loc_820039E8:
-  // 820039E8: stw r31,44(r28)
-  t0 = (ctx.r[28] + uint64_t(44)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[31]));
-  // 820039EC: cmp r17,r14,r29
-  fsr::set_cr_signed(ctx, 4, int64_t(ctx.r[14]), int64_t(ctx.r[29]));
-  // 820039F0: bc 4,16,0x820038A0
-  if (!ctx.crb[16]) goto loc_820038A0;
-loc_820039F4:
-  // 820039F4: stw r31,48(r28)
-  t0 = (ctx.r[28] + uint64_t(48)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[31]));
-  // 820039F8: b 0x820038A0
-  goto loc_820038A0;
-loc_820039FC:
-  // 820039FC: or_ r31,r3,r31
-  ctx.r[3] = ctx.r[31] | ctx.r[31];
-  // 82003A00: ld r31,248(r1)
-  t0 = (ctx.r[1] + uint64_t(248)); ea = uint32_t(t0);
-  ctx.r[31] = fsr::ld64(base, ea);
-  // 82003A04: ld r30,240(r1)
-  t0 = (ctx.r[1] + uint64_t(240)); ea = uint32_t(t0);
-  ctx.r[30] = fsr::ld64(base, ea);
-  // 82003A08: ld r29,232(r1)
-  t0 = (ctx.r[1] + uint64_t(232)); ea = uint32_t(t0);
-  ctx.r[29] = fsr::ld64(base, ea);
-  // 82003A0C: ld r28,224(r1)
-  t0 = (ctx.r[1] + uint64_t(224)); ea = uint32_t(t0);
-  ctx.r[28] = fsr::ld64(base, ea);
-  // 82003A10: ld r27,216(r1)
-  t0 = (ctx.r[1] + uint64_t(216)); ea = uint32_t(t0);
-  ctx.r[27] = fsr::ld64(base, ea);
-  // 82003A14: ld r26,208(r1)
-  t0 = (ctx.r[1] + uint64_t(208)); ea = uint32_t(t0);
-  ctx.r[26] = fsr::ld64(base, ea);
-  // 82003A18: ld r25,200(r1)
-  t0 = (ctx.r[1] + uint64_t(200)); ea = uint32_t(t0);
-  ctx.r[25] = fsr::ld64(base, ea);
-  // 82003A1C: ld r24,192(r1)
-  t0 = (ctx.r[1] + uint64_t(192)); ea = uint32_t(t0);
-  ctx.r[24] = fsr::ld64(base, ea);
-  // 82003A20: ld r23,184(r1)
-  t0 = (ctx.r[1] + uint64_t(184)); ea = uint32_t(t0);
-  ctx.r[23] = fsr::ld64(base, ea);
-  // 82003A24: ld r22,176(r1)
-  t0 = (ctx.r[1] + uint64_t(176)); ea = uint32_t(t0);
-  ctx.r[22] = fsr::ld64(base, ea);
-  // 82003A28: ld r21,168(r1)
-  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
-  ctx.r[21] = fsr::ld64(base, ea);
-  // 82003A2C: ld r20,160(r1)
-  t0 = (ctx.r[1] + uint64_t(160)); ea = uint32_t(t0);
-  ctx.r[20] = fsr::ld64(base, ea);
-  // 82003A30: ld r19,152(r1)
-  t0 = (ctx.r[1] + uint64_t(152)); ea = uint32_t(t0);
-  ctx.r[19] = fsr::ld64(base, ea);
-  // 82003A34: ld r18,144(r1)
-  t0 = (ctx.r[1] + uint64_t(144)); ea = uint32_t(t0);
-  ctx.r[18] = fsr::ld64(base, ea);
-  // 82003A38: ld r17,136(r1)
-  t0 = (ctx.r[1] + uint64_t(136)); ea = uint32_t(t0);
-  ctx.r[17] = fsr::ld64(base, ea);
-  // 82003A3C: ld r16,128(r1)
-  t0 = (ctx.r[1] + uint64_t(128)); ea = uint32_t(t0);
-  ctx.r[16] = fsr::ld64(base, ea);
-  // 82003A40: ld r15,120(r1)
-  t0 = (ctx.r[1] + uint64_t(120)); ea = uint32_t(t0);
-  ctx.r[15] = fsr::ld64(base, ea);
-  // 82003A44: ld r14,112(r1)
-  t0 = (ctx.r[1] + uint64_t(112)); ea = uint32_t(t0);
-  ctx.r[14] = fsr::ld64(base, ea);
-  // 82003A48: addi r1,r1,256
-  ctx.r[1] = ctx.r[1] + uint64_t(256);
-  // 82003A4C: ld r0,16(r1)
-  t0 = (ctx.r[1] + uint64_t(16)); ea = uint32_t(t0);
-  ctx.r[0] = fsr::ld64(base, ea);
-  // 82003A50: lwz r12,8(r1)
-  t0 = (ctx.r[1] + uint64_t(8)); ea = uint32_t(t0);
-  ctx.r[12] = fsr::ld32(base, ea);
-  // 82003A54: mtspr r0,r8,r0
-  ctx.lr = ctx.r[0];
-  // 82003A58: mtcrf r12,r18,r0
-  fsr::set_cr_field_bits(ctx, uint32_t(ctx.r[12]), 32);
-  // 82003A5C: mtcrf r12,r17,r0
-  fsr::set_cr_field_bits(ctx, uint32_t(ctx.r[12]), 16);
-  // 82003A60: mtcrf r12,r16,r16
-  fsr::set_cr_field_bits(ctx, uint32_t(ctx.r[12]), 8);
-  // 82003A64: bclr r20,r0,r0
-  if (true) return;
-  fsr::fsr_unimplemented(ctx, base, 0x82003A68, 0); // zero word (padding)
-  fsr::fsr_unimplemented(ctx, base, 0x82003A6C, 0); // zero word (padding)
-  fsr::fsr_unimplemented(ctx, base, 0x82003A70, 0); // zero word (padding)
-  fsr::fsr_call_indirect(ctx, base, 0x82003A74);
-  return;
-}
-
-FSR_FUNC(sub_82003A80) {
-  uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
-  // 82003A80: cmpli r1,r5,r0
-  fsr::set_cr_unsigned(ctx, 0, ctx.r[5], 0u);
-  // 82003A84: bclr r12,r2,r0
-  if (ctx.crb[2]) return;
-  // 82003A88: addi r4,r4,-1
-  ctx.r[4] = ctx.r[4] + uint64_t(int64_t(-1));
-  // 82003A8C: addi r6,r3,-1
-  ctx.r[6] = ctx.r[3] + uint64_t(int64_t(-1));
-  // 82003A90: mtspr r5,r9,r0
-  ctx.ctr = ctx.r[5];
-  // 82003A94: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003A98: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003A9C: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-loc_82003AA0:
-  // 82003AA0: lbzu r5,1(r4)
-  t0 = (ctx.r[4] + uint64_t(1)); ea = uint32_t(t0);
-  ctx.r[5] = fsr::ld8(base, ea);
-  ctx.r[4] = t0;
-  // 82003AA4: stbu r5,1(r6)
-  t0 = (ctx.r[6] + uint64_t(1)); ea = uint32_t(t0);
-  fsr::st8(base, ea, uint8_t(ctx.r[5]));
-  ctx.r[6] = t0;
-  // 82003AA8: bc 16,0,0x82003AA0
-  ctx.ctr--;
-  if (ctx.ctr != 0) goto loc_82003AA0;
-  // 82003AAC: bclr r20,r0,r0
-  if (true) return;
-  fsr::fsr_unimplemented(ctx, base, 0x82003AB0, 0); // zero word (padding)
-  fsr::fsr_unimplemented(ctx, base, 0x82003AB4, 0); // zero word (padding)
-  fsr::fsr_unimplemented(ctx, base, 0x82003AB8, 0); // zero word (padding)
-  fsr::fsr_call_indirect(ctx, base, 0x82003ABC);
-  return;
-}
-
-FSR_FUNC(sub_82003AC0) {
-  uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
-  // 82003AC0: cmpli r1,r5,r0
-  fsr::set_cr_unsigned(ctx, 0, ctx.r[5], 0u);
-  // 82003AC4: bclr r12,r2,r0
-  if (ctx.crb[2]) return;
-  // 82003AC8: cmpli r1,r5,r0
-  fsr::set_cr_unsigned(ctx, 0, ctx.r[5], 1u);
-  // 82003ACC: bc 4,2,0x82003ADC
-  if (!ctx.crb[2]) goto loc_82003ADC;
-  // 82003AD0: or_ r3,r7,r3
-  ctx.r[7] = ctx.r[3] | ctx.r[3];
-  // 82003AD4: or_ r5,r6,r5
-  ctx.r[6] = ctx.r[5] | ctx.r[5];
-  // 82003AD8: b 0x82003B14
-  goto loc_82003B14;
-loc_82003ADC:
-  // 82003ADC: rldicr r5,r8,r0
-  ctx.r[8] = fsr::rotl64(ctx.r[5], 0) & 0xFFFFFFFFFFFFFFFEull;
-  // 82003AE0: rldicl r5,r6,r0
-  ctx.r[6] = fsr::rotl64(ctx.r[5], 0) & 0x1ull;
-  // 82003AE4: addi r7,r8,-2
-  ctx.r[7] = ctx.r[8] + uint64_t(int64_t(-2));
-  // 82003AE8: rldicl r7,r9,r31
-  ctx.r[9] = fsr::rotl64(ctx.r[7], 63) & 0x7FFFFFFFFFFFFFFFull;
-  // 82003AEC: add r7,r3,r8
-  t0 = ctx.r[3]; t1 = ctx.r[8]; ctx.r[7] = t0 + t1;
-  // 82003AF0: addi r10,r9,1
-  ctx.r[10] = ctx.r[9] + uint64_t(1);
-  // 82003AF4: addi r9,r3,-2
-  ctx.r[9] = ctx.r[3] + uint64_t(int64_t(-2));
-  // 82003AF8: mtspr r10,r9,r0
-  ctx.ctr = ctx.r[10];
-  // 82003AFC: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-loc_82003B00:
-  // 82003B00: stbu r4,2(r9)
-  t0 = (ctx.r[9] + uint64_t(2)); ea = uint32_t(t0);
-  fsr::st8(base, ea, uint8_t(ctx.r[4]));
-  ctx.r[9] = t0;
-  // 82003B04: stb r4,1(r9)
-  t0 = (ctx.r[9] + uint64_t(1)); ea = uint32_t(t0);
-  fsr::st8(base, ea, uint8_t(ctx.r[4]));
-  // 82003B08: bc 16,0,0x82003B00
-  ctx.ctr--;
-  if (ctx.ctr != 0) goto loc_82003B00;
-  // 82003B0C: cmpl r1,r8,r5
-  fsr::set_cr_unsigned(ctx, 0, ctx.r[8], ctx.r[5]);
-  // 82003B10: bclr r12,r2,r0
-  if (ctx.crb[2]) return;
-loc_82003B14:
-  // 82003B14: addi r5,r7,-1
-  ctx.r[5] = ctx.r[7] + uint64_t(int64_t(-1));
-  // 82003B18: mtspr r6,r9,r0
-  ctx.ctr = ctx.r[6];
-  // 82003B1C: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-loc_82003B20:
-  // 82003B20: stbu r4,1(r5)
-  t0 = (ctx.r[5] + uint64_t(1)); ea = uint32_t(t0);
-  fsr::st8(base, ea, uint8_t(ctx.r[4]));
-  ctx.r[5] = t0;
-  // 82003B24: bc 16,0,0x82003B20
-  ctx.ctr--;
-  if (ctx.ctr != 0) goto loc_82003B20;
-  // 82003B28: bclr r20,r0,r0
-  if (true) return;
-  fsr::fsr_unimplemented(ctx, base, 0x82003B2C, 0); // zero word (padding)
-  fsr::fsr_unimplemented(ctx, base, 0x82003B30, 0); // zero word (padding)
-  fsr::fsr_unimplemented(ctx, base, 0x82003B34, 0); // zero word (padding)
-  fsr::fsr_call_indirect(ctx, base, 0x82003B38);
-  return;
-}
-
-FSR_FUNC(sub_82003B40) {
-  uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
-  // 82003B40: cmpl r1,r3,r4
-  fsr::set_cr_unsigned(ctx, 0, ctx.r[3], ctx.r[4]);
-  // 82003B44: bc 4,0,0x82003B70
-  if (!ctx.crb[0]) goto loc_82003B70;
-  // 82003B48: cmpli r1,r5,r0
-  fsr::set_cr_unsigned(ctx, 0, ctx.r[5], 0u);
-  // 82003B4C: bclr r12,r2,r0
-  if (ctx.crb[2]) return;
-  // 82003B50: addi r4,r4,-1
-  ctx.r[4] = ctx.r[4] + uint64_t(int64_t(-1));
-  // 82003B54: addi r6,r3,-1
-  ctx.r[6] = ctx.r[3] + uint64_t(int64_t(-1));
-  // 82003B58: mtspr r5,r9,r0
-  ctx.ctr = ctx.r[5];
-  // 82003B5C: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-loc_82003B60:
-  // 82003B60: lbzu r5,1(r4)
-  t0 = (ctx.r[4] + uint64_t(1)); ea = uint32_t(t0);
-  ctx.r[5] = fsr::ld8(base, ea);
-  ctx.r[4] = t0;
-  // 82003B64: stbu r5,1(r6)
-  t0 = (ctx.r[6] + uint64_t(1)); ea = uint32_t(t0);
-  fsr::st8(base, ea, uint8_t(ctx.r[5]));
-  ctx.r[6] = t0;
-  // 82003B68: bc 16,0,0x82003B60
-  ctx.ctr--;
-  if (ctx.ctr != 0) goto loc_82003B60;
-  // 82003B6C: bclr r20,r0,r0
-  if (true) return;
-loc_82003B70:
-  // 82003B70: cmpli r1,r5,r0
-  fsr::set_cr_unsigned(ctx, 0, ctx.r[5], 0u);
-  // 82003B74: bclr r12,r2,r0
-  if (ctx.crb[2]) return;
-  // 82003B78: add r4,r4,r5
-  t0 = ctx.r[4]; t1 = ctx.r[5]; ctx.r[4] = t0 + t1;
-  // 82003B7C: add r6,r3,r5
-  t0 = ctx.r[3]; t1 = ctx.r[5]; ctx.r[6] = t0 + t1;
-  // 82003B80: mtspr r5,r9,r0
-  ctx.ctr = ctx.r[5];
-  // 82003B84: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003B88: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003B8C: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-loc_82003B90:
-  // 82003B90: lbzu r5,-1(r4)
-  t0 = (ctx.r[4] + uint64_t(int64_t(-1))); ea = uint32_t(t0);
-  ctx.r[5] = fsr::ld8(base, ea);
-  ctx.r[4] = t0;
-  // 82003B94: stbu r5,-1(r6)
-  t0 = (ctx.r[6] + uint64_t(int64_t(-1))); ea = uint32_t(t0);
-  fsr::st8(base, ea, uint8_t(ctx.r[5]));
-  ctx.r[6] = t0;
-  // 82003B98: bc 16,0,0x82003B90
-  ctx.ctr--;
-  if (ctx.ctr != 0) goto loc_82003B90;
-  // 82003B9C: bclr r20,r0,r0
-  if (true) return;
-  fsr::fsr_unimplemented(ctx, base, 0x82003BA0, 0); // zero word (padding)
-  fsr::fsr_unimplemented(ctx, base, 0x82003BA4, 0); // zero word (padding)
-  fsr::fsr_unimplemented(ctx, base, 0x82003BA8, 0); // zero word (padding)
-  fsr::fsr_call_indirect(ctx, base, 0x82003BAC);
-  return;
-}
-
-FSR_FUNC(sub_82003BC0) {
-  uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
-  // 82003BC0: addis r2,r12,1
-  ctx.r[2] = ctx.r[12] + uint64_t(65536);
-  // 82003BC4: addi r2,r2,-27064
-  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-27064));
-  // 82003BC8: mfspr r0,r8,r0
-  ctx.r[0] = ctx.lr;
-  // 82003BCC: std r21,-88(r1)
-  t0 = (ctx.r[1] + uint64_t(int64_t(-88))); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[21]);
-  // 82003BD0: std r22,-80(r1)
-  t0 = (ctx.r[1] + uint64_t(int64_t(-80))); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[22]);
-  // 82003BD4: std r23,-72(r1)
-  t0 = (ctx.r[1] + uint64_t(int64_t(-72))); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[23]);
-  // 82003BD8: std r24,-64(r1)
-  t0 = (ctx.r[1] + uint64_t(int64_t(-64))); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[24]);
-  // 82003BDC: std r25,-56(r1)
-  t0 = (ctx.r[1] + uint64_t(int64_t(-56))); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[25]);
-  // 82003BE0: std r26,-48(r1)
-  t0 = (ctx.r[1] + uint64_t(int64_t(-48))); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[26]);
-  // 82003BE4: std r27,-40(r1)
-  t0 = (ctx.r[1] + uint64_t(int64_t(-40))); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[27]);
-  // 82003BE8: std r28,-32(r1)
-  t0 = (ctx.r[1] + uint64_t(int64_t(-32))); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[28]);
-  // 82003BEC: std r29,-24(r1)
-  t0 = (ctx.r[1] + uint64_t(int64_t(-24))); ea = uint32_t(t0);
+  // 82003100: std r29,472(r1)
+  t0 = (ctx.r[1] + uint64_t(472)); ea = uint32_t(t0);
   fsr::st64(base, ea, ctx.r[29]);
-  // 82003BF0: std r30,-16(r1)
-  t0 = (ctx.r[1] + uint64_t(int64_t(-16))); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[30]);
-  // 82003BF4: stdu r1,-288(r1)
-  t0 = (ctx.r[1] + uint64_t(int64_t(-288))); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[1]);
-  ctx.r[1] = t0;
-  // 82003BF8: or_ r3,r30,r3
-  ctx.r[30] = ctx.r[3] | ctx.r[3];
-  // 82003BFC: addi r3,r0,0
-  ctx.r[3] = uint64_t(0) + uint64_t(0);
-  // 82003C00: std r0,304(r1)
-  t0 = (ctx.r[1] + uint64_t(304)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[0]);
-  // 82003C04: addis r4,r2,-1
-  ctx.r[4] = ctx.r[2] + uint64_t(int64_t(-65536));
-  // 82003C08: addi r26,r4,32678
-  ctx.r[26] = ctx.r[4] + uint64_t(32678);
-  // 82003C0C: addi r4,r0,2049
-  ctx.r[4] = uint64_t(0) + uint64_t(2049);
-  // 82003C10: addi r29,r1,136
-  ctx.r[29] = ctx.r[1] + uint64_t(136);
-  // 82003C14: stw r3,168(r1)
-  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[3]));
-  // 82003C18: addi r3,r0,-1
-  ctx.r[3] = uint64_t(0) + uint64_t(int64_t(-1));
-  // 82003C1C: addi r5,r1,40
-  ctx.r[5] = ctx.r[1] + uint64_t(40);
-  // 82003C20: std r3,0(r30)
-  t0 = (ctx.r[30] + uint64_t(0)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[3]);
-  // 82003C24: rldic r4,r4,r20
-  ctx.r[4] = fsr::rotl64(ctx.r[4], 20) & 0xFFF00000ull;
-  // 82003C28: addi r6,r1,172
-  ctx.r[6] = ctx.r[1] + uint64_t(172);
-  // 82003C2C: addi r7,r0,32
-  ctx.r[7] = uint64_t(0) + uint64_t(32);
-  // 82003C30: std r3,8(r30)
-  t0 = (ctx.r[30] + uint64_t(8)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[3]);
-  // 82003C34: std r3,16(r30)
-  t0 = (ctx.r[30] + uint64_t(16)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[3]);
-  // 82003C38: std r3,24(r30)
-  t0 = (ctx.r[30] + uint64_t(24)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[3]);
-  // 82003C3C: std r3,32(r30)
-  t0 = (ctx.r[30] + uint64_t(32)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[3]);
-  // 82003C40: stw r3,40(r30)
-  t0 = (ctx.r[30] + uint64_t(40)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[3]));
-  // 82003C44: addi r3,r0,-3
-  ctx.r[3] = uint64_t(0) + uint64_t(int64_t(-3));
-  // 82003C48: stw r3,40(r1)
-  t0 = (ctx.r[1] + uint64_t(40)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[3]));
-  // 82003C4C: addis r3,r0,20
-  ctx.r[3] = uint64_t(0) + uint64_t(1310720);
-  // 82003C50: ori r3,r3,0x15
-  ctx.r[3] = ctx.r[3] | 0x15ull;
-  // 82003C54: stw r3,136(r1)
-  t0 = (ctx.r[1] + uint64_t(136)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[3]));
-  // 82003C58: addi r3,r26,33
-  ctx.r[3] = ctx.r[26] + uint64_t(33);
-  // 82003C5C: stw r3,140(r1)
-  t0 = (ctx.r[1] + uint64_t(140)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[3]));
-  // 82003C60: addi r3,r0,64
-  ctx.r[3] = uint64_t(0) + uint64_t(64);
-  // 82003C64: stw r3,48(r1)
-  t0 = (ctx.r[1] + uint64_t(48)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[3]));
-  // 82003C68: addi r3,r1,168
-  ctx.r[3] = ctx.r[1] + uint64_t(168);
-  // 82003C6C: stw r29,44(r1)
-  t0 = (ctx.r[1] + uint64_t(44)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[29]));
-  // 82003C70: bl 0x82001020
-  ctx.lr = 0x82003C74;
-  sub_82001020(ctx, base);
-  // 82003C74: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003C78: or_ r3,r4,r3
-  ctx.r[4] = ctx.r[3] | ctx.r[3];
-  // 82003C7C: addi r3,r0,1
-  ctx.r[3] = uint64_t(0) + uint64_t(1);
-  // 82003C80: stw r4,0(r30)
-  t0 = (ctx.r[30] + uint64_t(0)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[4]));
-  // 82003C84: cmpli r0,r4,r0
+  // 82003104: or_ r4,r29,r4
+  ctx.r[29] = ctx.r[4] | ctx.r[4];
+  // 82003108: lbz r4,-29744(r2)
+  t0 = (ctx.r[2] + uint64_t(int64_t(-29744))); ea = uint32_t(t0);
+  ctx.r[4] = fsr::ld8(base, ea);
+  // 8200310C: std r22,416(r1)
+  t0 = (ctx.r[1] + uint64_t(416)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[22]);
+  // 82003110: cmpli r0,r4,r0
   fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[4]), 0u);
-  // 82003C88: bc 4,2,0x82003E60
-  if (!ctx.crb[2]) goto loc_82003E60;
-  // 82003C8C: lwz r3,168(r1)
-  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
-  ctx.r[3] = fsr::ld32(base, ea);
-  // 82003C90: addi r7,r1,172
-  ctx.r[7] = ctx.r[1] + uint64_t(172);
-  // 82003C94: addi r8,r1,161
-  ctx.r[8] = ctx.r[1] + uint64_t(161);
-  // 82003C98: addi r4,r0,0
-  ctx.r[4] = uint64_t(0) + uint64_t(0);
-  // 82003C9C: addi r5,r0,0
-  ctx.r[5] = uint64_t(0) + uint64_t(0);
-  // 82003CA0: addi r6,r0,0
-  ctx.r[6] = uint64_t(0) + uint64_t(0);
-  // 82003CA4: addi r9,r0,7
-  ctx.r[9] = uint64_t(0) + uint64_t(7);
-  // 82003CA8: addi r10,r0,0
-  ctx.r[10] = uint64_t(0) + uint64_t(0);
-  // 82003CAC: addi r25,r0,0
-  ctx.r[25] = uint64_t(0) + uint64_t(0);
-  // 82003CB0: bl 0x82001030
-  ctx.lr = 0x82003CB4;
-  sub_82001030(ctx, base);
-  // 82003CB4: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003CB8: cmpli r0,r3,r0
-  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[3]), 0u);
-  // 82003CBC: addi r21,r0,0
-  ctx.r[21] = uint64_t(0) + uint64_t(0);
-  // 82003CC0: addi r24,r0,0
-  ctx.r[24] = uint64_t(0) + uint64_t(0);
-  // 82003CC4: bc 12,2,0x82003E98
-  if (ctx.crb[2]) goto loc_82003E98;
-loc_82003CC8:
-  // 82003CC8: stw r3,12(r30)
-  t0 = (ctx.r[30] + uint64_t(12)); ea = uint32_t(t0);
+  // 82003114: addi r22,r1,340
+  ctx.r[22] = ctx.r[1] + uint64_t(340);
+  // 82003118: std r30,480(r1)
+  t0 = (ctx.r[1] + uint64_t(480)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[30]);
+  // 8200311C: or_ r5,r30,r5
+  ctx.r[30] = ctx.r[5] | ctx.r[5];
+  // 82003120: std r14,352(r1)
+  t0 = (ctx.r[1] + uint64_t(352)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[14]);
+  // 82003124: std r15,360(r1)
+  t0 = (ctx.r[1] + uint64_t(360)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[15]);
+  // 82003128: std r16,368(r1)
+  t0 = (ctx.r[1] + uint64_t(368)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[16]);
+  // 8200312C: std r17,376(r1)
+  t0 = (ctx.r[1] + uint64_t(376)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[17]);
+  // 82003130: std r18,384(r1)
+  t0 = (ctx.r[1] + uint64_t(384)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[18]);
+  // 82003134: std r19,392(r1)
+  t0 = (ctx.r[1] + uint64_t(392)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[19]);
+  // 82003138: std r20,400(r1)
+  t0 = (ctx.r[1] + uint64_t(400)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[20]);
+  // 8200313C: std r21,408(r1)
+  t0 = (ctx.r[1] + uint64_t(408)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[21]);
+  // 82003140: std r23,424(r1)
+  t0 = (ctx.r[1] + uint64_t(424)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[23]);
+  // 82003144: std r24,432(r1)
+  t0 = (ctx.r[1] + uint64_t(432)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[24]);
+  // 82003148: std r25,440(r1)
+  t0 = (ctx.r[1] + uint64_t(440)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[25]);
+  // 8200314C: std r26,448(r1)
+  t0 = (ctx.r[1] + uint64_t(448)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[26]);
+  // 82003150: std r27,456(r1)
+  t0 = (ctx.r[1] + uint64_t(456)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[27]);
+  // 82003154: std r31,488(r1)
+  t0 = (ctx.r[1] + uint64_t(488)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[31]);
+  // 82003158: std r6,136(r1)
+  t0 = (ctx.r[1] + uint64_t(136)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[6]);
+  // 8200315C: bc 4,2,0x820033D4
+  if (!ctx.crb[2]) goto loc_820033D4;
+  // 82003160: addi r4,r0,1
+  ctx.r[4] = uint64_t(0) + uint64_t(1);
+  // 82003164: addi r27,r0,0
+  ctx.r[27] = uint64_t(0) + uint64_t(0);
+  // 82003168: stw r22,316(r1)
+  t0 = (ctx.r[1] + uint64_t(316)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[22]));
+  // 8200316C: addi r5,r1,312
+  ctx.r[5] = ctx.r[1] + uint64_t(312);
+  // 82003170: addi r6,r1,332
+  ctx.r[6] = ctx.r[1] + uint64_t(332);
+  // 82003174: stb r4,-29744(r2)
+  t0 = (ctx.r[2] + uint64_t(int64_t(-29744))); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[4]));
+  // 82003178: addis r4,r2,-1
+  ctx.r[4] = ctx.r[2] + uint64_t(int64_t(-65536));
+  // 8200317C: addi r3,r0,-3
+  ctx.r[3] = uint64_t(0) + uint64_t(int64_t(-3));
+  // 82003180: addi r24,r4,32400
+  ctx.r[24] = ctx.r[4] + uint64_t(32400);
+  // 82003184: addi r4,r0,2049
+  ctx.r[4] = uint64_t(0) + uint64_t(2049);
+  // 82003188: stw r3,312(r1)
+  t0 = (ctx.r[1] + uint64_t(312)); ea = uint32_t(t0);
   fsr::st32(base, ea, uint32_t(ctx.r[3]));
-  // 82003CCC: addi r28,r1,172
-  ctx.r[28] = ctx.r[1] + uint64_t(172);
-  // 82003CD0: or_ r29,r5,r29
-  ctx.r[5] = ctx.r[29] | ctx.r[29];
-  // 82003CD4: or_ r28,r4,r28
-  ctx.r[4] = ctx.r[28] | ctx.r[28];
-  // 82003CD8: addi r6,r0,24
-  ctx.r[6] = uint64_t(0) + uint64_t(24);
-  // 82003CDC: lwz r3,168(r1)
-  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
-  ctx.r[3] = fsr::ld32(base, ea);
-  // 82003CE0: addi r7,r0,5
-  ctx.r[7] = uint64_t(0) + uint64_t(5);
-  // 82003CE4: stw r21,4(r30)
-  t0 = (ctx.r[30] + uint64_t(4)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[21]));
-  // 82003CE8: stw r24,8(r30)
-  t0 = (ctx.r[30] + uint64_t(8)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[24]));
-  // 82003CEC: bl 0x82001040
-  ctx.lr = 0x82003CF0;
-  sub_82001040(ctx, base);
-  // 82003CF0: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003CF4: ld r3,8(r29)
-  t0 = (ctx.r[29] + uint64_t(8)); ea = uint32_t(t0);
-  ctx.r[3] = fsr::ld64(base, ea);
-  // 82003CF8: addi r5,r1,128
-  ctx.r[5] = ctx.r[1] + uint64_t(128);
-  // 82003CFC: or_ r28,r4,r28
-  ctx.r[4] = ctx.r[28] | ctx.r[28];
-  // 82003D00: addi r6,r0,8
-  ctx.r[6] = uint64_t(0) + uint64_t(8);
-  // 82003D04: addi r7,r0,14
-  ctx.r[7] = uint64_t(0) + uint64_t(14);
-  // 82003D08: stw r3,16(r30)
-  t0 = (ctx.r[30] + uint64_t(16)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[3]));
-  // 82003D0C: lwz r3,168(r1)
-  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
-  ctx.r[3] = fsr::ld32(base, ea);
-  // 82003D10: bl 0x82001040
-  ctx.lr = 0x82003D14;
-  sub_82001040(ctx, base);
-  // 82003D14: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003D18: ld r3,128(r1)
-  t0 = (ctx.r[1] + uint64_t(128)); ea = uint32_t(t0);
-  ctx.r[3] = fsr::ld64(base, ea);
-  // 82003D1C: addi r4,r0,3
-  ctx.r[4] = uint64_t(0) + uint64_t(3);
-  // 82003D20: addi r8,r1,116
-  ctx.r[8] = ctx.r[1] + uint64_t(116);
-  // 82003D24: addi r10,r1,120
-  ctx.r[10] = ctx.r[1] + uint64_t(120);
-  // 82003D28: addi r5,r0,0
-  ctx.r[5] = uint64_t(0) + uint64_t(0);
-  // 82003D2C: stw r3,20(r30)
-  t0 = (ctx.r[30] + uint64_t(20)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[3]));
-  // 82003D30: addi r6,r0,0
-  ctx.r[6] = uint64_t(0) + uint64_t(0);
-  // 82003D34: or_ r28,r7,r28
-  ctx.r[7] = ctx.r[28] | ctx.r[28];
-  // 82003D38: lwz r3,168(r1)
-  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
-  ctx.r[3] = fsr::ld32(base, ea);
-  // 82003D3C: addi r9,r0,4
-  ctx.r[9] = uint64_t(0) + uint64_t(4);
-  // 82003D40: std r4,120(r1)
-  t0 = (ctx.r[1] + uint64_t(120)); ea = uint32_t(t0);
-  fsr::st64(base, ea, ctx.r[4]);
-  // 82003D44: addi r4,r0,0
-  ctx.r[4] = uint64_t(0) + uint64_t(0);
-  // 82003D48: stw r25,116(r1)
-  t0 = (ctx.r[1] + uint64_t(116)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[25]));
-  // 82003D4C: bl 0x82001030
-  ctx.lr = 0x82003D50;
-  sub_82001030(ctx, base);
-  // 82003D50: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003D54: lwz r3,116(r1)
-  t0 = (ctx.r[1] + uint64_t(116)); ea = uint32_t(t0);
-  ctx.r[3] = fsr::ld32(base, ea);
-  // 82003D58: stw r3,24(r30)
-  t0 = (ctx.r[30] + uint64_t(24)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[3]));
-  // 82003D5C: lwz r3,168(r1)
-  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
-  ctx.r[3] = fsr::ld32(base, ea);
-  // 82003D60: bl 0x82001070
-  ctx.lr = 0x82003D64;
-  sub_82001070(ctx, base);
-  // 82003D64: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003D68: lwz r3,168(r1)
-  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
-  ctx.r[3] = fsr::ld32(base, ea);
-  // 82003D6C: bl 0x82001070
-  ctx.lr = 0x82003D70;
-  sub_82001070(ctx, base);
-  // 82003D70: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003D74: stw r3,36(r30)
-  t0 = (ctx.r[30] + uint64_t(36)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[3]));
-  // 82003D78: addi r3,r1,108
-  ctx.r[3] = ctx.r[1] + uint64_t(108);
-  // 82003D7C: addi r4,r26,13
-  ctx.r[4] = ctx.r[26] + uint64_t(13);
-  // 82003D80: addi r29,r1,40
-  ctx.r[29] = ctx.r[1] + uint64_t(40);
-  // 82003D84: addi r25,r0,-3
-  ctx.r[25] = uint64_t(0) + uint64_t(int64_t(-3));
-  // 82003D88: stw r3,100(r1)
-  t0 = (ctx.r[1] + uint64_t(100)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[3]));
-  // 82003D8C: addis r3,r0,19
-  ctx.r[3] = uint64_t(0) + uint64_t(1245184);
-  // 82003D90: addi r24,r0,64
-  ctx.r[24] = uint64_t(0) + uint64_t(64);
-  // 82003D94: ori r3,r3,0x13
-  ctx.r[3] = ctx.r[3] | 0x13ull;
-  // 82003D98: stw r4,112(r1)
-  t0 = (ctx.r[1] + uint64_t(112)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[4]));
-  // 82003D9C: or_ r29,r4,r29
-  ctx.r[4] = ctx.r[29] | ctx.r[29];
-  // 82003DA0: stw r3,108(r1)
-  t0 = (ctx.r[1] + uint64_t(108)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[3]));
-  // 82003DA4: addi r3,r1,96
-  ctx.r[3] = ctx.r[1] + uint64_t(96);
-  // 82003DA8: stw r25,96(r1)
-  t0 = (ctx.r[1] + uint64_t(96)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[25]));
-  // 82003DAC: stw r24,104(r1)
-  t0 = (ctx.r[1] + uint64_t(104)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[24]));
-  // 82003DB0: bl 0x82001060
-  ctx.lr = 0x82003DB4;
-  sub_82001060(ctx, base);
-  // 82003DB4: ori r0,r0,0x0
-  ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003DB8: cmpli r0,r3,r0
-  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[3]), 0u);
-  // 82003DBC: bc 4,2,0x82003DC8
-  if (!ctx.crb[2]) goto loc_82003DC8;
-  // 82003DC0: ld r3,40(r29)
-  t0 = (ctx.r[29] + uint64_t(40)); ea = uint32_t(t0);
-  ctx.r[3] = fsr::ld64(base, ea);
-  // 82003DC4: stw r3,28(r30)
-  t0 = (ctx.r[30] + uint64_t(28)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[3]));
-loc_82003DC8:
-  // 82003DC8: addi r3,r26,54
-  ctx.r[3] = ctx.r[26] + uint64_t(54);
-  // 82003DCC: addi r29,r1,168
-  ctx.r[29] = ctx.r[1] + uint64_t(168);
-  // 82003DD0: stw r25,180(r1)
-  t0 = (ctx.r[1] + uint64_t(180)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[25]));
-  // 82003DD4: addi r27,r1,172
-  ctx.r[27] = ctx.r[1] + uint64_t(172);
-  // 82003DD8: addi r23,r1,192
-  ctx.r[23] = ctx.r[1] + uint64_t(192);
-  // 82003DDC: stw r3,196(r1)
-  t0 = (ctx.r[1] + uint64_t(196)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[3]));
-  // 82003DE0: addis r3,r0,29
-  ctx.r[3] = uint64_t(0) + uint64_t(1900544);
-  // 82003DE4: addi r5,r1,180
-  ctx.r[5] = ctx.r[1] + uint64_t(180);
-  // 82003DE8: ori r3,r3,0x1E
-  ctx.r[3] = ctx.r[3] | 0x1Eull;
-  // 82003DEC: or_ r27,r6,r27
-  ctx.r[6] = ctx.r[27] | ctx.r[27];
-  // 82003DF0: stw r23,184(r1)
-  t0 = (ctx.r[1] + uint64_t(184)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[23]));
-  // 82003DF4: addi r7,r0,32
+  // 8200318C: addis r3,r0,20
+  ctx.r[3] = uint64_t(0) + uint64_t(1310720);
+  // 82003190: rldic r4,r4,r20
+  ctx.r[4] = fsr::rotl64(ctx.r[4], 20) & 0xFFF00000ull;
+  // 82003194: ori r3,r3,0x15
+  ctx.r[3] = ctx.r[3] | 0x15ull;
+  // 82003198: addi r7,r0,32
   ctx.r[7] = uint64_t(0) + uint64_t(32);
-  // 82003DF8: stw r3,192(r1)
-  t0 = (ctx.r[1] + uint64_t(192)); ea = uint32_t(t0);
+  // 8200319C: stw r3,340(r1)
+  t0 = (ctx.r[1] + uint64_t(340)); ea = uint32_t(t0);
   fsr::st32(base, ea, uint32_t(ctx.r[3]));
-  // 82003DFC: addi r3,r0,2049
-  ctx.r[3] = uint64_t(0) + uint64_t(2049);
-  // 82003E00: rldic r3,r28,r20
-  ctx.r[28] = fsr::rotl64(ctx.r[3], 20) & 0xFFF00000ull;
-  // 82003E04: or_ r29,r3,r29
-  ctx.r[3] = ctx.r[29] | ctx.r[29];
-  // 82003E08: or_ r28,r4,r28
-  ctx.r[4] = ctx.r[28] | ctx.r[28];
-  // 82003E0C: stw r24,188(r1)
-  t0 = (ctx.r[1] + uint64_t(188)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[24]));
-  // 82003E10: bl 0x82001020
-  ctx.lr = 0x82003E14;
+  // 820031A0: addi r3,r24,69
+  ctx.r[3] = ctx.r[24] + uint64_t(69);
+  // 820031A4: addi r26,r0,32
+  ctx.r[26] = uint64_t(0) + uint64_t(32);
+  // 820031A8: stw r3,344(r1)
+  t0 = (ctx.r[1] + uint64_t(344)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
+  // 820031AC: addi r3,r0,64
+  ctx.r[3] = uint64_t(0) + uint64_t(64);
+  // 820031B0: stw r3,320(r1)
+  t0 = (ctx.r[1] + uint64_t(320)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
+  // 820031B4: addi r3,r1,328
+  ctx.r[3] = ctx.r[1] + uint64_t(328);
+  // 820031B8: stw r27,328(r1)
+  t0 = (ctx.r[1] + uint64_t(328)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[27]));
+  // 820031BC: bl 0x82001020
+  ctx.lr = 0x820031C0;
   sub_82001020(ctx, base);
+  // 820031C0: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820031C4: cmpli r0,r3,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[3]), 0u);
+  // 820031C8: bc 12,2,0x820032C4
+  if (ctx.crb[2]) goto loc_820032C4;
+  // 820031CC: rlwinm r4,r3,4,28,31
+  ctx.r[4] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[3]), 4)) & 0xFull;
+  // 820031D0: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820031D4: rlwinm r5,r3,8,28,31
+  ctx.r[5] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[3]), 8)) & 0xFull;
+  // 820031D8: lbzx r4,r24,r4
+  t0 = (ctx.r[24] + ctx.r[4]); ea = uint32_t(t0);
+  ctx.r[4] = fsr::ld8(base, ea);
+  // 820031DC: addi r8,r2,-29743
+  ctx.r[8] = ctx.r[2] + uint64_t(int64_t(-29743));
+  // 820031E0: addi r9,r0,21843
+  ctx.r[9] = uint64_t(0) + uint64_t(21843);
+  // 820031E4: rlwinm r6,r3,12,28,31
+  ctx.r[6] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[3]), 12)) & 0xFull;
+  // 820031E8: lbzx r5,r24,r5
+  t0 = (ctx.r[24] + ctx.r[5]); ea = uint32_t(t0);
+  ctx.r[5] = fsr::ld8(base, ea);
+  // 820031EC: rlwinm r7,r3,16,28,31
+  ctx.r[7] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[3]), 16)) & 0xFull;
+  // 820031F0: rlwinm r10,r3,24,28,31
+  ctx.r[10] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[3]), 24)) & 0xFull;
+  // 820031F4: stb r4,43(r8)
+  t0 = (ctx.r[8] + uint64_t(43)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[4]));
+  // 820031F8: rlwinm r4,r3,28,28,31
+  ctx.r[4] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[3]), 28)) & 0xFull;
+  // 820031FC: sth r9,40(r8)
+  t0 = (ctx.r[8] + uint64_t(40)); ea = uint32_t(t0);
+  fsr::st16(base, ea, uint16_t(ctx.r[9]));
+  // 82003200: rlwinm r9,r3,20,28,31
+  ctx.r[9] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[3]), 20)) & 0xFull;
+  // 82003204: rldicl r3,r3,r0
+  ctx.r[3] = fsr::rotl64(ctx.r[3], 0) & 0xFull;
+  // 82003208: lbzx r4,r24,r4
+  t0 = (ctx.r[24] + ctx.r[4]); ea = uint32_t(t0);
+  ctx.r[4] = fsr::ld8(base, ea);
+  // 8200320C: lbzx r3,r24,r3
+  t0 = (ctx.r[24] + ctx.r[3]); ea = uint32_t(t0);
+  ctx.r[3] = fsr::ld8(base, ea);
+  // 82003210: lbzx r6,r24,r6
+  t0 = (ctx.r[24] + ctx.r[6]); ea = uint32_t(t0);
+  ctx.r[6] = fsr::ld8(base, ea);
+  // 82003214: stb r5,44(r8)
+  t0 = (ctx.r[8] + uint64_t(44)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[5]));
+  // 82003218: addis r5,r0,18241
+  ctx.r[5] = uint64_t(0) + uint64_t(1195442176);
+  // 8200321C: stb r4,49(r8)
+  t0 = (ctx.r[8] + uint64_t(49)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[4]));
+  // 82003220: ori r4,r5,0x4D45
+  ctx.r[4] = ctx.r[5] | 0x4D45ull;
+  // 82003224: stb r3,50(r8)
+  t0 = (ctx.r[8] + uint64_t(50)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[3]));
+  // 82003228: rldic r4,r3,r0
+  ctx.r[3] = fsr::rotl64(ctx.r[4], 32) & 0x7FFFFFFF00000000ull;
+  // 8200322C: oris r3,r3,0x3A5C
+  ctx.r[3] = ctx.r[3] | 0x3A5C0000ull;
+  // 82003230: ori r3,r3,0x4441
+  ctx.r[3] = ctx.r[3] | 0x4441ull;
+  // 82003234: lbzx r7,r24,r7
+  t0 = (ctx.r[24] + ctx.r[7]); ea = uint32_t(t0);
+  ctx.r[7] = fsr::ld8(base, ea);
+  // 82003238: stb r6,45(r8)
+  t0 = (ctx.r[8] + uint64_t(45)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[6]));
+  // 8200323C: addis r6,r0,2696
+  ctx.r[6] = uint64_t(0) + uint64_t(176685056);
+  // 82003240: ori r5,r6,0x2B89
+  ctx.r[5] = ctx.r[6] | 0x2B89ull;
+  // 82003244: lbzx r9,r24,r9
+  t0 = (ctx.r[24] + ctx.r[9]); ea = uint32_t(t0);
+  ctx.r[9] = fsr::ld8(base, ea);
+  // 82003248: std r3,0(r8)
+  t0 = (ctx.r[8] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[3]);
+  // 8200324C: rldic r5,r3,r3
+  ctx.r[3] = fsr::rotl64(ctx.r[5], 35) & 0x7FFFFFF800000000ull;
+  // 82003250: oris r3,r3,0x454C
+  ctx.r[3] = ctx.r[3] | 0x454C0000ull;
+  // 82003254: ori r3,r3,0x4C4F
+  ctx.r[3] = ctx.r[3] | 0x4C4Full;
+  // 82003258: stb r7,46(r8)
+  t0 = (ctx.r[8] + uint64_t(46)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[7]));
+  // 8200325C: addis r7,r0,2965
+  ctx.r[7] = uint64_t(0) + uint64_t(194314240);
+  // 82003260: ori r6,r7,0x1615
+  ctx.r[6] = ctx.r[7] | 0x1615ull;
+  // 82003264: lbzx r10,r24,r10
+  t0 = (ctx.r[24] + ctx.r[10]); ea = uint32_t(t0);
+  ctx.r[10] = fsr::ld8(base, ea);
+  // 82003268: stb r9,47(r8)
+  t0 = (ctx.r[8] + uint64_t(47)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[9]));
+  // 8200326C: addis r9,r0,4178
+  ctx.r[9] = uint64_t(0) + uint64_t(273809408);
+  // 82003270: ori r7,r9,0xC815
+  ctx.r[7] = ctx.r[9] | 0xC815ull;
+  // 82003274: rldic r7,r4,r2
+  ctx.r[4] = fsr::rotl64(ctx.r[7], 34) & 0x7FFFFFFC00000000ull;
+  // 82003278: std r3,8(r8)
+  t0 = (ctx.r[8] + uint64_t(8)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[3]);
+  // 8200327C: rldic r6,r3,r2
+  ctx.r[3] = fsr::rotl64(ctx.r[6], 34) & 0x3FFFFFFC00000000ull;
+  // 82003280: oris r3,r3,0x2054
+  ctx.r[3] = ctx.r[3] | 0x20540000ull;
+  // 82003284: ori r3,r3,0x4944
+  ctx.r[3] = ctx.r[3] | 0x4944ull;
+  // 82003288: stb r10,48(r8)
+  t0 = (ctx.r[8] + uint64_t(48)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[10]));
+  // 8200328C: addis r10,r0,2152
+  ctx.r[10] = uint64_t(0) + uint64_t(141033472);
+  // 82003290: ori r9,r10,0x2405
+  ctx.r[9] = ctx.r[10] | 0x2405ull;
+  // 82003294: std r3,16(r8)
+  t0 = (ctx.r[8] + uint64_t(16)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[3]);
+  // 82003298: oris r3,r4,0x4552
+  ctx.r[3] = ctx.r[4] | 0x45520000ull;
+  // 8200329C: rldic r9,r4,r3
+  ctx.r[4] = fsr::rotl64(ctx.r[9], 35) & 0x7FFFFFF800000000ull;
+  // 820032A0: ori r3,r3,0x4241
+  ctx.r[3] = ctx.r[3] | 0x4241ull;
+  // 820032A4: std r3,24(r8)
+  t0 = (ctx.r[8] + uint64_t(24)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[3]);
+  // 820032A8: oris r3,r4,0x5354
+  ctx.r[3] = ctx.r[4] | 0x53540000ull;
+  // 820032AC: ori r3,r3,0x4154
+  ctx.r[3] = ctx.r[3] | 0x4154ull;
+  // 820032B0: std r3,32(r8)
+  t0 = (ctx.r[8] + uint64_t(32)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[3]);
+  // 820032B4: addi r3,r0,10496
+  ctx.r[3] = uint64_t(0) + uint64_t(10496);
+  // 820032B8: stb r26,42(r8)
+  t0 = (ctx.r[8] + uint64_t(42)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[26]));
+  // 820032BC: sth r3,51(r8)
+  t0 = (ctx.r[8] + uint64_t(51)); ea = uint32_t(t0);
+  fsr::st16(base, ea, uint16_t(ctx.r[3]));
+  // 820032C0: b 0x820033B8
+  goto loc_820033B8;
+loc_820032C4:
+  // 820032C4: lwz r3,328(r1)
+  t0 = (ctx.r[1] + uint64_t(328)); ea = uint32_t(t0);
+  ctx.r[3] = fsr::ld32(base, ea);
+  // 820032C8: addi r26,r1,152
+  ctx.r[26] = ctx.r[1] + uint64_t(152);
+  // 820032CC: addi r7,r1,332
+  ctx.r[7] = ctx.r[1] + uint64_t(332);
+  // 820032D0: addi r4,r0,0
+  ctx.r[4] = uint64_t(0) + uint64_t(0);
+  // 820032D4: addi r5,r0,0
+  ctx.r[5] = uint64_t(0) + uint64_t(0);
+  // 820032D8: addi r6,r0,0
+  ctx.r[6] = uint64_t(0) + uint64_t(0);
+  // 820032DC: or_ r26,r8,r26
+  ctx.r[8] = ctx.r[26] | ctx.r[26];
+  // 820032E0: addi r9,r0,44
+  ctx.r[9] = uint64_t(0) + uint64_t(44);
+  // 820032E4: addi r10,r0,0
+  ctx.r[10] = uint64_t(0) + uint64_t(0);
+  // 820032E8: bl 0x82001030
+  ctx.lr = 0x820032EC;
+  sub_82001030(ctx, base);
+  // 820032EC: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820032F0: or_ r3,r25,r3
+  ctx.r[25] = ctx.r[3] | ctx.r[3];
+  // 820032F4: lwz r3,328(r1)
+  t0 = (ctx.r[1] + uint64_t(328)); ea = uint32_t(t0);
+  ctx.r[3] = fsr::ld32(base, ea);
+  // 820032F8: lwz r23,336(r1)
+  t0 = (ctx.r[1] + uint64_t(336)); ea = uint32_t(t0);
+  ctx.r[23] = fsr::ld32(base, ea);
+  // 820032FC: bl 0x82001070
+  ctx.lr = 0x82003300;
+  sub_82001070(ctx, base);
+  // 82003300: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003304: addis r4,r0,2696
+  ctx.r[4] = uint64_t(0) + uint64_t(176685056);
+  // 82003308: addis r3,r0,18241
+  ctx.r[3] = uint64_t(0) + uint64_t(1195442176);
+  // 8200330C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003310: ori r4,r4,0x2B89
+  ctx.r[4] = ctx.r[4] | 0x2B89ull;
+  // 82003314: ori r3,r3,0x4D45
+  ctx.r[3] = ctx.r[3] | 0x4D45ull;
+  // 82003318: rldic r4,r4,r3
+  ctx.r[4] = fsr::rotl64(ctx.r[4], 35) & 0x7FFFFFF800000000ull;
+  // 8200331C: addis r5,r0,2965
+  ctx.r[5] = uint64_t(0) + uint64_t(194314240);
+  // 82003320: rldic r3,r3,r0
+  ctx.r[3] = fsr::rotl64(ctx.r[3], 32) & 0x7FFFFFFF00000000ull;
+  // 82003324: oris r4,r4,0x454C
+  ctx.r[4] = ctx.r[4] | 0x454C0000ull;
+  // 82003328: ori r5,r5,0x1615
+  ctx.r[5] = ctx.r[5] | 0x1615ull;
+  // 8200332C: oris r7,r3,0x3A5C
+  ctx.r[7] = ctx.r[3] | 0x3A5C0000ull;
+  // 82003330: addi r3,r2,-29743
+  ctx.r[3] = ctx.r[2] + uint64_t(int64_t(-29743));
+  // 82003334: ori r4,r4,0x4C4F
+  ctx.r[4] = ctx.r[4] | 0x4C4Full;
+  // 82003338: ori r6,r7,0x4441
+  ctx.r[6] = ctx.r[7] | 0x4441ull;
+  // 8200333C: std r4,8(r3)
+  t0 = (ctx.r[3] + uint64_t(8)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[4]);
+  // 82003340: rldic r5,r4,r2
+  ctx.r[4] = fsr::rotl64(ctx.r[5], 34) & 0x3FFFFFFC00000000ull;
+  // 82003344: cmpli r0,r25,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[25]), 0u);
+  // 82003348: oris r4,r4,0x203D
+  ctx.r[4] = ctx.r[4] | 0x203D0000ull;
+  // 8200334C: std r6,0(r3)
+  t0 = (ctx.r[3] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[6]);
+  // 82003350: ori r4,r4,0x2022
+  ctx.r[4] = ctx.r[4] | 0x2022ull;
+  // 82003354: std r4,16(r3)
+  t0 = (ctx.r[3] + uint64_t(16)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[4]);
+  // 82003358: or_ r3,r4,r3
+  ctx.r[4] = ctx.r[3] | ctx.r[3];
+  // 8200335C: stbu r27,24(r4)
+  t0 = (ctx.r[4] + uint64_t(24)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[27]));
+  ctx.r[4] = t0;
+  // 82003360: bc 4,2,0x820033B0
+  if (!ctx.crb[2]) goto loc_820033B0;
+  // 82003364: cmpli r0,r23,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[23]), 0u);
+  // 82003368: bc 12,2,0x820033B0
+  if (ctx.crb[2]) goto loc_820033B0;
+  // 8200336C: addi r3,r3,24
+  ctx.r[3] = ctx.r[3] + uint64_t(24);
+  // 82003370: mtspr r23,r9,r0
+  ctx.ctr = ctx.r[23];
+  // 82003374: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003378: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 8200337C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82003380:
+  // 82003380: lbz r5,0(r26)
+  t0 = (ctx.r[26] + uint64_t(0)); ea = uint32_t(t0);
+  ctx.r[5] = fsr::ld8(base, ea);
+  // 82003384: cmpli r0,r5,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[5]), 13u);
+  // 82003388: bc 12,2,0x820033AC
+  if (ctx.crb[2]) goto loc_820033AC;
+  // 8200338C: cmpli r0,r5,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[5]), 10u);
+  // 82003390: bc 12,2,0x820033AC
+  if (ctx.crb[2]) goto loc_820033AC;
+  // 82003394: addi r4,r3,1
+  ctx.r[4] = ctx.r[3] + uint64_t(1);
+  // 82003398: stb r5,0(r3)
+  t0 = (ctx.r[3] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[5]));
+  // 8200339C: addi r26,r26,1
+  ctx.r[26] = ctx.r[26] + uint64_t(1);
+  // 820033A0: or_ r4,r3,r4
+  ctx.r[3] = ctx.r[4] | ctx.r[4];
+  // 820033A4: bc 16,0,0x82003380
+  ctx.ctr--;
+  if (ctx.ctr != 0) goto loc_82003380;
+  // 820033A8: b 0x820033B0
+  goto loc_820033B0;
+loc_820033AC:
+  // 820033AC: or_ r3,r4,r3
+  ctx.r[4] = ctx.r[3] | ctx.r[3];
+loc_820033B0:
+  // 820033B0: addi r3,r0,8704
+  ctx.r[3] = uint64_t(0) + uint64_t(8704);
+  // 820033B4: sth r3,0(r4)
+  t0 = (ctx.r[4] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st16(base, ea, uint16_t(ctx.r[3]));
+loc_820033B8:
+  // 820033B8: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820033BC: addi r3,r24,90
+  ctx.r[3] = ctx.r[24] + uint64_t(90);
+  // 820033C0: or_ r30,r5,r30
+  ctx.r[5] = ctx.r[30] | ctx.r[30];
+  // 820033C4: addi r6,r2,-29743
+  ctx.r[6] = ctx.r[2] + uint64_t(int64_t(-29743));
+  // 820033C8: or_ r29,r4,r29
+  ctx.r[4] = ctx.r[29] | ctx.r[29];
+  // 820033CC: bl 0x82001010
+  ctx.lr = 0x820033D0;
+  sub_82001010(ctx, base);
+  // 820033D0: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_820033D4:
+  // 820033D4: addi r5,r1,312
+  ctx.r[5] = ctx.r[1] + uint64_t(312);
+  // 820033D8: addi r3,r0,0
+  ctx.r[3] = uint64_t(0) + uint64_t(0);
+  // 820033DC: addi r4,r0,0
+  ctx.r[4] = uint64_t(0) + uint64_t(0);
+  // 820033E0: bl 0x82001000
+  ctx.lr = 0x820033E4;
+  sub_82001000(ctx, base);
+  // 820033E4: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820033E8: cmpli r0,r3,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[3]), 0u);
+  // 820033EC: addi r15,r0,0
+  ctx.r[15] = uint64_t(0) + uint64_t(0);
+  // 820033F0: addi r14,r0,0
+  ctx.r[14] = uint64_t(0) + uint64_t(0);
+  // 820033F4: addi r9,r0,0
+  ctx.r[9] = uint64_t(0) + uint64_t(0);
+  // 820033F8: addi r10,r0,0
+  ctx.r[10] = uint64_t(0) + uint64_t(0);
+  // 820033FC: addi r11,r0,0
+  ctx.r[11] = uint64_t(0) + uint64_t(0);
+  // 82003400: addi r12,r0,0
+  ctx.r[12] = uint64_t(0) + uint64_t(0);
+  // 82003404: addi r26,r0,0
+  ctx.r[26] = uint64_t(0) + uint64_t(0);
+  // 82003408: bc 4,2,0x82003428
+  if (!ctx.crb[2]) goto loc_82003428;
+  // 8200340C: lha r12,320(r1)
+  t0 = (ctx.r[1] + uint64_t(320)); ea = uint32_t(t0);
+  ctx.r[12] = uint64_t(int64_t(int16_t(fsr::ld16(base, ea))));
+  // 82003410: lha r11,322(r1)
+  t0 = (ctx.r[1] + uint64_t(322)); ea = uint32_t(t0);
+  ctx.r[11] = uint64_t(int64_t(int16_t(fsr::ld16(base, ea))));
+  // 82003414: lha r10,324(r1)
+  t0 = (ctx.r[1] + uint64_t(324)); ea = uint32_t(t0);
+  ctx.r[10] = uint64_t(int64_t(int16_t(fsr::ld16(base, ea))));
+  // 82003418: lha r9,326(r1)
+  t0 = (ctx.r[1] + uint64_t(326)); ea = uint32_t(t0);
+  ctx.r[9] = uint64_t(int64_t(int16_t(fsr::ld16(base, ea))));
+  // 8200341C: lhz r26,316(r1)
+  t0 = (ctx.r[1] + uint64_t(316)); ea = uint32_t(t0);
+  ctx.r[26] = fsr::ld16(base, ea);
+  // 82003420: lbz r14,318(r1)
+  t0 = (ctx.r[1] + uint64_t(318)); ea = uint32_t(t0);
+  ctx.r[14] = fsr::ld8(base, ea);
+  // 82003424: lbz r15,319(r1)
+  t0 = (ctx.r[1] + uint64_t(319)); ea = uint32_t(t0);
+  ctx.r[15] = fsr::ld8(base, ea);
+loc_82003428:
+  // 82003428: andi_rc r3,r26,0x4
+  ctx.r[3] = ctx.r[26] & 0x4ull;
+  fsr::set_cr0(ctx, ctx.r[3]);
+  // 8200342C: addi r4,r0,-24000
+  ctx.r[4] = uint64_t(0) + uint64_t(int64_t(-24000));
+  // 82003430: mcrf r4,r0,r0
+  std::memcpy(ctx.crb + 4, ctx.crb + 0, 4);
+  // 82003434: andi_rc r3,r26,0x8
+  ctx.r[3] = ctx.r[26] & 0x8ull;
+  fsr::set_cr0(ctx, ctx.r[3]);
+  // 82003438: addi r6,r0,24000
+  ctx.r[6] = uint64_t(0) + uint64_t(24000);
+  // 8200343C: mcrf r20,r0,r0
+  std::memcpy(ctx.crb + 20, ctx.crb + 0, 4);
+  // 82003440: bc 12,6,0x8200344C
+  if (ctx.crb[6]) goto loc_8200344C;
+  // 82003444: ori r3,r4,0x0
+  ctx.r[3] = ctx.r[4] | 0x0ull;
+  // 82003448: b 0x82003450
+  goto loc_82003450;
+loc_8200344C:
+  // 8200344C: addi r3,r12,0
+  ctx.r[3] = ctx.r[12] + uint64_t(0);
+loc_82003450:
+  // 82003450: andi_rc r5,r26,0x1
+  ctx.r[5] = ctx.r[26] & 0x1ull;
+  fsr::set_cr0(ctx, ctx.r[5]);
+  // 82003454: bc 12,22,0x82003460
+  if (ctx.crb[22]) goto loc_82003460;
+  // 82003458: ori r5,r6,0x0
+  ctx.r[5] = ctx.r[6] | 0x0ull;
+  // 8200345C: b 0x82003464
+  goto loc_82003464;
+loc_82003460:
+  // 82003460: addi r5,r3,0
+  ctx.r[5] = ctx.r[3] + uint64_t(0);
+loc_82003464:
+  // 82003464: mcrf r4,r0,r0
+  std::memcpy(ctx.crb + 4, ctx.crb + 0, 4);
+  // 82003468: addi r3,r0,-6002
+  ctx.r[3] = uint64_t(0) + uint64_t(int64_t(-6002));
+  // 8200346C: addi r7,r5,-3001
+  ctx.r[7] = ctx.r[5] + uint64_t(int64_t(-3001));
+  // 82003470: bc 12,6,0x82003478
+  if (ctx.crb[6]) goto loc_82003478;
+  // 82003474: b 0x8200347C
+  goto loc_8200347C;
+loc_82003478:
+  // 82003478: addi r6,r11,0
+  ctx.r[6] = ctx.r[11] + uint64_t(0);
+loc_8200347C:
+  // 8200347C: cmpl r20,r7,r3
+  fsr::set_cr_unsigned(ctx, 5, uint32_t(ctx.r[7]), uint32_t(ctx.r[3]));
+  // 82003480: andi_rc r7,r26,0x2
+  ctx.r[7] = ctx.r[26] & 0x2ull;
+  fsr::set_cr0(ctx, ctx.r[7]);
+  // 82003484: bc 12,2,0x8200348C
+  if (ctx.crb[2]) goto loc_8200348C;
+  // 82003488: b 0x82003490
+  goto loc_82003490;
+loc_8200348C:
+  // 8200348C: addi r4,r6,0
+  ctx.r[4] = ctx.r[6] + uint64_t(0);
+loc_82003490:
+  // 82003490: bc 12,21,0x820034B8
+  if (ctx.crb[21]) goto loc_820034B8;
+  // 82003494: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003498: mulli r5,r5,26215
+  ctx.r[5] = ctx.r[5] * uint64_t(26215);
+  // 8200349C: lwz r8,-29888(r2)
+  t0 = (ctx.r[2] + uint64_t(int64_t(-29888))); ea = uint32_t(t0);
+  ctx.r[8] = fsr::ld32(base, ea);
+  // 820034A0: rlwinm r7,r5,1,31,31
+  ctx.r[7] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[5]), 1)) & 0x1ull;
+  // 820034A4: addi r6,r2,-29888
+  ctx.r[6] = ctx.r[2] + uint64_t(int64_t(-29888));
+  // 820034A8: srawi r5,r5,r20
+  ctx.r[5] = fsr::ppc_sraw(ctx, ctx.r[5], 20);
+  // 820034AC: add r5,r5,r7
+  t0 = ctx.r[5]; t1 = ctx.r[7]; ctx.r[5] = t0 + t1;
+  // 820034B0: add r5,r8,r5
+  t0 = ctx.r[8]; t1 = ctx.r[5]; ctx.r[5] = t0 + t1;
+  // 820034B4: stw r5,0(r6)
+  t0 = (ctx.r[6] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[5]));
+loc_820034B8:
+  // 820034B8: addi r5,r4,-3001
+  ctx.r[5] = ctx.r[4] + uint64_t(int64_t(-3001));
+  // 820034BC: cmpl r0,r5,r3
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[5]), uint32_t(ctx.r[3]));
+  // 820034C0: bc 12,1,0x820034F8
+  if (ctx.crb[1]) goto loc_820034F8;
+  // 820034C4: rlwinm r3,r4,4,0,27
+  ctx.r[3] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[4]), 4)) & 0xFFFFFFF0ull;
+  // 820034C8: addis r4,r0,18932
+  ctx.r[4] = uint64_t(0) + uint64_t(1240727552);
+  // 820034CC: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820034D0: ori r4,r4,0x9F49
+  ctx.r[4] = ctx.r[4] | 0x9F49ull;
+  // 820034D4: mulhw r4,r3,r4
+  ctx.r[4] = uint64_t(int64_t(int32_t((int64_t(int32_t(ctx.r[3])) * int64_t(int32_t(ctx.r[4]))) >> 32)));
+  // 820034D8: subf r3,r3,r4
+  t0 = ~ctx.r[3]; t1 = ctx.r[4]; ctx.r[3] = t1 + t0 + 1;
+  // 820034DC: lwz r4,-29884(r2)
+  t0 = (ctx.r[2] + uint64_t(int64_t(-29884))); ea = uint32_t(t0);
+  ctx.r[4] = fsr::ld32(base, ea);
+  // 820034E0: addi r5,r2,-29884
+  ctx.r[5] = ctx.r[2] + uint64_t(int64_t(-29884));
+  // 820034E4: rlwinm r6,r3,1,31,31
+  ctx.r[6] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[3]), 1)) & 0x1ull;
+  // 820034E8: srawi r3,r3,r8
+  ctx.r[3] = fsr::ppc_sraw(ctx, ctx.r[3], 8);
+  // 820034EC: add r3,r3,r6
+  t0 = ctx.r[3]; t1 = ctx.r[6]; ctx.r[3] = t0 + t1;
+  // 820034F0: add r3,r4,r3
+  t0 = ctx.r[4]; t1 = ctx.r[3]; ctx.r[3] = t0 + t1;
+  // 820034F4: stw r3,0(r5)
+  t0 = (ctx.r[5] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
+loc_820034F8:
+  // 820034F8: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820034FC: lwz r3,-29888(r2)
+  t0 = (ctx.r[2] + uint64_t(int64_t(-29888))); ea = uint32_t(t0);
+  ctx.r[3] = fsr::ld32(base, ea);
+  // 82003500: cmpi r0,r3,r31
+  fsr::set_cr_signed(ctx, 0, int32_t(ctx.r[3]), -1);
+  // 82003504: bc 12,1,0x82003514
+  if (ctx.crb[1]) goto loc_82003514;
+  // 82003508: addi r3,r0,0
+  ctx.r[3] = uint64_t(0) + uint64_t(0);
+  // 8200350C: stw r3,-29888(r2)
+  t0 = (ctx.r[2] + uint64_t(int64_t(-29888))); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
+  // 82003510: addi r3,r0,0
+  ctx.r[3] = uint64_t(0) + uint64_t(0);
+loc_82003514:
+  // 82003514: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003518: lwz r4,-29884(r2)
+  t0 = (ctx.r[2] + uint64_t(int64_t(-29884))); ea = uint32_t(t0);
+  ctx.r[4] = fsr::ld32(base, ea);
+  // 8200351C: cmpi r0,r4,r31
+  fsr::set_cr_signed(ctx, 0, int32_t(ctx.r[4]), -1);
+  // 82003520: bc 4,1,0x82003AAC
+  if (!ctx.crb[1]) goto loc_82003AAC;
+  // 82003524: andis_rc r7,r3,0xFFFF
+  ctx.r[7] = ctx.r[3] & 0xFFFF0000ull;
+  fsr::set_cr0(ctx, ctx.r[7]);
+  // 82003528: bc 4,2,0x82003AC0
+  if (!ctx.crb[2]) goto loc_82003AC0;
+loc_8200352C:
+  // 8200352C: andis_rc r6,r4,0xFFFF
+  ctx.r[6] = ctx.r[4] & 0xFFFF0000ull;
+  fsr::set_cr0(ctx, ctx.r[6]);
+  // 82003530: bc 4,2,0x82003ADC
+  if (!ctx.crb[2]) goto loc_82003ADC;
+loc_82003534:
+  // 82003534: cmpli r0,r26,r2
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[26]), 4096u);
+  // 82003538: bc 12,0,0x8200359C
+  if (ctx.crb[0]) goto loc_8200359C;
+loc_8200353C:
+  // 8200353C: andi_rc r5,r26,0x4000
+  ctx.r[5] = ctx.r[26] & 0x4000ull;
+  fsr::set_cr0(ctx, ctx.r[5]);
+  // 82003540: addis r6,r0,15570
+  ctx.r[6] = uint64_t(0) + uint64_t(1020395520);
+  // 82003544: mcrf r4,r0,r0
+  std::memcpy(ctx.crb + 4, ctx.crb + 0, 4);
+  // 82003548: addis r5,r0,-6596
+  ctx.r[5] = uint64_t(0) + uint64_t(int64_t(-432275456));
+  // 8200354C: addis r7,r0,15480
+  ctx.r[7] = uint64_t(0) + uint64_t(1014497280);
+  // 82003550: andi_rc r8,r26,0x2000
+  ctx.r[8] = ctx.r[26] & 0x2000ull;
+  fsr::set_cr0(ctx, ctx.r[8]);
+  // 82003554: ori r5,r5,0x3CFF
+  ctx.r[5] = ctx.r[5] | 0x3CFFull;
+  // 82003558: ori r6,r6,0x5AFF
+  ctx.r[6] = ctx.r[6] | 0x5AFFull;
+  // 8200355C: ori r7,r7,0xF0FF
+  ctx.r[7] = ctx.r[7] | 0xF0FFull;
+  // 82003560: bc 12,2,0x82003568
+  if (ctx.crb[2]) goto loc_82003568;
+  // 82003564: b 0x8200356C
+  goto loc_8200356C;
+loc_82003568:
+  // 82003568: addi r5,r6,0
+  ctx.r[5] = ctx.r[6] + uint64_t(0);
+loc_8200356C:
+  // 8200356C: addis r8,r0,-3886
+  ctx.r[8] = uint64_t(0) + uint64_t(int64_t(-254672896));
+  // 82003570: bc 12,6,0x8200357C
+  if (ctx.crb[6]) goto loc_8200357C;
+  // 82003574: ori r5,r7,0x0
+  ctx.r[5] = ctx.r[7] | 0x0ull;
+  // 82003578: b 0x8200357C
+  goto loc_8200357C;
+loc_8200357C:
+  // 8200357C: cmpli r0,r26,r15
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[26]), 32767u);
+  // 82003580: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003584: ori r6,r8,0x3CFF
+  ctx.r[6] = ctx.r[8] | 0x3CFFull;
+  // 82003588: bc 12,1,0x82003590
+  if (ctx.crb[1]) goto loc_82003590;
+  // 8200358C: b 0x82003594
+  goto loc_82003594;
+loc_82003590:
+  // 82003590: addi r5,r6,0
+  ctx.r[5] = ctx.r[6] + uint64_t(0);
+loc_82003594:
+  // 82003594: addi r6,r2,-29880
+  ctx.r[6] = ctx.r[2] + uint64_t(int64_t(-29880));
+  // 82003598: stw r5,0(r6)
+  t0 = (ctx.r[6] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[5]));
+loc_8200359C:
+  // 8200359C: addis r6,r0,6990
+  ctx.r[6] = uint64_t(0) + uint64_t(458096640);
+  // 820035A0: addi r5,r30,150
+  ctx.r[5] = ctx.r[30] + uint64_t(150);
+  // 820035A4: stw r12,116(r1)
+  t0 = (ctx.r[1] + uint64_t(116)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[12]));
+  // 820035A8: ori r6,r6,0x81B5
+  ctx.r[6] = ctx.r[6] | 0x81B5ull;
+  // 820035AC: cmpi r0,r30,r0
+  fsr::set_cr_signed(ctx, 0, int32_t(ctx.r[30]), 0);
+  // 820035B0: stw r11,124(r1)
+  t0 = (ctx.r[1] + uint64_t(124)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[11]));
+  // 820035B4: mulhw r5,r5,r6
+  ctx.r[5] = uint64_t(int64_t(int32_t((int64_t(int32_t(ctx.r[5])) * int64_t(int32_t(ctx.r[6]))) >> 32)));
+  // 820035B8: rlwinm r6,r5,1,31,31
+  ctx.r[6] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[5]), 1)) & 0x1ull;
+  // 820035BC: stw r10,128(r1)
+  t0 = (ctx.r[1] + uint64_t(128)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[10]));
+  // 820035C0: srawi r5,r5,r5
+  ctx.r[5] = fsr::ppc_sraw(ctx, ctx.r[5], 5);
+  // 820035C4: add r5,r5,r6
+  t0 = ctx.r[5]; t1 = ctx.r[6]; ctx.r[5] = t0 + t1;
+  // 820035C8: addi r6,r0,1
+  ctx.r[6] = uint64_t(0) + uint64_t(1);
+  // 820035CC: stw r9,132(r1)
+  t0 = (ctx.r[1] + uint64_t(132)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[9]));
+  // 820035D0: cmpi r4,r5,r0
+  fsr::set_cr_signed(ctx, 1, int32_t(ctx.r[5]), 1);
+  // 820035D4: bc 12,5,0x820035E0
+  if (ctx.crb[5]) goto loc_820035E0;
+  // 820035D8: ori r20,r6,0x0
+  ctx.r[20] = ctx.r[6] | 0x0ull;
+  // 820035DC: b 0x820035E4
+  goto loc_820035E4;
+loc_820035E0:
+  // 820035E0: addi r20,r5,0
+  ctx.r[20] = ctx.r[5] + uint64_t(0);
+loc_820035E4:
+  // 820035E4: cmpi r4,r29,r0
+  fsr::set_cr_signed(ctx, 1, int32_t(ctx.r[29]), 1);
+  // 820035E8: std r22,144(r1)
+  t0 = (ctx.r[1] + uint64_t(144)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[22]);
+  // 820035EC: bc 4,1,0x820036F0
+  if (!ctx.crb[1]) goto loc_820036F0;
+  // 820035F0: rldicl r29,r5,r0
+  ctx.r[5] = fsr::rotl64(ctx.r[29], 0) & 0xFFFFFFFFull;
+  // 820035F4: rldicl r30,r6,r0
+  ctx.r[6] = fsr::rotl64(ctx.r[30], 0) & 0xFFFFFFFFull;
+  // 820035F8: rlwinm r7,r5,0,1,30
+  ctx.r[7] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[5]), 0)) & 0x7FFFFFFEull;
+  // 820035FC: addi r8,r28,4
+  ctx.r[8] = ctx.r[28] + uint64_t(4);
+  // 82003600: addi r10,r7,-2
+  ctx.r[10] = ctx.r[7] + uint64_t(int64_t(-2));
+  // 82003604: rldicr r29,r9,r2
+  ctx.r[9] = fsr::rotl64(ctx.r[29], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 82003608: rldicl r10,r11,r31
+  ctx.r[11] = fsr::rotl64(ctx.r[10], 63) & 0x7FFFFFFFFFFFFFFFull;
+  // 8200360C: addi r10,r0,0
+  ctx.r[10] = uint64_t(0) + uint64_t(0);
+  // 82003610: addi r11,r11,1
+  ctx.r[11] = ctx.r[11] + uint64_t(1);
+  // 82003614: cmpli r0,r29,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[29]), 1u);
+  // 82003618: cmpl r21,r7,r5
+  fsr::set_cr_unsigned(ctx, 5, ctx.r[7], ctx.r[5]);
+  // 8200361C: or_ r28,r12,r28
+  ctx.r[12] = ctx.r[28] | ctx.r[28];
+  // 82003620: b 0x82003644
+  goto loc_82003644;
+  // 82003624: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003628: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 8200362C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82003630:
+  // 82003630: addi r10,r10,1
+  ctx.r[10] = ctx.r[10] + uint64_t(1);
+  // 82003634: add r8,r8,r9
+  t0 = ctx.r[8]; t1 = ctx.r[9]; ctx.r[8] = t0 + t1;
+  // 82003638: cmpl r25,r10,r6
+  fsr::set_cr_unsigned(ctx, 6, ctx.r[10], ctx.r[6]);
+  // 8200363C: add r12,r12,r9
+  t0 = ctx.r[12]; t1 = ctx.r[9]; ctx.r[12] = t0 + t1;
+  // 82003640: bc 12,26,0x820036F0
+  if (ctx.crb[26]) goto loc_820036F0;
+loc_82003644:
+  // 82003644: bc 12,4,0x82003630
+  if (ctx.crb[4]) goto loc_82003630;
+  // 82003648: mulli r0,r10,10
+  ctx.r[0] = ctx.r[10] * uint64_t(10);
+  // 8200364C: mulli r27,r10,46
+  ctx.r[27] = ctx.r[10] * uint64_t(46);
+  // 82003650: divwu r0,r0,r30
+  ctx.r[0] = fsr::divw_u(ctx.r[0], ctx.r[30]);
+  // 82003654: rlwinm r25,r10,2,0,29
+  ctx.r[25] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[10]), 2)) & 0xFFFFFFFCull;
+  // 82003658: rlwinm r24,r0,24,0,7
+  ctx.r[24] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[0]), 24)) & 0xFF000000ull;
+  // 8200365C: addi r24,r24,255
+  ctx.r[24] = ctx.r[24] + uint64_t(255);
+  // 82003660: divwu r27,r27,r30
+  ctx.r[27] = fsr::divw_u(ctx.r[27], ctx.r[30]);
+  // 82003664: rlwinm r27,r27,16,0,15
+  ctx.r[27] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[27]), 16)) & 0xFFFF0000ull;
+  // 82003668: addis r0,r27,30
+  ctx.r[0] = ctx.r[27] + uint64_t(1966080);
+  // 8200366C: addis r27,r24,4096
+  ctx.r[27] = ctx.r[24] + uint64_t(268435456);
+  // 82003670: or_ r27,r0,r0
+  ctx.r[0] = ctx.r[27] | ctx.r[0];
+  // 82003674: addi r27,r0,0
+  ctx.r[27] = uint64_t(0) + uint64_t(0);
+  // 82003678: divwu r25,r25,r30
+  ctx.r[25] = fsr::divw_u(ctx.r[25], ctx.r[30]);
+  // 8200367C: rlwinm r25,r25,8,0,23
+  ctx.r[25] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[25]), 8)) & 0xFFFFFF00ull;
+  // 82003680: addi r25,r25,11264
+  ctx.r[25] = ctx.r[25] + uint64_t(11264);
+  // 82003684: or_ r0,r0,r25
+  ctx.r[0] = ctx.r[0] | ctx.r[25];
+  // 82003688: bc 12,2,0x820036B8
+  if (ctx.crb[2]) goto loc_820036B8;
+  // 8200368C: or_ r8,r27,r8
+  ctx.r[27] = ctx.r[8] | ctx.r[8];
+  // 82003690: mtspr r11,r9,r0
+  ctx.ctr = ctx.r[11];
+  // 82003694: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003698: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 8200369C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_820036A0:
+  // 820036A0: stw r0,-4(r27)
+  t0 = (ctx.r[27] + uint64_t(int64_t(-4))); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[0]));
+  // 820036A4: stw r0,0(r27)
+  t0 = (ctx.r[27] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[0]));
+  // 820036A8: addi r27,r27,8
+  ctx.r[27] = ctx.r[27] + uint64_t(8);
+  // 820036AC: bc 16,0,0x820036A0
+  ctx.ctr--;
+  if (ctx.ctr != 0) goto loc_820036A0;
+  // 820036B0: or_ r7,r27,r7
+  ctx.r[27] = ctx.r[7] | ctx.r[7];
+  // 820036B4: bc 12,22,0x82003630
+  if (ctx.crb[22]) goto loc_82003630;
+loc_820036B8:
+  // 820036B8: rldicr r27,r25,r2
+  ctx.r[25] = fsr::rotl64(ctx.r[27], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 820036BC: subf r24,r27,r5
+  t0 = ~ctx.r[27]; t1 = ctx.r[5]; ctx.r[24] = t1 + t0 + 1;
+  // 820036C0: add r27,r12,r25
+  t0 = ctx.r[12]; t1 = ctx.r[25]; ctx.r[27] = t0 + t1;
+  // 820036C4: mtspr r24,r9,r0
+  ctx.ctr = ctx.r[24];
+  // 820036C8: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820036CC: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820036D0: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820036D4: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820036D8: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820036DC: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_820036E0:
+  // 820036E0: stw r0,0(r27)
+  t0 = (ctx.r[27] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[0]));
+  // 820036E4: addi r27,r27,4
+  ctx.r[27] = ctx.r[27] + uint64_t(4);
+  // 820036E8: bc 16,0,0x820036E0
+  ctx.ctr--;
+  if (ctx.ctr != 0) goto loc_820036E0;
+  // 820036EC: b 0x82003630
+  goto loc_82003630;
+loc_820036F0:
+  // 820036F0: mulli r5,r29,240
+  ctx.r[5] = ctx.r[29] * uint64_t(240);
+  // 820036F4: rldicl r20,r6,r0
+  ctx.r[6] = fsr::rotl64(ctx.r[20], 0) & 0xFFFFFFFFull;
+  // 820036F8: addi r12,r5,48
+  ctx.r[12] = ctx.r[5] + uint64_t(48);
+  // 820036FC: mulld r5,r12,r6
+  ctx.r[5] = ctx.r[12] * ctx.r[6];
+  // 82003700: mulli r6,r20,-24
+  ctx.r[6] = ctx.r[20] * uint64_t(int64_t(-24));
+  // 82003704: mulli r7,r20,12
+  ctx.r[7] = ctx.r[20] * uint64_t(12);
+  // 82003708: add r8,r6,r29
+  t0 = ctx.r[6]; t1 = ctx.r[29]; ctx.r[8] = t0 + t1;
+  // 8200370C: rldicl r7,r6,r0
+  ctx.r[6] = fsr::rotl64(ctx.r[7], 0) & 0xFFFFFFFFull;
+  // 82003710: add r7,r8,r7
+  t0 = ctx.r[8]; t1 = ctx.r[7]; ctx.r[7] = t0 + t1;
+  // 82003714: ori r27,r6,0x1
+  ctx.r[27] = ctx.r[6] | 0x1ull;
+  // 82003718: extsw r7,r10,r0
+  ctx.r[10] = uint64_t(int64_t(int32_t(ctx.r[7])));
+  // 8200371C: mulli r11,r20,60
+  ctx.r[11] = ctx.r[20] * uint64_t(60);
+  // 82003720: cmp r1,r27,r10
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[27]), int64_t(ctx.r[10]));
+  // 82003724: bc 12,1,0x82003730
+  if (ctx.crb[1]) goto loc_82003730;
+  // 82003728: ori r27,r10,0x0
+  ctx.r[27] = ctx.r[10] | 0x0ull;
+  // 8200372C: b 0x82003730
+  goto loc_82003730;
+loc_82003730:
+  // 82003730: addis r7,r0,-10018
+  ctx.r[7] = uint64_t(0) + uint64_t(int64_t(-656539648));
+  // 82003734: mulli r0,r20,61
+  ctx.r[0] = ctx.r[20] * uint64_t(61);
+  // 82003738: ori r9,r7,0xE4FF
+  ctx.r[9] = ctx.r[7] | 0xE4FFull;
+  // 8200373C: rldicl r11,r7,r0
+  ctx.r[7] = fsr::rotl64(ctx.r[11], 0) & 0xFFFFFFFFull;
+  // 82003740: addi r21,r1,152
+  ctx.r[21] = ctx.r[1] + uint64_t(152);
+  // 82003744: rldicl r0,r11,r0
+  ctx.r[11] = fsr::rotl64(ctx.r[0], 0) & 0xFFFFFFFFull;
+  // 82003748: add r0,r28,r5
+  t0 = ctx.r[28]; t1 = ctx.r[5]; ctx.r[0] = t0 + t1;
+  // 8200374C: rldicr r29,r5,r2
+  ctx.r[5] = fsr::rotl64(ctx.r[29], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 82003750: subf r27,r6,r27
+  t0 = ~ctx.r[6]; t1 = ctx.r[27]; ctx.r[27] = t1 + t0 + 1;
+  // 82003754: cmpi r20,r8,r0
+  fsr::set_cr_signed(ctx, 5, int32_t(ctx.r[8]), 1);
+  // 82003758: or_ r7,r24,r7
+  ctx.r[24] = ctx.r[7] | ctx.r[7];
+  // 8200375C: b 0x82003770
+  goto loc_82003770;
+loc_82003760:
+  // 82003760: addi r24,r24,1
+  ctx.r[24] = ctx.r[24] + uint64_t(1);
+  // 82003764: add r0,r0,r5
+  t0 = ctx.r[0]; t1 = ctx.r[5]; ctx.r[0] = t0 + t1;
+  // 82003768: cmpl r1,r24,r11
+  fsr::set_cr_unsigned(ctx, 0, ctx.r[24], ctx.r[11]);
+  // 8200376C: bc 4,0,0x820037CC
+  if (!ctx.crb[0]) goto loc_820037CC;
+loc_82003770:
+  // 82003770: bc 12,20,0x82003760
+  if (ctx.crb[20]) goto loc_82003760;
+  // 82003774: cmp r25,r24,r30
+  fsr::set_cr_signed(ctx, 6, int64_t(ctx.r[24]), int64_t(ctx.r[30]));
+  // 82003778: or_ r0,r23,r0
+  ctx.r[23] = ctx.r[0] | ctx.r[0];
+  // 8200377C: or_ r6,r22,r6
+  ctx.r[22] = ctx.r[6] | ctx.r[6];
+  // 82003780: mtspr r27,r9,r0
+  ctx.ctr = ctx.r[27];
+  // 82003784: b 0x820037AC
+  goto loc_820037AC;
+  // 82003788: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 8200378C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003790: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003794: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003798: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 8200379C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_820037A0:
+  // 820037A0: addi r22,r22,1
+  ctx.r[22] = ctx.r[22] + uint64_t(1);
+  // 820037A4: addi r23,r23,4
+  ctx.r[23] = ctx.r[23] + uint64_t(4);
+  // 820037A8: bc 18,0,0x82003760
+  ctx.ctr--;
+  if (ctx.ctr == 0) goto loc_82003760;
+loc_820037AC:
+  // 820037AC: bc 4,24,0x820037A0
+  if (!ctx.crb[24]) goto loc_820037A0;
+  // 820037B0: cmp r1,r22,r29
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[22]), int64_t(ctx.r[29]));
+  // 820037B4: bc 4,0,0x820037A0
+  if (!ctx.crb[0]) goto loc_820037A0;
+  // 820037B8: or_ r22,r25,r24
+  ctx.r[25] = ctx.r[22] | ctx.r[24];
+  // 820037BC: andis_rc r25,r25,0x8000
+  ctx.r[25] = ctx.r[25] & 0x80000000ull;
+  fsr::set_cr0(ctx, ctx.r[25]);
+  // 820037C0: bc 4,2,0x820037A0
+  if (!ctx.crb[2]) goto loc_820037A0;
+  // 820037C4: stw r9,0(r23)
+  t0 = (ctx.r[23] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[9]));
+  // 820037C8: b 0x820037A0
+  goto loc_820037A0;
+loc_820037CC:
+  // 820037CC: subf r19,r6,r30
+  t0 = ~ctx.r[6]; t1 = ctx.r[30]; ctx.r[19] = t1 + t0 + 1;
+  // 820037D0: rldicl r20,r25,r0
+  ctx.r[25] = fsr::rotl64(ctx.r[20], 0) & 0xFFFFFFFFull;
+  // 820037D4: std r21,104(r1)
+  t0 = (ctx.r[1] + uint64_t(104)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[21]);
+  // 820037D8: extsw r19,r11,r0
+  ctx.r[11] = uint64_t(int64_t(int32_t(ctx.r[19])));
+  // 820037DC: addi r27,r6,1
+  ctx.r[27] = ctx.r[6] + uint64_t(1);
+  // 820037E0: mulld r0,r29,r11
+  ctx.r[0] = ctx.r[29] * ctx.r[11];
+  // 820037E4: mulli r25,r25,48
+  ctx.r[25] = ctx.r[25] * uint64_t(48);
+  // 820037E8: cmp r1,r27,r10
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[27]), int64_t(ctx.r[10]));
+  // 820037EC: add r24,r19,r20
+  t0 = ctx.r[19]; t1 = ctx.r[20]; ctx.r[24] = t0 + t1;
+  // 820037F0: rldicr r0,r23,r2
+  ctx.r[23] = fsr::rotl64(ctx.r[0], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 820037F4: extsw r24,r0,r0
+  ctx.r[0] = uint64_t(int64_t(int32_t(ctx.r[24])));
+  // 820037F8: add r25,r23,r25
+  t0 = ctx.r[23]; t1 = ctx.r[25]; ctx.r[25] = t0 + t1;
+  // 820037FC: bc 12,1,0x82003808
+  if (ctx.crb[1]) goto loc_82003808;
+  // 82003800: ori r24,r10,0x0
+  ctx.r[24] = ctx.r[10] | 0x0ull;
+  // 82003804: b 0x8200380C
+  goto loc_8200380C;
+loc_82003808:
+  // 82003808: addi r24,r27,0
+  ctx.r[24] = ctx.r[27] + uint64_t(0);
+loc_8200380C:
+  // 8200380C: add r10,r28,r25
+  t0 = ctx.r[28]; t1 = ctx.r[25]; ctx.r[10] = t0 + t1;
+  // 82003810: subf r24,r6,r24
+  t0 = ~ctx.r[6]; t1 = ctx.r[24]; ctx.r[24] = t1 + t0 + 1;
+  // 82003814: or_ r11,r23,r11
+  ctx.r[23] = ctx.r[11] | ctx.r[11];
+  // 82003818: b 0x82003830
+  goto loc_82003830;
+  // 8200381C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82003820:
+  // 82003820: addi r23,r23,1
+  ctx.r[23] = ctx.r[23] + uint64_t(1);
+  // 82003824: add r10,r10,r5
+  t0 = ctx.r[10]; t1 = ctx.r[5]; ctx.r[10] = t0 + t1;
+  // 82003828: cmp r1,r23,r0
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[23]), int64_t(ctx.r[0]));
+  // 8200382C: bc 4,0,0x8200388C
+  if (!ctx.crb[0]) goto loc_8200388C;
+loc_82003830:
+  // 82003830: bc 12,20,0x82003820
+  if (ctx.crb[20]) goto loc_82003820;
+  // 82003834: cmp r25,r23,r30
+  fsr::set_cr_signed(ctx, 6, int64_t(ctx.r[23]), int64_t(ctx.r[30]));
+  // 82003838: or_ r10,r22,r10
+  ctx.r[22] = ctx.r[10] | ctx.r[10];
+  // 8200383C: or_ r6,r21,r6
+  ctx.r[21] = ctx.r[6] | ctx.r[6];
+  // 82003840: mtspr r24,r9,r0
+  ctx.ctr = ctx.r[24];
+  // 82003844: b 0x8200386C
+  goto loc_8200386C;
+  // 82003848: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 8200384C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003850: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003854: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003858: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 8200385C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82003860:
+  // 82003860: addi r21,r21,1
+  ctx.r[21] = ctx.r[21] + uint64_t(1);
+  // 82003864: addi r22,r22,4
+  ctx.r[22] = ctx.r[22] + uint64_t(4);
+  // 82003868: bc 18,0,0x82003820
+  ctx.ctr--;
+  if (ctx.ctr == 0) goto loc_82003820;
+loc_8200386C:
+  // 8200386C: bc 4,24,0x82003860
+  if (!ctx.crb[24]) goto loc_82003860;
+  // 82003870: cmp r1,r21,r29
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[21]), int64_t(ctx.r[29]));
+  // 82003874: bc 4,0,0x82003860
+  if (!ctx.crb[0]) goto loc_82003860;
+  // 82003878: or_ r21,r25,r23
+  ctx.r[25] = ctx.r[21] | ctx.r[23];
+  // 8200387C: andis_rc r25,r25,0x8000
+  ctx.r[25] = ctx.r[25] & 0x80000000ull;
+  fsr::set_cr0(ctx, ctx.r[25]);
+  // 82003880: bc 4,2,0x82003860
+  if (!ctx.crb[2]) goto loc_82003860;
+  // 82003884: stw r9,0(r22)
+  t0 = (ctx.r[22] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[9]));
+  // 82003888: b 0x82003860
+  goto loc_82003860;
+loc_8200388C:
+  // 8200388C: subf r10,r7,r19
+  t0 = ~ctx.r[7]; t1 = ctx.r[19]; ctx.r[10] = t1 + t0 + 1;
+  // 82003890: stw r19,120(r1)
+  t0 = (ctx.r[1] + uint64_t(120)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[19]));
+  // 82003894: cmpi r0,r10,r0
+  fsr::set_cr_signed(ctx, 0, int32_t(ctx.r[10]), 1);
+  // 82003898: bc 12,0,0x82003AFC
+  if (ctx.crb[0]) goto loc_82003AFC;
+  // 8200389C: rldicl r20,r0,r0
+  ctx.r[0] = fsr::rotl64(ctx.r[20], 0) & 0xFFFFFFFFull;
+  // 820038A0: mulld r12,r12,r0
+  ctx.r[12] = ctx.r[12] * ctx.r[0];
+  // 820038A4: mulli r0,r20,13
+  ctx.r[0] = ctx.r[20] * uint64_t(13);
+  // 820038A8: rldicl r0,r25,r0
+  ctx.r[25] = fsr::rotl64(ctx.r[0], 0) & 0xFFFFFFFFull;
+  // 820038AC: cmpl r1,r25,r27
+  fsr::set_cr_unsigned(ctx, 0, ctx.r[25], ctx.r[27]);
+  // 820038B0: add r12,r28,r12
+  t0 = ctx.r[28]; t1 = ctx.r[12]; ctx.r[12] = t0 + t1;
+  // 820038B4: bc 12,1,0x820038C0
+  if (ctx.crb[1]) goto loc_820038C0;
+  // 820038B8: ori r0,r27,0x0
+  ctx.r[0] = ctx.r[27] | 0x0ull;
+  // 820038BC: b 0x820038C4
+  goto loc_820038C4;
+loc_820038C0:
+  // 820038C0: addi r0,r25,0
+  ctx.r[0] = ctx.r[25] + uint64_t(0);
+loc_820038C4:
+  // 820038C4: subf r0,r6,r0
+  t0 = ~ctx.r[6]; t1 = ctx.r[0]; ctx.r[0] = t1 + t0 + 1;
+  // 820038C8: or_ r7,r27,r7
+  ctx.r[27] = ctx.r[7] | ctx.r[7];
+  // 820038CC: b 0x820038E0
+  goto loc_820038E0;
+loc_820038D0:
+  // 820038D0: addi r27,r27,1
+  ctx.r[27] = ctx.r[27] + uint64_t(1);
+  // 820038D4: add r12,r12,r5
+  t0 = ctx.r[12]; t1 = ctx.r[5]; ctx.r[12] = t0 + t1;
+  // 820038D8: cmp r1,r27,r11
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[27]), int64_t(ctx.r[11]));
+  // 820038DC: bc 4,0,0x8200392C
+  if (!ctx.crb[0]) goto loc_8200392C;
+loc_820038E0:
+  // 820038E0: cmp r21,r27,r30
+  fsr::set_cr_signed(ctx, 5, int64_t(ctx.r[27]), int64_t(ctx.r[30]));
+  // 820038E4: or_ r12,r24,r12
+  ctx.r[24] = ctx.r[12] | ctx.r[12];
+  // 820038E8: or_ r6,r23,r6
+  ctx.r[23] = ctx.r[6] | ctx.r[6];
+  // 820038EC: mtspr r0,r9,r0
+  ctx.ctr = ctx.r[0];
+  // 820038F0: b 0x8200390C
+  goto loc_8200390C;
+  // 820038F4: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820038F8: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820038FC: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82003900:
+  // 82003900: addi r23,r23,1
+  ctx.r[23] = ctx.r[23] + uint64_t(1);
+  // 82003904: addi r24,r24,4
+  ctx.r[24] = ctx.r[24] + uint64_t(4);
+  // 82003908: bc 18,0,0x820038D0
+  ctx.ctr--;
+  if (ctx.ctr == 0) goto loc_820038D0;
+loc_8200390C:
+  // 8200390C: bc 4,20,0x82003900
+  if (!ctx.crb[20]) goto loc_82003900;
+  // 82003910: cmp r1,r23,r29
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[23]), int64_t(ctx.r[29]));
+  // 82003914: bc 4,0,0x82003900
+  if (!ctx.crb[0]) goto loc_82003900;
+  // 82003918: or_ r23,r25,r27
+  ctx.r[25] = ctx.r[23] | ctx.r[27];
+  // 8200391C: andis_rc r25,r25,0x8000
+  ctx.r[25] = ctx.r[25] & 0x80000000ull;
+  fsr::set_cr0(ctx, ctx.r[25]);
+  // 82003920: bc 4,2,0x82003900
+  if (!ctx.crb[2]) goto loc_82003900;
+  // 82003924: stw r9,0(r24)
+  t0 = (ctx.r[24] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[9]));
+  // 82003928: b 0x82003900
+  goto loc_82003900;
+loc_8200392C:
+  // 8200392C: rldicl r20,r12,r0
+  ctx.r[12] = fsr::rotl64(ctx.r[20], 0) & 0xFFFFFFFFull;
+  // 82003930: mulli r0,r20,-13
+  ctx.r[0] = ctx.r[20] * uint64_t(int64_t(-13));
+  // 82003934: mulld r12,r29,r12
+  ctx.r[12] = ctx.r[29] * ctx.r[12];
+  // 82003938: mulli r27,r12,240
+  ctx.r[27] = ctx.r[12] * uint64_t(240);
+  // 8200393C: add r12,r0,r29
+  t0 = ctx.r[0]; t1 = ctx.r[29]; ctx.r[12] = t0 + t1;
+  // 82003940: add r0,r12,r20
+  t0 = ctx.r[12]; t1 = ctx.r[20]; ctx.r[0] = t0 + t1;
+  // 82003944: extsw r12,r12,r0
+  ctx.r[12] = uint64_t(int64_t(int32_t(ctx.r[12])));
+  // 82003948: extsw r0,r25,r0
+  ctx.r[25] = uint64_t(int64_t(int32_t(ctx.r[0])));
+  // 8200394C: addi r24,r12,1
+  ctx.r[24] = ctx.r[12] + uint64_t(1);
+  // 82003950: rldicr r12,r0,r2
+  ctx.r[0] = fsr::rotl64(ctx.r[12], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 82003954: cmp r1,r24,r25
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[24]), int64_t(ctx.r[25]));
+  // 82003958: add r0,r27,r0
+  t0 = ctx.r[27]; t1 = ctx.r[0]; ctx.r[0] = t0 + t1;
+  // 8200395C: bc 12,1,0x82003968
+  if (ctx.crb[1]) goto loc_82003968;
+  // 82003960: ori r27,r25,0x0
+  ctx.r[27] = ctx.r[25] | 0x0ull;
+  // 82003964: b 0x8200396C
+  goto loc_8200396C;
+loc_82003968:
+  // 82003968: addi r27,r24,0
+  ctx.r[27] = ctx.r[24] + uint64_t(0);
+loc_8200396C:
+  // 8200396C: add r0,r28,r0
+  t0 = ctx.r[28]; t1 = ctx.r[0]; ctx.r[0] = t0 + t1;
+  // 82003970: subf r27,r12,r27
+  t0 = ~ctx.r[12]; t1 = ctx.r[27]; ctx.r[27] = t1 + t0 + 1;
+  // 82003974: or_ r7,r24,r7
+  ctx.r[24] = ctx.r[7] | ctx.r[7];
+  // 82003978: b 0x82003990
+  goto loc_82003990;
+  // 8200397C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82003980:
+  // 82003980: addi r24,r24,1
+  ctx.r[24] = ctx.r[24] + uint64_t(1);
+  // 82003984: add r0,r0,r5
+  t0 = ctx.r[0]; t1 = ctx.r[5]; ctx.r[0] = t0 + t1;
+  // 82003988: cmp r1,r24,r11
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[24]), int64_t(ctx.r[11]));
+  // 8200398C: bc 4,0,0x820039EC
+  if (!ctx.crb[0]) goto loc_820039EC;
+loc_82003990:
+  // 82003990: cmp r21,r24,r30
+  fsr::set_cr_signed(ctx, 5, int64_t(ctx.r[24]), int64_t(ctx.r[30]));
+  // 82003994: or_ r0,r23,r0
+  ctx.r[23] = ctx.r[0] | ctx.r[0];
+  // 82003998: or_ r12,r22,r12
+  ctx.r[22] = ctx.r[12] | ctx.r[12];
+  // 8200399C: mtspr r27,r9,r0
+  ctx.ctr = ctx.r[27];
+  // 820039A0: b 0x820039CC
+  goto loc_820039CC;
+  // 820039A4: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820039A8: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820039AC: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820039B0: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820039B4: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820039B8: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820039BC: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_820039C0:
+  // 820039C0: addi r22,r22,1
+  ctx.r[22] = ctx.r[22] + uint64_t(1);
+  // 820039C4: addi r23,r23,4
+  ctx.r[23] = ctx.r[23] + uint64_t(4);
+  // 820039C8: bc 18,0,0x82003980
+  ctx.ctr--;
+  if (ctx.ctr == 0) goto loc_82003980;
+loc_820039CC:
+  // 820039CC: bc 4,20,0x820039C0
+  if (!ctx.crb[20]) goto loc_820039C0;
+  // 820039D0: cmp r1,r22,r29
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[22]), int64_t(ctx.r[29]));
+  // 820039D4: bc 4,0,0x820039C0
+  if (!ctx.crb[0]) goto loc_820039C0;
+  // 820039D8: or_ r22,r25,r24
+  ctx.r[25] = ctx.r[22] | ctx.r[24];
+  // 820039DC: andis_rc r25,r25,0x8000
+  ctx.r[25] = ctx.r[25] & 0x80000000ull;
+  fsr::set_cr0(ctx, ctx.r[25]);
+  // 820039E0: bc 4,2,0x820039C0
+  if (!ctx.crb[2]) goto loc_820039C0;
+  // 820039E4: stw r9,0(r23)
+  t0 = (ctx.r[23] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[9]));
+  // 820039E8: b 0x820039C0
+  goto loc_820039C0;
+loc_820039EC:
+  // 820039EC: rldicl r20,r12,r0
+  ctx.r[12] = fsr::rotl64(ctx.r[20], 0) & 0xFFFFFFFFull;
+  // 820039F0: mulld r12,r29,r12
+  ctx.r[12] = ctx.r[29] * ctx.r[12];
+  // 820039F4: mulli r0,r12,240
+  ctx.r[0] = ctx.r[12] * uint64_t(240);
+  // 820039F8: srawi r29,r12,r1
+  ctx.r[12] = fsr::ppc_sraw(ctx, ctx.r[29], 1);
+  // 820039FC: addze r12,r12,r0
+  t0 = ctx.r[12]; t1 = 0; ctx.r[12] = fsr::add_carry(ctx, t0, t1, ctx.xer_ca);
+  // 82003A00: add r25,r20,r12
+  t0 = ctx.r[20]; t1 = ctx.r[12]; ctx.r[25] = t0 + t1;
+  // 82003A04: extsw r12,r27,r0
+  ctx.r[27] = uint64_t(int64_t(int32_t(ctx.r[12])));
+  // 82003A08: extsw r25,r25,r0
+  ctx.r[25] = uint64_t(int64_t(int32_t(ctx.r[25])));
+  // 82003A0C: addi r23,r27,1
+  ctx.r[23] = ctx.r[27] + uint64_t(1);
+  // 82003A10: rldicr r27,r24,r2
+  ctx.r[24] = fsr::rotl64(ctx.r[27], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 82003A14: cmp r1,r23,r25
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[23]), int64_t(ctx.r[25]));
+  // 82003A18: add r0,r0,r24
+  t0 = ctx.r[0]; t1 = ctx.r[24]; ctx.r[0] = t0 + t1;
+  // 82003A1C: bc 12,1,0x82003A24
+  if (ctx.crb[1]) goto loc_82003A24;
+  // 82003A20: b 0x82003A28
+  goto loc_82003A28;
+loc_82003A24:
+  // 82003A24: addi r25,r23,0
+  ctx.r[25] = ctx.r[23] + uint64_t(0);
+loc_82003A28:
+  // 82003A28: add r0,r28,r0
+  t0 = ctx.r[28]; t1 = ctx.r[0]; ctx.r[0] = t0 + t1;
+  // 82003A2C: subf r24,r27,r25
+  t0 = ~ctx.r[27]; t1 = ctx.r[25]; ctx.r[24] = t1 + t0 + 1;
+  // 82003A30: or_ r7,r23,r7
+  ctx.r[23] = ctx.r[7] | ctx.r[7];
+  // 82003A34: b 0x82003A50
+  goto loc_82003A50;
+  // 82003A38: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003A3C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82003A40:
+  // 82003A40: addi r23,r23,1
+  ctx.r[23] = ctx.r[23] + uint64_t(1);
+  // 82003A44: add r0,r0,r5
+  t0 = ctx.r[0]; t1 = ctx.r[5]; ctx.r[0] = t0 + t1;
+  // 82003A48: cmp r1,r23,r11
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[23]), int64_t(ctx.r[11]));
+  // 82003A4C: bc 4,0,0x82003B04
+  if (!ctx.crb[0]) goto loc_82003B04;
+loc_82003A50:
+  // 82003A50: cmp r21,r23,r30
+  fsr::set_cr_signed(ctx, 5, int64_t(ctx.r[23]), int64_t(ctx.r[30]));
+  // 82003A54: or_ r0,r22,r0
+  ctx.r[22] = ctx.r[0] | ctx.r[0];
+  // 82003A58: or_ r27,r21,r27
+  ctx.r[21] = ctx.r[27] | ctx.r[27];
+  // 82003A5C: mtspr r24,r9,r0
+  ctx.ctr = ctx.r[24];
+  // 82003A60: b 0x82003A8C
+  goto loc_82003A8C;
+  // 82003A64: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003A68: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003A6C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003A70: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003A74: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003A78: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003A7C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82003A80:
+  // 82003A80: addi r21,r21,1
+  ctx.r[21] = ctx.r[21] + uint64_t(1);
+  // 82003A84: addi r22,r22,4
+  ctx.r[22] = ctx.r[22] + uint64_t(4);
+  // 82003A88: bc 18,0,0x82003A40
+  ctx.ctr--;
+  if (ctx.ctr == 0) goto loc_82003A40;
+loc_82003A8C:
+  // 82003A8C: bc 4,20,0x82003A80
+  if (!ctx.crb[20]) goto loc_82003A80;
+  // 82003A90: cmp r1,r21,r29
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[21]), int64_t(ctx.r[29]));
+  // 82003A94: bc 4,0,0x82003A80
+  if (!ctx.crb[0]) goto loc_82003A80;
+  // 82003A98: or_ r21,r25,r23
+  ctx.r[25] = ctx.r[21] | ctx.r[23];
+  // 82003A9C: andis_rc r25,r25,0x8000
+  ctx.r[25] = ctx.r[25] & 0x80000000ull;
+  fsr::set_cr0(ctx, ctx.r[25]);
+  // 82003AA0: bc 4,2,0x82003A80
+  if (!ctx.crb[2]) goto loc_82003A80;
+  // 82003AA4: stw r9,0(r22)
+  t0 = (ctx.r[22] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[9]));
+  // 82003AA8: b 0x82003A80
+  goto loc_82003A80;
+loc_82003AAC:
+  // 82003AAC: addi r4,r0,0
+  ctx.r[4] = uint64_t(0) + uint64_t(0);
+  // 82003AB0: stw r4,-29884(r2)
+  t0 = (ctx.r[2] + uint64_t(int64_t(-29884))); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[4]));
+  // 82003AB4: addi r4,r0,0
+  ctx.r[4] = uint64_t(0) + uint64_t(0);
+  // 82003AB8: andis_rc r7,r3,0xFFFF
+  ctx.r[7] = ctx.r[3] & 0xFFFF0000ull;
+  fsr::set_cr0(ctx, ctx.r[7]);
+  // 82003ABC: bc 12,2,0x8200352C
+  if (ctx.crb[2]) goto loc_8200352C;
+loc_82003AC0:
+  // 82003AC0: addis r3,r0,0
+  ctx.r[3] = uint64_t(0) + uint64_t(0);
+  // 82003AC4: addi r7,r0,0
+  ctx.r[7] = uint64_t(0) + uint64_t(0);
+  // 82003AC8: ori r7,r7,0xFFFF
+  ctx.r[7] = ctx.r[7] | 0xFFFFull;
+  // 82003ACC: ori r3,r3,0xFFFF
+  ctx.r[3] = ctx.r[3] | 0xFFFFull;
+  // 82003AD0: stw r7,-29888(r2)
+  t0 = (ctx.r[2] + uint64_t(int64_t(-29888))); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[7]));
+  // 82003AD4: andis_rc r6,r4,0xFFFF
+  ctx.r[6] = ctx.r[4] & 0xFFFF0000ull;
+  fsr::set_cr0(ctx, ctx.r[6]);
+  // 82003AD8: bc 12,2,0x82003534
+  if (ctx.crb[2]) goto loc_82003534;
+loc_82003ADC:
+  // 82003ADC: addis r4,r0,0
+  ctx.r[4] = uint64_t(0) + uint64_t(0);
+  // 82003AE0: addi r6,r0,0
+  ctx.r[6] = uint64_t(0) + uint64_t(0);
+  // 82003AE4: ori r6,r6,0xFFFF
+  ctx.r[6] = ctx.r[6] | 0xFFFFull;
+  // 82003AE8: ori r4,r4,0xFFFF
+  ctx.r[4] = ctx.r[4] | 0xFFFFull;
+  // 82003AEC: stw r6,-29884(r2)
+  t0 = (ctx.r[2] + uint64_t(int64_t(-29884))); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[6]));
+  // 82003AF0: cmpli r0,r26,r2
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[26]), 4096u);
+  // 82003AF4: bc 4,0,0x8200353C
+  if (!ctx.crb[0]) goto loc_8200353C;
+  // 82003AF8: b 0x8200359C
+  goto loc_8200359C;
+loc_82003AFC:
+  // 82003AFC: srawi r29,r11,r1
+  ctx.r[11] = fsr::ppc_sraw(ctx, ctx.r[29], 1);
+  // 82003B00: addze r12,r11,r0
+  t0 = ctx.r[11]; t1 = 0; ctx.r[12] = fsr::add_carry(ctx, t0, t1, ctx.xer_ca);
+loc_82003B04:
+  // 82003B04: cmpi r0,r10,r31
+  fsr::set_cr_signed(ctx, 0, int32_t(ctx.r[10]), -4);
+  // 82003B08: bc 4,0,0x82003E40
+  if (!ctx.crb[0]) goto loc_82003E40;
+loc_82003B0C:
+  // 82003B0C: addis r11,r0,-30584
+  ctx.r[11] = uint64_t(0) + uint64_t(int64_t(-2004353024));
+  // 82003B10: add r9,r14,r15
+  t0 = ctx.r[14]; t1 = ctx.r[15]; ctx.r[9] = t0 + t1;
+  // 82003B14: addis r12,r0,-30447
+  ctx.r[12] = uint64_t(0) + uint64_t(int64_t(-1995374592));
+  // 82003B18: ori r11,r11,0x8889
+  ctx.r[11] = ctx.r[11] | 0x8889ull;
+  // 82003B1C: mullw r9,r9,r30
+  ctx.r[9] = uint64_t(int64_t(int32_t(ctx.r[9])) * int64_t(int32_t(ctx.r[30])));
+  // 82003B20: ori r12,r12,0x9A23
+  ctx.r[12] = ctx.r[12] | 0x9A23ull;
+  // 82003B24: mulhw r11,r30,r11
+  ctx.r[11] = uint64_t(int64_t(int32_t((int64_t(int32_t(ctx.r[30])) * int64_t(int32_t(ctx.r[11]))) >> 32)));
+  // 82003B28: mulhw r12,r9,r12
+  ctx.r[12] = uint64_t(int64_t(int32_t((int64_t(int32_t(ctx.r[9])) * int64_t(int32_t(ctx.r[12]))) >> 32)));
+  // 82003B2C: add r11,r11,r30
+  t0 = ctx.r[11]; t1 = ctx.r[30]; ctx.r[11] = t0 + t1;
+  // 82003B30: add r9,r12,r9
+  t0 = ctx.r[12]; t1 = ctx.r[9]; ctx.r[9] = t0 + t1;
+  // 82003B34: rlwinm r12,r11,1,31,31
+  ctx.r[12] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[11]), 1)) & 0x1ull;
+  // 82003B38: srawi r11,r11,r4
+  ctx.r[11] = fsr::ppc_sraw(ctx, ctx.r[11], 4);
+  // 82003B3C: add r11,r11,r12
+  t0 = ctx.r[11]; t1 = ctx.r[12]; ctx.r[11] = t0 + t1;
+  // 82003B40: rlwinm r12,r9,1,31,31
+  ctx.r[12] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[9]), 1)) & 0x1ull;
+  // 82003B44: srawi r9,r9,r12
+  ctx.r[9] = fsr::ppc_sraw(ctx, ctx.r[9], 12);
+  // 82003B48: add r12,r9,r12
+  t0 = ctx.r[9]; t1 = ctx.r[12]; ctx.r[12] = t0 + t1;
+  // 82003B4C: add r9,r12,r11
+  t0 = ctx.r[12]; t1 = ctx.r[11]; ctx.r[9] = t0 + t1;
+  // 82003B50: cmpi r0,r9,r0
+  fsr::set_cr_signed(ctx, 0, int32_t(ctx.r[9]), 0);
+  // 82003B54: bc 12,0,0x82003CCC
+  if (ctx.crb[0]) goto loc_82003CCC;
+  // 82003B58: rldicl r4,r4,r0
+  ctx.r[4] = fsr::rotl64(ctx.r[4], 0) & 0xFFFFFFFFull;
+  // 82003B5C: extsw r10,r10,r0
+  ctx.r[10] = uint64_t(int64_t(int32_t(ctx.r[10])));
+  // 82003B60: rldicl r3,r3,r0
+  ctx.r[3] = fsr::rotl64(ctx.r[3], 0) & 0xFFFFFFFFull;
+  // 82003B64: extsw r8,r8,r0
+  ctx.r[8] = uint64_t(int64_t(int32_t(ctx.r[8])));
+  // 82003B68: mulld r4,r4,r10
+  ctx.r[4] = ctx.r[4] * ctx.r[10];
+  // 82003B6C: mulld r10,r3,r8
+  ctx.r[10] = ctx.r[3] * ctx.r[8];
+  // 82003B70: extsw r12,r3,r0
+  ctx.r[3] = uint64_t(int64_t(int32_t(ctx.r[12])));
+  // 82003B74: extsw r11,r8,r0
+  ctx.r[8] = uint64_t(int64_t(int32_t(ctx.r[11])));
+  // 82003B78: add r0,r3,r8
+  t0 = ctx.r[3]; t1 = ctx.r[8]; ctx.r[0] = t0 + t1;
+  // 82003B7C: sradi r4,r3,r16
+  ctx.r[3] = fsr::ppc_srad(ctx, ctx.r[4], 16);
+  // 82003B80: addze r3,r3,r0
+  t0 = ctx.r[3]; t1 = 0; ctx.r[3] = fsr::add_carry(ctx, t0, t1, ctx.xer_ca);
+  // 82003B84: neg r11,r9,r0
+  t0 = ctx.r[9]; ctx.r[11] = uint64_t(0) - t0;
+  // 82003B88: add r3,r7,r3
+  t0 = ctx.r[7]; t1 = ctx.r[3]; ctx.r[3] = t0 + t1;
+  // 82003B8C: sradi r10,r24,r16
+  ctx.r[24] = fsr::ppc_srad(ctx, ctx.r[10], 16);
+  // 82003B90: extsw r3,r3,r0
+  ctx.r[3] = uint64_t(int64_t(int32_t(ctx.r[3])));
+  // 82003B94: addze r24,r24,r0
+  t0 = ctx.r[24]; t1 = 0; ctx.r[24] = fsr::add_carry(ctx, t0, t1, ctx.xer_ca);
+  // 82003B98: subf r4,r0,r3
+  t0 = ~ctx.r[0]; t1 = ctx.r[3]; ctx.r[4] = t1 + t0 + 1;
+  // 82003B9C: add r6,r6,r24
+  t0 = ctx.r[6]; t1 = ctx.r[24]; ctx.r[6] = t0 + t1;
+  // 82003BA0: mulld r12,r29,r4
+  ctx.r[12] = ctx.r[29] * ctx.r[4];
+  // 82003BA4: extsw r6,r24,r0
+  ctx.r[24] = uint64_t(int64_t(int32_t(ctx.r[6])));
+  // 82003BA8: addi r27,r9,1
+  ctx.r[27] = ctx.r[9] + uint64_t(1);
+  // 82003BAC: rldicr r12,r6,r2
+  ctx.r[6] = fsr::rotl64(ctx.r[12], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 82003BB0: rldicr r24,r12,r2
+  ctx.r[12] = fsr::rotl64(ctx.r[24], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 82003BB4: extsw r11,r10,r0
+  ctx.r[10] = uint64_t(int64_t(int32_t(ctx.r[11])));
+  // 82003BB8: rldicl r27,r11,r0
+  ctx.r[11] = fsr::rotl64(ctx.r[27], 0) & 0xFFFFFFFFull;
+  // 82003BBC: rldicr r0,r27,r2
+  ctx.r[27] = fsr::rotl64(ctx.r[0], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 82003BC0: add r12,r6,r12
+  t0 = ctx.r[6]; t1 = ctx.r[12]; ctx.r[12] = t0 + t1;
+  // 82003BC4: subf r27,r27,r12
+  t0 = ~ctx.r[27]; t1 = ctx.r[12]; ctx.r[27] = t1 + t0 + 1;
+  // 82003BC8: add r16,r28,r27
+  t0 = ctx.r[28]; t1 = ctx.r[27]; ctx.r[16] = t0 + t1;
+  // 82003BCC: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003BD0: nor r20,r7,r20
+  ctx.r[7] = ~(ctx.r[20] | ctx.r[20]);
+  // 82003BD4: neg r6,r0,r0
+  t0 = ctx.r[0]; ctx.r[6] = uint64_t(0) - t0;
+  // 82003BD8: add r12,r0,r11
+  t0 = ctx.r[0]; t1 = ctx.r[11]; ctx.r[12] = t0 + t1;
+  // 82003BDC: subf r0,r0,r24
+  t0 = ~ctx.r[0]; t1 = ctx.r[24]; ctx.r[0] = t1 + t0 + 1;
+  // 82003BE0: lwz r24,-29880(r2)
+  t0 = (ctx.r[2] + uint64_t(int64_t(-29880))); ea = uint32_t(t0);
+  ctx.r[24] = fsr::ld32(base, ea);
+  // 82003BE4: add r7,r9,r7
+  t0 = ctx.r[9]; t1 = ctx.r[7]; ctx.r[7] = t0 + t1;
+  // 82003BE8: rlwinm r8,r9,31,1,31
+  ctx.r[8] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[9]), 31)) & 0x7FFFFFFFull;
+  // 82003BEC: addis r25,r0,4112
+  ctx.r[25] = uint64_t(0) + uint64_t(269484032);
+  // 82003BF0: addis r22,r0,-2828
+  ctx.r[22] = uint64_t(0) + uint64_t(int64_t(-185335808));
+  // 82003BF4: mullw r4,r9,r9
+  ctx.r[4] = uint64_t(int64_t(int32_t(ctx.r[9])) * int64_t(int32_t(ctx.r[9])));
+  // 82003BF8: mullw r7,r7,r7
+  ctx.r[7] = uint64_t(int64_t(int32_t(ctx.r[7])) * int64_t(int32_t(ctx.r[7])));
+  // 82003BFC: addi r8,r8,1
+  ctx.r[8] = ctx.r[8] + uint64_t(1);
+  // 82003C00: ori r23,r25,0x10FF
+  ctx.r[23] = ctx.r[25] | 0x10FFull;
+  // 82003C04: ori r31,r22,0xF4FF
+  ctx.r[31] = ctx.r[22] | 0xF4FFull;
+  // 82003C08: b 0x82003C20
+  goto loc_82003C20;
+  // 82003C0C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82003C10:
+  // 82003C10: addi r10,r10,1
+  ctx.r[10] = ctx.r[10] + uint64_t(1);
+  // 82003C14: add r16,r16,r5
+  t0 = ctx.r[16]; t1 = ctx.r[5]; ctx.r[16] = t0 + t1;
+  // 82003C18: cmpl r1,r10,r11
+  fsr::set_cr_unsigned(ctx, 0, ctx.r[10], ctx.r[11]);
+  // 82003C1C: bc 12,2,0x82003CCC
+  if (ctx.crb[2]) goto loc_82003CCC;
+loc_82003C20:
+  // 82003C20: add r19,r10,r3
+  t0 = ctx.r[10]; t1 = ctx.r[3]; ctx.r[19] = t0 + t1;
+  // 82003C24: add r27,r9,r10
+  t0 = ctx.r[9]; t1 = ctx.r[10]; ctx.r[27] = t0 + t1;
+  // 82003C28: mulld r21,r10,r10
+  ctx.r[21] = ctx.r[10] * ctx.r[10];
+  // 82003C2C: addi r17,r0,0
+  ctx.r[17] = uint64_t(0) + uint64_t(0);
+  // 82003C30: divw r18,r27,r8
+  ctx.r[18] = fsr::divw_s(ctx.r[27], ctx.r[8]);
+  // 82003C34: cmp r21,r19,r30
+  fsr::set_cr_signed(ctx, 5, int64_t(ctx.r[19]), int64_t(ctx.r[30]));
+  // 82003C38: or_ r16,r27,r16
+  ctx.r[27] = ctx.r[16] | ctx.r[16];
+  // 82003C3C: mtspr r12,r9,r0
+  ctx.ctr = ctx.r[12];
+  // 82003C40: b 0x82003C6C
+  goto loc_82003C6C;
+  // 82003C44: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003C48: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003C4C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003C50: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003C54: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003C58: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003C5C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82003C60:
+  // 82003C60: addi r17,r17,1
+  ctx.r[17] = ctx.r[17] + uint64_t(1);
+  // 82003C64: addi r27,r27,4
+  ctx.r[27] = ctx.r[27] + uint64_t(4);
+  // 82003C68: bc 18,0,0x82003C10
+  ctx.ctr--;
+  if (ctx.ctr == 0) goto loc_82003C10;
+loc_82003C6C:
+  // 82003C6C: add r25,r6,r17
+  t0 = ctx.r[6]; t1 = ctx.r[17]; ctx.r[25] = t0 + t1;
+  // 82003C70: mulld r25,r25,r25
+  ctx.r[25] = ctx.r[25] * ctx.r[25];
+  // 82003C74: add r25,r25,r21
+  t0 = ctx.r[25]; t1 = ctx.r[21]; ctx.r[25] = t0 + t1;
+  // 82003C78: cmpl r0,r4,r25
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[4]), uint32_t(ctx.r[25]));
+  // 82003C7C: bc 12,0,0x82003C60
+  if (ctx.crb[0]) goto loc_82003C60;
+  // 82003C80: cmpl r0,r7,r25
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[7]), uint32_t(ctx.r[25]));
+  // 82003C84: or_ r23,r22,r23
+  ctx.r[22] = ctx.r[23] | ctx.r[23];
+  // 82003C88: bc 4,1,0x82003CA8
+  if (!ctx.crb[1]) goto loc_82003CA8;
+  // 82003C8C: divw r25,r17,r8
+  ctx.r[25] = fsr::divw_s(ctx.r[17], ctx.r[8]);
+  // 82003C90: add r25,r18,r25
+  t0 = ctx.r[18]; t1 = ctx.r[25]; ctx.r[25] = t0 + t1;
+  // 82003C94: andi_rc r25,r25,0x1
+  ctx.r[25] = ctx.r[25] & 0x1ull;
+  fsr::set_cr0(ctx, ctx.r[25]);
+  // 82003C98: bc 12,2,0x82003CA4
+  if (ctx.crb[2]) goto loc_82003CA4;
+  // 82003C9C: ori r22,r24,0x0
+  ctx.r[22] = ctx.r[24] | 0x0ull;
+  // 82003CA0: b 0x82003CA8
+  goto loc_82003CA8;
+loc_82003CA4:
+  // 82003CA4: addi r22,r31,0
+  ctx.r[22] = ctx.r[31] + uint64_t(0);
+loc_82003CA8:
+  // 82003CA8: bc 4,20,0x82003C60
+  if (!ctx.crb[20]) goto loc_82003C60;
+  // 82003CAC: add r25,r0,r17
+  t0 = ctx.r[0]; t1 = ctx.r[17]; ctx.r[25] = t0 + t1;
+  // 82003CB0: cmp r1,r25,r29
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[25]), int64_t(ctx.r[29]));
+  // 82003CB4: bc 4,0,0x82003C60
+  if (!ctx.crb[0]) goto loc_82003C60;
+  // 82003CB8: or_ r25,r25,r19
+  ctx.r[25] = ctx.r[25] | ctx.r[19];
+  // 82003CBC: andis_rc r25,r25,0x8000
+  ctx.r[25] = ctx.r[25] & 0x80000000ull;
+  fsr::set_cr0(ctx, ctx.r[25]);
+  // 82003CC0: bc 4,2,0x82003C60
+  if (!ctx.crb[2]) goto loc_82003C60;
+  // 82003CC4: stw r22,0(r27)
+  t0 = (ctx.r[27] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[22]));
+  // 82003CC8: b 0x82003C60
+  goto loc_82003C60;
+loc_82003CCC:
+  // 82003CCC: ld r25,144(r1)
+  t0 = (ctx.r[1] + uint64_t(144)); ea = uint32_t(t0);
+  ctx.r[25] = fsr::ld64(base, ea);
+  // 82003CD0: mulli r6,r20,58
+  ctx.r[6] = ctx.r[20] * uint64_t(58);
+  // 82003CD4: addis r8,r0,2575
+  ctx.r[8] = uint64_t(0) + uint64_t(168755200);
+  // 82003CD8: mulli r3,r20,6
+  ctx.r[3] = ctx.r[20] * uint64_t(6);
+  // 82003CDC: ld r21,104(r1)
+  t0 = (ctx.r[1] + uint64_t(104)); ea = uint32_t(t0);
+  ctx.r[21] = fsr::ld64(base, ea);
+  // 82003CE0: rlwinm r4,r20,3,0,28
+  ctx.r[4] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[20]), 3)) & 0xFFFFFFF8ull;
+  // 82003CE4: rldicl r6,r6,r0
+  ctx.r[6] = fsr::rotl64(ctx.r[6], 0) & 0xFFFFFFFFull;
+  // 82003CE8: addi r7,r0,0
+  ctx.r[7] = uint64_t(0) + uint64_t(0);
+  // 82003CEC: ori r8,r8,0x18FF
+  ctx.r[8] = ctx.r[8] | 0x18FFull;
+  // 82003CF0: or_ r28,r9,r28
+  ctx.r[9] = ctx.r[28] | ctx.r[28];
+  // 82003CF4: b 0x82003D10
+  goto loc_82003D10;
+  // 82003CF8: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003CFC: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82003D00:
+  // 82003D00: addi r7,r7,1
+  ctx.r[7] = ctx.r[7] + uint64_t(1);
+  // 82003D04: add r9,r9,r5
+  t0 = ctx.r[9]; t1 = ctx.r[5]; ctx.r[9] = t0 + t1;
+  // 82003D08: cmpl r1,r7,r6
+  fsr::set_cr_unsigned(ctx, 0, ctx.r[7], ctx.r[6]);
+  // 82003D0C: bc 12,2,0x82003D64
+  if (ctx.crb[2]) goto loc_82003D64;
+loc_82003D10:
+  // 82003D10: bc 12,4,0x82003D00
+  if (ctx.crb[4]) goto loc_82003D00;
+  // 82003D14: addi r10,r0,0
+  ctx.r[10] = uint64_t(0) + uint64_t(0);
+  // 82003D18: cmp r21,r7,r30
+  fsr::set_cr_signed(ctx, 5, int64_t(ctx.r[7]), int64_t(ctx.r[30]));
+  // 82003D1C: or_ r9,r11,r9
+  ctx.r[11] = ctx.r[9] | ctx.r[9];
+  // 82003D20: mtspr r29,r9,r0
+  ctx.ctr = ctx.r[29];
+  // 82003D24: b 0x82003D4C
+  goto loc_82003D4C;
+  // 82003D28: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003D2C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003D30: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003D34: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003D38: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003D3C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82003D40:
+  // 82003D40: addi r10,r10,1
+  ctx.r[10] = ctx.r[10] + uint64_t(1);
+  // 82003D44: addi r11,r11,4
+  ctx.r[11] = ctx.r[11] + uint64_t(4);
+  // 82003D48: bc 18,0,0x82003D00
+  ctx.ctr--;
+  if (ctx.ctr == 0) goto loc_82003D00;
+loc_82003D4C:
+  // 82003D4C: bc 4,20,0x82003D40
+  if (!ctx.crb[20]) goto loc_82003D40;
+  // 82003D50: or_ r10,r12,r7
+  ctx.r[12] = ctx.r[10] | ctx.r[7];
+  // 82003D54: andis_rc r12,r12,0x8000
+  ctx.r[12] = ctx.r[12] & 0x80000000ull;
+  fsr::set_cr0(ctx, ctx.r[12]);
+  // 82003D58: bc 4,2,0x82003D40
+  if (!ctx.crb[2]) goto loc_82003D40;
+  // 82003D5C: stw r8,0(r11)
+  t0 = (ctx.r[11] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[8]));
+  // 82003D60: b 0x82003D40
+  goto loc_82003D40;
+loc_82003D64:
+  // 82003D64: addis r5,r2,-1
+  ctx.r[5] = ctx.r[2] + uint64_t(int64_t(-65536));
+  // 82003D68: extsw r4,r23,r0
+  ctx.r[23] = uint64_t(int64_t(int32_t(ctx.r[4])));
+  // 82003D6C: extsw r3,r7,r0
+  ctx.r[7] = uint64_t(int64_t(int32_t(ctx.r[3])));
+  // 82003D70: addi r31,r5,32400
+  ctx.r[31] = ctx.r[5] + uint64_t(32400);
+  // 82003D74: addi r3,r0,-11702
+  ctx.r[3] = uint64_t(0) + uint64_t(int64_t(-11702));
+  // 82003D78: extsw r20,r24,r0
+  ctx.r[24] = uint64_t(int64_t(int32_t(ctx.r[20])));
+  // 82003D7C: addi r9,r31,177
+  ctx.r[9] = ctx.r[31] + uint64_t(177);
+  // 82003D80: rldicl r3,r10,r8
+  ctx.r[10] = fsr::rotl64(ctx.r[3], 8) & 0xFFFFFFFFull;
+  // 82003D84: or_ r28,r3,r28
+  ctx.r[3] = ctx.r[28] | ctx.r[28];
+  // 82003D88: or_ r29,r4,r29
+  ctx.r[4] = ctx.r[29] | ctx.r[29];
+  // 82003D8C: or_ r30,r5,r30
+  ctx.r[5] = ctx.r[30] | ctx.r[30];
+  // 82003D90: or_ r23,r6,r23
+  ctx.r[6] = ctx.r[23] | ctx.r[23];
+  // 82003D94: or_ r24,r8,r24
+  ctx.r[8] = ctx.r[24] | ctx.r[24];
+  // 82003D98: bl 0x82004658
+  ctx.lr = 0x82003D9C;
+  sub_82004658(ctx, base);
+  // 82003D9C: addis r4,r0,-5907
+  ctx.r[4] = uint64_t(0) + uint64_t(int64_t(-387121152));
+  // 82003DA0: mulli r3,r20,15
+  ctx.r[3] = ctx.r[20] * uint64_t(15);
+  // 82003DA4: ori r4,r4,0xF5FF
+  ctx.r[4] = ctx.r[4] | 0xF5FFull;
+  // 82003DA8: addi r9,r31,130
+  ctx.r[9] = ctx.r[31] + uint64_t(130);
+  // 82003DAC: extsw r3,r7,r0
+  ctx.r[7] = uint64_t(int64_t(int32_t(ctx.r[3])));
+  // 82003DB0: rldic r4,r10,r0
+  ctx.r[10] = fsr::rotl64(ctx.r[4], 0) & 0xFFFFFFFFull;
+  // 82003DB4: or_ r28,r3,r28
+  ctx.r[3] = ctx.r[28] | ctx.r[28];
+  // 82003DB8: or_ r29,r4,r29
+  ctx.r[4] = ctx.r[29] | ctx.r[29];
+  // 82003DBC: or_ r30,r5,r30
+  ctx.r[5] = ctx.r[30] | ctx.r[30];
+  // 82003DC0: or_ r23,r6,r23
+  ctx.r[6] = ctx.r[23] | ctx.r[23];
+  // 82003DC4: or_ r24,r8,r24
+  ctx.r[8] = ctx.r[24] | ctx.r[24];
+  // 82003DC8: bl 0x82004658
+  ctx.lr = 0x82003DCC;
+  sub_82004658(ctx, base);
+  // 82003DCC: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003DD0: addis r3,r0,17481
+  ctx.r[3] = uint64_t(0) + uint64_t(1145634816);
+  // 82003DD4: addi r27,r0,0
+  ctx.r[27] = uint64_t(0) + uint64_t(0);
+  // 82003DD8: lbz r4,-29743(r2)
+  t0 = (ctx.r[2] + uint64_t(int64_t(-29743))); ea = uint32_t(t0);
+  ctx.r[4] = fsr::ld8(base, ea);
+  // 82003DDC: ori r3,r3,0x5343
+  ctx.r[3] = ctx.r[3] | 0x5343ull;
+  // 82003DE0: addi r5,r1,158
+  ctx.r[5] = ctx.r[1] + uint64_t(158);
+  // 82003DE4: stw r3,152(r1)
+  t0 = (ctx.r[1] + uint64_t(152)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
+  // 82003DE8: addi r3,r0,14880
+  ctx.r[3] = uint64_t(0) + uint64_t(14880);
+  // 82003DEC: cmpli r0,r4,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[4]), 0u);
+  // 82003DF0: sth r3,156(r1)
+  t0 = (ctx.r[1] + uint64_t(156)); ea = uint32_t(t0);
+  fsr::st16(base, ea, uint16_t(ctx.r[3]));
+  // 82003DF4: mulli r3,r20,24
+  ctx.r[3] = ctx.r[20] * uint64_t(24);
+  // 82003DF8: stb r27,158(r1)
+  t0 = (ctx.r[1] + uint64_t(158)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[27]));
+  // 82003DFC: bc 12,2,0x82003F48
+  if (ctx.crb[2]) goto loc_82003F48;
+  // 82003E00: lwz r22,120(r1)
+  t0 = (ctx.r[1] + uint64_t(120)); ea = uint32_t(t0);
+  ctx.r[22] = fsr::ld32(base, ea);
+  // 82003E04: addi r6,r2,-29743
+  ctx.r[6] = ctx.r[2] + uint64_t(int64_t(-29743));
+  // 82003E08: addi r6,r6,1
+  ctx.r[6] = ctx.r[6] + uint64_t(1);
+  // 82003E0C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003E10: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
   // 82003E14: ori r0,r0,0x0
   ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003E18: stw r3,32(r30)
-  t0 = (ctx.r[30] + uint64_t(32)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[3]));
-  // 82003E1C: addis r3,r0,12
-  ctx.r[3] = uint64_t(0) + uint64_t(786432);
-  // 82003E20: addi r5,r1,180
-  ctx.r[5] = ctx.r[1] + uint64_t(180);
-  // 82003E24: ori r3,r3,0xD
-  ctx.r[3] = ctx.r[3] | 0xDull;
-  // 82003E28: or_ r28,r4,r28
-  ctx.r[4] = ctx.r[28] | ctx.r[28];
-  // 82003E2C: stw r3,192(r1)
-  t0 = (ctx.r[1] + uint64_t(192)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[3]));
-  // 82003E30: or_ r29,r3,r29
-  ctx.r[3] = ctx.r[29] | ctx.r[29];
-  // 82003E34: or_ r27,r6,r27
-  ctx.r[6] = ctx.r[27] | ctx.r[27];
-  // 82003E38: addi r7,r0,32
-  ctx.r[7] = uint64_t(0) + uint64_t(32);
-  // 82003E3C: stw r26,196(r1)
-  t0 = (ctx.r[1] + uint64_t(196)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[26]));
-  // 82003E40: stw r25,180(r1)
-  t0 = (ctx.r[1] + uint64_t(180)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[25]));
-  // 82003E44: stw r23,184(r1)
-  t0 = (ctx.r[1] + uint64_t(184)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[23]));
-  // 82003E48: stw r24,188(r1)
-  t0 = (ctx.r[1] + uint64_t(188)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[24]));
-  // 82003E4C: bl 0x82001020
-  ctx.lr = 0x82003E50;
-  sub_82001020(ctx, base);
-  // 82003E50: ori r0,r0,0x0
+  // 82003E18: ori r0,r0,0x0
   ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003E54: or_ r3,r4,r3
-  ctx.r[4] = ctx.r[3] | ctx.r[3];
-  // 82003E58: addi r3,r0,0
-  ctx.r[3] = uint64_t(0) + uint64_t(0);
-  // 82003E5C: stw r4,40(r30)
-  t0 = (ctx.r[30] + uint64_t(40)); ea = uint32_t(t0);
-  fsr::st32(base, ea, uint32_t(ctx.r[4]));
-loc_82003E60:
-  // 82003E60: addi r1,r1,288
-  ctx.r[1] = ctx.r[1] + uint64_t(288);
-  // 82003E64: ld r0,16(r1)
-  t0 = (ctx.r[1] + uint64_t(16)); ea = uint32_t(t0);
-  ctx.r[0] = fsr::ld64(base, ea);
-  // 82003E68: mtspr r0,r8,r0
-  ctx.lr = ctx.r[0];
-  // 82003E6C: ld r30,-16(r1)
-  t0 = (ctx.r[1] + uint64_t(int64_t(-16))); ea = uint32_t(t0);
-  ctx.r[30] = fsr::ld64(base, ea);
-  // 82003E70: ld r29,-24(r1)
-  t0 = (ctx.r[1] + uint64_t(int64_t(-24))); ea = uint32_t(t0);
-  ctx.r[29] = fsr::ld64(base, ea);
-  // 82003E74: ld r28,-32(r1)
-  t0 = (ctx.r[1] + uint64_t(int64_t(-32))); ea = uint32_t(t0);
-  ctx.r[28] = fsr::ld64(base, ea);
-  // 82003E78: ld r27,-40(r1)
-  t0 = (ctx.r[1] + uint64_t(int64_t(-40))); ea = uint32_t(t0);
-  ctx.r[27] = fsr::ld64(base, ea);
-  // 82003E7C: ld r26,-48(r1)
-  t0 = (ctx.r[1] + uint64_t(int64_t(-48))); ea = uint32_t(t0);
-  ctx.r[26] = fsr::ld64(base, ea);
-  // 82003E80: ld r25,-56(r1)
-  t0 = (ctx.r[1] + uint64_t(int64_t(-56))); ea = uint32_t(t0);
-  ctx.r[25] = fsr::ld64(base, ea);
-  // 82003E84: ld r24,-64(r1)
-  t0 = (ctx.r[1] + uint64_t(int64_t(-64))); ea = uint32_t(t0);
-  ctx.r[24] = fsr::ld64(base, ea);
-  // 82003E88: ld r23,-72(r1)
-  t0 = (ctx.r[1] + uint64_t(int64_t(-72))); ea = uint32_t(t0);
-  ctx.r[23] = fsr::ld64(base, ea);
-  // 82003E8C: ld r22,-80(r1)
-  t0 = (ctx.r[1] + uint64_t(int64_t(-80))); ea = uint32_t(t0);
-  ctx.r[22] = fsr::ld64(base, ea);
-  // 82003E90: ld r21,-88(r1)
-  t0 = (ctx.r[1] + uint64_t(int64_t(-88))); ea = uint32_t(t0);
-  ctx.r[21] = fsr::ld64(base, ea);
-  // 82003E94: bclr r20,r0,r0
-  if (true) return;
-loc_82003E98:
-  // 82003E98: addis r3,r0,-4680
-  ctx.r[3] = uint64_t(0) + uint64_t(int64_t(-306708480));
-  // 82003E9C: addi r23,r1,160
-  ctx.r[23] = ctx.r[1] + uint64_t(160);
-  // 82003EA0: addi r28,r1,172
-  ctx.r[28] = ctx.r[1] + uint64_t(172);
-  // 82003EA4: ori r22,r3,0x8320
-  ctx.r[22] = ctx.r[3] | 0x8320ull;
-  // 82003EA8: addi r27,r1,161
-  ctx.r[27] = ctx.r[1] + uint64_t(161);
-  // 82003EAC: b 0x82003EE4
-  goto loc_82003EE4;
-loc_82003EB0:
-  // 82003EB0: add r24,r3,r24
-  t0 = ctx.r[3]; t1 = ctx.r[24]; ctx.r[24] = t0 + t1;
-  // 82003EB4: lwz r3,168(r1)
-  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
-  ctx.r[3] = fsr::ld32(base, ea);
-  // 82003EB8: addi r4,r0,0
-  ctx.r[4] = uint64_t(0) + uint64_t(0);
-  // 82003EBC: addi r5,r0,0
-  ctx.r[5] = uint64_t(0) + uint64_t(0);
-  // 82003EC0: addi r6,r0,0
-  ctx.r[6] = uint64_t(0) + uint64_t(0);
-  // 82003EC4: or_ r28,r7,r28
-  ctx.r[7] = ctx.r[28] | ctx.r[28];
-  // 82003EC8: or_ r27,r8,r27
-  ctx.r[8] = ctx.r[27] | ctx.r[27];
-  // 82003ECC: addi r9,r0,7
-  ctx.r[9] = uint64_t(0) + uint64_t(7);
-  // 82003ED0: addi r10,r0,0
-  ctx.r[10] = uint64_t(0) + uint64_t(0);
-  // 82003ED4: bl 0x82001030
-  ctx.lr = 0x82003ED8;
-  sub_82001030(ctx, base);
-  // 82003ED8: ori r0,r0,0x0
+  // 82003E1C: ori r0,r0,0x0
   ctx.r[0] = ctx.r[0] | 0x0ull;
-  // 82003EDC: cmpli r0,r3,r0
-  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[3]), 0u);
-  // 82003EE0: bc 4,2,0x82003CC8
-  if (!ctx.crb[2]) goto loc_82003CC8;
-loc_82003EE4:
-  // 82003EE4: lwz r3,176(r1)
-  t0 = (ctx.r[1] + uint64_t(176)); ea = uint32_t(t0);
-  ctx.r[3] = fsr::ld32(base, ea);
-  // 82003EE8: cmpli r0,r3,r0
-  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[3]), 0u);
-  // 82003EEC: bc 12,2,0x82003EB0
-  if (ctx.crb[2]) goto loc_82003EB0;
-  // 82003EF0: nor r21,r5,r21
-  ctx.r[5] = ~(ctx.r[21] | ctx.r[21]);
-  // 82003EF4: or_ r23,r4,r23
-  ctx.r[4] = ctx.r[23] | ctx.r[23];
-  // 82003EF8: mtspr r3,r9,r0
-  ctx.ctr = ctx.r[3];
+loc_82003E20:
+  // 82003E20: stb r4,0(r5)
+  t0 = (ctx.r[5] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[4]));
+  // 82003E24: addi r7,r5,1
+  ctx.r[7] = ctx.r[5] + uint64_t(1);
+  // 82003E28: or_ r7,r5,r7
+  ctx.r[5] = ctx.r[7] | ctx.r[7];
+  // 82003E2C: lbz r4,0(r6)
+  t0 = (ctx.r[6] + uint64_t(0)); ea = uint32_t(t0);
+  ctx.r[4] = fsr::ld8(base, ea);
+  // 82003E30: addi r6,r6,1
+  ctx.r[6] = ctx.r[6] + uint64_t(1);
+  // 82003E34: cmpli r0,r4,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[4]), 0u);
+  // 82003E38: bc 4,2,0x82003E20
+  if (!ctx.crb[2]) goto loc_82003E20;
+  // 82003E3C: b 0x82003F50
+  goto loc_82003F50;
+loc_82003E40:
+  // 82003E40: addis r11,r0,26214
+  ctx.r[11] = uint64_t(0) + uint64_t(1717960704);
+  // 82003E44: add r0,r7,r30
+  t0 = ctx.r[7]; t1 = ctx.r[30]; ctx.r[0] = t0 + t1;
+  // 82003E48: ori r11,r11,0x6667
+  ctx.r[11] = ctx.r[11] | 0x6667ull;
+  // 82003E4C: subf r0,r6,r0
+  t0 = ~ctx.r[6]; t1 = ctx.r[0]; ctx.r[0] = t1 + t0 + 1;
+  // 82003E50: mulhw r11,r10,r11
+  ctx.r[11] = uint64_t(int64_t(int32_t((int64_t(int32_t(ctx.r[10])) * int64_t(int32_t(ctx.r[11]))) >> 32)));
+  // 82003E54: extsw r12,r12,r0
+  ctx.r[12] = uint64_t(int64_t(int32_t(ctx.r[12])));
+  // 82003E58: rlwinm r27,r11,1,31,31
+  ctx.r[27] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[11]), 1)) & 0x1ull;
+  // 82003E5C: srawi r11,r11,r1
+  ctx.r[11] = fsr::ppc_sraw(ctx, ctx.r[11], 1);
+  // 82003E60: add r25,r11,r27
+  t0 = ctx.r[11]; t1 = ctx.r[27]; ctx.r[25] = t0 + t1;
+  // 82003E64: srawi r0,r11,r1
+  ctx.r[11] = fsr::ppc_sraw(ctx, ctx.r[0], 1);
+  // 82003E68: addze r11,r11,r0
+  t0 = ctx.r[11]; t1 = 0; ctx.r[11] = fsr::add_carry(ctx, t0, t1, ctx.xer_ca);
+  // 82003E6C: extsw r25,r24,r0
+  ctx.r[24] = uint64_t(int64_t(int32_t(ctx.r[25])));
+  // 82003E70: extsw r11,r11,r0
+  ctx.r[11] = uint64_t(int64_t(int32_t(ctx.r[11])));
+  // 82003E74: subf r0,r24,r11
+  t0 = ~ctx.r[24]; t1 = ctx.r[11]; ctx.r[0] = t1 + t0 + 1;
+  // 82003E78: mulld r23,r29,r0
+  ctx.r[23] = ctx.r[29] * ctx.r[0];
+  // 82003E7C: rldicr r12,r21,r2
+  ctx.r[21] = fsr::rotl64(ctx.r[12], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 82003E80: rldicr r23,r23,r2
+  ctx.r[23] = fsr::rotl64(ctx.r[23], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 82003E84: mullw r0,r25,r25
+  ctx.r[0] = uint64_t(int64_t(int32_t(ctx.r[25])) * int64_t(int32_t(ctx.r[25])));
+  // 82003E88: subf r27,r20,r25
+  t0 = ~ctx.r[20]; t1 = ctx.r[25]; ctx.r[27] = t1 + t0 + 1;
+  // 82003E8C: neg r22,r25,r0
+  t0 = ctx.r[25]; ctx.r[22] = uint64_t(0) - t0;
+  // 82003E90: addi r25,r25,1
+  ctx.r[25] = ctx.r[25] + uint64_t(1);
+  // 82003E94: add r21,r23,r21
+  t0 = ctx.r[23]; t1 = ctx.r[21]; ctx.r[21] = t0 + t1;
+  // 82003E98: rldicr r24,r19,r2
+  ctx.r[19] = fsr::rotl64(ctx.r[24], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 82003E9C: extsw r22,r22,r0
+  ctx.r[22] = uint64_t(int64_t(int32_t(ctx.r[22])));
+  // 82003EA0: rldicl r25,r23,r0
+  ctx.r[23] = fsr::rotl64(ctx.r[25], 0) & 0xFFFFFFFFull;
+  // 82003EA4: subf r25,r19,r21
+  t0 = ~ctx.r[19]; t1 = ctx.r[21]; ctx.r[25] = t1 + t0 + 1;
+  // 82003EA8: mullw r27,r27,r27
+  ctx.r[27] = uint64_t(int64_t(int32_t(ctx.r[27])) * int64_t(int32_t(ctx.r[27])));
+  // 82003EAC: add r31,r28,r25
+  t0 = ctx.r[28]; t1 = ctx.r[25]; ctx.r[31] = t0 + t1;
+  // 82003EB0: add r21,r24,r23
+  t0 = ctx.r[24]; t1 = ctx.r[23]; ctx.r[21] = t0 + t1;
+  // 82003EB4: or_ r22,r24,r22
+  ctx.r[24] = ctx.r[22] | ctx.r[22];
+  // 82003EB8: b 0x82003ED0
+  goto loc_82003ED0;
+  // 82003EBC: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82003EC0:
+  // 82003EC0: addi r24,r24,1
+  ctx.r[24] = ctx.r[24] + uint64_t(1);
+  // 82003EC4: addi r31,r31,4
+  ctx.r[31] = ctx.r[31] + uint64_t(4);
+  // 82003EC8: cmpl r1,r24,r23
+  fsr::set_cr_unsigned(ctx, 0, ctx.r[24], ctx.r[23]);
+  // 82003ECC: bc 12,2,0x82003B0C
+  if (ctx.crb[2]) goto loc_82003B0C;
+loc_82003ED0:
+  // 82003ED0: add r18,r24,r12
+  t0 = ctx.r[24]; t1 = ctx.r[12]; ctx.r[18] = t0 + t1;
+  // 82003ED4: mulld r17,r24,r24
+  ctx.r[17] = ctx.r[24] * ctx.r[24];
+  // 82003ED8: cmp r21,r18,r29
+  fsr::set_cr_signed(ctx, 5, int64_t(ctx.r[18]), int64_t(ctx.r[29]));
+  // 82003EDC: or_ r31,r16,r31
+  ctx.r[16] = ctx.r[31] | ctx.r[31];
+  // 82003EE0: or_ r22,r19,r22
+  ctx.r[19] = ctx.r[22] | ctx.r[22];
+  // 82003EE4: mtspr r21,r9,r0
+  ctx.ctr = ctx.r[21];
+  // 82003EE8: b 0x82003F0C
+  goto loc_82003F0C;
+  // 82003EEC: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003EF0: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003EF4: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003EF8: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
   // 82003EFC: ori r0,r0,0x0
   ctx.r[0] = ctx.r[0] | 0x0ull;
 loc_82003F00:
-  // 82003F00: lbzu r6,1(r4)
-  t0 = (ctx.r[4] + uint64_t(1)); ea = uint32_t(t0);
-  ctx.r[6] = fsr::ld8(base, ea);
-  ctx.r[4] = t0;
-  // 82003F04: xor_ r5,r5,r6
-  ctx.r[5] = ctx.r[5] ^ ctx.r[6];
-  // 82003F08: andi_rc r6,r5,0x1
-  ctx.r[6] = ctx.r[5] & 0x1ull;
-  fsr::set_cr0(ctx, ctx.r[6]);
-  // 82003F0C: rlwinm r5,r5,31,1,31
-  ctx.r[5] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[5]), 31)) & 0x7FFFFFFFull;
-  // 82003F10: xor_ r5,r6,r22
-  ctx.r[6] = ctx.r[5] ^ ctx.r[22];
-  // 82003F14: bc 12,2,0x82003F20
-  if (ctx.crb[2]) goto loc_82003F20;
-  // 82003F18: ori r5,r6,0x0
-  ctx.r[5] = ctx.r[6] | 0x0ull;
-  // 82003F1C: b 0x82003F20
-  goto loc_82003F20;
-loc_82003F20:
-  // 82003F20: andi_rc r6,r5,0x1
-  ctx.r[6] = ctx.r[5] & 0x1ull;
-  fsr::set_cr0(ctx, ctx.r[6]);
-  // 82003F24: rlwinm r5,r5,31,1,31
-  ctx.r[5] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[5]), 31)) & 0x7FFFFFFFull;
-  // 82003F28: xor_ r5,r6,r22
-  ctx.r[6] = ctx.r[5] ^ ctx.r[22];
-  // 82003F2C: bc 12,2,0x82003F38
-  if (ctx.crb[2]) goto loc_82003F38;
-  // 82003F30: ori r5,r6,0x0
-  ctx.r[5] = ctx.r[6] | 0x0ull;
-  // 82003F34: b 0x82003F38
-  goto loc_82003F38;
-loc_82003F38:
-  // 82003F38: andi_rc r6,r5,0x1
-  ctx.r[6] = ctx.r[5] & 0x1ull;
-  fsr::set_cr0(ctx, ctx.r[6]);
-  // 82003F3C: rlwinm r5,r5,31,1,31
-  ctx.r[5] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[5]), 31)) & 0x7FFFFFFFull;
-  // 82003F40: xor_ r5,r6,r22
-  ctx.r[6] = ctx.r[5] ^ ctx.r[22];
-  // 82003F44: bc 12,2,0x82003F50
-  if (ctx.crb[2]) goto loc_82003F50;
-  // 82003F48: ori r5,r6,0x0
-  ctx.r[5] = ctx.r[6] | 0x0ull;
-  // 82003F4C: b 0x82003F50
-  goto loc_82003F50;
-loc_82003F50:
-  // 82003F50: andi_rc r6,r5,0x1
-  ctx.r[6] = ctx.r[5] & 0x1ull;
-  fsr::set_cr0(ctx, ctx.r[6]);
-  // 82003F54: rlwinm r5,r5,31,1,31
-  ctx.r[5] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[5]), 31)) & 0x7FFFFFFFull;
-  // 82003F58: xor_ r5,r6,r22
-  ctx.r[6] = ctx.r[5] ^ ctx.r[22];
-  // 82003F5C: bc 12,2,0x82003F68
-  if (ctx.crb[2]) goto loc_82003F68;
-  // 82003F60: ori r5,r6,0x0
-  ctx.r[5] = ctx.r[6] | 0x0ull;
-  // 82003F64: b 0x82003F68
-  goto loc_82003F68;
-loc_82003F68:
-  // 82003F68: andi_rc r6,r5,0x1
-  ctx.r[6] = ctx.r[5] & 0x1ull;
-  fsr::set_cr0(ctx, ctx.r[6]);
-  // 82003F6C: rlwinm r5,r5,31,1,31
-  ctx.r[5] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[5]), 31)) & 0x7FFFFFFFull;
-  // 82003F70: xor_ r5,r6,r22
-  ctx.r[6] = ctx.r[5] ^ ctx.r[22];
-  // 82003F74: bc 12,2,0x82003F80
-  if (ctx.crb[2]) goto loc_82003F80;
-  // 82003F78: ori r5,r6,0x0
-  ctx.r[5] = ctx.r[6] | 0x0ull;
-  // 82003F7C: b 0x82003F80
-  goto loc_82003F80;
-loc_82003F80:
-  // 82003F80: andi_rc r6,r5,0x1
-  ctx.r[6] = ctx.r[5] & 0x1ull;
-  fsr::set_cr0(ctx, ctx.r[6]);
-  // 82003F84: rlwinm r5,r5,31,1,31
-  ctx.r[5] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[5]), 31)) & 0x7FFFFFFFull;
-  // 82003F88: xor_ r5,r6,r22
-  ctx.r[6] = ctx.r[5] ^ ctx.r[22];
-  // 82003F8C: bc 12,2,0x82003F98
-  if (ctx.crb[2]) goto loc_82003F98;
-  // 82003F90: ori r5,r6,0x0
-  ctx.r[5] = ctx.r[6] | 0x0ull;
-  // 82003F94: b 0x82003F98
-  goto loc_82003F98;
-loc_82003F98:
-  // 82003F98: andi_rc r6,r5,0x1
-  ctx.r[6] = ctx.r[5] & 0x1ull;
-  fsr::set_cr0(ctx, ctx.r[6]);
-  // 82003F9C: rlwinm r5,r5,31,1,31
-  ctx.r[5] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[5]), 31)) & 0x7FFFFFFFull;
-  // 82003FA0: xor_ r5,r6,r22
-  ctx.r[6] = ctx.r[5] ^ ctx.r[22];
-  // 82003FA4: bc 12,2,0x82003FB0
-  if (ctx.crb[2]) goto loc_82003FB0;
-  // 82003FA8: ori r5,r6,0x0
-  ctx.r[5] = ctx.r[6] | 0x0ull;
-  // 82003FAC: b 0x82003FB0
-  goto loc_82003FB0;
-loc_82003FB0:
-  // 82003FB0: andi_rc r6,r5,0x1
-  ctx.r[6] = ctx.r[5] & 0x1ull;
-  fsr::set_cr0(ctx, ctx.r[6]);
-  // 82003FB4: rlwinm r5,r5,31,1,31
-  ctx.r[5] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[5]), 31)) & 0x7FFFFFFFull;
-  // 82003FB8: xor_ r5,r6,r22
-  ctx.r[6] = ctx.r[5] ^ ctx.r[22];
-  // 82003FBC: bc 12,2,0x82003FC8
-  if (ctx.crb[2]) goto loc_82003FC8;
-  // 82003FC0: ori r5,r6,0x0
-  ctx.r[5] = ctx.r[6] | 0x0ull;
-  // 82003FC4: b 0x82003FC8
-  goto loc_82003FC8;
-loc_82003FC8:
-  // 82003FC8: bc 16,0,0x82003F00
+  // 82003F00: addi r19,r19,1
+  ctx.r[19] = ctx.r[19] + uint64_t(1);
+  // 82003F04: add r16,r16,r5
+  t0 = ctx.r[16]; t1 = ctx.r[5]; ctx.r[16] = t0 + t1;
+  // 82003F08: bc 18,0,0x82003EC0
   ctx.ctr--;
-  if (ctx.ctr != 0) goto loc_82003F00;
-  // 82003FCC: nor r5,r21,r5
-  ctx.r[21] = ~(ctx.r[5] | ctx.r[5]);
-  // 82003FD0: b 0x82003EB0
-  goto loc_82003EB0;
-  fsr::fsr_unimplemented(ctx, base, 0x82003FD4, 0); // zero word (padding)
-  fsr::fsr_unimplemented(ctx, base, 0x82003FD8, 0); // zero word (padding)
-  fsr::fsr_unimplemented(ctx, base, 0x82003FDC, 0); // zero word (padding)
-  sub_82003FE0(ctx, base);
+  if (ctx.ctr == 0) goto loc_82003EC0;
+loc_82003F0C:
+  // 82003F0C: mulld r25,r19,r19
+  ctx.r[25] = ctx.r[19] * ctx.r[19];
+  // 82003F10: add r25,r25,r17
+  t0 = ctx.r[25]; t1 = ctx.r[17]; ctx.r[25] = t0 + t1;
+  // 82003F14: cmpl r0,r0,r25
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[0]), uint32_t(ctx.r[25]));
+  // 82003F18: bc 12,0,0x82003F00
+  if (ctx.crb[0]) goto loc_82003F00;
+  // 82003F1C: cmpl r0,r27,r25
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[27]), uint32_t(ctx.r[25]));
+  // 82003F20: bc 12,1,0x82003F00
+  if (ctx.crb[1]) goto loc_82003F00;
+  // 82003F24: add r25,r11,r19
+  t0 = ctx.r[11]; t1 = ctx.r[19]; ctx.r[25] = t0 + t1;
+  // 82003F28: cmp r1,r25,r30
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[25]), int64_t(ctx.r[30]));
+  // 82003F2C: bc 4,0,0x82003F00
+  if (!ctx.crb[0]) goto loc_82003F00;
+  // 82003F30: bc 4,20,0x82003F00
+  if (!ctx.crb[20]) goto loc_82003F00;
+  // 82003F34: or_ r25,r25,r18
+  ctx.r[25] = ctx.r[25] | ctx.r[18];
+  // 82003F38: andis_rc r25,r25,0x8000
+  ctx.r[25] = ctx.r[25] & 0x80000000ull;
+  fsr::set_cr0(ctx, ctx.r[25]);
+  // 82003F3C: bc 4,2,0x82003F00
+  if (!ctx.crb[2]) goto loc_82003F00;
+  // 82003F40: stw r9,0(r16)
+  t0 = (ctx.r[16] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[9]));
+  // 82003F44: b 0x82003F00
+  goto loc_82003F00;
+loc_82003F48:
+  // 82003F48: or_ r5,r7,r5
+  ctx.r[7] = ctx.r[5] | ctx.r[5];
+  // 82003F4C: lwz r22,120(r1)
+  t0 = (ctx.r[1] + uint64_t(120)); ea = uint32_t(t0);
+  ctx.r[22] = fsr::ld32(base, ea);
+loc_82003F50:
+  // 82003F50: addis r4,r0,-24608
+  ctx.r[4] = uint64_t(0) + uint64_t(int64_t(-1612709888));
+  // 82003F54: stb r27,0(r7)
+  t0 = (ctx.r[7] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[27]));
+  // 82003F58: extsw r3,r7,r0
+  ctx.r[7] = uint64_t(int64_t(int32_t(ctx.r[3])));
+  // 82003F5C: ori r4,r4,0xA8FF
+  ctx.r[4] = ctx.r[4] | 0xA8FFull;
+  // 82003F60: or_ r28,r3,r28
+  ctx.r[3] = ctx.r[28] | ctx.r[28];
+  // 82003F64: rldic r4,r10,r0
+  ctx.r[10] = fsr::rotl64(ctx.r[4], 0) & 0xFFFFFFFFull;
+  // 82003F68: or_ r29,r4,r29
+  ctx.r[4] = ctx.r[29] | ctx.r[29];
+  // 82003F6C: or_ r30,r5,r30
+  ctx.r[5] = ctx.r[30] | ctx.r[30];
+  // 82003F70: or_ r23,r6,r23
+  ctx.r[6] = ctx.r[23] | ctx.r[23];
+  // 82003F74: or_ r24,r8,r24
+  ctx.r[8] = ctx.r[24] | ctx.r[24];
+  // 82003F78: or_ r21,r9,r21
+  ctx.r[9] = ctx.r[21] | ctx.r[21];
+  // 82003F7C: bl 0x82004658
+  ctx.lr = 0x82003F80;
+  sub_82004658(ctx, base);
+  // 82003F80: addis r3,r0,10791
+  ctx.r[3] = uint64_t(0) + uint64_t(707198976);
+  // 82003F84: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003F88: addi r7,r0,0
+  ctx.r[7] = uint64_t(0) + uint64_t(0);
+  // 82003F8C: addi r5,r2,-29872
+  ctx.r[5] = ctx.r[2] + uint64_t(int64_t(-29872));
+  // 82003F90: ori r3,r3,0xA6A1
+  ctx.r[3] = ctx.r[3] | 0xA6A1ull;
+  // 82003F94: addi r6,r0,0
+  ctx.r[6] = uint64_t(0) + uint64_t(0);
+  // 82003F98: rldic r3,r4,r1
+  ctx.r[4] = fsr::rotl64(ctx.r[3], 33) & 0x7FFFFFFE00000000ull;
+  // 82003F9C: addi r3,r1,159
+  ctx.r[3] = ctx.r[1] + uint64_t(159);
+  // 82003FA0: oris r4,r4,0x4F4C
+  ctx.r[4] = ctx.r[4] | 0x4F4C0000ull;
+  // 82003FA4: ori r4,r4,0x3A00
+  ctx.r[4] = ctx.r[4] | 0x3A00ull;
+  // 82003FA8: stdx r4,r0,r21
+  t0 = (uint64_t(0) + ctx.r[21]); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[4]);
+  // 82003FAC: addi r4,r0,8192
+  ctx.r[4] = uint64_t(0) + uint64_t(8192);
+  // 82003FB0: b 0x82003FD8
+  goto loc_82003FD8;
+  // 82003FB4: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003FB8: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82003FBC: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82003FC0:
+  // 82003FC0: addi r3,r3,1
+  ctx.r[3] = ctx.r[3] + uint64_t(1);
+  // 82003FC4: addi r7,r0,1
+  ctx.r[7] = uint64_t(0) + uint64_t(1);
+  // 82003FC8: stb r27,0(r3)
+  t0 = (ctx.r[3] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[27]));
+loc_82003FCC:
+  // 82003FCC: addi r6,r6,1
+  ctx.r[6] = ctx.r[6] + uint64_t(1);
+  // 82003FD0: cmpli r1,r6,r0
+  fsr::set_cr_unsigned(ctx, 0, ctx.r[6], 16u);
+  // 82003FD4: bc 12,2,0x82004014
+  if (ctx.crb[2]) goto loc_82004014;
+loc_82003FD8:
+  // 82003FD8: srw r26,r8,r6
+  ctx.r[8] = fsr::ppc_srw(ctx.r[26], ctx.r[6]);
+  // 82003FDC: andi_rc r8,r8,0x1
+  ctx.r[8] = ctx.r[8] & 0x1ull;
+  fsr::set_cr0(ctx, ctx.r[8]);
+  // 82003FE0: bc 12,2,0x82003FCC
+  if (ctx.crb[2]) goto loc_82003FCC;
+  // 82003FE4: rldicr r6,r7,r3
+  ctx.r[7] = fsr::rotl64(ctx.r[6], 3) & 0xFFFFFFFFFFFFFFF8ull;
+  // 82003FE8: sth r4,0(r3)
+  t0 = (ctx.r[3] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st16(base, ea, uint16_t(ctx.r[4]));
+  // 82003FEC: ldx r7,r5,r7
+  t0 = (ctx.r[5] + ctx.r[7]); ea = uint32_t(t0);
+  ctx.r[7] = fsr::ld64(base, ea);
+  // 82003FF0: lbz r8,0(r7)
+  t0 = (ctx.r[7] + uint64_t(0)); ea = uint32_t(t0);
+  ctx.r[8] = fsr::ld8(base, ea);
+  // 82003FF4: cmpli r0,r8,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[8]), 0u);
+  // 82003FF8: bc 12,2,0x82003FC0
+  if (ctx.crb[2]) goto loc_82003FC0;
+  // 82003FFC: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82004000:
+  // 82004000: stbu r8,1(r3)
+  t0 = (ctx.r[3] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[8]));
+  ctx.r[3] = t0;
+  // 82004004: lbzu r8,1(r7)
+  t0 = (ctx.r[7] + uint64_t(1)); ea = uint32_t(t0);
+  ctx.r[8] = fsr::ld8(base, ea);
+  ctx.r[7] = t0;
+  // 82004008: cmpli r0,r8,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[8]), 0u);
+  // 8200400C: bc 4,2,0x82004000
+  if (!ctx.crb[2]) goto loc_82004000;
+  // 82004010: b 0x82003FC0
+  goto loc_82003FC0;
+loc_82004014:
+  // 82004014: cmpli r4,r14,r0
+  fsr::set_cr_unsigned(ctx, 1, uint32_t(ctx.r[14]), 0u);
+  // 82004018: cmpli r0,r15,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[15]), 0u);
+  // 8200401C: bc 12,6,0x820040C0
+  if (ctx.crb[6]) goto loc_820040C0;
+  // 82004020: addis r4,r0,8268
+  ctx.r[4] = uint64_t(0) + uint64_t(541851648);
+  // 82004024: lwz r27,124(r1)
+  t0 = (ctx.r[1] + uint64_t(124)); ea = uint32_t(t0);
+  ctx.r[27] = fsr::ld32(base, ea);
+  // 82004028: addis r6,r0,-13108
+  ctx.r[6] = uint64_t(0) + uint64_t(int64_t(-859045888));
+  // 8200402C: ori r4,r4,0x543D
+  ctx.r[4] = ctx.r[4] | 0x543Dull;
+  // 82004030: addi r5,r1,339
+  ctx.r[5] = ctx.r[1] + uint64_t(339);
+  // 82004034: stw r4,0(r3)
+  t0 = (ctx.r[3] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[4]));
+  // 82004038: addi r4,r0,0
+  ctx.r[4] = uint64_t(0) + uint64_t(0);
+  // 8200403C: ori r6,r6,0xCCCD
+  ctx.r[6] = ctx.r[6] | 0xCCCDull;
+  // 82004040: stb r4,4(r3)
+  t0 = (ctx.r[3] + uint64_t(4)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[4]));
+  // 82004044: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004048: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 8200404C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82004050:
+  // 82004050: mulhwu r7,r14,r6
+  ctx.r[7] = (uint64_t(uint32_t(ctx.r[14])) * uint64_t(uint32_t(ctx.r[6]))) >> 32;
+  // 82004054: cmpli r4,r14,r0
+  fsr::set_cr_unsigned(ctx, 1, uint32_t(ctx.r[14]), 9u);
+  // 82004058: rlwinm r8,r7,29,3,31
+  ctx.r[8] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[7]), 29)) & 0x1FFFFFFFull;
+  // 8200405C: mulli r7,r8,10
+  ctx.r[7] = ctx.r[8] * uint64_t(10);
+  // 82004060: subf r9,r7,r14
+  t0 = ~ctx.r[7]; t1 = ctx.r[14]; ctx.r[9] = t1 + t0 + 1;
+  // 82004064: or_ r4,r7,r4
+  ctx.r[7] = ctx.r[4] | ctx.r[4];
+  // 82004068: ori r4,r9,0x30
+  ctx.r[4] = ctx.r[9] | 0x30ull;
+  // 8200406C: stbu r4,1(r5)
+  t0 = (ctx.r[5] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[4]));
+  ctx.r[5] = t0;
+  // 82004070: addi r4,r7,1
+  ctx.r[4] = ctx.r[7] + uint64_t(1);
+  // 82004074: or_ r8,r14,r8
+  ctx.r[14] = ctx.r[8] | ctx.r[8];
+  // 82004078: bc 12,5,0x82004050
+  if (ctx.crb[5]) goto loc_82004050;
+  // 8200407C: extsw r4,r4,r0
+  ctx.r[4] = uint64_t(int64_t(int32_t(ctx.r[4])));
+  // 82004080: rldicl r7,r6,r0
+  ctx.r[6] = fsr::rotl64(ctx.r[7], 0) & 0xFFFFFFFFull;
+  // 82004084: add r5,r25,r4
+  t0 = ctx.r[25]; t1 = ctx.r[4]; ctx.r[5] = t0 + t1;
+  // 82004088: addi r6,r6,1
+  ctx.r[6] = ctx.r[6] + uint64_t(1);
+  // 8200408C: addi r4,r3,3
+  ctx.r[4] = ctx.r[3] + uint64_t(3);
+  // 82004090: mtspr r6,r9,r0
+  ctx.ctr = ctx.r[6];
+  // 82004094: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004098: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 8200409C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_820040A0:
+  // 820040A0: lbzu r3,-1(r5)
+  t0 = (ctx.r[5] + uint64_t(int64_t(-1))); ea = uint32_t(t0);
+  ctx.r[3] = fsr::ld8(base, ea);
+  ctx.r[5] = t0;
+  // 820040A4: stbu r3,1(r4)
+  t0 = (ctx.r[4] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[3]));
+  ctx.r[4] = t0;
+  // 820040A8: bc 16,0,0x820040A0
+  ctx.ctr--;
+  if (ctx.ctr != 0) goto loc_820040A0;
+  // 820040AC: addi r5,r0,0
+  ctx.r[5] = uint64_t(0) + uint64_t(0);
+  // 820040B0: addi r3,r4,1
+  ctx.r[3] = ctx.r[4] + uint64_t(1);
+  // 820040B4: stb r5,1(r4)
+  t0 = (ctx.r[4] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[5]));
+  // 820040B8: bc 4,2,0x820040C8
+  if (!ctx.crb[2]) goto loc_820040C8;
+  // 820040BC: b 0x82004154
+  goto loc_82004154;
+loc_820040C0:
+  // 820040C0: lwz r27,124(r1)
+  t0 = (ctx.r[1] + uint64_t(124)); ea = uint32_t(t0);
+  ctx.r[27] = fsr::ld32(base, ea);
+  // 820040C4: bc 12,2,0x82004604
+  if (ctx.crb[2]) goto loc_82004604;
+loc_820040C8:
+  // 820040C8: addis r4,r0,8274
+  ctx.r[4] = uint64_t(0) + uint64_t(542244864);
+  // 820040CC: addis r6,r0,-13108
+  ctx.r[6] = uint64_t(0) + uint64_t(int64_t(-859045888));
+  // 820040D0: ori r4,r4,0x543D
+  ctx.r[4] = ctx.r[4] | 0x543Dull;
+  // 820040D4: addi r5,r1,339
+  ctx.r[5] = ctx.r[1] + uint64_t(339);
+  // 820040D8: stw r4,0(r3)
+  t0 = (ctx.r[3] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[4]));
+  // 820040DC: addi r4,r0,0
+  ctx.r[4] = uint64_t(0) + uint64_t(0);
+  // 820040E0: ori r6,r6,0xCCCD
+  ctx.r[6] = ctx.r[6] | 0xCCCDull;
+  // 820040E4: stb r4,4(r3)
+  t0 = (ctx.r[3] + uint64_t(4)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[4]));
+  // 820040E8: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820040EC: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_820040F0:
+  // 820040F0: mulhwu r7,r15,r6
+  ctx.r[7] = (uint64_t(uint32_t(ctx.r[15])) * uint64_t(uint32_t(ctx.r[6]))) >> 32;
+  // 820040F4: cmpli r0,r15,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[15]), 9u);
+  // 820040F8: rlwinm r8,r7,29,3,31
+  ctx.r[8] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[7]), 29)) & 0x1FFFFFFFull;
+  // 820040FC: mulli r7,r8,10
+  ctx.r[7] = ctx.r[8] * uint64_t(10);
+  // 82004100: subf r9,r7,r15
+  t0 = ~ctx.r[7]; t1 = ctx.r[15]; ctx.r[9] = t1 + t0 + 1;
+  // 82004104: or_ r4,r7,r4
+  ctx.r[7] = ctx.r[4] | ctx.r[4];
+  // 82004108: ori r4,r9,0x30
+  ctx.r[4] = ctx.r[9] | 0x30ull;
+  // 8200410C: stbu r4,1(r5)
+  t0 = (ctx.r[5] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[4]));
+  ctx.r[5] = t0;
+  // 82004110: addi r4,r7,1
+  ctx.r[4] = ctx.r[7] + uint64_t(1);
+  // 82004114: or_ r8,r15,r8
+  ctx.r[15] = ctx.r[8] | ctx.r[8];
+  // 82004118: bc 12,1,0x820040F0
+  if (ctx.crb[1]) goto loc_820040F0;
+  // 8200411C: extsw r4,r4,r0
+  ctx.r[4] = uint64_t(int64_t(int32_t(ctx.r[4])));
+  // 82004120: rldicl r7,r5,r0
+  ctx.r[5] = fsr::rotl64(ctx.r[7], 0) & 0xFFFFFFFFull;
+  // 82004124: add r4,r25,r4
+  t0 = ctx.r[25]; t1 = ctx.r[4]; ctx.r[4] = t0 + t1;
+  // 82004128: addi r5,r5,1
+  ctx.r[5] = ctx.r[5] + uint64_t(1);
+  // 8200412C: addi r3,r3,3
+  ctx.r[3] = ctx.r[3] + uint64_t(3);
+  // 82004130: mtspr r5,r9,r0
+  ctx.ctr = ctx.r[5];
+  // 82004134: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004138: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 8200413C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82004140:
+  // 82004140: lbzu r5,-1(r4)
+  t0 = (ctx.r[4] + uint64_t(int64_t(-1))); ea = uint32_t(t0);
+  ctx.r[5] = fsr::ld8(base, ea);
+  ctx.r[4] = t0;
+  // 82004144: stbu r5,1(r3)
+  t0 = (ctx.r[3] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[5]));
+  ctx.r[3] = t0;
+  // 82004148: bc 16,0,0x82004140
+  ctx.ctr--;
+  if (ctx.ctr != 0) goto loc_82004140;
+  // 8200414C: addi r4,r0,0
+  ctx.r[4] = uint64_t(0) + uint64_t(0);
+  // 82004150: stb r4,1(r3)
+  t0 = (ctx.r[3] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[4]));
+loc_82004154:
+  // 82004154: mulli r3,r20,33
+  ctx.r[3] = ctx.r[20] * uint64_t(33);
+  // 82004158: addi r4,r0,-1
+  ctx.r[4] = uint64_t(0) + uint64_t(int64_t(-1));
+  // 8200415C: extsw r3,r7,r0
+  ctx.r[7] = uint64_t(int64_t(int32_t(ctx.r[3])));
+  // 82004160: rldic r4,r10,r0
+  ctx.r[10] = fsr::rotl64(ctx.r[4], 0) & 0xFFFFFFFFull;
+  // 82004164: or_ r28,r3,r28
+  ctx.r[3] = ctx.r[28] | ctx.r[28];
+  // 82004168: or_ r29,r4,r29
+  ctx.r[4] = ctx.r[29] | ctx.r[29];
+  // 8200416C: or_ r30,r5,r30
+  ctx.r[5] = ctx.r[30] | ctx.r[30];
+  // 82004170: or_ r23,r6,r23
+  ctx.r[6] = ctx.r[23] | ctx.r[23];
+  // 82004174: or_ r24,r8,r24
+  ctx.r[8] = ctx.r[24] | ctx.r[24];
+  // 82004178: or_ r21,r9,r21
+  ctx.r[9] = ctx.r[21] | ctx.r[21];
+  // 8200417C: bl 0x82004658
+  ctx.lr = 0x82004180;
+  sub_82004658(ctx, base);
+  // 82004180: addis r4,r0,4179
+  ctx.r[4] = uint64_t(0) + uint64_t(273874944);
+  // 82004184: lwz r10,116(r1)
+  t0 = (ctx.r[1] + uint64_t(116)); ea = uint32_t(t0);
+  ctx.r[10] = fsr::ld32(base, ea);
+  // 82004188: addi r5,r0,8192
+  ctx.r[5] = uint64_t(0) + uint64_t(8192);
+  // 8200418C: ori r4,r4,0x9053
+  ctx.r[4] = ctx.r[4] | 0x9053ull;
+  // 82004190: addi r3,r1,161
+  ctx.r[3] = ctx.r[1] + uint64_t(161);
+  // 82004194: sth r5,160(r1)
+  t0 = (ctx.r[1] + uint64_t(160)); ea = uint32_t(t0);
+  fsr::st16(base, ea, uint16_t(ctx.r[5]));
+  // 82004198: rldic r4,r7,r2
+  ctx.r[7] = fsr::rotl64(ctx.r[4], 34) & 0x7FFFFFFC00000000ull;
+  // 8200419C: srawi r10,r6,r31
+  ctx.r[6] = fsr::ppc_sraw(ctx, ctx.r[10], 31);
+  // 820041A0: oris r7,r7,0x4F47
+  ctx.r[7] = ctx.r[7] | 0x4F470000ull;
+  // 820041A4: xor_ r10,r8,r6
+  ctx.r[8] = ctx.r[10] ^ ctx.r[6];
+  // 820041A8: ori r7,r7,0x204C
+  ctx.r[7] = ctx.r[7] | 0x204Cull;
+  // 820041AC: addi r4,r0,0
+  ctx.r[4] = uint64_t(0) + uint64_t(0);
+  // 820041B0: stdx r7,r0,r21
+  t0 = (uint64_t(0) + ctx.r[21]); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[7]);
+  // 820041B4: subf r7,r6,r8
+  t0 = ~ctx.r[6]; t1 = ctx.r[8]; ctx.r[7] = t1 + t0 + 1;
+  // 820041B8: addis r6,r0,-13108
+  ctx.r[6] = uint64_t(0) + uint64_t(int64_t(-859045888));
+  // 820041BC: addi r5,r1,339
+  ctx.r[5] = ctx.r[1] + uint64_t(339);
+  // 820041C0: ori r6,r6,0xCCCD
+  ctx.r[6] = ctx.r[6] | 0xCCCDull;
+  // 820041C4: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820041C8: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820041CC: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_820041D0:
+  // 820041D0: mulhwu r8,r7,r6
+  ctx.r[8] = (uint64_t(uint32_t(ctx.r[7])) * uint64_t(uint32_t(ctx.r[6]))) >> 32;
+  // 820041D4: cmpli r0,r7,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[7]), 9u);
+  // 820041D8: rlwinm r8,r8,29,3,31
+  ctx.r[8] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[8]), 29)) & 0x1FFFFFFFull;
+  // 820041DC: mulli r9,r8,10
+  ctx.r[9] = ctx.r[8] * uint64_t(10);
+  // 820041E0: addi r4,r4,1
+  ctx.r[4] = ctx.r[4] + uint64_t(1);
+  // 820041E4: subf r7,r9,r7
+  t0 = ~ctx.r[9]; t1 = ctx.r[7]; ctx.r[7] = t1 + t0 + 1;
+  // 820041E8: ori r7,r7,0x30
+  ctx.r[7] = ctx.r[7] | 0x30ull;
+  // 820041EC: stbu r7,1(r5)
+  t0 = (ctx.r[5] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[7]));
+  ctx.r[5] = t0;
+  // 820041F0: or_ r8,r7,r8
+  ctx.r[7] = ctx.r[8] | ctx.r[8];
+  // 820041F4: bc 12,1,0x820041D0
+  if (ctx.crb[1]) goto loc_820041D0;
+  // 820041F8: ld r11,136(r1)
+  t0 = (ctx.r[1] + uint64_t(136)); ea = uint32_t(t0);
+  ctx.r[11] = fsr::ld64(base, ea);
+  // 820041FC: cmpi r0,r10,r31
+  fsr::set_cr_signed(ctx, 0, int32_t(ctx.r[10]), -1);
+  // 82004200: lwz r12,132(r1)
+  t0 = (ctx.r[1] + uint64_t(132)); ea = uint32_t(t0);
+  ctx.r[12] = fsr::ld32(base, ea);
+  // 82004204: lwz r0,128(r1)
+  t0 = (ctx.r[1] + uint64_t(128)); ea = uint32_t(t0);
+  ctx.r[0] = fsr::ld32(base, ea);
+  // 82004208: bc 12,1,0x82004218
+  if (ctx.crb[1]) goto loc_82004218;
+  // 8200420C: addi r5,r0,45
+  ctx.r[5] = uint64_t(0) + uint64_t(45);
+  // 82004210: addi r3,r1,162
+  ctx.r[3] = ctx.r[1] + uint64_t(162);
+  // 82004214: stb r5,161(r1)
+  t0 = (ctx.r[1] + uint64_t(161)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[5]));
+loc_82004218:
+  // 82004218: cmpli r1,r4,r0
+  fsr::set_cr_unsigned(ctx, 0, ctx.r[4], 2u);
+  // 8200421C: extsw r4,r7,r0
+  ctx.r[7] = uint64_t(int64_t(int32_t(ctx.r[4])));
+  // 82004220: bc 12,0,0x82004288
+  if (ctx.crb[0]) goto loc_82004288;
+  // 82004224: rldicr r4,r6,r0
+  ctx.r[6] = fsr::rotl64(ctx.r[4], 0) & 0xFFFFFFFFFFFFFFFEull;
+  // 82004228: add r8,r25,r7
+  t0 = ctx.r[25]; t1 = ctx.r[7]; ctx.r[8] = t0 + t1;
+  // 8200422C: addi r9,r6,-2
+  ctx.r[9] = ctx.r[6] + uint64_t(int64_t(-2));
+  // 82004230: subf r7,r6,r7
+  t0 = ~ctx.r[6]; t1 = ctx.r[7]; ctx.r[7] = t1 + t0 + 1;
+  // 82004234: rldicl r9,r9,r31
+  ctx.r[9] = fsr::rotl64(ctx.r[9], 63) & 0x7FFFFFFFFFFFFFFFull;
+  // 82004238: add r5,r3,r6
+  t0 = ctx.r[3]; t1 = ctx.r[6]; ctx.r[5] = t0 + t1;
+  // 8200423C: addi r8,r8,1
+  ctx.r[8] = ctx.r[8] + uint64_t(1);
+  // 82004240: addi r9,r9,1
+  ctx.r[9] = ctx.r[9] + uint64_t(1);
+  // 82004244: addi r3,r3,-2
+  ctx.r[3] = ctx.r[3] + uint64_t(int64_t(-2));
+  // 82004248: mtspr r9,r9,r0
+  ctx.ctr = ctx.r[9];
+  // 8200424C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004250: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004254: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004258: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 8200425C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82004260:
+  // 82004260: lbzu r9,-2(r8)
+  t0 = (ctx.r[8] + uint64_t(int64_t(-2))); ea = uint32_t(t0);
+  ctx.r[9] = fsr::ld8(base, ea);
+  ctx.r[8] = t0;
+  // 82004264: stbu r9,2(r3)
+  t0 = (ctx.r[3] + uint64_t(2)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[9]));
+  ctx.r[3] = t0;
+  // 82004268: lbz r9,-1(r8)
+  t0 = (ctx.r[8] + uint64_t(int64_t(-1))); ea = uint32_t(t0);
+  ctx.r[9] = fsr::ld8(base, ea);
+  // 8200426C: stb r9,1(r3)
+  t0 = (ctx.r[3] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[9]));
+  // 82004270: bc 16,0,0x82004260
+  ctx.ctr--;
+  if (ctx.ctr != 0) goto loc_82004260;
+  // 82004274: cmpl r1,r4,r6
+  fsr::set_cr_unsigned(ctx, 0, ctx.r[4], ctx.r[6]);
+  // 82004278: bc 4,2,0x82004284
+  if (!ctx.crb[2]) goto loc_82004284;
+  // 8200427C: addi r3,r5,-1
+  ctx.r[3] = ctx.r[5] + uint64_t(int64_t(-1));
+  // 82004280: b 0x820042B0
+  goto loc_820042B0;
+loc_82004284:
+  // 82004284: or_ r5,r3,r5
+  ctx.r[3] = ctx.r[5] | ctx.r[5];
+loc_82004288:
+  // 82004288: addi r4,r7,-1
+  ctx.r[4] = ctx.r[7] + uint64_t(int64_t(-1));
+  // 8200428C: addi r3,r3,-1
+  ctx.r[3] = ctx.r[3] + uint64_t(int64_t(-1));
+  // 82004290: rldicl r4,r5,r0
+  ctx.r[5] = fsr::rotl64(ctx.r[4], 0) & 0xFFFFFFFFull;
+  // 82004294: add r4,r25,r7
+  t0 = ctx.r[25]; t1 = ctx.r[7]; ctx.r[4] = t0 + t1;
+  // 82004298: addi r5,r5,1
+  ctx.r[5] = ctx.r[5] + uint64_t(1);
+  // 8200429C: mtspr r5,r9,r0
+  ctx.ctr = ctx.r[5];
+loc_820042A0:
+  // 820042A0: lbzu r5,-1(r4)
+  t0 = (ctx.r[4] + uint64_t(int64_t(-1))); ea = uint32_t(t0);
+  ctx.r[5] = fsr::ld8(base, ea);
+  ctx.r[4] = t0;
+  // 820042A4: stbu r5,1(r3)
+  t0 = (ctx.r[3] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[5]));
+  ctx.r[3] = t0;
+  // 820042A8: bc 16,0,0x820042A0
+  ctx.ctr--;
+  if (ctx.ctr != 0) goto loc_820042A0;
+  // 820042AC: addi r5,r3,1
+  ctx.r[5] = ctx.r[3] + uint64_t(1);
+loc_820042B0:
+  // 820042B0: addi r6,r0,44
+  ctx.r[6] = uint64_t(0) + uint64_t(44);
+  // 820042B4: srawi r27,r7,r31
+  ctx.r[7] = fsr::ppc_sraw(ctx, ctx.r[27], 31);
+  // 820042B8: stb r6,0(r5)
+  t0 = (ctx.r[5] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[6]));
+  // 820042BC: addi r4,r0,0
+  ctx.r[4] = uint64_t(0) + uint64_t(0);
+  // 820042C0: xor_ r27,r8,r7
+  ctx.r[8] = ctx.r[27] ^ ctx.r[7];
+  // 820042C4: addis r10,r0,-13108
+  ctx.r[10] = uint64_t(0) + uint64_t(int64_t(-859045888));
+  // 820042C8: or_ r3,r5,r3
+  ctx.r[5] = ctx.r[3] | ctx.r[3];
+  // 820042CC: stbu r4,2(r5)
+  t0 = (ctx.r[5] + uint64_t(2)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[4]));
+  ctx.r[5] = t0;
+  // 820042D0: subf r9,r7,r8
+  t0 = ~ctx.r[7]; t1 = ctx.r[8]; ctx.r[9] = t1 + t0 + 1;
+  // 820042D4: addi r6,r1,339
+  ctx.r[6] = ctx.r[1] + uint64_t(339);
+  // 820042D8: ori r7,r10,0xCCCD
+  ctx.r[7] = ctx.r[10] | 0xCCCDull;
+  // 820042DC: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_820042E0:
+  // 820042E0: mulhwu r8,r9,r7
+  ctx.r[8] = (uint64_t(uint32_t(ctx.r[9])) * uint64_t(uint32_t(ctx.r[7]))) >> 32;
+  // 820042E4: cmpli r0,r9,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[9]), 9u);
+  // 820042E8: rlwinm r10,r8,29,3,31
+  ctx.r[10] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[8]), 29)) & 0x1FFFFFFFull;
+  // 820042EC: mulli r8,r10,10
+  ctx.r[8] = ctx.r[10] * uint64_t(10);
+  // 820042F0: subf r9,r8,r9
+  t0 = ~ctx.r[8]; t1 = ctx.r[9]; ctx.r[9] = t1 + t0 + 1;
+  // 820042F4: or_ r4,r8,r4
+  ctx.r[8] = ctx.r[4] | ctx.r[4];
+  // 820042F8: ori r4,r9,0x30
+  ctx.r[4] = ctx.r[9] | 0x30ull;
+  // 820042FC: stbu r4,1(r6)
+  t0 = (ctx.r[6] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[4]));
+  ctx.r[6] = t0;
+  // 82004300: addi r4,r8,1
+  ctx.r[4] = ctx.r[8] + uint64_t(1);
+  // 82004304: or_ r10,r9,r10
+  ctx.r[9] = ctx.r[10] | ctx.r[10];
+  // 82004308: bc 12,1,0x820042E0
+  if (ctx.crb[1]) goto loc_820042E0;
+  // 8200430C: cmpi r0,r27,r31
+  fsr::set_cr_signed(ctx, 0, int32_t(ctx.r[27]), -1);
+  // 82004310: bc 12,1,0x82004320
+  if (ctx.crb[1]) goto loc_82004320;
+  // 82004314: addi r6,r0,45
+  ctx.r[6] = uint64_t(0) + uint64_t(45);
+  // 82004318: addi r5,r3,3
+  ctx.r[5] = ctx.r[3] + uint64_t(3);
+  // 8200431C: stb r6,2(r3)
+  t0 = (ctx.r[3] + uint64_t(2)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[6]));
+loc_82004320:
+  // 82004320: extsw r4,r3,r0
+  ctx.r[3] = uint64_t(int64_t(int32_t(ctx.r[4])));
+  // 82004324: rldicl r8,r6,r0
+  ctx.r[6] = fsr::rotl64(ctx.r[8], 0) & 0xFFFFFFFFull;
+  // 82004328: add r4,r25,r3
+  t0 = ctx.r[25]; t1 = ctx.r[3]; ctx.r[4] = t0 + t1;
+  // 8200432C: addi r6,r6,1
+  ctx.r[6] = ctx.r[6] + uint64_t(1);
+  // 82004330: addi r3,r5,-1
+  ctx.r[3] = ctx.r[5] + uint64_t(int64_t(-1));
+  // 82004334: mtspr r6,r9,r0
+  ctx.ctr = ctx.r[6];
+  // 82004338: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 8200433C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82004340:
+  // 82004340: lbzu r5,-1(r4)
+  t0 = (ctx.r[4] + uint64_t(int64_t(-1))); ea = uint32_t(t0);
+  ctx.r[5] = fsr::ld8(base, ea);
+  ctx.r[4] = t0;
+  // 82004344: stbu r5,1(r3)
+  t0 = (ctx.r[3] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[5]));
+  ctx.r[3] = t0;
+  // 82004348: bc 16,0,0x82004340
+  ctx.ctr--;
+  if (ctx.ctr != 0) goto loc_82004340;
+  // 8200434C: srawi r0,r8,r31
+  ctx.r[8] = fsr::ppc_sraw(ctx, ctx.r[0], 31);
+  // 82004350: addis r6,r0,8224
+  ctx.r[6] = uint64_t(0) + uint64_t(538968064);
+  // 82004354: xor_ r0,r9,r8
+  ctx.r[9] = ctx.r[0] ^ ctx.r[8];
+  // 82004358: addi r7,r0,8192
+  ctx.r[7] = uint64_t(0) + uint64_t(8192);
+  // 8200435C: sth r7,5(r3)
+  t0 = (ctx.r[3] + uint64_t(5)); ea = uint32_t(t0);
+  fsr::st16(base, ea, uint16_t(ctx.r[7]));
+  // 82004360: ori r6,r6,0x2052
+  ctx.r[6] = ctx.r[6] | 0x2052ull;
+  // 82004364: subf r9,r8,r9
+  t0 = ~ctx.r[8]; t1 = ctx.r[9]; ctx.r[9] = t1 + t0 + 1;
+  // 82004368: addis r8,r0,-13108
+  ctx.r[8] = uint64_t(0) + uint64_t(int64_t(-859045888));
+  // 8200436C: addi r4,r3,6
+  ctx.r[4] = ctx.r[3] + uint64_t(6);
+  // 82004370: stw r6,1(r3)
+  t0 = (ctx.r[3] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[6]));
+  // 82004374: addi r5,r0,0
+  ctx.r[5] = uint64_t(0) + uint64_t(0);
+  // 82004378: addi r6,r1,339
+  ctx.r[6] = ctx.r[1] + uint64_t(339);
+  // 8200437C: ori r7,r8,0xCCCD
+  ctx.r[7] = ctx.r[8] | 0xCCCDull;
+loc_82004380:
+  // 82004380: mulhwu r8,r9,r7
+  ctx.r[8] = (uint64_t(uint32_t(ctx.r[9])) * uint64_t(uint32_t(ctx.r[7]))) >> 32;
+  // 82004384: cmpli r0,r9,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[9]), 9u);
+  // 82004388: rlwinm r10,r8,29,3,31
+  ctx.r[10] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[8]), 29)) & 0x1FFFFFFFull;
+  // 8200438C: mulli r8,r10,10
+  ctx.r[8] = ctx.r[10] * uint64_t(10);
+  // 82004390: subf r9,r8,r9
+  t0 = ~ctx.r[8]; t1 = ctx.r[9]; ctx.r[9] = t1 + t0 + 1;
+  // 82004394: or_ r5,r8,r5
+  ctx.r[8] = ctx.r[5] | ctx.r[5];
+  // 82004398: ori r5,r9,0x30
+  ctx.r[5] = ctx.r[9] | 0x30ull;
+  // 8200439C: stbu r5,1(r6)
+  t0 = (ctx.r[6] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[5]));
+  ctx.r[6] = t0;
+  // 820043A0: addi r5,r8,1
+  ctx.r[5] = ctx.r[8] + uint64_t(1);
+  // 820043A4: or_ r10,r9,r10
+  ctx.r[9] = ctx.r[10] | ctx.r[10];
+  // 820043A8: bc 12,1,0x82004380
+  if (ctx.crb[1]) goto loc_82004380;
+  // 820043AC: cmpi r0,r0,r31
+  fsr::set_cr_signed(ctx, 0, int32_t(ctx.r[0]), -1);
+  // 820043B0: bc 12,1,0x820043C0
+  if (ctx.crb[1]) goto loc_820043C0;
+  // 820043B4: addi r6,r0,45
+  ctx.r[6] = uint64_t(0) + uint64_t(45);
+  // 820043B8: addi r4,r3,7
+  ctx.r[4] = ctx.r[3] + uint64_t(7);
+  // 820043BC: stb r6,6(r3)
+  t0 = (ctx.r[3] + uint64_t(6)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[6]));
+loc_820043C0:
+  // 820043C0: extsw r5,r3,r0
+  ctx.r[3] = uint64_t(int64_t(int32_t(ctx.r[5])));
+  // 820043C4: rldicl r8,r6,r0
+  ctx.r[6] = fsr::rotl64(ctx.r[8], 0) & 0xFFFFFFFFull;
+  // 820043C8: add r5,r25,r3
+  t0 = ctx.r[25]; t1 = ctx.r[3]; ctx.r[5] = t0 + t1;
+  // 820043CC: addi r6,r6,1
+  ctx.r[6] = ctx.r[6] + uint64_t(1);
+  // 820043D0: addi r3,r4,-1
+  ctx.r[3] = ctx.r[4] + uint64_t(int64_t(-1));
+  // 820043D4: mtspr r6,r9,r0
+  ctx.ctr = ctx.r[6];
+  // 820043D8: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820043DC: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_820043E0:
+  // 820043E0: lbzu r4,-1(r5)
+  t0 = (ctx.r[5] + uint64_t(int64_t(-1))); ea = uint32_t(t0);
+  ctx.r[4] = fsr::ld8(base, ea);
+  ctx.r[5] = t0;
+  // 820043E4: stbu r4,1(r3)
+  t0 = (ctx.r[3] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[4]));
+  ctx.r[3] = t0;
+  // 820043E8: bc 16,0,0x820043E0
+  ctx.ctr--;
+  if (ctx.ctr != 0) goto loc_820043E0;
+  // 820043EC: srawi r12,r7,r31
+  ctx.r[7] = fsr::ppc_sraw(ctx, ctx.r[12], 31);
+  // 820043F0: addi r6,r0,11264
+  ctx.r[6] = uint64_t(0) + uint64_t(11264);
+  // 820043F4: sth r6,1(r3)
+  t0 = (ctx.r[3] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st16(base, ea, uint16_t(ctx.r[6]));
+  // 820043F8: xor_ r12,r8,r7
+  ctx.r[8] = ctx.r[12] ^ ctx.r[7];
+  // 820043FC: addi r4,r3,2
+  ctx.r[4] = ctx.r[3] + uint64_t(2);
+  // 82004400: subf r9,r7,r8
+  t0 = ~ctx.r[7]; t1 = ctx.r[8]; ctx.r[9] = t1 + t0 + 1;
+  // 82004404: addis r7,r0,-13108
+  ctx.r[7] = uint64_t(0) + uint64_t(int64_t(-859045888));
+  // 82004408: addi r5,r0,0
+  ctx.r[5] = uint64_t(0) + uint64_t(0);
+  // 8200440C: addi r6,r1,339
+  ctx.r[6] = ctx.r[1] + uint64_t(339);
+  // 82004410: ori r7,r7,0xCCCD
+  ctx.r[7] = ctx.r[7] | 0xCCCDull;
+  // 82004414: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004418: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 8200441C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82004420:
+  // 82004420: mulhwu r8,r9,r7
+  ctx.r[8] = (uint64_t(uint32_t(ctx.r[9])) * uint64_t(uint32_t(ctx.r[7]))) >> 32;
+  // 82004424: cmpli r0,r9,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[9]), 9u);
+  // 82004428: rlwinm r10,r8,29,3,31
+  ctx.r[10] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[8]), 29)) & 0x1FFFFFFFull;
+  // 8200442C: mulli r8,r10,10
+  ctx.r[8] = ctx.r[10] * uint64_t(10);
+  // 82004430: subf r9,r8,r9
+  t0 = ~ctx.r[8]; t1 = ctx.r[9]; ctx.r[9] = t1 + t0 + 1;
+  // 82004434: or_ r5,r8,r5
+  ctx.r[8] = ctx.r[5] | ctx.r[5];
+  // 82004438: ori r5,r9,0x30
+  ctx.r[5] = ctx.r[9] | 0x30ull;
+  // 8200443C: stbu r5,1(r6)
+  t0 = (ctx.r[6] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[5]));
+  ctx.r[6] = t0;
+  // 82004440: addi r5,r8,1
+  ctx.r[5] = ctx.r[8] + uint64_t(1);
+  // 82004444: or_ r10,r9,r10
+  ctx.r[9] = ctx.r[10] | ctx.r[10];
+  // 82004448: bc 12,1,0x82004420
+  if (ctx.crb[1]) goto loc_82004420;
+  // 8200444C: cmpi r0,r12,r31
+  fsr::set_cr_signed(ctx, 0, int32_t(ctx.r[12]), -1);
+  // 82004450: bc 12,1,0x82004460
+  if (ctx.crb[1]) goto loc_82004460;
+  // 82004454: addi r6,r0,45
+  ctx.r[6] = uint64_t(0) + uint64_t(45);
+  // 82004458: addi r4,r3,3
+  ctx.r[4] = ctx.r[3] + uint64_t(3);
+  // 8200445C: stb r6,2(r3)
+  t0 = (ctx.r[3] + uint64_t(2)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[6]));
+loc_82004460:
+  // 82004460: extsw r5,r3,r0
+  ctx.r[3] = uint64_t(int64_t(int32_t(ctx.r[5])));
+  // 82004464: rldicl r8,r6,r0
+  ctx.r[6] = fsr::rotl64(ctx.r[8], 0) & 0xFFFFFFFFull;
+  // 82004468: add r5,r25,r3
+  t0 = ctx.r[25]; t1 = ctx.r[3]; ctx.r[5] = t0 + t1;
+  // 8200446C: addi r6,r6,1
+  ctx.r[6] = ctx.r[6] + uint64_t(1);
+  // 82004470: addi r3,r4,-1
+  ctx.r[3] = ctx.r[4] + uint64_t(int64_t(-1));
+  // 82004474: mtspr r6,r9,r0
+  ctx.ctr = ctx.r[6];
+  // 82004478: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 8200447C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82004480:
+  // 82004480: lbzu r4,-1(r5)
+  t0 = (ctx.r[5] + uint64_t(int64_t(-1))); ea = uint32_t(t0);
+  ctx.r[4] = fsr::ld8(base, ea);
+  ctx.r[5] = t0;
+  // 82004484: stbu r4,1(r3)
+  t0 = (ctx.r[3] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[4]));
+  ctx.r[3] = t0;
+  // 82004488: bc 16,0,0x82004480
+  ctx.ctr--;
+  if (ctx.ctr != 0) goto loc_82004480;
+  // 8200448C: addis r5,r0,4112
+  ctx.r[5] = uint64_t(0) + uint64_t(269484032);
+  // 82004490: srawi r11,r8,r31
+  ctx.r[8] = fsr::ppc_sraw(ctx, ctx.r[11], 31);
+  // 82004494: ori r5,r5,0x1023
+  ctx.r[5] = ctx.r[5] | 0x1023ull;
+  // 82004498: addi r6,r3,1
+  ctx.r[6] = ctx.r[3] + uint64_t(1);
+  // 8200449C: rldic r5,r9,r1
+  ctx.r[9] = fsr::rotl64(ctx.r[5], 33) & 0x3FFFFFFE00000000ull;
+  // 820044A0: xor_ r11,r10,r8
+  ctx.r[10] = ctx.r[11] ^ ctx.r[8];
+  // 820044A4: oris r9,r9,0x5241
+  ctx.r[9] = ctx.r[9] | 0x52410000ull;
+  // 820044A8: addi r7,r0,8192
+  ctx.r[7] = uint64_t(0) + uint64_t(8192);
+  // 820044AC: sth r7,9(r3)
+  t0 = (ctx.r[3] + uint64_t(9)); ea = uint32_t(t0);
+  fsr::st16(base, ea, uint16_t(ctx.r[7]));
+  // 820044B0: ori r9,r9,0x4D45
+  ctx.r[9] = ctx.r[9] | 0x4D45ull;
+  // 820044B4: addi r4,r3,10
+  ctx.r[4] = ctx.r[3] + uint64_t(10);
+  // 820044B8: std r9,0(r6)
+  t0 = (ctx.r[6] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[9]);
+  // 820044BC: subf r9,r8,r10
+  t0 = ~ctx.r[8]; t1 = ctx.r[10]; ctx.r[9] = t1 + t0 + 1;
+  // 820044C0: addis r8,r0,-13108
+  ctx.r[8] = uint64_t(0) + uint64_t(int64_t(-859045888));
+  // 820044C4: addi r5,r0,0
+  ctx.r[5] = uint64_t(0) + uint64_t(0);
+  // 820044C8: addi r6,r1,339
+  ctx.r[6] = ctx.r[1] + uint64_t(339);
+  // 820044CC: ori r7,r8,0xCCCD
+  ctx.r[7] = ctx.r[8] | 0xCCCDull;
+loc_820044D0:
+  // 820044D0: mulhwu r8,r9,r7
+  ctx.r[8] = (uint64_t(uint32_t(ctx.r[9])) * uint64_t(uint32_t(ctx.r[7]))) >> 32;
+  // 820044D4: cmpli r0,r9,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[9]), 9u);
+  // 820044D8: rlwinm r10,r8,29,3,31
+  ctx.r[10] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[8]), 29)) & 0x1FFFFFFFull;
+  // 820044DC: mulli r8,r10,10
+  ctx.r[8] = ctx.r[10] * uint64_t(10);
+  // 820044E0: subf r9,r8,r9
+  t0 = ~ctx.r[8]; t1 = ctx.r[9]; ctx.r[9] = t1 + t0 + 1;
+  // 820044E4: or_ r5,r8,r5
+  ctx.r[8] = ctx.r[5] | ctx.r[5];
+  // 820044E8: ori r5,r9,0x30
+  ctx.r[5] = ctx.r[9] | 0x30ull;
+  // 820044EC: stbu r5,1(r6)
+  t0 = (ctx.r[6] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[5]));
+  ctx.r[6] = t0;
+  // 820044F0: addi r5,r8,1
+  ctx.r[5] = ctx.r[8] + uint64_t(1);
+  // 820044F4: or_ r10,r9,r10
+  ctx.r[9] = ctx.r[10] | ctx.r[10];
+  // 820044F8: bc 12,1,0x820044D0
+  if (ctx.crb[1]) goto loc_820044D0;
+  // 820044FC: cmpi r0,r11,r31
+  fsr::set_cr_signed(ctx, 0, int32_t(ctx.r[11]), -1);
+  // 82004500: bc 12,1,0x82004510
+  if (ctx.crb[1]) goto loc_82004510;
+  // 82004504: addi r6,r0,45
+  ctx.r[6] = uint64_t(0) + uint64_t(45);
+  // 82004508: addi r4,r3,11
+  ctx.r[4] = ctx.r[3] + uint64_t(11);
+  // 8200450C: stb r6,10(r3)
+  t0 = (ctx.r[3] + uint64_t(10)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[6]));
+loc_82004510:
+  // 82004510: extsw r5,r3,r0
+  ctx.r[3] = uint64_t(int64_t(int32_t(ctx.r[5])));
+  // 82004514: rldicl r8,r6,r0
+  ctx.r[6] = fsr::rotl64(ctx.r[8], 0) & 0xFFFFFFFFull;
+  // 82004518: add r5,r25,r3
+  t0 = ctx.r[25]; t1 = ctx.r[3]; ctx.r[5] = t0 + t1;
+  // 8200451C: addi r6,r6,1
+  ctx.r[6] = ctx.r[6] + uint64_t(1);
+  // 82004520: addi r3,r4,-1
+  ctx.r[3] = ctx.r[4] + uint64_t(int64_t(-1));
+  // 82004524: mtspr r6,r9,r0
+  ctx.ctr = ctx.r[6];
+  // 82004528: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 8200452C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82004530:
+  // 82004530: lbzu r4,-1(r5)
+  t0 = (ctx.r[5] + uint64_t(int64_t(-1))); ea = uint32_t(t0);
+  ctx.r[4] = fsr::ld8(base, ea);
+  ctx.r[5] = t0;
+  // 82004534: stbu r4,1(r3)
+  t0 = (ctx.r[3] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[4]));
+  ctx.r[3] = t0;
+  // 82004538: bc 16,0,0x82004530
+  ctx.ctr--;
+  if (ctx.ctr != 0) goto loc_82004530;
+  // 8200453C: addi r4,r0,0
+  ctx.r[4] = uint64_t(0) + uint64_t(0);
+  // 82004540: mulli r5,r20,42
+  ctx.r[5] = ctx.r[20] * uint64_t(42);
+  // 82004544: stb r4,1(r3)
+  t0 = (ctx.r[3] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[4]));
+  // 82004548: addis r3,r0,-18236
+  ctx.r[3] = uint64_t(0) + uint64_t(int64_t(-1195114496));
+  // 8200454C: ori r3,r3,0xD6FF
+  ctx.r[3] = ctx.r[3] | 0xD6FFull;
+  // 82004550: extsw r5,r7,r0
+  ctx.r[7] = uint64_t(int64_t(int32_t(ctx.r[5])));
+  // 82004554: rldic r3,r27,r0
+  ctx.r[27] = fsr::rotl64(ctx.r[3], 0) & 0xFFFFFFFFull;
+  // 82004558: addi r9,r1,152
+  ctx.r[9] = ctx.r[1] + uint64_t(152);
+  // 8200455C: or_ r28,r3,r28
+  ctx.r[3] = ctx.r[28] | ctx.r[28];
+  // 82004560: or_ r29,r4,r29
+  ctx.r[4] = ctx.r[29] | ctx.r[29];
+  // 82004564: or_ r30,r5,r30
+  ctx.r[5] = ctx.r[30] | ctx.r[30];
+  // 82004568: or_ r23,r6,r23
+  ctx.r[6] = ctx.r[23] | ctx.r[23];
+  // 8200456C: or_ r24,r8,r24
+  ctx.r[8] = ctx.r[24] | ctx.r[24];
+  // 82004570: or_ r27,r10,r27
+  ctx.r[10] = ctx.r[27] | ctx.r[27];
+  // 82004574: bl 0x82004658
+  ctx.lr = 0x82004578;
+  sub_82004658(ctx, base);
+  // 82004578: mulli r3,r20,-10
+  ctx.r[3] = ctx.r[20] * uint64_t(int64_t(-10));
+  // 8200457C: rlwinm r4,r20,4,0,27
+  ctx.r[4] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[20]), 4)) & 0xFFFFFFF0ull;
+  // 82004580: add r3,r22,r3
+  t0 = ctx.r[22]; t1 = ctx.r[3]; ctx.r[3] = t0 + t1;
+  // 82004584: addi r9,r31,225
+  ctx.r[9] = ctx.r[31] + uint64_t(225);
+  // 82004588: extsw r3,r7,r0
+  ctx.r[7] = uint64_t(int64_t(int32_t(ctx.r[3])));
+  // 8200458C: extsw r4,r6,r0
+  ctx.r[6] = uint64_t(int64_t(int32_t(ctx.r[4])));
+  // 82004590: or_ r28,r3,r28
+  ctx.r[3] = ctx.r[28] | ctx.r[28];
+  // 82004594: or_ r29,r4,r29
+  ctx.r[4] = ctx.r[29] | ctx.r[29];
+  // 82004598: or_ r30,r5,r30
+  ctx.r[5] = ctx.r[30] | ctx.r[30];
+  // 8200459C: or_ r24,r8,r24
+  ctx.r[8] = ctx.r[24] | ctx.r[24];
+  // 820045A0: or_ r27,r10,r27
+  ctx.r[10] = ctx.r[27] | ctx.r[27];
+  // 820045A4: bl 0x82004658
+  ctx.lr = 0x820045A8;
+  sub_82004658(ctx, base);
+  // 820045A8: or_ r26,r3,r26
+  ctx.r[3] = ctx.r[26] | ctx.r[26];
+  // 820045AC: ld r31,488(r1)
+  t0 = (ctx.r[1] + uint64_t(488)); ea = uint32_t(t0);
+  ctx.r[31] = fsr::ld64(base, ea);
+  // 820045B0: ld r30,480(r1)
+  t0 = (ctx.r[1] + uint64_t(480)); ea = uint32_t(t0);
+  ctx.r[30] = fsr::ld64(base, ea);
+  // 820045B4: ld r29,472(r1)
+  t0 = (ctx.r[1] + uint64_t(472)); ea = uint32_t(t0);
+  ctx.r[29] = fsr::ld64(base, ea);
+  // 820045B8: ld r28,464(r1)
+  t0 = (ctx.r[1] + uint64_t(464)); ea = uint32_t(t0);
+  ctx.r[28] = fsr::ld64(base, ea);
+  // 820045BC: ld r27,456(r1)
+  t0 = (ctx.r[1] + uint64_t(456)); ea = uint32_t(t0);
+  ctx.r[27] = fsr::ld64(base, ea);
+  // 820045C0: ld r26,448(r1)
+  t0 = (ctx.r[1] + uint64_t(448)); ea = uint32_t(t0);
+  ctx.r[26] = fsr::ld64(base, ea);
+  // 820045C4: ld r25,440(r1)
+  t0 = (ctx.r[1] + uint64_t(440)); ea = uint32_t(t0);
+  ctx.r[25] = fsr::ld64(base, ea);
+  // 820045C8: ld r24,432(r1)
+  t0 = (ctx.r[1] + uint64_t(432)); ea = uint32_t(t0);
+  ctx.r[24] = fsr::ld64(base, ea);
+  // 820045CC: ld r23,424(r1)
+  t0 = (ctx.r[1] + uint64_t(424)); ea = uint32_t(t0);
+  ctx.r[23] = fsr::ld64(base, ea);
+  // 820045D0: ld r22,416(r1)
+  t0 = (ctx.r[1] + uint64_t(416)); ea = uint32_t(t0);
+  ctx.r[22] = fsr::ld64(base, ea);
+  // 820045D4: ld r21,408(r1)
+  t0 = (ctx.r[1] + uint64_t(408)); ea = uint32_t(t0);
+  ctx.r[21] = fsr::ld64(base, ea);
+  // 820045D8: ld r20,400(r1)
+  t0 = (ctx.r[1] + uint64_t(400)); ea = uint32_t(t0);
+  ctx.r[20] = fsr::ld64(base, ea);
+  // 820045DC: ld r19,392(r1)
+  t0 = (ctx.r[1] + uint64_t(392)); ea = uint32_t(t0);
+  ctx.r[19] = fsr::ld64(base, ea);
+  // 820045E0: ld r18,384(r1)
+  t0 = (ctx.r[1] + uint64_t(384)); ea = uint32_t(t0);
+  ctx.r[18] = fsr::ld64(base, ea);
+  // 820045E4: ld r17,376(r1)
+  t0 = (ctx.r[1] + uint64_t(376)); ea = uint32_t(t0);
+  ctx.r[17] = fsr::ld64(base, ea);
+  // 820045E8: ld r16,368(r1)
+  t0 = (ctx.r[1] + uint64_t(368)); ea = uint32_t(t0);
+  ctx.r[16] = fsr::ld64(base, ea);
+  // 820045EC: ld r15,360(r1)
+  t0 = (ctx.r[1] + uint64_t(360)); ea = uint32_t(t0);
+  ctx.r[15] = fsr::ld64(base, ea);
+  // 820045F0: ld r14,352(r1)
+  t0 = (ctx.r[1] + uint64_t(352)); ea = uint32_t(t0);
+  ctx.r[14] = fsr::ld64(base, ea);
+  // 820045F4: addi r1,r1,496
+  ctx.r[1] = ctx.r[1] + uint64_t(496);
+  // 820045F8: ld r0,16(r1)
+  t0 = (ctx.r[1] + uint64_t(16)); ea = uint32_t(t0);
+  ctx.r[0] = fsr::ld64(base, ea);
+  // 820045FC: mtspr r0,r8,r0
+  ctx.lr = ctx.r[0];
+  // 82004600: bclr r20,r0,r0
+  if (true) return;
+loc_82004604:
+  // 82004604: cmpli r0,r7,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[7]), 0u);
+  // 82004608: bc 4,2,0x82004154
+  if (!ctx.crb[2]) goto loc_82004154;
+  // 8200460C: addis r4,r0,8232
+  ctx.r[4] = uint64_t(0) + uint64_t(539492352);
+  // 82004610: addis r5,r0,16708
+  ctx.r[5] = uint64_t(0) + uint64_t(1094975488);
+  // 82004614: ori r4,r4,0x5449
+  ctx.r[4] = ctx.r[4] | 0x5449ull;
+  // 82004618: ori r5,r5,0x4129
+  ctx.r[5] = ctx.r[5] | 0x4129ull;
+  // 8200461C: stw r5,8(r3)
+  t0 = (ctx.r[3] + uint64_t(8)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[5]));
+  // 82004620: rldic r4,r4,r0
+  ctx.r[4] = fsr::rotl64(ctx.r[4], 32) & 0x3FFFFFFF00000000ull;
+  // 82004624: oris r4,r4,0x4441
+  ctx.r[4] = ctx.r[4] | 0x44410000ull;
+  // 82004628: ori r4,r4,0x4B20
+  ctx.r[4] = ctx.r[4] | 0x4B20ull;
+  // 8200462C: std r4,0(r3)
+  t0 = (ctx.r[3] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[4]);
+  // 82004630: addi r4,r0,0
+  ctx.r[4] = uint64_t(0) + uint64_t(0);
+  // 82004634: stb r4,12(r3)
+  t0 = (ctx.r[3] + uint64_t(12)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[4]));
+  // 82004638: b 0x82004154
+  goto loc_82004154;
+  fsr::fsr_unimplemented(ctx, base, 0x8200463C, 0); // zero word (padding)
+  fsr::fsr_unimplemented(ctx, base, 0x82004640, 0); // zero word (padding)
+  fsr::fsr_unimplemented(ctx, base, 0x82004644, 0); // zero word (padding)
+  fsr::fsr_call_indirect(ctx, base, 0x82004648);
   return;
 }
 
-FSR_FUNC(sub_82003FE0) {
+FSR_FUNC(sub_82004650) {
   uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
-  // 82003FE0: addi r5,r0,16
+  // 82004650: addis r2,r12,1
+  ctx.r[2] = ctx.r[12] + uint64_t(65536);
+  // 82004654: addi r2,r2,-24976
+  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-24976));
+  // 82004658: stdu r1,-448(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-448))); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[1]);
+  ctx.r[1] = t0;
+  // 8200465C: std r7,168(r1)
+  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[7]);
+  // 82004660: lbz r7,0(r9)
+  t0 = (ctx.r[9] + uint64_t(0)); ea = uint32_t(t0);
+  ctx.r[7] = fsr::ld8(base, ea);
+  // 82004664: cmpli r0,r7,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[7]), 0u);
+  // 82004668: std r14,304(r1)
+  t0 = (ctx.r[1] + uint64_t(304)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[14]);
+  // 8200466C: std r15,312(r1)
+  t0 = (ctx.r[1] + uint64_t(312)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[15]);
+  // 82004670: std r16,320(r1)
+  t0 = (ctx.r[1] + uint64_t(320)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[16]);
+  // 82004674: std r17,328(r1)
+  t0 = (ctx.r[1] + uint64_t(328)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[17]);
+  // 82004678: std r18,336(r1)
+  t0 = (ctx.r[1] + uint64_t(336)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[18]);
+  // 8200467C: std r19,344(r1)
+  t0 = (ctx.r[1] + uint64_t(344)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[19]);
+  // 82004680: std r20,352(r1)
+  t0 = (ctx.r[1] + uint64_t(352)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[20]);
+  // 82004684: std r21,360(r1)
+  t0 = (ctx.r[1] + uint64_t(360)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[21]);
+  // 82004688: std r22,368(r1)
+  t0 = (ctx.r[1] + uint64_t(368)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[22]);
+  // 8200468C: std r23,376(r1)
+  t0 = (ctx.r[1] + uint64_t(376)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[23]);
+  // 82004690: std r24,384(r1)
+  t0 = (ctx.r[1] + uint64_t(384)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[24]);
+  // 82004694: std r25,392(r1)
+  t0 = (ctx.r[1] + uint64_t(392)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[25]);
+  // 82004698: std r26,400(r1)
+  t0 = (ctx.r[1] + uint64_t(400)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[26]);
+  // 8200469C: std r27,408(r1)
+  t0 = (ctx.r[1] + uint64_t(408)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[27]);
+  // 820046A0: std r28,416(r1)
+  t0 = (ctx.r[1] + uint64_t(416)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[28]);
+  // 820046A4: std r29,424(r1)
+  t0 = (ctx.r[1] + uint64_t(424)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[29]);
+  // 820046A8: std r30,432(r1)
+  t0 = (ctx.r[1] + uint64_t(432)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[30]);
+  // 820046AC: std r31,440(r1)
+  t0 = (ctx.r[1] + uint64_t(440)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[31]);
+  // 820046B0: std r6,280(r1)
+  t0 = (ctx.r[1] + uint64_t(280)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[6]);
+  // 820046B4: bc 12,2,0x82004AD0
+  if (ctx.crb[2]) goto loc_82004AD0;
+  // 820046B8: ld r11,168(r1)
+  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
+  ctx.r[11] = fsr::ld64(base, ea);
+  // 820046BC: extsw r8,r28,r0
+  ctx.r[28] = uint64_t(int64_t(int32_t(ctx.r[8])));
+  fsr::set_cr0(ctx, ctx.r[28]);
+  // 820046C0: mulli r12,r8,6
+  ctx.r[12] = ctx.r[8] * uint64_t(6);
+  // 820046C4: mcrf r4,r0,r0
+  std::memcpy(ctx.crb + 4, ctx.crb + 0, 4);
+  // 820046C8: extsw r12,r24,r0
+  ctx.r[24] = uint64_t(int64_t(int32_t(ctx.r[12])));
+  // 820046CC: ld r29,280(r1)
+  t0 = (ctx.r[1] + uint64_t(280)); ea = uint32_t(t0);
+  ctx.r[29] = fsr::ld64(base, ea);
+  // 820046D0: addi r6,r11,1
+  ctx.r[6] = ctx.r[11] + uint64_t(1);
+  // 820046D4: mulld r30,r11,r4
+  ctx.r[30] = ctx.r[11] * ctx.r[4];
+  // 820046D8: mulld r6,r6,r4
+  ctx.r[6] = ctx.r[6] * ctx.r[4];
+  // 820046DC: std r28,296(r1)
+  t0 = (ctx.r[1] + uint64_t(296)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[28]);
+  // 820046E0: std r24,88(r1)
+  t0 = (ctx.r[1] + uint64_t(88)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[24]);
+  // 820046E4: rldicr r29,r0,r2
+  ctx.r[0] = fsr::rotl64(ctx.r[29], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 820046E8: addi r27,r29,2
+  ctx.r[27] = ctx.r[29] + uint64_t(2);
+  // 820046EC: rldicr r6,r6,r2
+  ctx.r[6] = fsr::rotl64(ctx.r[6], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 820046F0: std r27,120(r1)
+  t0 = (ctx.r[1] + uint64_t(120)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[27]);
+  // 820046F4: nor r29,r27,r29
+  ctx.r[27] = ~(ctx.r[29] | ctx.r[29]);
+  // 820046F8: add r6,r6,r0
+  t0 = ctx.r[6]; t1 = ctx.r[0]; ctx.r[6] = t0 + t1;
+  // 820046FC: mulld r11,r28,r4
+  ctx.r[11] = ctx.r[28] * ctx.r[4];
+  // 82004700: std r27,112(r1)
+  t0 = (ctx.r[1] + uint64_t(112)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[27]);
+  // 82004704: addi r27,r29,1
+  ctx.r[27] = ctx.r[29] + uint64_t(1);
+  // 82004708: rldicr r30,r12,r2
+  ctx.r[12] = fsr::rotl64(ctx.r[30], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 8200470C: std r6,48(r1)
+  t0 = (ctx.r[1] + uint64_t(48)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[6]);
+  // 82004710: add r30,r28,r29
+  t0 = ctx.r[28]; t1 = ctx.r[29]; ctx.r[30] = t0 + t1;
+  // 82004714: add r6,r6,r3
+  t0 = ctx.r[6]; t1 = ctx.r[3]; ctx.r[6] = t0 + t1;
+  // 82004718: std r27,104(r1)
+  t0 = (ctx.r[1] + uint64_t(104)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[27]);
+  // 8200471C: neg r27,r29,r0
+  t0 = ctx.r[29]; ctx.r[27] = uint64_t(0) - t0;
+  // 82004720: rldicr r28,r25,r2
+  ctx.r[25] = fsr::rotl64(ctx.r[28], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 82004724: neg r29,r28,r0
+  t0 = ctx.r[28]; ctx.r[29] = uint64_t(0) - t0;
+  // 82004728: std r27,96(r1)
+  t0 = (ctx.r[1] + uint64_t(96)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[27]);
+  // 8200472C: rldicr r11,r28,r2
+  ctx.r[28] = fsr::rotl64(ctx.r[11], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 82004730: add r11,r12,r0
+  t0 = ctx.r[12]; t1 = ctx.r[0]; ctx.r[11] = t0 + t1;
+  // 82004734: addi r12,r30,1
+  ctx.r[12] = ctx.r[30] + uint64_t(1);
+  // 82004738: std r29,224(r1)
+  t0 = (ctx.r[1] + uint64_t(224)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[29]);
+  // 8200473C: addi r31,r6,4
+  ctx.r[31] = ctx.r[6] + uint64_t(4);
+  // 82004740: addis r6,r2,-1
+  ctx.r[6] = ctx.r[2] + uint64_t(int64_t(-65536));
+  // 82004744: rldicr r4,r8,r2
+  ctx.r[8] = fsr::rotl64(ctx.r[4], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 82004748: addi r6,r6,31952
+  ctx.r[6] = ctx.r[6] + uint64_t(31952);
+  // 8200474C: addi r26,r0,0
+  ctx.r[26] = uint64_t(0) + uint64_t(0);
+  // 82004750: std r12,64(r1)
+  t0 = (ctx.r[1] + uint64_t(64)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[12]);
+  // 82004754: rldicr r24,r29,r2
+  ctx.r[29] = fsr::rotl64(ctx.r[24], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 82004758: neg r12,r24,r0
+  t0 = ctx.r[24]; ctx.r[12] = uint64_t(0) - t0;
+  // 8200475C: add r17,r3,r11
+  t0 = ctx.r[3]; t1 = ctx.r[11]; ctx.r[17] = t0 + t1;
+  // 82004760: std r30,80(r1)
+  t0 = (ctx.r[1] + uint64_t(80)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[30]);
+  // 82004764: addi r11,r11,-4
+  ctx.r[11] = ctx.r[11] + uint64_t(int64_t(-4));
+  // 82004768: addi r27,r0,255
+  ctx.r[27] = uint64_t(0) + uint64_t(255);
+  // 8200476C: std r12,56(r1)
+  t0 = (ctx.r[1] + uint64_t(56)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[12]);
+  // 82004770: std r11,40(r1)
+  t0 = (ctx.r[1] + uint64_t(40)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[11]);
+  // 82004774: std r6,32(r1)
+  t0 = (ctx.r[1] + uint64_t(32)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[6]);
+  // 82004778: std r29,72(r1)
+  t0 = (ctx.r[1] + uint64_t(72)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[29]);
+  // 8200477C: std r28,160(r1)
+  t0 = (ctx.r[1] + uint64_t(160)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[28]);
+  // 82004780: b 0x820047CC
+  goto loc_820047CC;
+  // 82004784: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004788: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 8200478C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82004790:
+  // 82004790: ld r9,152(r1)
+  t0 = (ctx.r[1] + uint64_t(152)); ea = uint32_t(t0);
+  ctx.r[9] = fsr::ld64(base, ea);
+  // 82004794: lbzu r7,1(r9)
+  t0 = (ctx.r[9] + uint64_t(1)); ea = uint32_t(t0);
+  ctx.r[7] = fsr::ld8(base, ea);
+  ctx.r[9] = t0;
+  // 82004798: ld r6,280(r1)
+  t0 = (ctx.r[1] + uint64_t(280)); ea = uint32_t(t0);
+  ctx.r[6] = fsr::ld64(base, ea);
+  // 8200479C: cmpli r0,r7,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[7]), 0u);
+  // 820047A0: ld r24,88(r1)
+  t0 = (ctx.r[1] + uint64_t(88)); ea = uint32_t(t0);
+  ctx.r[24] = fsr::ld64(base, ea);
+  // 820047A4: ld r29,72(r1)
+  t0 = (ctx.r[1] + uint64_t(72)); ea = uint32_t(t0);
+  ctx.r[29] = fsr::ld64(base, ea);
+  // 820047A8: add r6,r6,r24
+  t0 = ctx.r[6]; t1 = ctx.r[24]; ctx.r[6] = t0 + t1;
+  // 820047AC: ld r31,128(r1)
+  t0 = (ctx.r[1] + uint64_t(128)); ea = uint32_t(t0);
+  ctx.r[31] = fsr::ld64(base, ea);
+  // 820047B0: ld r17,136(r1)
+  t0 = (ctx.r[1] + uint64_t(136)); ea = uint32_t(t0);
+  ctx.r[17] = fsr::ld64(base, ea);
+  // 820047B4: add r31,r31,r29
+  t0 = ctx.r[31]; t1 = ctx.r[29]; ctx.r[31] = t0 + t1;
+  // 820047B8: ld r26,144(r1)
+  t0 = (ctx.r[1] + uint64_t(144)); ea = uint32_t(t0);
+  ctx.r[26] = fsr::ld64(base, ea);
+  // 820047BC: add r17,r17,r29
+  t0 = ctx.r[17]; t1 = ctx.r[29]; ctx.r[17] = t0 + t1;
+  // 820047C0: addi r26,r26,1
+  ctx.r[26] = ctx.r[26] + uint64_t(1);
+  // 820047C4: std r6,280(r1)
+  t0 = (ctx.r[1] + uint64_t(280)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[6]);
+  // 820047C8: bc 12,2,0x82004AD0
+  if (ctx.crb[2]) goto loc_82004AD0;
+loc_820047CC:
+  // 820047CC: addi r12,r7,-97
+  ctx.r[12] = ctx.r[7] + uint64_t(int64_t(-97));
+  // 820047D0: rlwinm r7,r7,0,24,31
+  ctx.r[7] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[7]), 0)) & 0xFFull;
+  // 820047D4: std r9,152(r1)
+  t0 = (ctx.r[1] + uint64_t(152)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[9]);
+  // 820047D8: rlwinm r12,r12,0,24,31
+  ctx.r[12] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[12]), 0)) & 0xFFull;
+  // 820047DC: addi r30,r7,-32
+  ctx.r[30] = ctx.r[7] + uint64_t(int64_t(-32));
+  // 820047E0: ld r9,56(r1)
+  t0 = (ctx.r[1] + uint64_t(56)); ea = uint32_t(t0);
+  ctx.r[9] = fsr::ld64(base, ea);
+  // 820047E4: cmpli r0,r12,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[12]), 26u);
+  // 820047E8: addi r0,r0,-64
+  ctx.r[0] = uint64_t(0) + uint64_t(int64_t(-64));
+  // 820047EC: bc 12,0,0x820047F4
+  if (ctx.crb[0]) goto loc_820047F4;
+  // 820047F0: b 0x820047F8
+  goto loc_820047F8;
+loc_820047F4:
+  // 820047F4: addi r7,r30,0
+  ctx.r[7] = ctx.r[30] + uint64_t(0);
+loc_820047F8:
+  // 820047F8: addi r12,r7,-96
+  ctx.r[12] = ctx.r[7] + uint64_t(int64_t(-96));
+  // 820047FC: std r26,144(r1)
+  t0 = (ctx.r[1] + uint64_t(144)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[26]);
+  // 82004800: addi r7,r7,-32
+  ctx.r[7] = ctx.r[7] + uint64_t(int64_t(-32));
+  // 82004804: cmpl r0,r12,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[12]), uint32_t(ctx.r[0]));
+  // 82004808: addi r12,r0,31
+  ctx.r[12] = uint64_t(0) + uint64_t(31);
+  // 8200480C: std r17,136(r1)
+  t0 = (ctx.r[1] + uint64_t(136)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[17]);
+  // 82004810: bc 12,0,0x82004818
+  if (ctx.crb[0]) goto loc_82004818;
+  // 82004814: b 0x8200481C
+  goto loc_8200481C;
+loc_82004818:
+  // 82004818: addi r7,r12,0
+  ctx.r[7] = ctx.r[12] + uint64_t(0);
+loc_8200481C:
+  // 8200481C: mulld r6,r24,r26
+  ctx.r[6] = ctx.r[24] * ctx.r[26];
+  // 82004820: mulld r9,r9,r26
+  ctx.r[9] = ctx.r[9] * ctx.r[26];
+  // 82004824: ld r12,80(r1)
+  t0 = (ctx.r[1] + uint64_t(80)); ea = uint32_t(t0);
+  ctx.r[12] = fsr::ld64(base, ea);
+  // 82004828: std r31,128(r1)
+  t0 = (ctx.r[1] + uint64_t(128)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[31]);
+  // 8200482C: add r12,r12,r6
+  t0 = ctx.r[12]; t1 = ctx.r[6]; ctx.r[12] = t0 + t1;
+  // 82004830: mulld r11,r29,r26
+  ctx.r[11] = ctx.r[29] * ctx.r[26];
+  // 82004834: std r12,272(r1)
+  t0 = (ctx.r[1] + uint64_t(272)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[12]);
+  // 82004838: extsw r7,r7,r0
+  ctx.r[7] = uint64_t(int64_t(int32_t(ctx.r[7])));
+  // 8200483C: ld r12,104(r1)
+  t0 = (ctx.r[1] + uint64_t(104)); ea = uint32_t(t0);
+  ctx.r[12] = fsr::ld64(base, ea);
+  // 82004840: mulli r7,r7,7
+  ctx.r[7] = ctx.r[7] * uint64_t(7);
+  // 82004844: add r12,r12,r6
+  t0 = ctx.r[12]; t1 = ctx.r[6]; ctx.r[12] = t0 + t1;
+  // 82004848: std r12,264(r1)
+  t0 = (ctx.r[1] + uint64_t(264)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[12]);
+  // 8200484C: addi r30,r0,0
+  ctx.r[30] = uint64_t(0) + uint64_t(0);
+  // 82004850: ld r12,96(r1)
+  t0 = (ctx.r[1] + uint64_t(96)); ea = uint32_t(t0);
+  ctx.r[12] = fsr::ld64(base, ea);
+  // 82004854: add r12,r12,r9
+  t0 = ctx.r[12]; t1 = ctx.r[9]; ctx.r[12] = t0 + t1;
+  // 82004858: std r12,256(r1)
+  t0 = (ctx.r[1] + uint64_t(256)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[12]);
+  // 8200485C: ld r12,64(r1)
+  t0 = (ctx.r[1] + uint64_t(64)); ea = uint32_t(t0);
+  ctx.r[12] = fsr::ld64(base, ea);
+  // 82004860: add r12,r12,r6
+  t0 = ctx.r[12]; t1 = ctx.r[6]; ctx.r[12] = t0 + t1;
+  // 82004864: std r12,248(r1)
+  t0 = (ctx.r[1] + uint64_t(248)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[12]);
+  // 82004868: ld r12,120(r1)
+  t0 = (ctx.r[1] + uint64_t(120)); ea = uint32_t(t0);
+  ctx.r[12] = fsr::ld64(base, ea);
+  // 8200486C: add r6,r12,r6
+  t0 = ctx.r[12]; t1 = ctx.r[6]; ctx.r[6] = t0 + t1;
+  // 82004870: std r6,240(r1)
+  t0 = (ctx.r[1] + uint64_t(240)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[6]);
+  // 82004874: ld r6,112(r1)
+  t0 = (ctx.r[1] + uint64_t(112)); ea = uint32_t(t0);
+  ctx.r[6] = fsr::ld64(base, ea);
+  // 82004878: add r6,r6,r9
+  t0 = ctx.r[6]; t1 = ctx.r[9]; ctx.r[6] = t0 + t1;
+  // 8200487C: std r6,232(r1)
+  t0 = (ctx.r[1] + uint64_t(232)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[6]);
+  // 82004880: ld r6,40(r1)
+  t0 = (ctx.r[1] + uint64_t(40)); ea = uint32_t(t0);
+  ctx.r[6] = fsr::ld64(base, ea);
+  // 82004884: add r6,r6,r11
+  t0 = ctx.r[6]; t1 = ctx.r[11]; ctx.r[6] = t0 + t1;
+  // 82004888: std r6,192(r1)
+  t0 = (ctx.r[1] + uint64_t(192)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[6]);
+  // 8200488C: ld r6,48(r1)
+  t0 = (ctx.r[1] + uint64_t(48)); ea = uint32_t(t0);
+  ctx.r[6] = fsr::ld64(base, ea);
+  // 82004890: add r6,r6,r11
+  t0 = ctx.r[6]; t1 = ctx.r[11]; ctx.r[6] = t0 + t1;
+  // 82004894: std r6,184(r1)
+  t0 = (ctx.r[1] + uint64_t(184)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[6]);
+  // 82004898: ld r6,32(r1)
+  t0 = (ctx.r[1] + uint64_t(32)); ea = uint32_t(t0);
+  ctx.r[6] = fsr::ld64(base, ea);
+  // 8200489C: add r6,r6,r7
+  t0 = ctx.r[6]; t1 = ctx.r[7]; ctx.r[6] = t0 + t1;
+  // 820048A0: std r6,176(r1)
+  t0 = (ctx.r[1] + uint64_t(176)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[6]);
+  // 820048A4: b 0x820048D4
+  goto loc_820048D4;
+  // 820048A8: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820048AC: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_820048B0:
+  // 820048B0: ld r30,200(r1)
+  t0 = (ctx.r[1] + uint64_t(200)); ea = uint32_t(t0);
+  ctx.r[30] = fsr::ld64(base, ea);
+  // 820048B4: ld r28,160(r1)
+  t0 = (ctx.r[1] + uint64_t(160)); ea = uint32_t(t0);
+  ctx.r[28] = fsr::ld64(base, ea);
+  // 820048B8: addi r30,r30,1
+  ctx.r[30] = ctx.r[30] + uint64_t(1);
+  // 820048BC: cmpli r1,r30,r0
+  fsr::set_cr_unsigned(ctx, 0, ctx.r[30], 7u);
+  // 820048C0: ld r31,208(r1)
+  t0 = (ctx.r[1] + uint64_t(208)); ea = uint32_t(t0);
+  ctx.r[31] = fsr::ld64(base, ea);
+  // 820048C4: ld r17,216(r1)
+  t0 = (ctx.r[1] + uint64_t(216)); ea = uint32_t(t0);
+  ctx.r[17] = fsr::ld64(base, ea);
+  // 820048C8: add r31,r31,r28
+  t0 = ctx.r[31]; t1 = ctx.r[28]; ctx.r[31] = t0 + t1;
+  // 820048CC: add r17,r17,r28
+  t0 = ctx.r[17]; t1 = ctx.r[28]; ctx.r[17] = t0 + t1;
+  // 820048D0: bc 12,2,0x82004790
+  if (ctx.crb[2]) goto loc_82004790;
+loc_820048D4:
+  // 820048D4: ld r11,296(r1)
+  t0 = (ctx.r[1] + uint64_t(296)); ea = uint32_t(t0);
+  ctx.r[11] = fsr::ld64(base, ea);
+  // 820048D8: mulld r6,r28,r30
+  ctx.r[6] = ctx.r[28] * ctx.r[30];
+  // 820048DC: addi r19,r0,0
+  ctx.r[19] = uint64_t(0) + uint64_t(0);
+  // 820048E0: ld r9,168(r1)
+  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
+  ctx.r[9] = fsr::ld64(base, ea);
+  // 820048E4: mulld r7,r30,r11
+  ctx.r[7] = ctx.r[30] * ctx.r[11];
+  // 820048E8: std r30,200(r1)
+  t0 = (ctx.r[1] + uint64_t(200)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[30]);
+  // 820048EC: add r22,r7,r9
+  t0 = ctx.r[7]; t1 = ctx.r[9]; ctx.r[22] = t0 + t1;
+  // 820048F0: ld r7,192(r1)
+  t0 = (ctx.r[1] + uint64_t(192)); ea = uint32_t(t0);
+  ctx.r[7] = fsr::ld64(base, ea);
+  // 820048F4: addi r12,r22,1
+  ctx.r[12] = ctx.r[22] + uint64_t(1);
+  // 820048F8: add r28,r12,r11
+  t0 = ctx.r[12]; t1 = ctx.r[11]; ctx.r[28] = t0 + t1;
+  // 820048FC: add r7,r7,r6
+  t0 = ctx.r[7]; t1 = ctx.r[6]; ctx.r[7] = t0 + t1;
+  // 82004900: std r17,216(r1)
+  t0 = (ctx.r[1] + uint64_t(216)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[17]);
+  // 82004904: std r7,288(r1)
+  t0 = (ctx.r[1] + uint64_t(288)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[7]);
+  // 82004908: ld r7,184(r1)
+  t0 = (ctx.r[1] + uint64_t(184)); ea = uint32_t(t0);
+  ctx.r[7] = fsr::ld64(base, ea);
+  // 8200490C: add r18,r7,r6
+  t0 = ctx.r[7]; t1 = ctx.r[6]; ctx.r[18] = t0 + t1;
+  // 82004910: ld r6,176(r1)
+  t0 = (ctx.r[1] + uint64_t(176)); ea = uint32_t(t0);
+  ctx.r[6] = fsr::ld64(base, ea);
+  // 82004914: add r7,r22,r11
+  t0 = ctx.r[22]; t1 = ctx.r[11]; ctx.r[7] = t0 + t1;
+  // 82004918: lbzx r20,r6,r30
+  t0 = (ctx.r[6] + ctx.r[30]); ea = uint32_t(t0);
+  ctx.r[20] = fsr::ld8(base, ea);
+  // 8200491C: std r31,208(r1)
+  t0 = (ctx.r[1] + uint64_t(208)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[31]);
+  // 82004920: b 0x82004944
+  goto loc_82004944;
+  // 82004924: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004928: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 8200492C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82004930:
+  // 82004930: addi r19,r19,1
+  ctx.r[19] = ctx.r[19] + uint64_t(1);
+  // 82004934: add r31,r31,r25
+  t0 = ctx.r[31]; t1 = ctx.r[25]; ctx.r[31] = t0 + t1;
+  // 82004938: cmpli r1,r19,r0
+  fsr::set_cr_unsigned(ctx, 0, ctx.r[19], 5u);
+  // 8200493C: add r17,r17,r25
+  t0 = ctx.r[17]; t1 = ctx.r[25]; ctx.r[17] = t0 + t1;
+  // 82004940: bc 12,2,0x820048B0
+  if (ctx.crb[2]) goto loc_820048B0;
+loc_82004944:
+  // 82004944: slw r20,r6,r19
+  ctx.r[6] = fsr::ppc_slw(ctx.r[20], ctx.r[19]);
+  // 82004948: andi_rc r6,r6,0x10
+  ctx.r[6] = ctx.r[6] & 0x10ull;
+  fsr::set_cr0(ctx, ctx.r[6]);
+  // 8200494C: bc 12,2,0x82004930
+  if (ctx.crb[2]) goto loc_82004930;
+  // 82004950: bc 4,5,0x82004930
+  if (!ctx.crb[5]) goto loc_82004930;
+  // 82004954: ld r6,296(r1)
+  t0 = (ctx.r[1] + uint64_t(296)); ea = uint32_t(t0);
+  ctx.r[6] = fsr::ld64(base, ea);
+  // 82004958: mulld r11,r25,r19
+  ctx.r[11] = ctx.r[25] * ctx.r[19];
+  // 8200495C: addi r14,r0,0
+  ctx.r[14] = uint64_t(0) + uint64_t(0);
+  // 82004960: ld r0,272(r1)
+  t0 = (ctx.r[1] + uint64_t(272)); ea = uint32_t(t0);
+  ctx.r[0] = fsr::ld64(base, ea);
+  // 82004964: mulld r9,r6,r19
+  ctx.r[9] = ctx.r[6] * ctx.r[19];
+  // 82004968: ld r6,224(r1)
+  t0 = (ctx.r[1] + uint64_t(224)); ea = uint32_t(t0);
+  ctx.r[6] = fsr::ld64(base, ea);
+  // 8200496C: add r30,r0,r9
+  t0 = ctx.r[0]; t1 = ctx.r[9]; ctx.r[30] = t0 + t1;
+  // 82004970: ld r0,264(r1)
+  t0 = (ctx.r[1] + uint64_t(264)); ea = uint32_t(t0);
+  ctx.r[0] = fsr::ld64(base, ea);
+  // 82004974: mulld r6,r6,r19
+  ctx.r[6] = ctx.r[6] * ctx.r[19];
+  // 82004978: add r29,r0,r9
+  t0 = ctx.r[0]; t1 = ctx.r[9]; ctx.r[29] = t0 + t1;
+  // 8200497C: ld r0,248(r1)
+  t0 = (ctx.r[1] + uint64_t(248)); ea = uint32_t(t0);
+  ctx.r[0] = fsr::ld64(base, ea);
+  // 82004980: cmp r1,r30,r29
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[30]), int64_t(ctx.r[29]));
+  // 82004984: ld r24,232(r1)
+  t0 = (ctx.r[1] + uint64_t(232)); ea = uint32_t(t0);
+  ctx.r[24] = fsr::ld64(base, ea);
+  // 82004988: add r26,r0,r9
+  t0 = ctx.r[0]; t1 = ctx.r[9]; ctx.r[26] = t0 + t1;
+  // 8200498C: ld r0,240(r1)
+  t0 = (ctx.r[1] + uint64_t(240)); ea = uint32_t(t0);
+  ctx.r[0] = fsr::ld64(base, ea);
+  // 82004990: add r15,r24,r6
+  t0 = ctx.r[24]; t1 = ctx.r[6]; ctx.r[15] = t0 + t1;
+  // 82004994: add r23,r0,r9
+  t0 = ctx.r[0]; t1 = ctx.r[9]; ctx.r[23] = t0 + t1;
+  // 82004998: ld r0,256(r1)
+  t0 = (ctx.r[1] + uint64_t(256)); ea = uint32_t(t0);
+  ctx.r[0] = fsr::ld64(base, ea);
+  // 8200499C: cmp r21,r26,r23
+  fsr::set_cr_signed(ctx, 5, int64_t(ctx.r[26]), int64_t(ctx.r[23]));
+  // 820049A0: add r0,r0,r6
+  t0 = ctx.r[0]; t1 = ctx.r[6]; ctx.r[0] = t0 + t1;
+  // 820049A4: ld r6,288(r1)
+  t0 = (ctx.r[1] + uint64_t(288)); ea = uint32_t(t0);
+  ctx.r[6] = fsr::ld64(base, ea);
+  // 820049A8: add r24,r6,r11
+  t0 = ctx.r[6]; t1 = ctx.r[11]; ctx.r[24] = t0 + t1;
+  // 820049AC: add r6,r18,r11
+  t0 = ctx.r[18]; t1 = ctx.r[11]; ctx.r[6] = t0 + t1;
+  // 820049B0: ld r11,280(r1)
+  t0 = (ctx.r[1] + uint64_t(280)); ea = uint32_t(t0);
+  ctx.r[11] = fsr::ld64(base, ea);
+  // 820049B4: add r21,r9,r11
+  t0 = ctx.r[9]; t1 = ctx.r[11]; ctx.r[21] = t0 + t1;
+  // 820049B8: bc 12,1,0x820049C4
+  if (ctx.crb[1]) goto loc_820049C4;
+  // 820049BC: ori r9,r29,0x0
+  ctx.r[9] = ctx.r[29] | 0x0ull;
+  // 820049C0: b 0x820049C8
+  goto loc_820049C8;
+loc_820049C4:
+  // 820049C4: addi r9,r30,0
+  ctx.r[9] = ctx.r[30] + uint64_t(0);
+loc_820049C8:
+  // 820049C8: bc 12,21,0x820049D4
+  if (ctx.crb[21]) goto loc_820049D4;
+  // 820049CC: ori r11,r23,0x0
+  ctx.r[11] = ctx.r[23] | 0x0ull;
+  // 820049D0: b 0x820049D8
+  goto loc_820049D8;
+loc_820049D4:
+  // 820049D4: addi r11,r26,0
+  ctx.r[11] = ctx.r[26] + uint64_t(0);
+loc_820049D8:
+  // 820049D8: add r23,r9,r0
+  t0 = ctx.r[9]; t1 = ctx.r[0]; ctx.r[23] = t0 + t1;
+  // 820049DC: add r26,r11,r15
+  t0 = ctx.r[11]; t1 = ctx.r[15]; ctx.r[26] = t0 + t1;
+  // 820049E0: addi r0,r21,1
+  ctx.r[0] = ctx.r[21] + uint64_t(1);
+  // 820049E4: or_ r31,r15,r31
+  ctx.r[15] = ctx.r[31] | ctx.r[31];
+  // 820049E8: or_ r12,r9,r12
+  ctx.r[9] = ctx.r[12] | ctx.r[12];
+  // 820049EC: b 0x82004A04
+  goto loc_82004A04;
+loc_820049F0:
+  // 820049F0: addi r9,r9,1
+  ctx.r[9] = ctx.r[9] + uint64_t(1);
+  // 820049F4: add r15,r15,r8
+  t0 = ctx.r[15]; t1 = ctx.r[8]; ctx.r[15] = t0 + t1;
+  // 820049F8: cmp r1,r9,r28
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[9]), int64_t(ctx.r[28]));
+  // 820049FC: addi r14,r14,1
+  ctx.r[14] = ctx.r[14] + uint64_t(1);
+  // 82004A00: bc 4,0,0x82004A50
+  if (!ctx.crb[0]) goto loc_82004A50;
+loc_82004A04:
+  // 82004A04: mulld r11,r8,r14
+  ctx.r[11] = ctx.r[8] * ctx.r[14];
+  // 82004A08: cmp r21,r9,r5
+  fsr::set_cr_signed(ctx, 5, int64_t(ctx.r[9]), int64_t(ctx.r[5]));
+  // 82004A0C: add r11,r6,r11
+  t0 = ctx.r[6]; t1 = ctx.r[11]; ctx.r[11] = t0 + t1;
+  // 82004A10: add r29,r3,r11
+  t0 = ctx.r[3]; t1 = ctx.r[11]; ctx.r[29] = t0 + t1;
+  // 82004A14: or_ r0,r11,r0
+  ctx.r[11] = ctx.r[0] | ctx.r[0];
+  // 82004A18: mtspr r26,r9,r0
+  ctx.ctr = ctx.r[26];
+  // 82004A1C: b 0x82004A28
+  goto loc_82004A28;
+loc_82004A20:
+  // 82004A20: addi r11,r11,1
+  ctx.r[11] = ctx.r[11] + uint64_t(1);
+  // 82004A24: bc 18,0,0x820049F0
+  ctx.ctr--;
+  if (ctx.ctr == 0) goto loc_820049F0;
+loc_82004A28:
+  // 82004A28: or_ r29,r30,r29
+  ctx.r[30] = ctx.r[29] | ctx.r[29];
+  // 82004A2C: addi r29,r29,4
+  ctx.r[29] = ctx.r[29] + uint64_t(4);
+  // 82004A30: bc 4,20,0x82004A20
+  if (!ctx.crb[20]) goto loc_82004A20;
+  // 82004A34: cmp r1,r11,r4
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[11]), int64_t(ctx.r[4]));
+  // 82004A38: bc 4,0,0x82004A20
+  if (!ctx.crb[0]) goto loc_82004A20;
+  // 82004A3C: or_ r11,r16,r9
+  ctx.r[16] = ctx.r[11] | ctx.r[9];
+  // 82004A40: andis_rc r16,r16,0x8000
+  ctx.r[16] = ctx.r[16] & 0x80000000ull;
+  fsr::set_cr0(ctx, ctx.r[16]);
+  // 82004A44: bc 4,2,0x82004A20
+  if (!ctx.crb[2]) goto loc_82004A20;
+  // 82004A48: stw r27,4(r30)
+  t0 = (ctx.r[30] + uint64_t(4)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[27]));
+  // 82004A4C: b 0x82004A20
+  goto loc_82004A20;
+loc_82004A50:
+  // 82004A50: addi r6,r0,0
+  ctx.r[6] = uint64_t(0) + uint64_t(0);
+  // 82004A54: or_ r17,r11,r17
+  ctx.r[11] = ctx.r[17] | ctx.r[17];
+  // 82004A58: or_ r22,r9,r22
+  ctx.r[9] = ctx.r[22] | ctx.r[22];
+  // 82004A5C: b 0x82004A74
+  goto loc_82004A74;
+loc_82004A60:
+  // 82004A60: addi r9,r9,1
+  ctx.r[9] = ctx.r[9] + uint64_t(1);
+  // 82004A64: add r11,r11,r8
+  t0 = ctx.r[11]; t1 = ctx.r[8]; ctx.r[11] = t0 + t1;
+  // 82004A68: cmp r1,r9,r7
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[9]), int64_t(ctx.r[7]));
+  // 82004A6C: addi r6,r6,1
+  ctx.r[6] = ctx.r[6] + uint64_t(1);
+  // 82004A70: bc 4,0,0x82004930
+  if (!ctx.crb[0]) goto loc_82004930;
+loc_82004A74:
+  // 82004A74: mulld r0,r8,r6
+  ctx.r[0] = ctx.r[8] * ctx.r[6];
+  // 82004A78: cmp r21,r9,r5
+  fsr::set_cr_signed(ctx, 5, int64_t(ctx.r[9]), int64_t(ctx.r[5]));
+  // 82004A7C: add r0,r24,r0
+  t0 = ctx.r[24]; t1 = ctx.r[0]; ctx.r[0] = t0 + t1;
+  // 82004A80: add r26,r3,r0
+  t0 = ctx.r[3]; t1 = ctx.r[0]; ctx.r[26] = t0 + t1;
+  // 82004A84: or_ r21,r30,r21
+  ctx.r[30] = ctx.r[21] | ctx.r[21];
+  // 82004A88: mtspr r23,r9,r0
+  ctx.ctr = ctx.r[23];
+  // 82004A8C: b 0x82004AA8
+  goto loc_82004AA8;
+  // 82004A90: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004A94: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004A98: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004A9C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82004AA0:
+  // 82004AA0: addi r30,r30,1
+  ctx.r[30] = ctx.r[30] + uint64_t(1);
+  // 82004AA4: bc 18,0,0x82004A60
+  ctx.ctr--;
+  if (ctx.ctr == 0) goto loc_82004A60;
+loc_82004AA8:
+  // 82004AA8: or_ r26,r29,r26
+  ctx.r[29] = ctx.r[26] | ctx.r[26];
+  // 82004AAC: addi r26,r26,4
+  ctx.r[26] = ctx.r[26] + uint64_t(4);
+  // 82004AB0: bc 4,20,0x82004AA0
+  if (!ctx.crb[20]) goto loc_82004AA0;
+  // 82004AB4: cmp r1,r30,r4
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[30]), int64_t(ctx.r[4]));
+  // 82004AB8: bc 4,0,0x82004AA0
+  if (!ctx.crb[0]) goto loc_82004AA0;
+  // 82004ABC: or_ r30,r0,r9
+  ctx.r[0] = ctx.r[30] | ctx.r[9];
+  // 82004AC0: andis_rc r0,r0,0x8000
+  ctx.r[0] = ctx.r[0] & 0x80000000ull;
+  fsr::set_cr0(ctx, ctx.r[0]);
+  // 82004AC4: bc 4,2,0x82004AA0
+  if (!ctx.crb[2]) goto loc_82004AA0;
+  // 82004AC8: stw r10,4(r29)
+  t0 = (ctx.r[29] + uint64_t(4)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[10]));
+  // 82004ACC: b 0x82004AA0
+  goto loc_82004AA0;
+loc_82004AD0:
+  // 82004AD0: ld r31,440(r1)
+  t0 = (ctx.r[1] + uint64_t(440)); ea = uint32_t(t0);
+  ctx.r[31] = fsr::ld64(base, ea);
+  // 82004AD4: ld r30,432(r1)
+  t0 = (ctx.r[1] + uint64_t(432)); ea = uint32_t(t0);
+  ctx.r[30] = fsr::ld64(base, ea);
+  // 82004AD8: ld r29,424(r1)
+  t0 = (ctx.r[1] + uint64_t(424)); ea = uint32_t(t0);
+  ctx.r[29] = fsr::ld64(base, ea);
+  // 82004ADC: ld r28,416(r1)
+  t0 = (ctx.r[1] + uint64_t(416)); ea = uint32_t(t0);
+  ctx.r[28] = fsr::ld64(base, ea);
+  // 82004AE0: ld r27,408(r1)
+  t0 = (ctx.r[1] + uint64_t(408)); ea = uint32_t(t0);
+  ctx.r[27] = fsr::ld64(base, ea);
+  // 82004AE4: ld r26,400(r1)
+  t0 = (ctx.r[1] + uint64_t(400)); ea = uint32_t(t0);
+  ctx.r[26] = fsr::ld64(base, ea);
+  // 82004AE8: ld r25,392(r1)
+  t0 = (ctx.r[1] + uint64_t(392)); ea = uint32_t(t0);
+  ctx.r[25] = fsr::ld64(base, ea);
+  // 82004AEC: ld r24,384(r1)
+  t0 = (ctx.r[1] + uint64_t(384)); ea = uint32_t(t0);
+  ctx.r[24] = fsr::ld64(base, ea);
+  // 82004AF0: ld r23,376(r1)
+  t0 = (ctx.r[1] + uint64_t(376)); ea = uint32_t(t0);
+  ctx.r[23] = fsr::ld64(base, ea);
+  // 82004AF4: ld r22,368(r1)
+  t0 = (ctx.r[1] + uint64_t(368)); ea = uint32_t(t0);
+  ctx.r[22] = fsr::ld64(base, ea);
+  // 82004AF8: ld r21,360(r1)
+  t0 = (ctx.r[1] + uint64_t(360)); ea = uint32_t(t0);
+  ctx.r[21] = fsr::ld64(base, ea);
+  // 82004AFC: ld r20,352(r1)
+  t0 = (ctx.r[1] + uint64_t(352)); ea = uint32_t(t0);
+  ctx.r[20] = fsr::ld64(base, ea);
+  // 82004B00: ld r19,344(r1)
+  t0 = (ctx.r[1] + uint64_t(344)); ea = uint32_t(t0);
+  ctx.r[19] = fsr::ld64(base, ea);
+  // 82004B04: ld r18,336(r1)
+  t0 = (ctx.r[1] + uint64_t(336)); ea = uint32_t(t0);
+  ctx.r[18] = fsr::ld64(base, ea);
+  // 82004B08: ld r17,328(r1)
+  t0 = (ctx.r[1] + uint64_t(328)); ea = uint32_t(t0);
+  ctx.r[17] = fsr::ld64(base, ea);
+  // 82004B0C: ld r16,320(r1)
+  t0 = (ctx.r[1] + uint64_t(320)); ea = uint32_t(t0);
+  ctx.r[16] = fsr::ld64(base, ea);
+  // 82004B10: ld r15,312(r1)
+  t0 = (ctx.r[1] + uint64_t(312)); ea = uint32_t(t0);
+  ctx.r[15] = fsr::ld64(base, ea);
+  // 82004B14: ld r14,304(r1)
+  t0 = (ctx.r[1] + uint64_t(304)); ea = uint32_t(t0);
+  ctx.r[14] = fsr::ld64(base, ea);
+  // 82004B18: addi r1,r1,448
+  ctx.r[1] = ctx.r[1] + uint64_t(448);
+  // 82004B1C: bclr r20,r0,r0
+  if (true) return;
+  fsr::fsr_unimplemented(ctx, base, 0x82004B20, 0); // zero word (padding)
+  fsr::fsr_unimplemented(ctx, base, 0x82004B24, 0); // zero word (padding)
+  fsr::fsr_unimplemented(ctx, base, 0x82004B28, 0); // zero word (padding)
+  fsr::fsr_call_indirect(ctx, base, 0x82004B2C);
+  return;
+}
+
+FSR_FUNC(sub_82004658) {
+  uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
+  // 82004658: stdu r1,-448(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-448))); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[1]);
+  ctx.r[1] = t0;
+  // 8200465C: std r7,168(r1)
+  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[7]);
+  // 82004660: lbz r7,0(r9)
+  t0 = (ctx.r[9] + uint64_t(0)); ea = uint32_t(t0);
+  ctx.r[7] = fsr::ld8(base, ea);
+  // 82004664: cmpli r0,r7,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[7]), 0u);
+  // 82004668: std r14,304(r1)
+  t0 = (ctx.r[1] + uint64_t(304)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[14]);
+  // 8200466C: std r15,312(r1)
+  t0 = (ctx.r[1] + uint64_t(312)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[15]);
+  // 82004670: std r16,320(r1)
+  t0 = (ctx.r[1] + uint64_t(320)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[16]);
+  // 82004674: std r17,328(r1)
+  t0 = (ctx.r[1] + uint64_t(328)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[17]);
+  // 82004678: std r18,336(r1)
+  t0 = (ctx.r[1] + uint64_t(336)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[18]);
+  // 8200467C: std r19,344(r1)
+  t0 = (ctx.r[1] + uint64_t(344)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[19]);
+  // 82004680: std r20,352(r1)
+  t0 = (ctx.r[1] + uint64_t(352)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[20]);
+  // 82004684: std r21,360(r1)
+  t0 = (ctx.r[1] + uint64_t(360)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[21]);
+  // 82004688: std r22,368(r1)
+  t0 = (ctx.r[1] + uint64_t(368)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[22]);
+  // 8200468C: std r23,376(r1)
+  t0 = (ctx.r[1] + uint64_t(376)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[23]);
+  // 82004690: std r24,384(r1)
+  t0 = (ctx.r[1] + uint64_t(384)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[24]);
+  // 82004694: std r25,392(r1)
+  t0 = (ctx.r[1] + uint64_t(392)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[25]);
+  // 82004698: std r26,400(r1)
+  t0 = (ctx.r[1] + uint64_t(400)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[26]);
+  // 8200469C: std r27,408(r1)
+  t0 = (ctx.r[1] + uint64_t(408)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[27]);
+  // 820046A0: std r28,416(r1)
+  t0 = (ctx.r[1] + uint64_t(416)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[28]);
+  // 820046A4: std r29,424(r1)
+  t0 = (ctx.r[1] + uint64_t(424)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[29]);
+  // 820046A8: std r30,432(r1)
+  t0 = (ctx.r[1] + uint64_t(432)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[30]);
+  // 820046AC: std r31,440(r1)
+  t0 = (ctx.r[1] + uint64_t(440)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[31]);
+  // 820046B0: std r6,280(r1)
+  t0 = (ctx.r[1] + uint64_t(280)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[6]);
+  // 820046B4: bc 12,2,0x82004AD0
+  if (ctx.crb[2]) goto loc_82004AD0;
+  // 820046B8: ld r11,168(r1)
+  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
+  ctx.r[11] = fsr::ld64(base, ea);
+  // 820046BC: extsw r8,r28,r0
+  ctx.r[28] = uint64_t(int64_t(int32_t(ctx.r[8])));
+  fsr::set_cr0(ctx, ctx.r[28]);
+  // 820046C0: mulli r12,r8,6
+  ctx.r[12] = ctx.r[8] * uint64_t(6);
+  // 820046C4: mcrf r4,r0,r0
+  std::memcpy(ctx.crb + 4, ctx.crb + 0, 4);
+  // 820046C8: extsw r12,r24,r0
+  ctx.r[24] = uint64_t(int64_t(int32_t(ctx.r[12])));
+  // 820046CC: ld r29,280(r1)
+  t0 = (ctx.r[1] + uint64_t(280)); ea = uint32_t(t0);
+  ctx.r[29] = fsr::ld64(base, ea);
+  // 820046D0: addi r6,r11,1
+  ctx.r[6] = ctx.r[11] + uint64_t(1);
+  // 820046D4: mulld r30,r11,r4
+  ctx.r[30] = ctx.r[11] * ctx.r[4];
+  // 820046D8: mulld r6,r6,r4
+  ctx.r[6] = ctx.r[6] * ctx.r[4];
+  // 820046DC: std r28,296(r1)
+  t0 = (ctx.r[1] + uint64_t(296)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[28]);
+  // 820046E0: std r24,88(r1)
+  t0 = (ctx.r[1] + uint64_t(88)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[24]);
+  // 820046E4: rldicr r29,r0,r2
+  ctx.r[0] = fsr::rotl64(ctx.r[29], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 820046E8: addi r27,r29,2
+  ctx.r[27] = ctx.r[29] + uint64_t(2);
+  // 820046EC: rldicr r6,r6,r2
+  ctx.r[6] = fsr::rotl64(ctx.r[6], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 820046F0: std r27,120(r1)
+  t0 = (ctx.r[1] + uint64_t(120)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[27]);
+  // 820046F4: nor r29,r27,r29
+  ctx.r[27] = ~(ctx.r[29] | ctx.r[29]);
+  // 820046F8: add r6,r6,r0
+  t0 = ctx.r[6]; t1 = ctx.r[0]; ctx.r[6] = t0 + t1;
+  // 820046FC: mulld r11,r28,r4
+  ctx.r[11] = ctx.r[28] * ctx.r[4];
+  // 82004700: std r27,112(r1)
+  t0 = (ctx.r[1] + uint64_t(112)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[27]);
+  // 82004704: addi r27,r29,1
+  ctx.r[27] = ctx.r[29] + uint64_t(1);
+  // 82004708: rldicr r30,r12,r2
+  ctx.r[12] = fsr::rotl64(ctx.r[30], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 8200470C: std r6,48(r1)
+  t0 = (ctx.r[1] + uint64_t(48)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[6]);
+  // 82004710: add r30,r28,r29
+  t0 = ctx.r[28]; t1 = ctx.r[29]; ctx.r[30] = t0 + t1;
+  // 82004714: add r6,r6,r3
+  t0 = ctx.r[6]; t1 = ctx.r[3]; ctx.r[6] = t0 + t1;
+  // 82004718: std r27,104(r1)
+  t0 = (ctx.r[1] + uint64_t(104)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[27]);
+  // 8200471C: neg r27,r29,r0
+  t0 = ctx.r[29]; ctx.r[27] = uint64_t(0) - t0;
+  // 82004720: rldicr r28,r25,r2
+  ctx.r[25] = fsr::rotl64(ctx.r[28], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 82004724: neg r29,r28,r0
+  t0 = ctx.r[28]; ctx.r[29] = uint64_t(0) - t0;
+  // 82004728: std r27,96(r1)
+  t0 = (ctx.r[1] + uint64_t(96)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[27]);
+  // 8200472C: rldicr r11,r28,r2
+  ctx.r[28] = fsr::rotl64(ctx.r[11], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 82004730: add r11,r12,r0
+  t0 = ctx.r[12]; t1 = ctx.r[0]; ctx.r[11] = t0 + t1;
+  // 82004734: addi r12,r30,1
+  ctx.r[12] = ctx.r[30] + uint64_t(1);
+  // 82004738: std r29,224(r1)
+  t0 = (ctx.r[1] + uint64_t(224)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[29]);
+  // 8200473C: addi r31,r6,4
+  ctx.r[31] = ctx.r[6] + uint64_t(4);
+  // 82004740: addis r6,r2,-1
+  ctx.r[6] = ctx.r[2] + uint64_t(int64_t(-65536));
+  // 82004744: rldicr r4,r8,r2
+  ctx.r[8] = fsr::rotl64(ctx.r[4], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 82004748: addi r6,r6,31952
+  ctx.r[6] = ctx.r[6] + uint64_t(31952);
+  // 8200474C: addi r26,r0,0
+  ctx.r[26] = uint64_t(0) + uint64_t(0);
+  // 82004750: std r12,64(r1)
+  t0 = (ctx.r[1] + uint64_t(64)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[12]);
+  // 82004754: rldicr r24,r29,r2
+  ctx.r[29] = fsr::rotl64(ctx.r[24], 2) & 0xFFFFFFFFFFFFFFFCull;
+  // 82004758: neg r12,r24,r0
+  t0 = ctx.r[24]; ctx.r[12] = uint64_t(0) - t0;
+  // 8200475C: add r17,r3,r11
+  t0 = ctx.r[3]; t1 = ctx.r[11]; ctx.r[17] = t0 + t1;
+  // 82004760: std r30,80(r1)
+  t0 = (ctx.r[1] + uint64_t(80)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[30]);
+  // 82004764: addi r11,r11,-4
+  ctx.r[11] = ctx.r[11] + uint64_t(int64_t(-4));
+  // 82004768: addi r27,r0,255
+  ctx.r[27] = uint64_t(0) + uint64_t(255);
+  // 8200476C: std r12,56(r1)
+  t0 = (ctx.r[1] + uint64_t(56)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[12]);
+  // 82004770: std r11,40(r1)
+  t0 = (ctx.r[1] + uint64_t(40)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[11]);
+  // 82004774: std r6,32(r1)
+  t0 = (ctx.r[1] + uint64_t(32)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[6]);
+  // 82004778: std r29,72(r1)
+  t0 = (ctx.r[1] + uint64_t(72)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[29]);
+  // 8200477C: std r28,160(r1)
+  t0 = (ctx.r[1] + uint64_t(160)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[28]);
+  // 82004780: b 0x820047CC
+  goto loc_820047CC;
+  // 82004784: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004788: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 8200478C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82004790:
+  // 82004790: ld r9,152(r1)
+  t0 = (ctx.r[1] + uint64_t(152)); ea = uint32_t(t0);
+  ctx.r[9] = fsr::ld64(base, ea);
+  // 82004794: lbzu r7,1(r9)
+  t0 = (ctx.r[9] + uint64_t(1)); ea = uint32_t(t0);
+  ctx.r[7] = fsr::ld8(base, ea);
+  ctx.r[9] = t0;
+  // 82004798: ld r6,280(r1)
+  t0 = (ctx.r[1] + uint64_t(280)); ea = uint32_t(t0);
+  ctx.r[6] = fsr::ld64(base, ea);
+  // 8200479C: cmpli r0,r7,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[7]), 0u);
+  // 820047A0: ld r24,88(r1)
+  t0 = (ctx.r[1] + uint64_t(88)); ea = uint32_t(t0);
+  ctx.r[24] = fsr::ld64(base, ea);
+  // 820047A4: ld r29,72(r1)
+  t0 = (ctx.r[1] + uint64_t(72)); ea = uint32_t(t0);
+  ctx.r[29] = fsr::ld64(base, ea);
+  // 820047A8: add r6,r6,r24
+  t0 = ctx.r[6]; t1 = ctx.r[24]; ctx.r[6] = t0 + t1;
+  // 820047AC: ld r31,128(r1)
+  t0 = (ctx.r[1] + uint64_t(128)); ea = uint32_t(t0);
+  ctx.r[31] = fsr::ld64(base, ea);
+  // 820047B0: ld r17,136(r1)
+  t0 = (ctx.r[1] + uint64_t(136)); ea = uint32_t(t0);
+  ctx.r[17] = fsr::ld64(base, ea);
+  // 820047B4: add r31,r31,r29
+  t0 = ctx.r[31]; t1 = ctx.r[29]; ctx.r[31] = t0 + t1;
+  // 820047B8: ld r26,144(r1)
+  t0 = (ctx.r[1] + uint64_t(144)); ea = uint32_t(t0);
+  ctx.r[26] = fsr::ld64(base, ea);
+  // 820047BC: add r17,r17,r29
+  t0 = ctx.r[17]; t1 = ctx.r[29]; ctx.r[17] = t0 + t1;
+  // 820047C0: addi r26,r26,1
+  ctx.r[26] = ctx.r[26] + uint64_t(1);
+  // 820047C4: std r6,280(r1)
+  t0 = (ctx.r[1] + uint64_t(280)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[6]);
+  // 820047C8: bc 12,2,0x82004AD0
+  if (ctx.crb[2]) goto loc_82004AD0;
+loc_820047CC:
+  // 820047CC: addi r12,r7,-97
+  ctx.r[12] = ctx.r[7] + uint64_t(int64_t(-97));
+  // 820047D0: rlwinm r7,r7,0,24,31
+  ctx.r[7] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[7]), 0)) & 0xFFull;
+  // 820047D4: std r9,152(r1)
+  t0 = (ctx.r[1] + uint64_t(152)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[9]);
+  // 820047D8: rlwinm r12,r12,0,24,31
+  ctx.r[12] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[12]), 0)) & 0xFFull;
+  // 820047DC: addi r30,r7,-32
+  ctx.r[30] = ctx.r[7] + uint64_t(int64_t(-32));
+  // 820047E0: ld r9,56(r1)
+  t0 = (ctx.r[1] + uint64_t(56)); ea = uint32_t(t0);
+  ctx.r[9] = fsr::ld64(base, ea);
+  // 820047E4: cmpli r0,r12,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[12]), 26u);
+  // 820047E8: addi r0,r0,-64
+  ctx.r[0] = uint64_t(0) + uint64_t(int64_t(-64));
+  // 820047EC: bc 12,0,0x820047F4
+  if (ctx.crb[0]) goto loc_820047F4;
+  // 820047F0: b 0x820047F8
+  goto loc_820047F8;
+loc_820047F4:
+  // 820047F4: addi r7,r30,0
+  ctx.r[7] = ctx.r[30] + uint64_t(0);
+loc_820047F8:
+  // 820047F8: addi r12,r7,-96
+  ctx.r[12] = ctx.r[7] + uint64_t(int64_t(-96));
+  // 820047FC: std r26,144(r1)
+  t0 = (ctx.r[1] + uint64_t(144)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[26]);
+  // 82004800: addi r7,r7,-32
+  ctx.r[7] = ctx.r[7] + uint64_t(int64_t(-32));
+  // 82004804: cmpl r0,r12,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[12]), uint32_t(ctx.r[0]));
+  // 82004808: addi r12,r0,31
+  ctx.r[12] = uint64_t(0) + uint64_t(31);
+  // 8200480C: std r17,136(r1)
+  t0 = (ctx.r[1] + uint64_t(136)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[17]);
+  // 82004810: bc 12,0,0x82004818
+  if (ctx.crb[0]) goto loc_82004818;
+  // 82004814: b 0x8200481C
+  goto loc_8200481C;
+loc_82004818:
+  // 82004818: addi r7,r12,0
+  ctx.r[7] = ctx.r[12] + uint64_t(0);
+loc_8200481C:
+  // 8200481C: mulld r6,r24,r26
+  ctx.r[6] = ctx.r[24] * ctx.r[26];
+  // 82004820: mulld r9,r9,r26
+  ctx.r[9] = ctx.r[9] * ctx.r[26];
+  // 82004824: ld r12,80(r1)
+  t0 = (ctx.r[1] + uint64_t(80)); ea = uint32_t(t0);
+  ctx.r[12] = fsr::ld64(base, ea);
+  // 82004828: std r31,128(r1)
+  t0 = (ctx.r[1] + uint64_t(128)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[31]);
+  // 8200482C: add r12,r12,r6
+  t0 = ctx.r[12]; t1 = ctx.r[6]; ctx.r[12] = t0 + t1;
+  // 82004830: mulld r11,r29,r26
+  ctx.r[11] = ctx.r[29] * ctx.r[26];
+  // 82004834: std r12,272(r1)
+  t0 = (ctx.r[1] + uint64_t(272)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[12]);
+  // 82004838: extsw r7,r7,r0
+  ctx.r[7] = uint64_t(int64_t(int32_t(ctx.r[7])));
+  // 8200483C: ld r12,104(r1)
+  t0 = (ctx.r[1] + uint64_t(104)); ea = uint32_t(t0);
+  ctx.r[12] = fsr::ld64(base, ea);
+  // 82004840: mulli r7,r7,7
+  ctx.r[7] = ctx.r[7] * uint64_t(7);
+  // 82004844: add r12,r12,r6
+  t0 = ctx.r[12]; t1 = ctx.r[6]; ctx.r[12] = t0 + t1;
+  // 82004848: std r12,264(r1)
+  t0 = (ctx.r[1] + uint64_t(264)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[12]);
+  // 8200484C: addi r30,r0,0
+  ctx.r[30] = uint64_t(0) + uint64_t(0);
+  // 82004850: ld r12,96(r1)
+  t0 = (ctx.r[1] + uint64_t(96)); ea = uint32_t(t0);
+  ctx.r[12] = fsr::ld64(base, ea);
+  // 82004854: add r12,r12,r9
+  t0 = ctx.r[12]; t1 = ctx.r[9]; ctx.r[12] = t0 + t1;
+  // 82004858: std r12,256(r1)
+  t0 = (ctx.r[1] + uint64_t(256)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[12]);
+  // 8200485C: ld r12,64(r1)
+  t0 = (ctx.r[1] + uint64_t(64)); ea = uint32_t(t0);
+  ctx.r[12] = fsr::ld64(base, ea);
+  // 82004860: add r12,r12,r6
+  t0 = ctx.r[12]; t1 = ctx.r[6]; ctx.r[12] = t0 + t1;
+  // 82004864: std r12,248(r1)
+  t0 = (ctx.r[1] + uint64_t(248)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[12]);
+  // 82004868: ld r12,120(r1)
+  t0 = (ctx.r[1] + uint64_t(120)); ea = uint32_t(t0);
+  ctx.r[12] = fsr::ld64(base, ea);
+  // 8200486C: add r6,r12,r6
+  t0 = ctx.r[12]; t1 = ctx.r[6]; ctx.r[6] = t0 + t1;
+  // 82004870: std r6,240(r1)
+  t0 = (ctx.r[1] + uint64_t(240)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[6]);
+  // 82004874: ld r6,112(r1)
+  t0 = (ctx.r[1] + uint64_t(112)); ea = uint32_t(t0);
+  ctx.r[6] = fsr::ld64(base, ea);
+  // 82004878: add r6,r6,r9
+  t0 = ctx.r[6]; t1 = ctx.r[9]; ctx.r[6] = t0 + t1;
+  // 8200487C: std r6,232(r1)
+  t0 = (ctx.r[1] + uint64_t(232)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[6]);
+  // 82004880: ld r6,40(r1)
+  t0 = (ctx.r[1] + uint64_t(40)); ea = uint32_t(t0);
+  ctx.r[6] = fsr::ld64(base, ea);
+  // 82004884: add r6,r6,r11
+  t0 = ctx.r[6]; t1 = ctx.r[11]; ctx.r[6] = t0 + t1;
+  // 82004888: std r6,192(r1)
+  t0 = (ctx.r[1] + uint64_t(192)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[6]);
+  // 8200488C: ld r6,48(r1)
+  t0 = (ctx.r[1] + uint64_t(48)); ea = uint32_t(t0);
+  ctx.r[6] = fsr::ld64(base, ea);
+  // 82004890: add r6,r6,r11
+  t0 = ctx.r[6]; t1 = ctx.r[11]; ctx.r[6] = t0 + t1;
+  // 82004894: std r6,184(r1)
+  t0 = (ctx.r[1] + uint64_t(184)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[6]);
+  // 82004898: ld r6,32(r1)
+  t0 = (ctx.r[1] + uint64_t(32)); ea = uint32_t(t0);
+  ctx.r[6] = fsr::ld64(base, ea);
+  // 8200489C: add r6,r6,r7
+  t0 = ctx.r[6]; t1 = ctx.r[7]; ctx.r[6] = t0 + t1;
+  // 820048A0: std r6,176(r1)
+  t0 = (ctx.r[1] + uint64_t(176)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[6]);
+  // 820048A4: b 0x820048D4
+  goto loc_820048D4;
+  // 820048A8: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 820048AC: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_820048B0:
+  // 820048B0: ld r30,200(r1)
+  t0 = (ctx.r[1] + uint64_t(200)); ea = uint32_t(t0);
+  ctx.r[30] = fsr::ld64(base, ea);
+  // 820048B4: ld r28,160(r1)
+  t0 = (ctx.r[1] + uint64_t(160)); ea = uint32_t(t0);
+  ctx.r[28] = fsr::ld64(base, ea);
+  // 820048B8: addi r30,r30,1
+  ctx.r[30] = ctx.r[30] + uint64_t(1);
+  // 820048BC: cmpli r1,r30,r0
+  fsr::set_cr_unsigned(ctx, 0, ctx.r[30], 7u);
+  // 820048C0: ld r31,208(r1)
+  t0 = (ctx.r[1] + uint64_t(208)); ea = uint32_t(t0);
+  ctx.r[31] = fsr::ld64(base, ea);
+  // 820048C4: ld r17,216(r1)
+  t0 = (ctx.r[1] + uint64_t(216)); ea = uint32_t(t0);
+  ctx.r[17] = fsr::ld64(base, ea);
+  // 820048C8: add r31,r31,r28
+  t0 = ctx.r[31]; t1 = ctx.r[28]; ctx.r[31] = t0 + t1;
+  // 820048CC: add r17,r17,r28
+  t0 = ctx.r[17]; t1 = ctx.r[28]; ctx.r[17] = t0 + t1;
+  // 820048D0: bc 12,2,0x82004790
+  if (ctx.crb[2]) goto loc_82004790;
+loc_820048D4:
+  // 820048D4: ld r11,296(r1)
+  t0 = (ctx.r[1] + uint64_t(296)); ea = uint32_t(t0);
+  ctx.r[11] = fsr::ld64(base, ea);
+  // 820048D8: mulld r6,r28,r30
+  ctx.r[6] = ctx.r[28] * ctx.r[30];
+  // 820048DC: addi r19,r0,0
+  ctx.r[19] = uint64_t(0) + uint64_t(0);
+  // 820048E0: ld r9,168(r1)
+  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
+  ctx.r[9] = fsr::ld64(base, ea);
+  // 820048E4: mulld r7,r30,r11
+  ctx.r[7] = ctx.r[30] * ctx.r[11];
+  // 820048E8: std r30,200(r1)
+  t0 = (ctx.r[1] + uint64_t(200)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[30]);
+  // 820048EC: add r22,r7,r9
+  t0 = ctx.r[7]; t1 = ctx.r[9]; ctx.r[22] = t0 + t1;
+  // 820048F0: ld r7,192(r1)
+  t0 = (ctx.r[1] + uint64_t(192)); ea = uint32_t(t0);
+  ctx.r[7] = fsr::ld64(base, ea);
+  // 820048F4: addi r12,r22,1
+  ctx.r[12] = ctx.r[22] + uint64_t(1);
+  // 820048F8: add r28,r12,r11
+  t0 = ctx.r[12]; t1 = ctx.r[11]; ctx.r[28] = t0 + t1;
+  // 820048FC: add r7,r7,r6
+  t0 = ctx.r[7]; t1 = ctx.r[6]; ctx.r[7] = t0 + t1;
+  // 82004900: std r17,216(r1)
+  t0 = (ctx.r[1] + uint64_t(216)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[17]);
+  // 82004904: std r7,288(r1)
+  t0 = (ctx.r[1] + uint64_t(288)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[7]);
+  // 82004908: ld r7,184(r1)
+  t0 = (ctx.r[1] + uint64_t(184)); ea = uint32_t(t0);
+  ctx.r[7] = fsr::ld64(base, ea);
+  // 8200490C: add r18,r7,r6
+  t0 = ctx.r[7]; t1 = ctx.r[6]; ctx.r[18] = t0 + t1;
+  // 82004910: ld r6,176(r1)
+  t0 = (ctx.r[1] + uint64_t(176)); ea = uint32_t(t0);
+  ctx.r[6] = fsr::ld64(base, ea);
+  // 82004914: add r7,r22,r11
+  t0 = ctx.r[22]; t1 = ctx.r[11]; ctx.r[7] = t0 + t1;
+  // 82004918: lbzx r20,r6,r30
+  t0 = (ctx.r[6] + ctx.r[30]); ea = uint32_t(t0);
+  ctx.r[20] = fsr::ld8(base, ea);
+  // 8200491C: std r31,208(r1)
+  t0 = (ctx.r[1] + uint64_t(208)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[31]);
+  // 82004920: b 0x82004944
+  goto loc_82004944;
+  // 82004924: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004928: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 8200492C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82004930:
+  // 82004930: addi r19,r19,1
+  ctx.r[19] = ctx.r[19] + uint64_t(1);
+  // 82004934: add r31,r31,r25
+  t0 = ctx.r[31]; t1 = ctx.r[25]; ctx.r[31] = t0 + t1;
+  // 82004938: cmpli r1,r19,r0
+  fsr::set_cr_unsigned(ctx, 0, ctx.r[19], 5u);
+  // 8200493C: add r17,r17,r25
+  t0 = ctx.r[17]; t1 = ctx.r[25]; ctx.r[17] = t0 + t1;
+  // 82004940: bc 12,2,0x820048B0
+  if (ctx.crb[2]) goto loc_820048B0;
+loc_82004944:
+  // 82004944: slw r20,r6,r19
+  ctx.r[6] = fsr::ppc_slw(ctx.r[20], ctx.r[19]);
+  // 82004948: andi_rc r6,r6,0x10
+  ctx.r[6] = ctx.r[6] & 0x10ull;
+  fsr::set_cr0(ctx, ctx.r[6]);
+  // 8200494C: bc 12,2,0x82004930
+  if (ctx.crb[2]) goto loc_82004930;
+  // 82004950: bc 4,5,0x82004930
+  if (!ctx.crb[5]) goto loc_82004930;
+  // 82004954: ld r6,296(r1)
+  t0 = (ctx.r[1] + uint64_t(296)); ea = uint32_t(t0);
+  ctx.r[6] = fsr::ld64(base, ea);
+  // 82004958: mulld r11,r25,r19
+  ctx.r[11] = ctx.r[25] * ctx.r[19];
+  // 8200495C: addi r14,r0,0
+  ctx.r[14] = uint64_t(0) + uint64_t(0);
+  // 82004960: ld r0,272(r1)
+  t0 = (ctx.r[1] + uint64_t(272)); ea = uint32_t(t0);
+  ctx.r[0] = fsr::ld64(base, ea);
+  // 82004964: mulld r9,r6,r19
+  ctx.r[9] = ctx.r[6] * ctx.r[19];
+  // 82004968: ld r6,224(r1)
+  t0 = (ctx.r[1] + uint64_t(224)); ea = uint32_t(t0);
+  ctx.r[6] = fsr::ld64(base, ea);
+  // 8200496C: add r30,r0,r9
+  t0 = ctx.r[0]; t1 = ctx.r[9]; ctx.r[30] = t0 + t1;
+  // 82004970: ld r0,264(r1)
+  t0 = (ctx.r[1] + uint64_t(264)); ea = uint32_t(t0);
+  ctx.r[0] = fsr::ld64(base, ea);
+  // 82004974: mulld r6,r6,r19
+  ctx.r[6] = ctx.r[6] * ctx.r[19];
+  // 82004978: add r29,r0,r9
+  t0 = ctx.r[0]; t1 = ctx.r[9]; ctx.r[29] = t0 + t1;
+  // 8200497C: ld r0,248(r1)
+  t0 = (ctx.r[1] + uint64_t(248)); ea = uint32_t(t0);
+  ctx.r[0] = fsr::ld64(base, ea);
+  // 82004980: cmp r1,r30,r29
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[30]), int64_t(ctx.r[29]));
+  // 82004984: ld r24,232(r1)
+  t0 = (ctx.r[1] + uint64_t(232)); ea = uint32_t(t0);
+  ctx.r[24] = fsr::ld64(base, ea);
+  // 82004988: add r26,r0,r9
+  t0 = ctx.r[0]; t1 = ctx.r[9]; ctx.r[26] = t0 + t1;
+  // 8200498C: ld r0,240(r1)
+  t0 = (ctx.r[1] + uint64_t(240)); ea = uint32_t(t0);
+  ctx.r[0] = fsr::ld64(base, ea);
+  // 82004990: add r15,r24,r6
+  t0 = ctx.r[24]; t1 = ctx.r[6]; ctx.r[15] = t0 + t1;
+  // 82004994: add r23,r0,r9
+  t0 = ctx.r[0]; t1 = ctx.r[9]; ctx.r[23] = t0 + t1;
+  // 82004998: ld r0,256(r1)
+  t0 = (ctx.r[1] + uint64_t(256)); ea = uint32_t(t0);
+  ctx.r[0] = fsr::ld64(base, ea);
+  // 8200499C: cmp r21,r26,r23
+  fsr::set_cr_signed(ctx, 5, int64_t(ctx.r[26]), int64_t(ctx.r[23]));
+  // 820049A0: add r0,r0,r6
+  t0 = ctx.r[0]; t1 = ctx.r[6]; ctx.r[0] = t0 + t1;
+  // 820049A4: ld r6,288(r1)
+  t0 = (ctx.r[1] + uint64_t(288)); ea = uint32_t(t0);
+  ctx.r[6] = fsr::ld64(base, ea);
+  // 820049A8: add r24,r6,r11
+  t0 = ctx.r[6]; t1 = ctx.r[11]; ctx.r[24] = t0 + t1;
+  // 820049AC: add r6,r18,r11
+  t0 = ctx.r[18]; t1 = ctx.r[11]; ctx.r[6] = t0 + t1;
+  // 820049B0: ld r11,280(r1)
+  t0 = (ctx.r[1] + uint64_t(280)); ea = uint32_t(t0);
+  ctx.r[11] = fsr::ld64(base, ea);
+  // 820049B4: add r21,r9,r11
+  t0 = ctx.r[9]; t1 = ctx.r[11]; ctx.r[21] = t0 + t1;
+  // 820049B8: bc 12,1,0x820049C4
+  if (ctx.crb[1]) goto loc_820049C4;
+  // 820049BC: ori r9,r29,0x0
+  ctx.r[9] = ctx.r[29] | 0x0ull;
+  // 820049C0: b 0x820049C8
+  goto loc_820049C8;
+loc_820049C4:
+  // 820049C4: addi r9,r30,0
+  ctx.r[9] = ctx.r[30] + uint64_t(0);
+loc_820049C8:
+  // 820049C8: bc 12,21,0x820049D4
+  if (ctx.crb[21]) goto loc_820049D4;
+  // 820049CC: ori r11,r23,0x0
+  ctx.r[11] = ctx.r[23] | 0x0ull;
+  // 820049D0: b 0x820049D8
+  goto loc_820049D8;
+loc_820049D4:
+  // 820049D4: addi r11,r26,0
+  ctx.r[11] = ctx.r[26] + uint64_t(0);
+loc_820049D8:
+  // 820049D8: add r23,r9,r0
+  t0 = ctx.r[9]; t1 = ctx.r[0]; ctx.r[23] = t0 + t1;
+  // 820049DC: add r26,r11,r15
+  t0 = ctx.r[11]; t1 = ctx.r[15]; ctx.r[26] = t0 + t1;
+  // 820049E0: addi r0,r21,1
+  ctx.r[0] = ctx.r[21] + uint64_t(1);
+  // 820049E4: or_ r31,r15,r31
+  ctx.r[15] = ctx.r[31] | ctx.r[31];
+  // 820049E8: or_ r12,r9,r12
+  ctx.r[9] = ctx.r[12] | ctx.r[12];
+  // 820049EC: b 0x82004A04
+  goto loc_82004A04;
+loc_820049F0:
+  // 820049F0: addi r9,r9,1
+  ctx.r[9] = ctx.r[9] + uint64_t(1);
+  // 820049F4: add r15,r15,r8
+  t0 = ctx.r[15]; t1 = ctx.r[8]; ctx.r[15] = t0 + t1;
+  // 820049F8: cmp r1,r9,r28
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[9]), int64_t(ctx.r[28]));
+  // 820049FC: addi r14,r14,1
+  ctx.r[14] = ctx.r[14] + uint64_t(1);
+  // 82004A00: bc 4,0,0x82004A50
+  if (!ctx.crb[0]) goto loc_82004A50;
+loc_82004A04:
+  // 82004A04: mulld r11,r8,r14
+  ctx.r[11] = ctx.r[8] * ctx.r[14];
+  // 82004A08: cmp r21,r9,r5
+  fsr::set_cr_signed(ctx, 5, int64_t(ctx.r[9]), int64_t(ctx.r[5]));
+  // 82004A0C: add r11,r6,r11
+  t0 = ctx.r[6]; t1 = ctx.r[11]; ctx.r[11] = t0 + t1;
+  // 82004A10: add r29,r3,r11
+  t0 = ctx.r[3]; t1 = ctx.r[11]; ctx.r[29] = t0 + t1;
+  // 82004A14: or_ r0,r11,r0
+  ctx.r[11] = ctx.r[0] | ctx.r[0];
+  // 82004A18: mtspr r26,r9,r0
+  ctx.ctr = ctx.r[26];
+  // 82004A1C: b 0x82004A28
+  goto loc_82004A28;
+loc_82004A20:
+  // 82004A20: addi r11,r11,1
+  ctx.r[11] = ctx.r[11] + uint64_t(1);
+  // 82004A24: bc 18,0,0x820049F0
+  ctx.ctr--;
+  if (ctx.ctr == 0) goto loc_820049F0;
+loc_82004A28:
+  // 82004A28: or_ r29,r30,r29
+  ctx.r[30] = ctx.r[29] | ctx.r[29];
+  // 82004A2C: addi r29,r29,4
+  ctx.r[29] = ctx.r[29] + uint64_t(4);
+  // 82004A30: bc 4,20,0x82004A20
+  if (!ctx.crb[20]) goto loc_82004A20;
+  // 82004A34: cmp r1,r11,r4
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[11]), int64_t(ctx.r[4]));
+  // 82004A38: bc 4,0,0x82004A20
+  if (!ctx.crb[0]) goto loc_82004A20;
+  // 82004A3C: or_ r11,r16,r9
+  ctx.r[16] = ctx.r[11] | ctx.r[9];
+  // 82004A40: andis_rc r16,r16,0x8000
+  ctx.r[16] = ctx.r[16] & 0x80000000ull;
+  fsr::set_cr0(ctx, ctx.r[16]);
+  // 82004A44: bc 4,2,0x82004A20
+  if (!ctx.crb[2]) goto loc_82004A20;
+  // 82004A48: stw r27,4(r30)
+  t0 = (ctx.r[30] + uint64_t(4)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[27]));
+  // 82004A4C: b 0x82004A20
+  goto loc_82004A20;
+loc_82004A50:
+  // 82004A50: addi r6,r0,0
+  ctx.r[6] = uint64_t(0) + uint64_t(0);
+  // 82004A54: or_ r17,r11,r17
+  ctx.r[11] = ctx.r[17] | ctx.r[17];
+  // 82004A58: or_ r22,r9,r22
+  ctx.r[9] = ctx.r[22] | ctx.r[22];
+  // 82004A5C: b 0x82004A74
+  goto loc_82004A74;
+loc_82004A60:
+  // 82004A60: addi r9,r9,1
+  ctx.r[9] = ctx.r[9] + uint64_t(1);
+  // 82004A64: add r11,r11,r8
+  t0 = ctx.r[11]; t1 = ctx.r[8]; ctx.r[11] = t0 + t1;
+  // 82004A68: cmp r1,r9,r7
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[9]), int64_t(ctx.r[7]));
+  // 82004A6C: addi r6,r6,1
+  ctx.r[6] = ctx.r[6] + uint64_t(1);
+  // 82004A70: bc 4,0,0x82004930
+  if (!ctx.crb[0]) goto loc_82004930;
+loc_82004A74:
+  // 82004A74: mulld r0,r8,r6
+  ctx.r[0] = ctx.r[8] * ctx.r[6];
+  // 82004A78: cmp r21,r9,r5
+  fsr::set_cr_signed(ctx, 5, int64_t(ctx.r[9]), int64_t(ctx.r[5]));
+  // 82004A7C: add r0,r24,r0
+  t0 = ctx.r[24]; t1 = ctx.r[0]; ctx.r[0] = t0 + t1;
+  // 82004A80: add r26,r3,r0
+  t0 = ctx.r[3]; t1 = ctx.r[0]; ctx.r[26] = t0 + t1;
+  // 82004A84: or_ r21,r30,r21
+  ctx.r[30] = ctx.r[21] | ctx.r[21];
+  // 82004A88: mtspr r23,r9,r0
+  ctx.ctr = ctx.r[23];
+  // 82004A8C: b 0x82004AA8
+  goto loc_82004AA8;
+  // 82004A90: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004A94: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004A98: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004A9C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82004AA0:
+  // 82004AA0: addi r30,r30,1
+  ctx.r[30] = ctx.r[30] + uint64_t(1);
+  // 82004AA4: bc 18,0,0x82004A60
+  ctx.ctr--;
+  if (ctx.ctr == 0) goto loc_82004A60;
+loc_82004AA8:
+  // 82004AA8: or_ r26,r29,r26
+  ctx.r[29] = ctx.r[26] | ctx.r[26];
+  // 82004AAC: addi r26,r26,4
+  ctx.r[26] = ctx.r[26] + uint64_t(4);
+  // 82004AB0: bc 4,20,0x82004AA0
+  if (!ctx.crb[20]) goto loc_82004AA0;
+  // 82004AB4: cmp r1,r30,r4
+  fsr::set_cr_signed(ctx, 0, int64_t(ctx.r[30]), int64_t(ctx.r[4]));
+  // 82004AB8: bc 4,0,0x82004AA0
+  if (!ctx.crb[0]) goto loc_82004AA0;
+  // 82004ABC: or_ r30,r0,r9
+  ctx.r[0] = ctx.r[30] | ctx.r[9];
+  // 82004AC0: andis_rc r0,r0,0x8000
+  ctx.r[0] = ctx.r[0] & 0x80000000ull;
+  fsr::set_cr0(ctx, ctx.r[0]);
+  // 82004AC4: bc 4,2,0x82004AA0
+  if (!ctx.crb[2]) goto loc_82004AA0;
+  // 82004AC8: stw r10,4(r29)
+  t0 = (ctx.r[29] + uint64_t(4)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[10]));
+  // 82004ACC: b 0x82004AA0
+  goto loc_82004AA0;
+loc_82004AD0:
+  // 82004AD0: ld r31,440(r1)
+  t0 = (ctx.r[1] + uint64_t(440)); ea = uint32_t(t0);
+  ctx.r[31] = fsr::ld64(base, ea);
+  // 82004AD4: ld r30,432(r1)
+  t0 = (ctx.r[1] + uint64_t(432)); ea = uint32_t(t0);
+  ctx.r[30] = fsr::ld64(base, ea);
+  // 82004AD8: ld r29,424(r1)
+  t0 = (ctx.r[1] + uint64_t(424)); ea = uint32_t(t0);
+  ctx.r[29] = fsr::ld64(base, ea);
+  // 82004ADC: ld r28,416(r1)
+  t0 = (ctx.r[1] + uint64_t(416)); ea = uint32_t(t0);
+  ctx.r[28] = fsr::ld64(base, ea);
+  // 82004AE0: ld r27,408(r1)
+  t0 = (ctx.r[1] + uint64_t(408)); ea = uint32_t(t0);
+  ctx.r[27] = fsr::ld64(base, ea);
+  // 82004AE4: ld r26,400(r1)
+  t0 = (ctx.r[1] + uint64_t(400)); ea = uint32_t(t0);
+  ctx.r[26] = fsr::ld64(base, ea);
+  // 82004AE8: ld r25,392(r1)
+  t0 = (ctx.r[1] + uint64_t(392)); ea = uint32_t(t0);
+  ctx.r[25] = fsr::ld64(base, ea);
+  // 82004AEC: ld r24,384(r1)
+  t0 = (ctx.r[1] + uint64_t(384)); ea = uint32_t(t0);
+  ctx.r[24] = fsr::ld64(base, ea);
+  // 82004AF0: ld r23,376(r1)
+  t0 = (ctx.r[1] + uint64_t(376)); ea = uint32_t(t0);
+  ctx.r[23] = fsr::ld64(base, ea);
+  // 82004AF4: ld r22,368(r1)
+  t0 = (ctx.r[1] + uint64_t(368)); ea = uint32_t(t0);
+  ctx.r[22] = fsr::ld64(base, ea);
+  // 82004AF8: ld r21,360(r1)
+  t0 = (ctx.r[1] + uint64_t(360)); ea = uint32_t(t0);
+  ctx.r[21] = fsr::ld64(base, ea);
+  // 82004AFC: ld r20,352(r1)
+  t0 = (ctx.r[1] + uint64_t(352)); ea = uint32_t(t0);
+  ctx.r[20] = fsr::ld64(base, ea);
+  // 82004B00: ld r19,344(r1)
+  t0 = (ctx.r[1] + uint64_t(344)); ea = uint32_t(t0);
+  ctx.r[19] = fsr::ld64(base, ea);
+  // 82004B04: ld r18,336(r1)
+  t0 = (ctx.r[1] + uint64_t(336)); ea = uint32_t(t0);
+  ctx.r[18] = fsr::ld64(base, ea);
+  // 82004B08: ld r17,328(r1)
+  t0 = (ctx.r[1] + uint64_t(328)); ea = uint32_t(t0);
+  ctx.r[17] = fsr::ld64(base, ea);
+  // 82004B0C: ld r16,320(r1)
+  t0 = (ctx.r[1] + uint64_t(320)); ea = uint32_t(t0);
+  ctx.r[16] = fsr::ld64(base, ea);
+  // 82004B10: ld r15,312(r1)
+  t0 = (ctx.r[1] + uint64_t(312)); ea = uint32_t(t0);
+  ctx.r[15] = fsr::ld64(base, ea);
+  // 82004B14: ld r14,304(r1)
+  t0 = (ctx.r[1] + uint64_t(304)); ea = uint32_t(t0);
+  ctx.r[14] = fsr::ld64(base, ea);
+  // 82004B18: addi r1,r1,448
+  ctx.r[1] = ctx.r[1] + uint64_t(448);
+  // 82004B1C: bclr r20,r0,r0
+  if (true) return;
+  fsr::fsr_unimplemented(ctx, base, 0x82004B20, 0); // zero word (padding)
+  fsr::fsr_unimplemented(ctx, base, 0x82004B24, 0); // zero word (padding)
+  fsr::fsr_unimplemented(ctx, base, 0x82004B28, 0); // zero word (padding)
+  fsr::fsr_call_indirect(ctx, base, 0x82004B2C);
+  return;
+}
+
+FSR_FUNC(sub_82004B30) {
+  uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
+  // 82004B30: cmpli r1,r5,r0
+  fsr::set_cr_unsigned(ctx, 0, ctx.r[5], 0u);
+  // 82004B34: bclr r12,r2,r0
+  if (ctx.crb[2]) return;
+  // 82004B38: addi r4,r4,-1
+  ctx.r[4] = ctx.r[4] + uint64_t(int64_t(-1));
+  // 82004B3C: addi r6,r3,-1
+  ctx.r[6] = ctx.r[3] + uint64_t(int64_t(-1));
+  // 82004B40: mtspr r5,r9,r0
+  ctx.ctr = ctx.r[5];
+  // 82004B44: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004B48: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004B4C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82004B50:
+  // 82004B50: lbzu r5,1(r4)
+  t0 = (ctx.r[4] + uint64_t(1)); ea = uint32_t(t0);
+  ctx.r[5] = fsr::ld8(base, ea);
+  ctx.r[4] = t0;
+  // 82004B54: stbu r5,1(r6)
+  t0 = (ctx.r[6] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[5]));
+  ctx.r[6] = t0;
+  // 82004B58: bc 16,0,0x82004B50
+  ctx.ctr--;
+  if (ctx.ctr != 0) goto loc_82004B50;
+  // 82004B5C: bclr r20,r0,r0
+  if (true) return;
+  fsr::fsr_unimplemented(ctx, base, 0x82004B60, 0); // zero word (padding)
+  fsr::fsr_unimplemented(ctx, base, 0x82004B64, 0); // zero word (padding)
+  fsr::fsr_unimplemented(ctx, base, 0x82004B68, 0); // zero word (padding)
+  fsr::fsr_call_indirect(ctx, base, 0x82004B6C);
+  return;
+}
+
+FSR_FUNC(sub_82004B70) {
+  uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
+  // 82004B70: cmpli r1,r5,r0
+  fsr::set_cr_unsigned(ctx, 0, ctx.r[5], 0u);
+  // 82004B74: bclr r12,r2,r0
+  if (ctx.crb[2]) return;
+  // 82004B78: cmpli r1,r5,r0
+  fsr::set_cr_unsigned(ctx, 0, ctx.r[5], 1u);
+  // 82004B7C: bc 4,2,0x82004B8C
+  if (!ctx.crb[2]) goto loc_82004B8C;
+  // 82004B80: or_ r3,r7,r3
+  ctx.r[7] = ctx.r[3] | ctx.r[3];
+  // 82004B84: or_ r5,r6,r5
+  ctx.r[6] = ctx.r[5] | ctx.r[5];
+  // 82004B88: b 0x82004BC4
+  goto loc_82004BC4;
+loc_82004B8C:
+  // 82004B8C: rldicr r5,r8,r0
+  ctx.r[8] = fsr::rotl64(ctx.r[5], 0) & 0xFFFFFFFFFFFFFFFEull;
+  // 82004B90: rldicl r5,r6,r0
+  ctx.r[6] = fsr::rotl64(ctx.r[5], 0) & 0x1ull;
+  // 82004B94: addi r7,r8,-2
+  ctx.r[7] = ctx.r[8] + uint64_t(int64_t(-2));
+  // 82004B98: rldicl r7,r9,r31
+  ctx.r[9] = fsr::rotl64(ctx.r[7], 63) & 0x7FFFFFFFFFFFFFFFull;
+  // 82004B9C: add r7,r3,r8
+  t0 = ctx.r[3]; t1 = ctx.r[8]; ctx.r[7] = t0 + t1;
+  // 82004BA0: addi r10,r9,1
+  ctx.r[10] = ctx.r[9] + uint64_t(1);
+  // 82004BA4: addi r9,r3,-2
+  ctx.r[9] = ctx.r[3] + uint64_t(int64_t(-2));
+  // 82004BA8: mtspr r10,r9,r0
+  ctx.ctr = ctx.r[10];
+  // 82004BAC: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82004BB0:
+  // 82004BB0: stbu r4,2(r9)
+  t0 = (ctx.r[9] + uint64_t(2)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[4]));
+  ctx.r[9] = t0;
+  // 82004BB4: stb r4,1(r9)
+  t0 = (ctx.r[9] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[4]));
+  // 82004BB8: bc 16,0,0x82004BB0
+  ctx.ctr--;
+  if (ctx.ctr != 0) goto loc_82004BB0;
+  // 82004BBC: cmpl r1,r8,r5
+  fsr::set_cr_unsigned(ctx, 0, ctx.r[8], ctx.r[5]);
+  // 82004BC0: bclr r12,r2,r0
+  if (ctx.crb[2]) return;
+loc_82004BC4:
+  // 82004BC4: addi r5,r7,-1
+  ctx.r[5] = ctx.r[7] + uint64_t(int64_t(-1));
+  // 82004BC8: mtspr r6,r9,r0
+  ctx.ctr = ctx.r[6];
+  // 82004BCC: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82004BD0:
+  // 82004BD0: stbu r4,1(r5)
+  t0 = (ctx.r[5] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[4]));
+  ctx.r[5] = t0;
+  // 82004BD4: bc 16,0,0x82004BD0
+  ctx.ctr--;
+  if (ctx.ctr != 0) goto loc_82004BD0;
+  // 82004BD8: bclr r20,r0,r0
+  if (true) return;
+  fsr::fsr_unimplemented(ctx, base, 0x82004BDC, 0); // zero word (padding)
+  fsr::fsr_unimplemented(ctx, base, 0x82004BE0, 0); // zero word (padding)
+  fsr::fsr_unimplemented(ctx, base, 0x82004BE4, 0); // zero word (padding)
+  fsr::fsr_call_indirect(ctx, base, 0x82004BE8);
+  return;
+}
+
+FSR_FUNC(sub_82004BF0) {
+  uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
+  // 82004BF0: cmpl r1,r3,r4
+  fsr::set_cr_unsigned(ctx, 0, ctx.r[3], ctx.r[4]);
+  // 82004BF4: bc 4,0,0x82004C20
+  if (!ctx.crb[0]) goto loc_82004C20;
+  // 82004BF8: cmpli r1,r5,r0
+  fsr::set_cr_unsigned(ctx, 0, ctx.r[5], 0u);
+  // 82004BFC: bclr r12,r2,r0
+  if (ctx.crb[2]) return;
+  // 82004C00: addi r4,r4,-1
+  ctx.r[4] = ctx.r[4] + uint64_t(int64_t(-1));
+  // 82004C04: addi r6,r3,-1
+  ctx.r[6] = ctx.r[3] + uint64_t(int64_t(-1));
+  // 82004C08: mtspr r5,r9,r0
+  ctx.ctr = ctx.r[5];
+  // 82004C0C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82004C10:
+  // 82004C10: lbzu r5,1(r4)
+  t0 = (ctx.r[4] + uint64_t(1)); ea = uint32_t(t0);
+  ctx.r[5] = fsr::ld8(base, ea);
+  ctx.r[4] = t0;
+  // 82004C14: stbu r5,1(r6)
+  t0 = (ctx.r[6] + uint64_t(1)); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[5]));
+  ctx.r[6] = t0;
+  // 82004C18: bc 16,0,0x82004C10
+  ctx.ctr--;
+  if (ctx.ctr != 0) goto loc_82004C10;
+  // 82004C1C: bclr r20,r0,r0
+  if (true) return;
+loc_82004C20:
+  // 82004C20: cmpli r1,r5,r0
+  fsr::set_cr_unsigned(ctx, 0, ctx.r[5], 0u);
+  // 82004C24: bclr r12,r2,r0
+  if (ctx.crb[2]) return;
+  // 82004C28: add r4,r4,r5
+  t0 = ctx.r[4]; t1 = ctx.r[5]; ctx.r[4] = t0 + t1;
+  // 82004C2C: add r6,r3,r5
+  t0 = ctx.r[3]; t1 = ctx.r[5]; ctx.r[6] = t0 + t1;
+  // 82004C30: mtspr r5,r9,r0
+  ctx.ctr = ctx.r[5];
+  // 82004C34: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004C38: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004C3C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82004C40:
+  // 82004C40: lbzu r5,-1(r4)
+  t0 = (ctx.r[4] + uint64_t(int64_t(-1))); ea = uint32_t(t0);
+  ctx.r[5] = fsr::ld8(base, ea);
+  ctx.r[4] = t0;
+  // 82004C44: stbu r5,-1(r6)
+  t0 = (ctx.r[6] + uint64_t(int64_t(-1))); ea = uint32_t(t0);
+  fsr::st8(base, ea, uint8_t(ctx.r[5]));
+  ctx.r[6] = t0;
+  // 82004C48: bc 16,0,0x82004C40
+  ctx.ctr--;
+  if (ctx.ctr != 0) goto loc_82004C40;
+  // 82004C4C: bclr r20,r0,r0
+  if (true) return;
+  fsr::fsr_unimplemented(ctx, base, 0x82004C50, 0); // zero word (padding)
+  fsr::fsr_unimplemented(ctx, base, 0x82004C54, 0); // zero word (padding)
+  fsr::fsr_unimplemented(ctx, base, 0x82004C58, 0); // zero word (padding)
+  fsr::fsr_call_indirect(ctx, base, 0x82004C5C);
+  return;
+}
+
+FSR_FUNC(sub_82004C60) {
+  uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
+  // 82004C60: addis r2,r12,1
+  ctx.r[2] = ctx.r[12] + uint64_t(65536);
+  // 82004C64: addi r2,r2,-26528
+  ctx.r[2] = ctx.r[2] + uint64_t(int64_t(-26528));
+  // 82004C68: mfspr r0,r8,r0
+  ctx.r[0] = ctx.lr;
+  // 82004C6C: std r21,-88(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-88))); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[21]);
+  // 82004C70: std r22,-80(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-80))); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[22]);
+  // 82004C74: std r23,-72(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-72))); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[23]);
+  // 82004C78: std r24,-64(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-64))); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[24]);
+  // 82004C7C: std r25,-56(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-56))); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[25]);
+  // 82004C80: std r26,-48(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-48))); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[26]);
+  // 82004C84: std r27,-40(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-40))); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[27]);
+  // 82004C88: std r28,-32(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-32))); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[28]);
+  // 82004C8C: std r29,-24(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-24))); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[29]);
+  // 82004C90: std r30,-16(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-16))); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[30]);
+  // 82004C94: stdu r1,-288(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-288))); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[1]);
+  ctx.r[1] = t0;
+  // 82004C98: or_ r3,r30,r3
+  ctx.r[30] = ctx.r[3] | ctx.r[3];
+  // 82004C9C: addi r3,r0,0
+  ctx.r[3] = uint64_t(0) + uint64_t(0);
+  // 82004CA0: std r0,304(r1)
+  t0 = (ctx.r[1] + uint64_t(304)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[0]);
+  // 82004CA4: addis r4,r2,-1
+  ctx.r[4] = ctx.r[2] + uint64_t(int64_t(-65536));
+  // 82004CA8: addi r26,r4,32680
+  ctx.r[26] = ctx.r[4] + uint64_t(32680);
+  // 82004CAC: addi r4,r0,2049
+  ctx.r[4] = uint64_t(0) + uint64_t(2049);
+  // 82004CB0: addi r29,r1,136
+  ctx.r[29] = ctx.r[1] + uint64_t(136);
+  // 82004CB4: stw r3,168(r1)
+  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
+  // 82004CB8: addi r3,r0,-1
+  ctx.r[3] = uint64_t(0) + uint64_t(int64_t(-1));
+  // 82004CBC: addi r5,r1,40
+  ctx.r[5] = ctx.r[1] + uint64_t(40);
+  // 82004CC0: std r3,0(r30)
+  t0 = (ctx.r[30] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[3]);
+  // 82004CC4: rldic r4,r4,r20
+  ctx.r[4] = fsr::rotl64(ctx.r[4], 20) & 0xFFF00000ull;
+  // 82004CC8: addi r6,r1,172
+  ctx.r[6] = ctx.r[1] + uint64_t(172);
+  // 82004CCC: addi r7,r0,32
+  ctx.r[7] = uint64_t(0) + uint64_t(32);
+  // 82004CD0: std r3,8(r30)
+  t0 = (ctx.r[30] + uint64_t(8)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[3]);
+  // 82004CD4: std r3,16(r30)
+  t0 = (ctx.r[30] + uint64_t(16)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[3]);
+  // 82004CD8: std r3,24(r30)
+  t0 = (ctx.r[30] + uint64_t(24)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[3]);
+  // 82004CDC: std r3,32(r30)
+  t0 = (ctx.r[30] + uint64_t(32)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[3]);
+  // 82004CE0: stw r3,40(r30)
+  t0 = (ctx.r[30] + uint64_t(40)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
+  // 82004CE4: addi r3,r0,-3
+  ctx.r[3] = uint64_t(0) + uint64_t(int64_t(-3));
+  // 82004CE8: stw r3,40(r1)
+  t0 = (ctx.r[1] + uint64_t(40)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
+  // 82004CEC: addis r3,r0,20
+  ctx.r[3] = uint64_t(0) + uint64_t(1310720);
+  // 82004CF0: ori r3,r3,0x15
+  ctx.r[3] = ctx.r[3] | 0x15ull;
+  // 82004CF4: stw r3,136(r1)
+  t0 = (ctx.r[1] + uint64_t(136)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
+  // 82004CF8: addi r3,r26,33
+  ctx.r[3] = ctx.r[26] + uint64_t(33);
+  // 82004CFC: stw r3,140(r1)
+  t0 = (ctx.r[1] + uint64_t(140)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
+  // 82004D00: addi r3,r0,64
+  ctx.r[3] = uint64_t(0) + uint64_t(64);
+  // 82004D04: stw r3,48(r1)
+  t0 = (ctx.r[1] + uint64_t(48)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
+  // 82004D08: addi r3,r1,168
+  ctx.r[3] = ctx.r[1] + uint64_t(168);
+  // 82004D0C: stw r29,44(r1)
+  t0 = (ctx.r[1] + uint64_t(44)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[29]));
+  // 82004D10: bl 0x82001020
+  ctx.lr = 0x82004D14;
+  sub_82001020(ctx, base);
+  // 82004D14: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004D18: or_ r3,r4,r3
+  ctx.r[4] = ctx.r[3] | ctx.r[3];
+  // 82004D1C: addi r3,r0,1
+  ctx.r[3] = uint64_t(0) + uint64_t(1);
+  // 82004D20: stw r4,0(r30)
+  t0 = (ctx.r[30] + uint64_t(0)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[4]));
+  // 82004D24: cmpli r0,r4,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[4]), 0u);
+  // 82004D28: bc 4,2,0x82004F00
+  if (!ctx.crb[2]) goto loc_82004F00;
+  // 82004D2C: lwz r3,168(r1)
+  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
+  ctx.r[3] = fsr::ld32(base, ea);
+  // 82004D30: addi r7,r1,172
+  ctx.r[7] = ctx.r[1] + uint64_t(172);
+  // 82004D34: addi r8,r1,161
+  ctx.r[8] = ctx.r[1] + uint64_t(161);
+  // 82004D38: addi r4,r0,0
+  ctx.r[4] = uint64_t(0) + uint64_t(0);
+  // 82004D3C: addi r5,r0,0
+  ctx.r[5] = uint64_t(0) + uint64_t(0);
+  // 82004D40: addi r6,r0,0
+  ctx.r[6] = uint64_t(0) + uint64_t(0);
+  // 82004D44: addi r9,r0,7
+  ctx.r[9] = uint64_t(0) + uint64_t(7);
+  // 82004D48: addi r10,r0,0
+  ctx.r[10] = uint64_t(0) + uint64_t(0);
+  // 82004D4C: addi r25,r0,0
+  ctx.r[25] = uint64_t(0) + uint64_t(0);
+  // 82004D50: bl 0x82001030
+  ctx.lr = 0x82004D54;
+  sub_82001030(ctx, base);
+  // 82004D54: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004D58: cmpli r0,r3,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[3]), 0u);
+  // 82004D5C: addi r21,r0,0
+  ctx.r[21] = uint64_t(0) + uint64_t(0);
+  // 82004D60: addi r24,r0,0
+  ctx.r[24] = uint64_t(0) + uint64_t(0);
+  // 82004D64: bc 12,2,0x82004F38
+  if (ctx.crb[2]) goto loc_82004F38;
+loc_82004D68:
+  // 82004D68: stw r3,12(r30)
+  t0 = (ctx.r[30] + uint64_t(12)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
+  // 82004D6C: addi r28,r1,172
+  ctx.r[28] = ctx.r[1] + uint64_t(172);
+  // 82004D70: or_ r29,r5,r29
+  ctx.r[5] = ctx.r[29] | ctx.r[29];
+  // 82004D74: or_ r28,r4,r28
+  ctx.r[4] = ctx.r[28] | ctx.r[28];
+  // 82004D78: addi r6,r0,24
+  ctx.r[6] = uint64_t(0) + uint64_t(24);
+  // 82004D7C: lwz r3,168(r1)
+  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
+  ctx.r[3] = fsr::ld32(base, ea);
+  // 82004D80: addi r7,r0,5
+  ctx.r[7] = uint64_t(0) + uint64_t(5);
+  // 82004D84: stw r21,4(r30)
+  t0 = (ctx.r[30] + uint64_t(4)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[21]));
+  // 82004D88: stw r24,8(r30)
+  t0 = (ctx.r[30] + uint64_t(8)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[24]));
+  // 82004D8C: bl 0x82001040
+  ctx.lr = 0x82004D90;
+  sub_82001040(ctx, base);
+  // 82004D90: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004D94: ld r3,8(r29)
+  t0 = (ctx.r[29] + uint64_t(8)); ea = uint32_t(t0);
+  ctx.r[3] = fsr::ld64(base, ea);
+  // 82004D98: addi r5,r1,128
+  ctx.r[5] = ctx.r[1] + uint64_t(128);
+  // 82004D9C: or_ r28,r4,r28
+  ctx.r[4] = ctx.r[28] | ctx.r[28];
+  // 82004DA0: addi r6,r0,8
+  ctx.r[6] = uint64_t(0) + uint64_t(8);
+  // 82004DA4: addi r7,r0,14
+  ctx.r[7] = uint64_t(0) + uint64_t(14);
+  // 82004DA8: stw r3,16(r30)
+  t0 = (ctx.r[30] + uint64_t(16)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
+  // 82004DAC: lwz r3,168(r1)
+  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
+  ctx.r[3] = fsr::ld32(base, ea);
+  // 82004DB0: bl 0x82001040
+  ctx.lr = 0x82004DB4;
+  sub_82001040(ctx, base);
+  // 82004DB4: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004DB8: ld r3,128(r1)
+  t0 = (ctx.r[1] + uint64_t(128)); ea = uint32_t(t0);
+  ctx.r[3] = fsr::ld64(base, ea);
+  // 82004DBC: addi r4,r0,3
+  ctx.r[4] = uint64_t(0) + uint64_t(3);
+  // 82004DC0: addi r8,r1,116
+  ctx.r[8] = ctx.r[1] + uint64_t(116);
+  // 82004DC4: addi r10,r1,120
+  ctx.r[10] = ctx.r[1] + uint64_t(120);
+  // 82004DC8: addi r5,r0,0
+  ctx.r[5] = uint64_t(0) + uint64_t(0);
+  // 82004DCC: stw r3,20(r30)
+  t0 = (ctx.r[30] + uint64_t(20)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
+  // 82004DD0: addi r6,r0,0
+  ctx.r[6] = uint64_t(0) + uint64_t(0);
+  // 82004DD4: or_ r28,r7,r28
+  ctx.r[7] = ctx.r[28] | ctx.r[28];
+  // 82004DD8: lwz r3,168(r1)
+  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
+  ctx.r[3] = fsr::ld32(base, ea);
+  // 82004DDC: addi r9,r0,4
+  ctx.r[9] = uint64_t(0) + uint64_t(4);
+  // 82004DE0: std r4,120(r1)
+  t0 = (ctx.r[1] + uint64_t(120)); ea = uint32_t(t0);
+  fsr::st64(base, ea, ctx.r[4]);
+  // 82004DE4: addi r4,r0,0
+  ctx.r[4] = uint64_t(0) + uint64_t(0);
+  // 82004DE8: stw r25,116(r1)
+  t0 = (ctx.r[1] + uint64_t(116)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[25]));
+  // 82004DEC: bl 0x82001030
+  ctx.lr = 0x82004DF0;
+  sub_82001030(ctx, base);
+  // 82004DF0: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004DF4: lwz r3,116(r1)
+  t0 = (ctx.r[1] + uint64_t(116)); ea = uint32_t(t0);
+  ctx.r[3] = fsr::ld32(base, ea);
+  // 82004DF8: stw r3,24(r30)
+  t0 = (ctx.r[30] + uint64_t(24)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
+  // 82004DFC: lwz r3,168(r1)
+  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
+  ctx.r[3] = fsr::ld32(base, ea);
+  // 82004E00: bl 0x82001070
+  ctx.lr = 0x82004E04;
+  sub_82001070(ctx, base);
+  // 82004E04: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004E08: lwz r3,168(r1)
+  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
+  ctx.r[3] = fsr::ld32(base, ea);
+  // 82004E0C: bl 0x82001070
+  ctx.lr = 0x82004E10;
+  sub_82001070(ctx, base);
+  // 82004E10: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004E14: stw r3,36(r30)
+  t0 = (ctx.r[30] + uint64_t(36)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
+  // 82004E18: addi r3,r1,108
+  ctx.r[3] = ctx.r[1] + uint64_t(108);
+  // 82004E1C: addi r4,r26,13
+  ctx.r[4] = ctx.r[26] + uint64_t(13);
+  // 82004E20: addi r29,r1,40
+  ctx.r[29] = ctx.r[1] + uint64_t(40);
+  // 82004E24: addi r25,r0,-3
+  ctx.r[25] = uint64_t(0) + uint64_t(int64_t(-3));
+  // 82004E28: stw r3,100(r1)
+  t0 = (ctx.r[1] + uint64_t(100)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
+  // 82004E2C: addis r3,r0,19
+  ctx.r[3] = uint64_t(0) + uint64_t(1245184);
+  // 82004E30: addi r24,r0,64
+  ctx.r[24] = uint64_t(0) + uint64_t(64);
+  // 82004E34: ori r3,r3,0x13
+  ctx.r[3] = ctx.r[3] | 0x13ull;
+  // 82004E38: stw r4,112(r1)
+  t0 = (ctx.r[1] + uint64_t(112)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[4]));
+  // 82004E3C: or_ r29,r4,r29
+  ctx.r[4] = ctx.r[29] | ctx.r[29];
+  // 82004E40: stw r3,108(r1)
+  t0 = (ctx.r[1] + uint64_t(108)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
+  // 82004E44: addi r3,r1,96
+  ctx.r[3] = ctx.r[1] + uint64_t(96);
+  // 82004E48: stw r25,96(r1)
+  t0 = (ctx.r[1] + uint64_t(96)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[25]));
+  // 82004E4C: stw r24,104(r1)
+  t0 = (ctx.r[1] + uint64_t(104)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[24]));
+  // 82004E50: bl 0x82001060
+  ctx.lr = 0x82004E54;
+  sub_82001060(ctx, base);
+  // 82004E54: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004E58: cmpli r0,r3,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[3]), 0u);
+  // 82004E5C: bc 4,2,0x82004E68
+  if (!ctx.crb[2]) goto loc_82004E68;
+  // 82004E60: ld r3,40(r29)
+  t0 = (ctx.r[29] + uint64_t(40)); ea = uint32_t(t0);
+  ctx.r[3] = fsr::ld64(base, ea);
+  // 82004E64: stw r3,28(r30)
+  t0 = (ctx.r[30] + uint64_t(28)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
+loc_82004E68:
+  // 82004E68: addi r3,r26,54
+  ctx.r[3] = ctx.r[26] + uint64_t(54);
+  // 82004E6C: addi r29,r1,168
+  ctx.r[29] = ctx.r[1] + uint64_t(168);
+  // 82004E70: stw r25,180(r1)
+  t0 = (ctx.r[1] + uint64_t(180)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[25]));
+  // 82004E74: addi r27,r1,172
+  ctx.r[27] = ctx.r[1] + uint64_t(172);
+  // 82004E78: addi r23,r1,192
+  ctx.r[23] = ctx.r[1] + uint64_t(192);
+  // 82004E7C: stw r3,196(r1)
+  t0 = (ctx.r[1] + uint64_t(196)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
+  // 82004E80: addis r3,r0,29
+  ctx.r[3] = uint64_t(0) + uint64_t(1900544);
+  // 82004E84: addi r5,r1,180
+  ctx.r[5] = ctx.r[1] + uint64_t(180);
+  // 82004E88: ori r3,r3,0x1E
+  ctx.r[3] = ctx.r[3] | 0x1Eull;
+  // 82004E8C: or_ r27,r6,r27
+  ctx.r[6] = ctx.r[27] | ctx.r[27];
+  // 82004E90: stw r23,184(r1)
+  t0 = (ctx.r[1] + uint64_t(184)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[23]));
+  // 82004E94: addi r7,r0,32
+  ctx.r[7] = uint64_t(0) + uint64_t(32);
+  // 82004E98: stw r3,192(r1)
+  t0 = (ctx.r[1] + uint64_t(192)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
+  // 82004E9C: addi r3,r0,2049
+  ctx.r[3] = uint64_t(0) + uint64_t(2049);
+  // 82004EA0: rldic r3,r28,r20
+  ctx.r[28] = fsr::rotl64(ctx.r[3], 20) & 0xFFF00000ull;
+  // 82004EA4: or_ r29,r3,r29
+  ctx.r[3] = ctx.r[29] | ctx.r[29];
+  // 82004EA8: or_ r28,r4,r28
+  ctx.r[4] = ctx.r[28] | ctx.r[28];
+  // 82004EAC: stw r24,188(r1)
+  t0 = (ctx.r[1] + uint64_t(188)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[24]));
+  // 82004EB0: bl 0x82001020
+  ctx.lr = 0x82004EB4;
+  sub_82001020(ctx, base);
+  // 82004EB4: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004EB8: stw r3,32(r30)
+  t0 = (ctx.r[30] + uint64_t(32)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
+  // 82004EBC: addis r3,r0,12
+  ctx.r[3] = uint64_t(0) + uint64_t(786432);
+  // 82004EC0: addi r5,r1,180
+  ctx.r[5] = ctx.r[1] + uint64_t(180);
+  // 82004EC4: ori r3,r3,0xD
+  ctx.r[3] = ctx.r[3] | 0xDull;
+  // 82004EC8: or_ r28,r4,r28
+  ctx.r[4] = ctx.r[28] | ctx.r[28];
+  // 82004ECC: stw r3,192(r1)
+  t0 = (ctx.r[1] + uint64_t(192)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[3]));
+  // 82004ED0: or_ r29,r3,r29
+  ctx.r[3] = ctx.r[29] | ctx.r[29];
+  // 82004ED4: or_ r27,r6,r27
+  ctx.r[6] = ctx.r[27] | ctx.r[27];
+  // 82004ED8: addi r7,r0,32
+  ctx.r[7] = uint64_t(0) + uint64_t(32);
+  // 82004EDC: stw r26,196(r1)
+  t0 = (ctx.r[1] + uint64_t(196)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[26]));
+  // 82004EE0: stw r25,180(r1)
+  t0 = (ctx.r[1] + uint64_t(180)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[25]));
+  // 82004EE4: stw r23,184(r1)
+  t0 = (ctx.r[1] + uint64_t(184)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[23]));
+  // 82004EE8: stw r24,188(r1)
+  t0 = (ctx.r[1] + uint64_t(188)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[24]));
+  // 82004EEC: bl 0x82001020
+  ctx.lr = 0x82004EF0;
+  sub_82001020(ctx, base);
+  // 82004EF0: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004EF4: or_ r3,r4,r3
+  ctx.r[4] = ctx.r[3] | ctx.r[3];
+  // 82004EF8: addi r3,r0,0
+  ctx.r[3] = uint64_t(0) + uint64_t(0);
+  // 82004EFC: stw r4,40(r30)
+  t0 = (ctx.r[30] + uint64_t(40)); ea = uint32_t(t0);
+  fsr::st32(base, ea, uint32_t(ctx.r[4]));
+loc_82004F00:
+  // 82004F00: addi r1,r1,288
+  ctx.r[1] = ctx.r[1] + uint64_t(288);
+  // 82004F04: ld r0,16(r1)
+  t0 = (ctx.r[1] + uint64_t(16)); ea = uint32_t(t0);
+  ctx.r[0] = fsr::ld64(base, ea);
+  // 82004F08: mtspr r0,r8,r0
+  ctx.lr = ctx.r[0];
+  // 82004F0C: ld r30,-16(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-16))); ea = uint32_t(t0);
+  ctx.r[30] = fsr::ld64(base, ea);
+  // 82004F10: ld r29,-24(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-24))); ea = uint32_t(t0);
+  ctx.r[29] = fsr::ld64(base, ea);
+  // 82004F14: ld r28,-32(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-32))); ea = uint32_t(t0);
+  ctx.r[28] = fsr::ld64(base, ea);
+  // 82004F18: ld r27,-40(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-40))); ea = uint32_t(t0);
+  ctx.r[27] = fsr::ld64(base, ea);
+  // 82004F1C: ld r26,-48(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-48))); ea = uint32_t(t0);
+  ctx.r[26] = fsr::ld64(base, ea);
+  // 82004F20: ld r25,-56(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-56))); ea = uint32_t(t0);
+  ctx.r[25] = fsr::ld64(base, ea);
+  // 82004F24: ld r24,-64(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-64))); ea = uint32_t(t0);
+  ctx.r[24] = fsr::ld64(base, ea);
+  // 82004F28: ld r23,-72(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-72))); ea = uint32_t(t0);
+  ctx.r[23] = fsr::ld64(base, ea);
+  // 82004F2C: ld r22,-80(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-80))); ea = uint32_t(t0);
+  ctx.r[22] = fsr::ld64(base, ea);
+  // 82004F30: ld r21,-88(r1)
+  t0 = (ctx.r[1] + uint64_t(int64_t(-88))); ea = uint32_t(t0);
+  ctx.r[21] = fsr::ld64(base, ea);
+  // 82004F34: bclr r20,r0,r0
+  if (true) return;
+loc_82004F38:
+  // 82004F38: addis r3,r0,-4680
+  ctx.r[3] = uint64_t(0) + uint64_t(int64_t(-306708480));
+  // 82004F3C: addi r23,r1,160
+  ctx.r[23] = ctx.r[1] + uint64_t(160);
+  // 82004F40: addi r28,r1,172
+  ctx.r[28] = ctx.r[1] + uint64_t(172);
+  // 82004F44: ori r22,r3,0x8320
+  ctx.r[22] = ctx.r[3] | 0x8320ull;
+  // 82004F48: addi r27,r1,161
+  ctx.r[27] = ctx.r[1] + uint64_t(161);
+  // 82004F4C: b 0x82004F84
+  goto loc_82004F84;
+loc_82004F50:
+  // 82004F50: add r24,r3,r24
+  t0 = ctx.r[3]; t1 = ctx.r[24]; ctx.r[24] = t0 + t1;
+  // 82004F54: lwz r3,168(r1)
+  t0 = (ctx.r[1] + uint64_t(168)); ea = uint32_t(t0);
+  ctx.r[3] = fsr::ld32(base, ea);
+  // 82004F58: addi r4,r0,0
+  ctx.r[4] = uint64_t(0) + uint64_t(0);
+  // 82004F5C: addi r5,r0,0
+  ctx.r[5] = uint64_t(0) + uint64_t(0);
+  // 82004F60: addi r6,r0,0
+  ctx.r[6] = uint64_t(0) + uint64_t(0);
+  // 82004F64: or_ r28,r7,r28
+  ctx.r[7] = ctx.r[28] | ctx.r[28];
+  // 82004F68: or_ r27,r8,r27
+  ctx.r[8] = ctx.r[27] | ctx.r[27];
+  // 82004F6C: addi r9,r0,7
+  ctx.r[9] = uint64_t(0) + uint64_t(7);
+  // 82004F70: addi r10,r0,0
+  ctx.r[10] = uint64_t(0) + uint64_t(0);
+  // 82004F74: bl 0x82001030
+  ctx.lr = 0x82004F78;
+  sub_82001030(ctx, base);
+  // 82004F78: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+  // 82004F7C: cmpli r0,r3,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[3]), 0u);
+  // 82004F80: bc 4,2,0x82004D68
+  if (!ctx.crb[2]) goto loc_82004D68;
+loc_82004F84:
+  // 82004F84: lwz r3,176(r1)
+  t0 = (ctx.r[1] + uint64_t(176)); ea = uint32_t(t0);
+  ctx.r[3] = fsr::ld32(base, ea);
+  // 82004F88: cmpli r0,r3,r0
+  fsr::set_cr_unsigned(ctx, 0, uint32_t(ctx.r[3]), 0u);
+  // 82004F8C: bc 12,2,0x82004F50
+  if (ctx.crb[2]) goto loc_82004F50;
+  // 82004F90: nor r21,r5,r21
+  ctx.r[5] = ~(ctx.r[21] | ctx.r[21]);
+  // 82004F94: or_ r23,r4,r23
+  ctx.r[4] = ctx.r[23] | ctx.r[23];
+  // 82004F98: mtspr r3,r9,r0
+  ctx.ctr = ctx.r[3];
+  // 82004F9C: ori r0,r0,0x0
+  ctx.r[0] = ctx.r[0] | 0x0ull;
+loc_82004FA0:
+  // 82004FA0: lbzu r6,1(r4)
+  t0 = (ctx.r[4] + uint64_t(1)); ea = uint32_t(t0);
+  ctx.r[6] = fsr::ld8(base, ea);
+  ctx.r[4] = t0;
+  // 82004FA4: xor_ r5,r5,r6
+  ctx.r[5] = ctx.r[5] ^ ctx.r[6];
+  // 82004FA8: andi_rc r6,r5,0x1
+  ctx.r[6] = ctx.r[5] & 0x1ull;
+  fsr::set_cr0(ctx, ctx.r[6]);
+  // 82004FAC: rlwinm r5,r5,31,1,31
+  ctx.r[5] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[5]), 31)) & 0x7FFFFFFFull;
+  // 82004FB0: xor_ r5,r6,r22
+  ctx.r[6] = ctx.r[5] ^ ctx.r[22];
+  // 82004FB4: bc 12,2,0x82004FC0
+  if (ctx.crb[2]) goto loc_82004FC0;
+  // 82004FB8: ori r5,r6,0x0
+  ctx.r[5] = ctx.r[6] | 0x0ull;
+  // 82004FBC: b 0x82004FC0
+  goto loc_82004FC0;
+loc_82004FC0:
+  // 82004FC0: andi_rc r6,r5,0x1
+  ctx.r[6] = ctx.r[5] & 0x1ull;
+  fsr::set_cr0(ctx, ctx.r[6]);
+  // 82004FC4: rlwinm r5,r5,31,1,31
+  ctx.r[5] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[5]), 31)) & 0x7FFFFFFFull;
+  // 82004FC8: xor_ r5,r6,r22
+  ctx.r[6] = ctx.r[5] ^ ctx.r[22];
+  // 82004FCC: bc 12,2,0x82004FD8
+  if (ctx.crb[2]) goto loc_82004FD8;
+  // 82004FD0: ori r5,r6,0x0
+  ctx.r[5] = ctx.r[6] | 0x0ull;
+  // 82004FD4: b 0x82004FD8
+  goto loc_82004FD8;
+loc_82004FD8:
+  // 82004FD8: andi_rc r6,r5,0x1
+  ctx.r[6] = ctx.r[5] & 0x1ull;
+  fsr::set_cr0(ctx, ctx.r[6]);
+  // 82004FDC: rlwinm r5,r5,31,1,31
+  ctx.r[5] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[5]), 31)) & 0x7FFFFFFFull;
+  // 82004FE0: xor_ r5,r6,r22
+  ctx.r[6] = ctx.r[5] ^ ctx.r[22];
+  // 82004FE4: bc 12,2,0x82004FF0
+  if (ctx.crb[2]) goto loc_82004FF0;
+  // 82004FE8: ori r5,r6,0x0
+  ctx.r[5] = ctx.r[6] | 0x0ull;
+  // 82004FEC: b 0x82004FF0
+  goto loc_82004FF0;
+loc_82004FF0:
+  // 82004FF0: andi_rc r6,r5,0x1
+  ctx.r[6] = ctx.r[5] & 0x1ull;
+  fsr::set_cr0(ctx, ctx.r[6]);
+  // 82004FF4: rlwinm r5,r5,31,1,31
+  ctx.r[5] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[5]), 31)) & 0x7FFFFFFFull;
+  // 82004FF8: xor_ r5,r6,r22
+  ctx.r[6] = ctx.r[5] ^ ctx.r[22];
+  // 82004FFC: bc 12,2,0x82005008
+  if (ctx.crb[2]) goto loc_82005008;
+  // 82005000: ori r5,r6,0x0
+  ctx.r[5] = ctx.r[6] | 0x0ull;
+  // 82005004: b 0x82005008
+  goto loc_82005008;
+loc_82005008:
+  // 82005008: andi_rc r6,r5,0x1
+  ctx.r[6] = ctx.r[5] & 0x1ull;
+  fsr::set_cr0(ctx, ctx.r[6]);
+  // 8200500C: rlwinm r5,r5,31,1,31
+  ctx.r[5] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[5]), 31)) & 0x7FFFFFFFull;
+  // 82005010: xor_ r5,r6,r22
+  ctx.r[6] = ctx.r[5] ^ ctx.r[22];
+  // 82005014: bc 12,2,0x82005020
+  if (ctx.crb[2]) goto loc_82005020;
+  // 82005018: ori r5,r6,0x0
+  ctx.r[5] = ctx.r[6] | 0x0ull;
+  // 8200501C: b 0x82005020
+  goto loc_82005020;
+loc_82005020:
+  // 82005020: andi_rc r6,r5,0x1
+  ctx.r[6] = ctx.r[5] & 0x1ull;
+  fsr::set_cr0(ctx, ctx.r[6]);
+  // 82005024: rlwinm r5,r5,31,1,31
+  ctx.r[5] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[5]), 31)) & 0x7FFFFFFFull;
+  // 82005028: xor_ r5,r6,r22
+  ctx.r[6] = ctx.r[5] ^ ctx.r[22];
+  // 8200502C: bc 12,2,0x82005038
+  if (ctx.crb[2]) goto loc_82005038;
+  // 82005030: ori r5,r6,0x0
+  ctx.r[5] = ctx.r[6] | 0x0ull;
+  // 82005034: b 0x82005038
+  goto loc_82005038;
+loc_82005038:
+  // 82005038: andi_rc r6,r5,0x1
+  ctx.r[6] = ctx.r[5] & 0x1ull;
+  fsr::set_cr0(ctx, ctx.r[6]);
+  // 8200503C: rlwinm r5,r5,31,1,31
+  ctx.r[5] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[5]), 31)) & 0x7FFFFFFFull;
+  // 82005040: xor_ r5,r6,r22
+  ctx.r[6] = ctx.r[5] ^ ctx.r[22];
+  // 82005044: bc 12,2,0x82005050
+  if (ctx.crb[2]) goto loc_82005050;
+  // 82005048: ori r5,r6,0x0
+  ctx.r[5] = ctx.r[6] | 0x0ull;
+  // 8200504C: b 0x82005050
+  goto loc_82005050;
+loc_82005050:
+  // 82005050: andi_rc r6,r5,0x1
+  ctx.r[6] = ctx.r[5] & 0x1ull;
+  fsr::set_cr0(ctx, ctx.r[6]);
+  // 82005054: rlwinm r5,r5,31,1,31
+  ctx.r[5] = fsr::dup32(fsr::rotl32(uint32_t(ctx.r[5]), 31)) & 0x7FFFFFFFull;
+  // 82005058: xor_ r5,r6,r22
+  ctx.r[6] = ctx.r[5] ^ ctx.r[22];
+  // 8200505C: bc 12,2,0x82005068
+  if (ctx.crb[2]) goto loc_82005068;
+  // 82005060: ori r5,r6,0x0
+  ctx.r[5] = ctx.r[6] | 0x0ull;
+  // 82005064: b 0x82005068
+  goto loc_82005068;
+loc_82005068:
+  // 82005068: bc 16,0,0x82004FA0
+  ctx.ctr--;
+  if (ctx.ctr != 0) goto loc_82004FA0;
+  // 8200506C: nor r5,r21,r5
+  ctx.r[21] = ~(ctx.r[5] | ctx.r[5]);
+  // 82005070: b 0x82004F50
+  goto loc_82004F50;
+  fsr::fsr_unimplemented(ctx, base, 0x82005074, 0); // zero word (padding)
+  fsr::fsr_unimplemented(ctx, base, 0x82005078, 0); // zero word (padding)
+  fsr::fsr_unimplemented(ctx, base, 0x8200507C, 0); // zero word (padding)
+  sub_82005080(ctx, base);
+  return;
+}
+
+FSR_FUNC(sub_82005080) {
+  uint32_t ea; uint64_t t0, t1; uint32_t target; (void)ea; (void)t0; (void)t1; (void)target;
+  // 82005080: addi r5,r0,16
   ctx.r[5] = uint64_t(0) + uint64_t(16);
-  // 82003FE4: addi r6,r0,32
+  // 82005084: addi r6,r0,32
   ctx.r[6] = uint64_t(0) + uint64_t(32);
-  // 82003FE8: addi r7,r0,48
+  // 82005088: addi r7,r0,48
   ctx.r[7] = uint64_t(0) + uint64_t(48);
-  // 82003FEC: addi r8,r0,64
+  // 8200508C: addi r8,r0,64
   ctx.r[8] = uint64_t(0) + uint64_t(64);
-  // 82003FF0: lvx128 v70,v0,v99
+  // 82005090: lvx128 v70,v0,v99
   fsr::vx::lvx(ctx.v[70], base, uint32_t(uint64_t(0) + ctx.r[3]));
-  // 82003FF4: lvx128 v101,v3,v101
+  // 82005094: lvx128 v101,v3,v101
   fsr::vx::lvx(ctx.v[101], base, uint32_t(ctx.r[3] + ctx.r[5]));
-  // 82003FF8: lvx128 v33,v3,v102
+  // 82005098: lvx128 v33,v3,v102
   fsr::vx::lvx(ctx.v[33], base, uint32_t(ctx.r[3] + ctx.r[6]));
-  // 82003FFC: lvx128 v127,v3,v103
+  // 8200509C: lvx128 v127,v3,v103
   fsr::vx::lvx(ctx.v[127], base, uint32_t(ctx.r[3] + ctx.r[7]));
-  // 82004000: lvx v5,v3,v8
+  // 820050A0: lvx v5,v3,v8
   fsr::vx::lvx(ctx.v[5], base, uint32_t(ctx.r[3] + ctx.r[8]));
-  // 82004004: vaddfp128 v64,v70,v101
+  // 820050A4: vaddfp128 v64,v70,v101
   fsr::vx::vaddfp(ctx.v[64], ctx.v[70], ctx.v[101]);
-  // 82004008: addi r9,r4,0
+  // 820050A8: addi r9,r4,0
   ctx.r[9] = ctx.r[4] + uint64_t(0);
-  // 8200400C: stvx128 v64,v0,v105
+  // 820050AC: stvx128 v64,v0,v105
   fsr::vx::stvx(ctx.v[64], base, uint32_t(uint64_t(0) + ctx.r[9]));
-  // 82004010: vmulfp128 v65,v70,v33
+  // 820050B0: vmulfp128 v65,v70,v33
   fsr::vx::vmulfp(ctx.v[65], ctx.v[70], ctx.v[33]);
-  // 82004014: addi r9,r4,16
+  // 820050B4: addi r9,r4,16
   ctx.r[9] = ctx.r[4] + uint64_t(16);
-  // 82004018: stvx128 v65,v0,v105
+  // 820050B8: stvx128 v65,v0,v105
   fsr::vx::stvx(ctx.v[65], base, uint32_t(uint64_t(0) + ctx.r[9]));
-  // 8200401C: vor128 v66,v33,v33
+  // 820050BC: vor128 v66,v33,v33
   fsr::vx::vor(ctx.v[66], ctx.v[33], ctx.v[33]);
-  // 82004020: vmaddfp128 v66,v70,v101
+  // 820050C0: vmaddfp128 v66,v70,v101
   fsr::vx::vmaddfp(ctx.v[66], ctx.v[70], ctx.v[101], ctx.v[66]);
-  // 82004024: addi r9,r4,32
+  // 820050C4: addi r9,r4,32
   ctx.r[9] = ctx.r[4] + uint64_t(32);
-  // 82004028: stvx128 v66,v0,v105
+  // 820050C8: stvx128 v66,v0,v105
   fsr::vx::stvx(ctx.v[66], base, uint32_t(uint64_t(0) + ctx.r[9]));
-  // 8200402C: vmsum3fp128 v67,v70,v101
+  // 820050CC: vmsum3fp128 v67,v70,v101
   fsr::vx::vmsum3fp128(ctx.v[67], ctx.v[70], ctx.v[101]);
-  // 82004030: addi r9,r4,48
+  // 820050D0: addi r9,r4,48
   ctx.r[9] = ctx.r[4] + uint64_t(48);
-  // 82004034: stvx128 v67,v0,v105
+  // 820050D4: stvx128 v67,v0,v105
   fsr::vx::stvx(ctx.v[67], base, uint32_t(uint64_t(0) + ctx.r[9]));
-  // 82004038: vmsum4fp128 v68,v33,v101
+  // 820050D8: vmsum4fp128 v68,v33,v101
   fsr::vx::vmsum4fp128(ctx.v[68], ctx.v[33], ctx.v[101]);
-  // 8200403C: addi r9,r4,64
+  // 820050DC: addi r9,r4,64
   ctx.r[9] = ctx.r[4] + uint64_t(64);
-  // 82004040: stvx128 v68,v0,v105
+  // 820050E0: stvx128 v68,v0,v105
   fsr::vx::stvx(ctx.v[68], base, uint32_t(uint64_t(0) + ctx.r[9]));
-  // 82004044: vpermwi128 v69,v4,v70
+  // 820050E4: vpermwi128 v69,v4,v70
   fsr::vx::vpermwi128(ctx.v[69], ctx.v[70], 228);
-  // 82004048: addi r9,r4,80
+  // 820050E8: addi r9,r4,80
   ctx.r[9] = ctx.r[4] + uint64_t(80);
-  // 8200404C: stvx128 v69,v0,v105
+  // 820050EC: stvx128 v69,v0,v105
   fsr::vx::stvx(ctx.v[69], base, uint32_t(uint64_t(0) + ctx.r[9]));
-  // 82004050: vor128 v71,v33,v33
+  // 820050F0: vor128 v71,v33,v33
   fsr::vx::vor(ctx.v[71], ctx.v[33], ctx.v[33]);
-  // 82004054: vrlimi128 v71,v74,v70
+  // 820050F4: vrlimi128 v71,v74,v70
   fsr::vx::vrlimi128(ctx.v[71], ctx.v[70], 10, 1);
-  // 82004058: addi r9,r4,96
+  // 820050F8: addi r9,r4,96
   ctx.r[9] = ctx.r[4] + uint64_t(96);
-  // 8200405C: stvx128 v71,v0,v105
+  // 820050FC: stvx128 v71,v0,v105
   fsr::vx::stvx(ctx.v[71], base, uint32_t(uint64_t(0) + ctx.r[9]));
-  // 82004060: vspltw128 v72,v98,v101
+  // 82005100: vspltw128 v72,v98,v101
   fsr::vx::vspltw(ctx.v[72], ctx.v[101], 2);
-  // 82004064: addi r9,r4,112
+  // 82005104: addi r9,r4,112
   ctx.r[9] = ctx.r[4] + uint64_t(112);
-  // 82004068: stvx128 v72,v0,v105
+  // 82005108: stvx128 v72,v0,v105
   fsr::vx::stvx(ctx.v[72], base, uint32_t(uint64_t(0) + ctx.r[9]));
-  // 8200406C: vcmpgtfp128 v73,v70,v101
+  // 8200510C: vcmpgtfp128 v73,v70,v101
   fsr::vx::vcmpgtfp_e(ctx.v[73], ctx.v[70], ctx.v[101]);
   fsr::vx::cr6_from(ctx.crb, ctx.v[73]);
-  // 82004070: mfcr r10,r0,r0
+  // 82005110: mfcr r10,r0,r0
   ctx.r[10] = fsr::get_cr(ctx);
-  // 82004074: addi r9,r4,128
+  // 82005114: addi r9,r4,128
   ctx.r[9] = ctx.r[4] + uint64_t(128);
-  // 82004078: stvx128 v73,v0,v105
+  // 82005118: stvx128 v73,v0,v105
   fsr::vx::stvx(ctx.v[73], base, uint32_t(uint64_t(0) + ctx.r[9]));
-  // 8200407C: vor128 v74,v73,v73
+  // 8200511C: vor128 v74,v73,v73
   fsr::vx::vor(ctx.v[74], ctx.v[73], ctx.v[73]);
-  // 82004080: vsel128 v74,v70,v101
+  // 82005120: vsel128 v74,v70,v101
   fsr::vx::vsel(ctx.v[74], ctx.v[70], ctx.v[101], ctx.v[74]);
-  // 82004084: addi r9,r4,144
+  // 82005124: addi r9,r4,144
   ctx.r[9] = ctx.r[4] + uint64_t(144);
-  // 82004088: stvx128 v74,v0,v105
+  // 82005128: stvx128 v74,v0,v105
   fsr::vx::stvx(ctx.v[74], base, uint32_t(uint64_t(0) + ctx.r[9]));
-  // 8200408C: vperm128 v75,v70,v101
+  // 8200512C: vperm128 v75,v70,v101
   fsr::vx::vperm(ctx.v[75], ctx.v[70], ctx.v[101], ctx.v[5]);
-  // 82004090: addi r9,r4,160
+  // 82005130: addi r9,r4,160
   ctx.r[9] = ctx.r[4] + uint64_t(160);
-  // 82004094: stvx128 v75,v0,v105
+  // 82005134: stvx128 v75,v0,v105
   fsr::vx::stvx(ctx.v[75], base, uint32_t(uint64_t(0) + ctx.r[9]));
-  // 82004098: vsldoi128 v76,v70,v101
+  // 82005138: vsldoi128 v76,v70,v101
   fsr::vx::vsldoi(ctx.v[76], ctx.v[70], ctx.v[101], 6);
-  // 8200409C: addi r9,r4,176
+  // 8200513C: addi r9,r4,176
   ctx.r[9] = ctx.r[4] + uint64_t(176);
-  // 820040A0: stvx128 v76,v0,v105
+  // 82005140: stvx128 v76,v0,v105
   fsr::vx::stvx(ctx.v[76], base, uint32_t(uint64_t(0) + ctx.r[9]));
-  // 820040A4: vcsxwfp128 v77,v36,v127
+  // 82005144: vcsxwfp128 v77,v36,v127
   fsr::vx::vcfsx(ctx.v[77], ctx.v[127], 4);
-  // 820040A8: addi r9,r4,192
+  // 82005148: addi r9,r4,192
   ctx.r[9] = ctx.r[4] + uint64_t(192);
-  // 820040AC: stvx128 v77,v0,v105
+  // 8200514C: stvx128 v77,v0,v105
   fsr::vx::stvx(ctx.v[77], base, uint32_t(uint64_t(0) + ctx.r[9]));
-  // 820040B0: vcfpsxws128 v78,v34,v70
+  // 82005150: vcfpsxws128 v78,v34,v70
   fsr::vx::vctsxs(ctx.v[78], ctx.v[70], 2, ctx.vscr);
-  // 820040B4: addi r9,r4,208
+  // 82005154: addi r9,r4,208
   ctx.r[9] = ctx.r[4] + uint64_t(208);
-  // 820040B8: stvx128 v78,v0,v105
+  // 82005158: stvx128 v78,v0,v105
   fsr::vx::stvx(ctx.v[78], base, uint32_t(uint64_t(0) + ctx.r[9]));
-  // 820040BC: vupkhsb128 v79,v0,v127
+  // 8200515C: vupkhsb128 v79,v0,v127
   fsr::vx::vupkhsb(ctx.v[79], ctx.v[127]);
-  // 820040C0: addi r9,r4,224
+  // 82005160: addi r9,r4,224
   ctx.r[9] = ctx.r[4] + uint64_t(224);
-  // 820040C4: stvx128 v79,v0,v105
+  // 82005164: stvx128 v79,v0,v105
   fsr::vx::stvx(ctx.v[79], base, uint32_t(uint64_t(0) + ctx.r[9]));
-  // 820040C8: vspltisw128 v80,v125,v0
+  // 82005168: vspltisw128 v80,v125,v0
   fsr::vx::vspltisw(ctx.v[80], 29);
-  // 820040CC: addi r9,r4,240
+  // 8200516C: addi r9,r4,240
   ctx.r[9] = ctx.r[4] + uint64_t(240);
-  // 820040D0: stvx128 v80,v0,v105
+  // 82005170: stvx128 v80,v0,v105
   fsr::vx::stvx(ctx.v[80], base, uint32_t(uint64_t(0) + ctx.r[9]));
-  // 820040D4: stw r10,256(r4)
+  // 82005174: stw r10,256(r4)
   t0 = (ctx.r[4] + uint64_t(256)); ea = uint32_t(t0);
   fsr::st32(base, ea, uint32_t(ctx.r[10]));
-  // 820040D8: or_ r10,r3,r10
+  // 82005178: or_ r10,r3,r10
   ctx.r[3] = ctx.r[10] | ctx.r[10];
-  // 820040DC: bclr r20,r0,r0
+  // 8200517C: bclr r20,r0,r0
   if (true) return;
-  fsr::fsr_call_indirect(ctx, base, 0x820040E0);
+  fsr::fsr_call_indirect(ctx, base, 0x82005180);
   return;
 }
 

@@ -104,6 +104,14 @@ Session::~Session() {
 
 void Session::set_window(ANativeWindow* win) {
   std::unique_lock<std::mutex> l(mu_);
+  if (win && win == window_) {
+    // Same surface, new size (e.g. system bars hidden): keep the Vulkan device,
+    // only rebuild the swapchain.
+    ANativeWindow_release(win);
+    window_resized_ = true;
+    cv_.notify_all();
+    return;
+  }
   ANativeWindow* old = window_;
   window_ = win;
   window_dirty_ = true;
@@ -182,6 +190,7 @@ void Session::loop() {
   auto window_start = Clock::now();
   uint32_t window_frames = 0;
   double acc_frame = 0, acc_guest = 0, acc_present = 0;
+  double acc_wait = 0, acc_acq = 0, acc_copy = 0, acc_sub = 0, acc_qp = 0;
   while (true) {
     GraphicsConfig g;
     int thermal;
@@ -203,6 +212,11 @@ void Session::loop() {
             }
           }
           cv_.notify_all();
+        }
+        if (window_resized_ && !window_dirty_) {
+          window_resized_ = false;
+          std::string err;
+          if (renderer.ready() && !renderer.resize(err)) logf("[session] swapchain resize failed: %s", err.c_str());
         }
         if (quit_ || (!paused_ && window_ && renderer.ready())) break;
         cv_.wait(l);
@@ -252,6 +266,10 @@ void Session::loop() {
 
     acc_guest += std::chrono::duration<double, std::milli>(t1 - t0).count();
     acc_present += std::chrono::duration<double, std::milli>(t2 - t1).count();
+    {
+      const PresentTimings& pt = renderer.last_timings();
+      acc_wait += pt.wait; acc_acq += pt.acquire; acc_copy += pt.copy; acc_sub += pt.submit; acc_qp += pt.present;
+    }
     acc_frame += std::chrono::duration<double, std::milli>(t3 - t0).count();
     window_frames++;
     double span = std::chrono::duration<double>(t3 - window_start).count();
@@ -261,6 +279,15 @@ void Session::loop() {
       stats_.frame_ms = float(acc_frame / window_frames);
       stats_.guest_ms = float(acc_guest / window_frames);
       stats_.present_ms = float(acc_present / window_frames);
+      stats_.wait_ms = float(acc_wait / window_frames);
+      stats_.acquire_ms = float(acc_acq / window_frames);
+      stats_.copy_ms = float(acc_copy / window_frames);
+      stats_.submit_ms = float(acc_sub / window_frames);
+      stats_.queue_present_ms = float(acc_qp / window_frames);
+      const SwapInfo& si = renderer.swap_info();
+      stats_.sc_images = si.images; stats_.sc_mode = uint32_t(si.mode); stats_.sc_transform = si.transform;
+      stats_.sc_current_transform = si.current_transform; stats_.sc_recreations = si.recreations;
+      stats_.sc_suboptimal = si.suboptimal;
       stats_.width = w;
       stats_.height = h;
       stats_.frames = frame;
@@ -268,6 +295,7 @@ void Session::loop() {
       window_start = t3;
       window_frames = 0;
       acc_frame = acc_guest = acc_present = 0;
+      acc_wait = acc_acq = acc_copy = acc_sub = acc_qp = 0;
     }
   }
   renderer.shutdown();

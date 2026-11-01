@@ -108,6 +108,7 @@ inline void set_cr_unsigned(PPCContext& c, int field, uint64_t a, uint64_t b) {
   f[0] = a < b; f[1] = a > b; f[2] = a == b; f[3] = c.xer_so;
 }
 inline void set_cr0(PPCContext& c, uint64_t v) { set_cr_signed(c, 0, int64_t(v), 0); }
+inline void set_cr0_w(PPCContext& c, uint64_t v) { set_cr_signed(c, 0, int32_t(v), 0); }  // 32-bit mode
 inline void set_cr_fp(PPCContext& c, int field, double a, double b) {
   uint8_t* f = c.crb + 4 * field;
   bool un = std::isnan(a) || std::isnan(b);

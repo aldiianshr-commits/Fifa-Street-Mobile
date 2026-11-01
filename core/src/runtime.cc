@@ -18,6 +18,9 @@ thread_local Runtime* t_runtime = nullptr;
 thread_local Runtime* t_stack_owner = nullptr;
 thread_local uint32_t t_stack = 0;
 constexpr uint64_t kGuestSpace = 0x100000000ull;  // 4 GiB
+// Slack after the 4 GiB window: an access at e.g. 0xFFFFFFFF with a 16-byte
+// width stays inside the mapping instead of crashing the host process.
+constexpr uint64_t kGuestSlack = 0x10000ull;
 constexpr uint32_t kHeapEnd = 0x7F000000u;
 constexpr uint32_t kStackSize = 1u << 20;
 }  // namespace
@@ -65,13 +68,13 @@ Runtime* Runtime::current() { return t_runtime; }
 
 bool Runtime::init(std::string& err) {
   if (mem_) return true;
-  void* p = mmap(nullptr, kGuestSpace, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_NORESERVE, -1, 0);
+  void* p = mmap(nullptr, kGuestSpace + kGuestSlack, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_NORESERVE, -1, 0);
   if (p == MAP_FAILED) {
     err = "cannot reserve 4 GiB guest address space";
     return false;
   }
   mem_ = static_cast<uint8_t*>(p);
-  mem_size_ = kGuestSpace;
+  mem_size_ = kGuestSpace + kGuestSlack;
   return true;
 }
 

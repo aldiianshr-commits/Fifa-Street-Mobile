@@ -118,8 +118,11 @@ class PlayActivity : Activity(), SurfaceHolder.Callback {
             }
             ui.post(script)
             ui.postDelayed({
-                val st = if (h != 0L) NativeBridge.sessionStats(h) else FloatArray(9)
+                val st = if (h != 0L) NativeBridge.sessionStats(h) else FloatArray(20)
                 AppLog.i("AUTOTEST play fps=${st[0]} frame_ms=${st[1]} guest_ms=${st[2]} present_ms=${st[3]} res=${st[4].toInt()}x${st[5].toInt()} " +
+                    "wait=${st[9]} acquire=${st[10]} copy=${st[11]} submit=${st[12]} qpresent=${st[13]} images=${st[14].toInt()} " +
+                    "mode=${st[15].toInt()} pre=${st[16].toInt()} cur=${st[17].toInt()} recreate=${st[18].toInt()} suboptimal=${st[19].toInt()} " +
+                    "disc_bytes=${if (h != 0L) NativeBridge.sessionDiscBytes(h) else 0} " +
                     "frames=${st[6].toLong()} kernel_calls=${st[7].toLong()} gpu=${if (h != 0L) NativeBridge.sessionGpu(h) else ""} " +
                     "error=${if (h != 0L) NativeBridge.sessionError(h) else "no session"}")
                 ui.removeCallbacks(script)
@@ -152,9 +155,13 @@ class PlayActivity : Activity(), SurfaceHolder.Callback {
             if (h == 0L) return
             val s = NativeBridge.sessionStats(h)
             val th = if (s[8] > 0f) "  ⚠ throttling (30 FPS)" else ""
-            stats.text = "%.1f FPS  frame %.2f ms  guest %.2f ms  present %.2f ms\n%dx%d  ·  frame %d  ·  kernel calls %d  ·  disc %s  ·  %s%s"
-                .format(s[0], s[1], s[2], s[3], s[4].toInt(), s[5].toInt(), s[6].toLong(), s[7].toLong(),
-                    GameLibraryFmt.bytes(NativeBridge.sessionDiscBytes(h)), NativeBridge.sessionGpu(h), th)
+            val mode = when (s[15].toInt()) { 0 -> "IMMEDIATE"; 1 -> "MAILBOX"; 2 -> "FIFO"; 3 -> "FIFO_RELAXED"; else -> "?" }
+            fun rot(t: Int) = when (t) { 1 -> "0°"; 2 -> "90°"; 4 -> "180°"; 8 -> "270°"; else -> "$t" }
+            stats.text = ("%.1f FPS  frame %.2f ms  guest %.2f ms  present %.2f ms (wait %.1f, acquire %.1f, copy %.1f, submit %.1f, queue %.1f)\n" +
+                "%dx%d · frame %d · kernel %d · disc %s · %s · %s %d img · rotasi %s/%s · swapchain dibuat %dx%s")
+                .format(s[0], s[1], s[2], s[3], s[9], s[10], s[11], s[12], s[13], s[4].toInt(), s[5].toInt(), s[6].toLong(), s[7].toLong(),
+                    GameLibraryFmt.bytes(NativeBridge.sessionDiscBytes(h)), NativeBridge.sessionGpu(h), mode, s[14].toInt(),
+                    rot(s[16].toInt()), rot(s[17].toInt()), s[18].toInt(), th)
             if (!errorShown && !NativeBridge.sessionRunning(h) && NativeBridge.sessionError(h).isNotEmpty()) {
                 errorShown = true
                 val err = NativeBridge.sessionError(h)

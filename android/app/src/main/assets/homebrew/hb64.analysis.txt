@@ -3,22 +3,22 @@ XEX2 hb64.xex
   disc         : 1/1
   original PE  : homebrew.exe
   base / entry : 82000000 / 82001080
-  image size   : 36864 bytes
+  image size   : 40960 bytes
   encryption   : none
   compression  : none
   image load   : ok
-  section .text va=00001000 size=12512 [code]
-  section .rodata va=00005000 size=514
-  section .got va=00005208 size=8
-  section .toc va=00005210 size=8
-  section .data va=00006000 size=12
-  section .bss va=00006010 size=1
-  section .pdata va=00007000 size=392
-  section .fsrimp va=00008000 size=36
-  .pdata functions : 48
+  section .text va=00001000 size=16768 [code]
+  section .rodata va=00006000 size=1212
+  section .got va=000064C0 size=8
+  section .toc va=000064C8 size=8
+  section .data va=00007000 size=144
+  section .bss va=00007090 size=73
+  section .pdata va=00008000 size=400
+  section .fsrimp va=00009000 size=36
+  .pdata functions : 49
   imports          : 8 (8 implemented by runtime HLE)
-  functions found  : 51 (2 with bctr dispatch)
-  instructions     : 3648
-  translated       : 3648 (100.00%)
+  functions found  : 53 (2 with bctr dispatch)
+  instructions     : 5018
+  translated       : 5018 (100.00%)
   VMX/VMX128       : 844 (844 translated, 39 VMX128 encodings)
   invalid words    : 0

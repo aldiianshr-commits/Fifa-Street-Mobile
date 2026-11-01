@@ -968,7 +968,16 @@ RecompOutput recompile(const RecompInput& in, const RecompOptions& opt) {
     count = 0;
   };
   for (auto& f : out.functions) {
-    body << em.function(f, opt.emit_comments);
+    std::string fn = em.function(f, opt.emit_comments);
+    if (opt.mode32) {
+      auto repl = [&](const std::string& a, const std::string& b) {
+        for (size_t pos = 0; (pos = fn.find(a, pos)) != std::string::npos; pos += b.size()) fn.replace(pos, a.size(), b);
+      };
+      repl("fsr::set_cr0(ctx, ", "fsr::set_cr0_w(ctx, ");
+      repl("ctx.ctr == 0", "uint32_t(ctx.ctr) == 0");
+      repl("ctx.ctr != 0", "uint32_t(ctx.ctr) != 0");
+    }
+    body << fn;
     if (++count >= opt.functions_per_file) flush();
   }
   // Import thunks.
