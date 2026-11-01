@@ -15,8 +15,7 @@
 
 ## 3. Membaca status kompatibilitas
 
-Halaman detail menampilkan setiap komponen dengan label **Berfungsi / Parsial / Belum tersedia / Perlu tindakan**, termasuk:
-jumlah fungsi & instruksi, persentase instruksi yang dapat diterjemahkan, jumlah VMX/VMX128, impor kernel yang sudah diimplementasikan, dan apakah ada modul hasil recompile di APK.
+Setiap game di Library berstatus **Ready** (semua persyaratan runtime terpenuhi), **Processing** (sedang dipindai/dianalisis, dengan tahap & persentase), **Partial** (format kompatibel, tetapi ada komponen yang belum didukung atau kunci belum ada), atau **Unsupported** (format/komponen tidak kompatibel, mis. bukan ISO Xbox 360, STFS, ISO terpotong). Halaman detail mencantumkan setiap persyaratan (filesystem, kelengkapan data, executable, region, enkripsi, dekompresi, modul lain, terjemahan CPU, impor kernel, thread, audio, file yang dirujuk, modul native ARM64, jalur grafis) dengan status dan penyebab teknisnya.
 
 ## 4. Me-recompile XEX Anda (PC Linux/WSL)
 
@@ -28,9 +27,9 @@ jumlah fungsi & instruksi, persentase instruksi yang dapat diterjemahkan, jumlah
 ./build-host/fsr-recomp  game.iso --key xex.key --out gen/fifastreet --name fifastreet   # XEX diambil dari ISO
 ```
 
-Untuk memasukkannya ke APK pribadi: salin `gen/fifastreet/*` ke `android/app/src/main/cpp/generated/fifastreet/`, tambahkan berkasnya di `android/app/src/main/cpp/CMakeLists.txt` dan `&fsr_module_fifastreet` ke `kModules` di `session.cpp`, lalu build. **Jangan publikasikan** kode hasil recompile game komersial.
+Untuk memasukkannya ke APK pribadi: salin `gen/fifastreet/*` ke `android/app/src/main/cpp/generated/fifastreet/`, tambahkan berkasnya di `android/app/src/main/cpp/CMakeLists.txt` dan panggil `fsr::register_module(&fsr_module_fifastreet)` di `RegisterModules` (`session.cpp`), lalu build. Setelah itu persyaratan "Modul native ARM64" pada ISO yang sama otomatis menjadi terpenuhi. **Jangan publikasikan** kode hasil recompile game komersial.
 
-Catatan jujur: untuk FIFA Street, langkah ini saat ini menghasilkan modul yang **belum dapat berjalan sampai selesai** karena VMX128, thread, GPU Xenos, dan audio belum diimplementasikan; runtime akan berhenti dengan `GuestFault` yang menyebut instruksi/impor yang belum ada — informasi itu berguna sebagai daftar pekerjaan berikutnya. Selain itu, sesi Play saat ini memanggil entry point `fsr_frame` milik homebrew; entry game retail (`mainCRTStartup`) membutuhkan thread & kernel yang lebih lengkap.
+Catatan jujur: untuk FIFA Street, langkah ini saat ini menghasilkan modul yang **belum dapat berjalan sampai selesai** karena thread guest, GPU Xenos, audio, sebagian besar HLE kernel, dan `vpkd3d128`/`vupkd3d128` belum diimplementasikan; runtime akan berhenti dengan `GuestFault` yang menyebut instruksi/impor yang belum ada — informasi itu berguna sebagai daftar pekerjaan berikutnya. Selain itu, sesi Play saat ini memanggil entry point `fsr_frame` milik homebrew; entry game retail (`mainCRTStartup`) membutuhkan thread & kernel yang lebih lengkap.
 
 ## 5. Kontrol
 
